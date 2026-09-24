@@ -1,11 +1,10 @@
 /**
  * @file src/components/home/EgcBanner.tsx
- * @desc Homepage banner for the Evergreen Cup, styled like packs' banner: Evergreen Cup's own
- *       dark green ground and tree mark, linking to evergreencup.org. Sits above everything else
- *       on the homepage.
+ * @desc Homepage banner for the Evergreen Cup: Evergreen Cup's own dark green ground and tree
+ *       mark, linking to evergreencup.org. Sits above everything else on the homepage.
  * @author David @dvhsh (https://dvh.sh)
  * @created Wed Sep 23, 2026
- * @modified Wed Sep 23, 2026
+ * @modified Thu Sep 24, 2026
  */
 
 import { useId } from "react";
