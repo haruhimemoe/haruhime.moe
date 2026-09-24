@@ -75,8 +75,8 @@ export default function UiPage() {
               <a href={NPM_URL} className={linkStyles}>
                 @haruhimemoe/ui
               </a>
-              , the kit haruhime.moe and packs are built from, rendered from the package itself. The
-              source is on{" "}
+              , rendered from the package itself. haruhime.moe is built from it, and packs is moving
+              to it. The source is on{" "}
               <a href={REPO_URL} className={linkStyles}>
                 GitHub
               </a>

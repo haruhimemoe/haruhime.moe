@@ -1,8 +1,9 @@
 /**
  * @file tests/components/app/UiPage.test.tsx
- * @desc /ui: title, one h1, the intro links, every group heading, a demo for every component
- *       @haruhimemoe/ui exports, the states each demo promises, a working filter panel (Clear filters
- *       shows for any filter, the length maximum included), and no axe violations.
+ * @desc /ui: title, one h1, the intro links and which sites the lead says use the kit, every group
+ *       heading, a demo for every component @haruhimemoe/ui exports, the states each demo promises,
+ *       a working filter panel (Clear filters shows for any filter, the length maximum included),
+ *       and no axe violations.
  * @author David @dvhsh (https://dvh.sh)
  * @created Wed Sep 23, 2026
  * @modified Wed Sep 23, 2026
@@ -44,6 +45,13 @@ describe("/ui", () => {
       "https://github.com/haruhimemoe/ui",
     );
     expect(screen.getByText(/^Version \d+\.\d+\.\d+, MIT license/)).toBeInTheDocument();
+  });
+
+  it("says haruhime.moe is built from the kit and packs is moving to it", () => {
+    render(<UiPage />);
+    const lead = screen.getByRole("link", { name: "@haruhimemoe/ui" }).closest("p");
+    expect(lead).toHaveTextContent("haruhime.moe is built from it, and packs is moving to it.");
+    expect(lead).not.toHaveTextContent(/packs (is|are) built from/);
   });
 
   it("has every group heading, linked from the page's own nav", () => {
