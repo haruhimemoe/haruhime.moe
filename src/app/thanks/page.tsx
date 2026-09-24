@@ -15,12 +15,16 @@ export const metadata: Metadata = {
   title: "Thanks",
   description: "The people and projects the haruhime.moe tools are built on.",
   alternates: { canonical: "/thanks" },
+  openGraph: { url: "/thanks" },
 };
 
 export default function ThanksPage() {
   return (
     <div className="flex flex-col gap-8">
-      <PageHeader title="Thanks" lead="these tools lean on other people's work. thank you." />
+      <PageHeader
+        title="Thanks"
+        lead="these tools lean on other people's work, feedback, encouragement, and so much more. thank you."
+      />
       <ul className="flex flex-col gap-3">
         {THANKS.map((entry) => (
           <li key={entry.name} className="rounded-[10px] bg-b4 p-5">

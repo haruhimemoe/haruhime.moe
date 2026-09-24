@@ -13,18 +13,26 @@ export type ThanksEntry = {
   line: string;
 };
 
-// David: add people here. One entry each, a short line in your own words, https links only.
+// One entry per person or project: a name, an optional https link, and a short line.
 /** Shown on /thanks in this order. */
 export const THANKS: readonly ThanksEntry[] = [
   {
+    name: "-Tynamo, Varler, RMarc, and the EvergreenCup Staff!",
+    line: "Thanks for giving me a shot and the oppertunity to work with all of you!",
+  },
+  {
+    name: "Enslow, Sohlayce, Zyoulou, Drou, Tienei, Wyrd, Rikki",
+    line: "and so many others from osu!cafe server! without you guys, who knows where my dev journey would be today in relation to osu!",
+  },
+  {
     name: "hburn7",
     url: "https://github.com/hburn7/omc-api",
-    line: "omc-api, the mappool rules our compliance checks are ported from.",
+    line: "omc-api, the mappool rules my compliance checks are ported from.",
   },
   {
     name: "the hinai beatmap mirror",
     url: "https://mirror.hinamizawa.ai",
-    line: "serves the beatmap downloads, so we never host a file.",
+    line: "serves the beatmap downloads, so I never host a file.",
   },
   {
     name: "ppy and the osu! team",

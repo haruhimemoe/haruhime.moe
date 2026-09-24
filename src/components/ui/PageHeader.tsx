@@ -17,6 +17,11 @@ type PageHeaderProps = {
   className?: string;
 };
 
+/**
+ * @function PageHeader
+ * @param props {PageHeaderProps} the page's title, and optional lead text, meta line, and actions
+ * @returns {JSX.Element} the page's one h1, with its optional lead, meta line and actions
+ */
 export function PageHeader({ title, lead, meta, actions, className }: PageHeaderProps) {
   return (
     <div className={cn("flex flex-wrap items-end justify-between gap-x-6 gap-y-4", className)}>

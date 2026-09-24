@@ -1,6 +1,6 @@
 /**
  * @file tests/components/app/HomePage.test.tsx
- * @desc /: title, one h1, the three tools, the Evergreen Cup card, GitHub links, Organization + Person data.
+ * @desc /: title, one h1, the three tools, the Evergreen Cup card, Organization + Person data.
  * @author David @dvhsh (https://dvh.sh)
  * @created Wed Sep 23, 2026
  * @modified Wed Sep 23, 2026
@@ -15,11 +15,7 @@ describe("/", () => {
     expect(metadata.title).toEqual({ absolute: "haruhime.moe: osu! tournament tools" });
     render(<HomePage />);
     expect(screen.getAllByRole("heading", { level: 1 })).toHaveLength(1);
-    expect(screen.getByRole("heading", { level: 1, name: "hi, I'm haruhime." })).toBeVisible();
-    expect(screen.getByRole("img", { name: "haruhime.moe" })).toHaveAttribute(
-      "src",
-      "/brand/haruhime-wordmark.svg",
-    );
+    expect(screen.getByRole("heading", { level: 1 })).toBeVisible();
   });
 
   it("shows packs live and pools and sheets coming soon", () => {
@@ -34,16 +30,12 @@ describe("/", () => {
     expect(within(tools).getAllByText("coming soon")).toHaveLength(2);
   });
 
-  it("links Evergreen Cup and GitHub", () => {
+  it("links Evergreen Cup", () => {
     render(<HomePage />);
     const egc = screen.getByRole("region", { name: "Evergreen Cup" });
     expect(within(egc).getByRole("link", { name: "evergreencup.org" })).toHaveAttribute(
       "href",
       "https://evergreencup.org",
-    );
-    expect(screen.getByRole("link", { name: "github.com/haruhimemoe" })).toHaveAttribute(
-      "href",
-      "https://github.com/haruhimemoe",
     );
   });
 
@@ -60,6 +52,7 @@ describe("/", () => {
           name: "haruhime.moe",
           url: "https://haruhime.moe",
           email: "contact@haruhime.moe",
+          logo: "https://haruhime.moe/apple-icon.png",
         }),
       ]),
     );

@@ -11,6 +11,11 @@ import { cn } from "@/utils/cn";
 
 type CardProps = ComponentProps<"section"> & { title?: string };
 
+/**
+ * @function Card
+ * @param props {CardProps} an optional title that labels the region, plus standard section props
+ * @returns {JSX.Element} a rounded panel, labelled by its title when one is given
+ */
 export function Card({ title, className, children, ...props }: CardProps) {
   const headingId = useId();
   return (

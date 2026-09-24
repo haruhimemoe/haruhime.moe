@@ -29,7 +29,6 @@ export const FOOTER_COLUMNS: readonly { title: string; items: readonly FooterIte
       { href: "/brand", label: "Brand" },
       { href: "/contact", label: "Contact" },
       { href: SITE.githubOrg, label: "GitHub" },
-      { href: SITE.sourceRepo, label: "Source on GitHub" },
     ],
   },
   {

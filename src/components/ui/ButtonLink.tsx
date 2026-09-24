@@ -12,6 +12,11 @@ import { type ButtonSize, type ButtonVariant, buttonClasses } from "@/components
 
 type ButtonLinkProps = ComponentProps<typeof Link> & { variant?: ButtonVariant; size?: ButtonSize };
 
+/**
+ * @function ButtonLink
+ * @param props {ButtonLinkProps} next/link props, plus an optional button variant and size
+ * @returns {JSX.Element} a next/link styled as a pill button
+ */
 export function ButtonLink({ variant, size, className, ...props }: ButtonLinkProps) {
   return <Link className={buttonClasses({ variant, size, className })} {...props} />;
 }

@@ -22,6 +22,7 @@ export const metadata: Metadata = {
   description:
     "The haruhime.moe name, logos, colors, and type, plus the packs, pools and sheets icons.",
   alternates: { canonical: "/brand" },
+  openGraph: { url: "/brand" },
 };
 
 export default function BrandPage() {
@@ -29,7 +30,7 @@ export default function BrandPage() {
     <div className="flex flex-col gap-8">
       <PageHeader
         title="Brand"
-        lead="haruhime.moe is home to packs, pools and sheets, osu! tools for tournament hosts. For anything not covered here, write to us."
+        lead="haruhime.moe is home to packs, pools and sheets, osu! tools for tournament hosts. For anything not covered here, write to me."
         meta={
           <a href={`mailto:${SITE.contactEmail}`} className={linkStyles}>
             {SITE.contactEmail}
@@ -83,6 +84,11 @@ export default function BrandPage() {
             </li>
           ))}
         </ul>
+        <p className="mt-4 text-sm">
+          <a href="/brand/haruhime-palette.json" download className={cn(linkStyles, "text-sm")}>
+            Download palette (JSON)
+          </a>
+        </p>
       </Card>
       <Card title="Product family">
         <p className="mb-4 text-sm">

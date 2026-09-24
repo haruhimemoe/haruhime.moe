@@ -6,9 +6,24 @@
  * @modified Wed Sep 23, 2026
  */
 
+import { readdirSync } from "node:fs";
+import path from "node:path";
 import { describe, expect, it } from "vitest";
 import robots from "@/app/robots";
 import sitemap from "@/app/sitemap";
+import { PAGE_PATHS } from "@/constants/site";
+
+/** Every route path under src/app that has its own page.tsx, derived straight from the filesystem. */
+const routePathsOnDisk = (): string[] => {
+  const appDir = path.join(process.cwd(), "src/app");
+  return readdirSync(appDir, { recursive: true })
+    .filter((entry) => entry.toString().endsWith("page.tsx"))
+    .map((entry) => {
+      const dir = path.posix.dirname(entry.toString().split(path.sep).join("/"));
+      return dir === "." ? "/" : `/${dir}`;
+    })
+    .sort();
+};
 
 describe("sitemap", () => {
   it("lists every page on the live domain", () => {
@@ -19,6 +34,10 @@ describe("sitemap", () => {
       "https://haruhime.moe/contact",
       "https://haruhime.moe/disclaimer",
     ]);
+  });
+
+  it("matches every page.tsx under src/app, so a new page can't miss the sitemap", () => {
+    expect([...PAGE_PATHS].sort()).toEqual(routePathsOnDisk());
   });
 });
 

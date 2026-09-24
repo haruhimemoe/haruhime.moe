@@ -40,7 +40,6 @@ describe("Footer", () => {
       ["Brand", "/brand"],
       ["Contact", "/contact"],
       ["GitHub", "https://github.com/haruhimemoe"],
-      ["Source on GitHub", "https://github.com/haruhimemoe/haruhime.moe"],
     ] as const;
     for (const [name, href] of expected) {
       expect(within(site).getByRole("link", { name })).toHaveAttribute("href", href);

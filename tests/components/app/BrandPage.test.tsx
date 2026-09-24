@@ -12,6 +12,7 @@ import BrandPage, { metadata } from "@/app/brand/page";
 import { BRAND_ASSETS, BRAND_COLORS } from "@/constants/brand";
 import { SITE } from "@/constants/site";
 import { TOOLS } from "@/constants/tools";
+import { hslToHex } from "@/utils/color";
 
 describe("/brand", () => {
   it("has its title and one h1", () => {
@@ -30,6 +31,10 @@ describe("/brand", () => {
         `/${asset.href}`,
       );
     }
+    expect(screen.getByRole("link", { name: "Download palette (JSON)" })).toHaveAttribute(
+      "href",
+      "/brand/haruhime-palette.json",
+    );
     for (const color of BRAND_COLORS) {
       expect(screen.getByText(color.hex)).toBeInTheDocument();
     }
@@ -43,7 +48,8 @@ describe("/brand", () => {
     const family = screen.getByRole("region", { name: "Product family" });
     for (const tool of TOOLS) {
       expect(within(family).getByText(tool.name)).toBeInTheDocument();
-      expect(within(family).getByText(new RegExp(`hue ${tool.hue}, #`))).toBeInTheDocument();
+      const hex = hslToHex(tool.hue, 100, 70);
+      expect(within(family).getByText(`hue ${tool.hue}, ${hex}`)).toBeInTheDocument();
       expect(
         within(family).getByRole("link", { name: `Download ${tool.name} icon` }),
       ).toHaveAttribute("href", `/${tool.icon}`);

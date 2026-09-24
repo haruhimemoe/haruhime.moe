@@ -17,6 +17,7 @@ export const metadata: Metadata = {
   title: "Contact",
   description: "How to reach haruhime.moe: email, GitHub, and security reports.",
   alternates: { canonical: "/contact" },
+  openGraph: { url: "/contact" },
 };
 
 export default function ContactPage() {

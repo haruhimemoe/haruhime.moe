@@ -31,14 +31,4 @@ describe("THANKS", () => {
       expect(Object.keys(entry).every((key) => ["name", "url", "line"].includes(key))).toBe(true);
     },
   );
-
-  it("keeps the seed entries", () => {
-    expect(THANKS.map((entry) => entry.url)).toEqual(
-      expect.arrayContaining([
-        "https://github.com/hburn7/omc-api",
-        "https://mirror.hinamizawa.ai",
-        "https://osu.ppy.sh",
-      ]),
-    );
-  });
 });

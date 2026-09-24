@@ -10,7 +10,7 @@
 /**
  * @function jsonLdString
  * @param data {Record<string, unknown>} a schema.org object without @context
- * @returns {string} JSON with @context added and every "<" written as <
+ * @returns {string} JSON with @context added and every "<" written as \u003c
  */
 export const jsonLdString = (data: Record<string, unknown>): string =>
   JSON.stringify({ "@context": "https://schema.org", ...data }).replace(/</g, "\\u003c");
