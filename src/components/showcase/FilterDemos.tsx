@@ -98,7 +98,11 @@ export function FilterDemos() {
       inRange(map.length, poolLength),
   );
   const active =
-    poolMods.length > 0 || poolStars[0] > 0 || poolStars[1] !== null || poolLength[0] > 0;
+    poolMods.length > 0 ||
+    poolStars[0] > 0 ||
+    poolStars[1] !== null ||
+    poolLength[0] > 0 ||
+    poolLength[1] !== null;
 
   return (
     <>

@@ -1,8 +1,8 @@
 /**
  * @file tests/components/app/UiPage.test.tsx
  * @desc /ui: title, one h1, the intro links, every group heading, a demo for every component
- *       @haruhimemoe/ui exports, the states each demo promises, a working filter panel, and no axe
- *       violations.
+ *       @haruhimemoe/ui exports, the states each demo promises, a working filter panel (Clear filters
+ *       shows for any filter, the length maximum included), and no axe violations.
  * @author David @dvhsh (https://dvh.sh)
  * @created Wed Sep 23, 2026
  * @modified Wed Sep 23, 2026
@@ -218,6 +218,17 @@ describe("/ui", () => {
 
     fireEvent.click(within(panel).getByRole("button", { name: "Clear filters" }));
     expect(within(panel).getByText("14 of 14 slots")).toBeInTheDocument();
+    expect(within(panel).queryByRole("button", { name: "Clear filters" })).not.toBeInTheDocument();
+
+    // The length maximum alone is a filter too: it drops TB (5:12), so Clear filters shows.
+    const maxLength = within(panel).getByRole("textbox", { name: "Maximum Length" });
+    expect(maxLength).toHaveValue("10:00+");
+    fireEvent.change(maxLength, { target: { value: "5:00" } });
+    fireEvent.blur(maxLength);
+    expect(within(panel).getByText("13 of 14 slots")).toBeInTheDocument();
+    fireEvent.click(within(panel).getByRole("button", { name: "Clear filters" }));
+    expect(within(panel).getByText("14 of 14 slots")).toBeInTheDocument();
+    expect(maxLength).toHaveValue("10:00+");
   });
 
   it("has no axe violations", async () => {
