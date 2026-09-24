@@ -1,6 +1,7 @@
 /**
  * @file tests/components/layout/Footer.test.tsx
- * @desc Footer: Tools / haruhime.moe / Legal columns, unreleased tools as plain text, trademark notice.
+ * @desc Footer: Tools / haruhime.moe / Legal columns, unreleased tools as plain text, the GitHub
+ *       icon link, trademark notice.
  * @author David @dvhsh (https://dvh.sh)
  * @created Wed Sep 23, 2026
  * @modified Wed Sep 23, 2026
@@ -32,14 +33,14 @@ describe("Footer", () => {
     }
   });
 
-  it("links the site pages and GitHub", () => {
+  it("links the site pages and the repo", () => {
     render(<Footer />);
     const site = screen.getByRole("navigation", { name: "haruhime.moe" });
     const expected = [
       ["Thanks", "/thanks"],
       ["Brand", "/brand"],
       ["Contact", "/contact"],
-      ["GitHub", "https://github.com/haruhimemoe"],
+      ["Source", "https://github.com/haruhimemoe/haruhime.moe"],
     ] as const;
     for (const [name, href] of expected) {
       expect(within(site).getByRole("link", { name })).toHaveAttribute("href", href);
@@ -49,6 +50,13 @@ describe("Footer", () => {
       "href",
       "/disclaimer",
     );
+  });
+
+  it("links a GitHub icon to the org, with an accessible name", () => {
+    render(<Footer />);
+    const link = screen.getByRole("link", { name: "haruhimemoe on GitHub" });
+    expect(link).toHaveAttribute("href", "https://github.com/haruhimemoe");
+    expect(link.querySelector("svg")).toBeInTheDocument();
   });
 
   it("keeps the trademark notice as fine print", () => {

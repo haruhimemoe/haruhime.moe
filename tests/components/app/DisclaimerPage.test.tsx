@@ -1,6 +1,6 @@
 /**
  * @file tests/components/app/DisclaimerPage.test.tsx
- * @desc /disclaimer: title, one h1, the required clauses, last-updated date.
+ * @desc /disclaimer: title, one h1, the headed sections, the required clauses, last-updated date.
  * @author David @dvhsh (https://dvh.sh)
  * @created Wed Sep 23, 2026
  * @modified Wed Sep 23, 2026
@@ -17,6 +17,18 @@ describe("/disclaimer", () => {
     render(<DisclaimerPage />);
     expect(screen.getAllByRole("heading", { level: 1 })).toHaveLength(1);
     expect(screen.getByRole("heading", { level: 1, name: "Disclaimer" })).toBeInTheDocument();
+  });
+
+  it("lays out packs-style headed sections", () => {
+    render(<DisclaimerPage />);
+    const headings = screen.getAllByRole("heading", { level: 2 }).map((h) => h.textContent);
+    expect(headings).toEqual([
+      "Not affiliated",
+      "The osu! API and the hinai mirror",
+      "Beatmaps belong to their creators",
+      "Provided as is",
+      "Made with AI help",
+    ]);
   });
 
   it("keeps every clause that protects us", () => {

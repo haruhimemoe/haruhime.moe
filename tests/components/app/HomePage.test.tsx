@@ -1,6 +1,6 @@
 /**
  * @file tests/components/app/HomePage.test.tsx
- * @desc /: title, one h1, the three tools, the Evergreen Cup card, Organization + Person data.
+ * @desc /: title, one h1, the Evergreen Cup banner first, the three tools, Organization + Person data.
  * @author David @dvhsh (https://dvh.sh)
  * @created Wed Sep 23, 2026
  * @modified Wed Sep 23, 2026
@@ -30,13 +30,14 @@ describe("/", () => {
     expect(within(tools).getAllByText("coming soon")).toHaveLength(2);
   });
 
-  it("links Evergreen Cup", () => {
-    render(<HomePage />);
+  it("puts the Evergreen Cup banner first, above the intro", () => {
+    const { container } = render(<HomePage />);
     const egc = screen.getByRole("region", { name: "Evergreen Cup" });
-    expect(within(egc).getByRole("link", { name: "evergreencup.org" })).toHaveAttribute(
+    expect(within(egc).getByRole("link", { name: "Visit evergreencup.org" })).toHaveAttribute(
       "href",
       "https://evergreencup.org",
     );
+    expect(container.firstElementChild?.firstElementChild).toBe(egc);
   });
 
   it("describes the site and its person as structured data", () => {

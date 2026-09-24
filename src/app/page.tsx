@@ -1,19 +1,19 @@
 /**
  * @file src/app/page.tsx
- * @desc Homepage: a short hello, the tools (packs live, pools and sheets coming soon), and the
- *       Evergreen Cup card. Static. Also the site's Organization and Person structured data.
+ * @desc Homepage: the Evergreen Cup banner up top, a short hello, and the tools (packs live,
+ *       pools and sheets coming soon). Static. Also the site's Organization and Person
+ *       structured data.
  * @author David @dvhsh (https://dvh.sh)
  * @created Wed Sep 23, 2026
  * @modified Wed Sep 23, 2026
  */
 
 import type { Metadata } from "next";
+import { EgcBanner } from "@/components/home/EgcBanner";
 import { ToolCard } from "@/components/home/ToolCard";
-import { Card } from "@/components/ui/Card";
 import { JsonLd } from "@/components/ui/JsonLd";
-import { linkStyles } from "@/components/ui/linkStyles";
 import { PageHeader } from "@/components/ui/PageHeader";
-import { EVERGREEN_CUP, SITE } from "@/constants/site";
+import { SITE } from "@/constants/site";
 import { TOOLS } from "@/constants/tools";
 
 export const metadata: Metadata = {
@@ -25,6 +25,7 @@ export const metadata: Metadata = {
 export default function HomePage() {
   return (
     <div className="flex flex-col gap-10">
+      <EgcBanner />
       <div className="flex flex-col gap-6">
         <PageHeader
           title="hellosu haruhime here"
@@ -41,14 +42,6 @@ export default function HomePage() {
           ))}
         </ul>
       </section>
-      <Card title={EVERGREEN_CUP.name}>
-        <p className="text-sm">
-          {EVERGREEN_CUP.line}{" "}
-          <a href={EVERGREEN_CUP.url} className={linkStyles}>
-            evergreencup.org
-          </a>
-        </p>
-      </Card>
       <JsonLd
         data={{
           "@graph": [
