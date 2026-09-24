@@ -6,7 +6,7 @@ Rules for any agent (or human) working in this repo. Authoritative; `CLAUDE.md` 
 
 haruhime.moe: a small static hub for haruhime's osu! tournament tools (packs, pools, sheets), an Evergreen Cup card, a few plain pages (thanks, brand, contact, disclaimer), and `/ui`, a showcase of every `@haruhimemoe/ui` component. It shares its look and brand kit with packs.haruhime.moe.
 
-**Hard rule: every route is static.** No database, no API routes, no auth, no per-request rendering. `bun run build` must list every route as `○ (Static)`. Keep client JavaScript to what Next needs: no `"use client"` components of our own unless a page can't work without one. (The header's nav list from `@haruhimemoe/ui` is a client component so it can mark the current page, and `/ui`'s filter demos are one client file.)
+**Hard rule: every route is static.** No database, no API routes, no auth, no per-request rendering. `bun run build` must list every route as `○ (Static)`. Keep client JavaScript to what Next needs: no `"use client"` components of our own unless a page can't work without one. `/ui`'s filter demos are our one client file. Every page also loads one client chunk we don't need (about 9 KB gzipped): `SiteHeader` from `@haruhimemoe/ui` always renders its nav list, `NavLinks`, as a client component so it can mark the current page, and it brings tailwind-merge along. On this site no header link can ever be current: the header lists only the tools, packs is an external URL, and pools and sheets aren't links until they launch. Drop the chunk once a later `@haruhimemoe/ui` renders the list on the server when no link is internal (or drops tailwind-merge from it). It is not a reason to add client code of our own.
 
 ## 2. Layout
 
