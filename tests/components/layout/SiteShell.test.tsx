@@ -52,20 +52,22 @@ describe("SiteShell header", () => {
     );
   });
 
-  it("centers the three tools, with only packs as a link", () => {
+  it("centers the three tools, with packs and pools as links", () => {
     renderShell();
     const tools = within(screen.getByRole("banner")).getByRole("navigation", { name: "Tools" });
     expect(within(tools).getByRole("link", { name: "packs" })).toHaveAttribute(
       "href",
       "https://packs.haruhime.moe",
     );
-    expect(within(tools).getAllByRole("link")).toHaveLength(1);
+    expect(within(tools).getByRole("link", { name: "pools" })).toHaveAttribute(
+      "href",
+      "https://pools.haruhime.moe",
+    );
+    expect(within(tools).getAllByRole("link")).toHaveLength(2);
     expect(within(tools).getAllByRole("listitem")).toHaveLength(3);
-    for (const name of ["pools", "sheets"]) {
-      const item = within(tools).getByText(name).closest('[aria-disabled="true"]');
-      expect(item).not.toBeNull();
-      expect(item).toHaveTextContent(`${name} soon`);
-    }
+    const item = within(tools).getByText("sheets").closest('[aria-disabled="true"]');
+    expect(item).not.toBeNull();
+    expect(item).toHaveTextContent("sheets soon");
   });
 });
 
@@ -78,7 +80,7 @@ describe("SiteShell footer", () => {
     }
   });
 
-  it("links packs and shows pools and sheets as plain text marked soon", () => {
+  it("links packs and pools and shows sheets as plain text marked soon", () => {
     renderShell();
     const tools = within(screen.getByRole("contentinfo")).getByRole("navigation", {
       name: "Tools",
@@ -87,10 +89,12 @@ describe("SiteShell footer", () => {
       "href",
       "https://packs.haruhime.moe",
     );
-    expect(within(tools).getAllByRole("link")).toHaveLength(1);
-    for (const name of ["pools", "sheets"]) {
-      expect(within(tools).getByText(name).closest("li")).toHaveTextContent(`${name} soon`);
-    }
+    expect(within(tools).getByRole("link", { name: "pools" })).toHaveAttribute(
+      "href",
+      "https://pools.haruhime.moe",
+    );
+    expect(within(tools).getAllByRole("link")).toHaveLength(2);
+    expect(within(tools).getByText("sheets").closest("li")).toHaveTextContent("sheets soon");
   });
 
   it("links the site pages", () => {

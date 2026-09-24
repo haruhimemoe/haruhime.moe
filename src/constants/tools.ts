@@ -5,7 +5,7 @@
  *       launched: it shows as "coming soon" and never links anywhere.
  * @author David @dvhsh (https://dvh.sh)
  * @created Wed Sep 23, 2026
- * @modified Wed Sep 23, 2026
+ * @modified Thu Sep 24, 2026
  */
 
 /** One tool. `url` is set only once the tool is live. */
@@ -31,6 +31,7 @@ export const TOOLS: readonly Tool[] = [
     hue: 200,
     tagline: "osu! mappools for tournament hosts",
     icon: "brand/pools-icon.svg",
+    url: "https://pools.haruhime.moe",
   },
   {
     name: "sheets",

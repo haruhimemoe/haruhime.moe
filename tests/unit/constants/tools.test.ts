@@ -1,9 +1,9 @@
 /**
  * @file tests/unit/constants/tools.test.ts
- * @desc Tools: packs live, pools and sheets not yet; icons exist; hues match the brand kit.
+ * @desc Tools: packs and pools live, sheets not yet; icons exist; hues match the brand kit.
  * @author David @dvhsh (https://dvh.sh)
  * @created Wed Sep 23, 2026
- * @modified Wed Sep 23, 2026
+ * @modified Thu Sep 24, 2026
  */
 
 import { existsSync, readFileSync } from "node:fs";
@@ -17,9 +17,10 @@ describe("TOOLS", () => {
     expect(TOOLS.map((tool) => tool.name)).toEqual(["packs", "pools", "sheets"]);
   });
 
-  it("links only packs until the others launch", () => {
-    expect(TOOLS.filter((tool) => tool.url).map((tool) => tool.name)).toEqual(["packs"]);
+  it("links packs and pools; sheets waits for its launch", () => {
+    expect(TOOLS.filter((tool) => tool.url).map((tool) => tool.name)).toEqual(["packs", "pools"]);
     expect(TOOLS[0]?.url).toBe("https://packs.haruhime.moe");
+    expect(TOOLS[1]?.url).toBe("https://pools.haruhime.moe");
   });
 
   it.each(TOOLS.map((tool) => [tool.name, tool] as const))(

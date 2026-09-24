@@ -19,7 +19,7 @@ describe("/", () => {
     expect(screen.getByRole("heading", { level: 1 })).toBeVisible();
   });
 
-  it("shows packs live and pools and sheets coming soon", () => {
+  it("shows packs and pools live and sheets coming soon", () => {
     render(<HomePage />);
     const tools = screen.getByRole("region", { name: "Tools" });
     expect(within(tools).getAllByRole("listitem")).toHaveLength(3);
@@ -27,8 +27,12 @@ describe("/", () => {
       "href",
       "https://packs.haruhime.moe",
     );
-    expect(within(tools).getAllByRole("link")).toHaveLength(1);
-    expect(within(tools).getAllByText("coming soon")).toHaveLength(2);
+    expect(within(tools).getByRole("link", { name: "pools" })).toHaveAttribute(
+      "href",
+      "https://pools.haruhime.moe",
+    );
+    expect(within(tools).getAllByRole("link")).toHaveLength(2);
+    expect(within(tools).getAllByText("coming soon")).toHaveLength(1);
   });
 
   it("puts the Evergreen Cup banner first, above the intro", () => {

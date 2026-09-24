@@ -8,6 +8,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ### Changed
 
+- pools is listed as live: the homepage card, the header and the footer link to https://pools.haruhime.moe.
 - `/ui` says packs is built from `@haruhimemoe/ui` too, now that it has moved over.
 
 ### Fixed

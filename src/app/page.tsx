@@ -1,11 +1,11 @@
 /**
  * @file src/app/page.tsx
- * @desc Homepage: the Evergreen Cup banner up top, a short hello, and the tools (packs live,
- *       pools and sheets coming soon). Static. Also the site's Organization and Person
+ * @desc Homepage: the Evergreen Cup banner up top, a short hello, and the tools (packs and pools live,
+ *       sheets coming soon). Static. Also the site's Organization and Person
  *       structured data.
  * @author David @dvhsh (https://dvh.sh)
  * @created Wed Sep 23, 2026
- * @modified Wed Sep 23, 2026
+ * @modified Thu Sep 24, 2026
  */
 
 import { JsonLd, PageHeader } from "@haruhimemoe/ui";
