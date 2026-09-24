@@ -30,6 +30,11 @@ export const THANKS: readonly ThanksEntry[] = [
     line: "omc-api, the mappool rules my compliance checks are ported from.",
   },
   {
+    name: "Sheppsu",
+    url: "https://otdb.sheppsu.me",
+    line: "otdb, and the okay to build the packs pool archive from its mappool export.",
+  },
+  {
     name: "the hinai beatmap mirror",
     url: "https://mirror.hinamizawa.ai",
     line: "serves the beatmap downloads, so I never host a file.",
