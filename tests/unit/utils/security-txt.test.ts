@@ -20,7 +20,7 @@ describe("buildSecurityTxt", () => {
       "Contact: mailto:contact@haruhime.moe",
       "Expires: 2027-09-23T00:00:00.000Z",
       "Preferred-Languages: en",
-      "Canonical: https://haruhime.moe/.well-known/security.txt",
+      "Canonical: https://www.haruhime.moe/.well-known/security.txt",
       "Policy: https://github.com/haruhimemoe/haruhime.moe/blob/main/SECURITY.md",
       "",
     ]);
@@ -34,7 +34,7 @@ describe("buildSecurityTxt", () => {
 
   it("only uses absolute links", () => {
     expect(text).toContain("mailto:contact@haruhime.moe");
-    expect(text).toContain("https://haruhime.moe/.well-known/security.txt");
+    expect(text).toContain("https://www.haruhime.moe/.well-known/security.txt");
     expect(text).toContain("https://github.com/haruhimemoe/haruhime.moe/blob/main/SECURITY.md");
   });
 

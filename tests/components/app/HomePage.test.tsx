@@ -51,9 +51,9 @@ describe("/", () => {
         expect.objectContaining({
           "@type": "Organization",
           name: "haruhime.moe",
-          url: "https://haruhime.moe",
+          url: "https://www.haruhime.moe",
           email: "contact@haruhime.moe",
-          logo: "https://haruhime.moe/apple-icon.png",
+          logo: "https://www.haruhime.moe/apple-icon.png",
         }),
       ]),
     );
