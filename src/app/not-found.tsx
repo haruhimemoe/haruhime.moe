@@ -6,9 +6,8 @@
  * @modified Wed Sep 23, 2026
  */
 
+import { ButtonLink, PageHeader } from "@haruhimemoe/ui";
 import type { Metadata } from "next";
-import { ButtonLink } from "@/components/ui/ButtonLink";
-import { PageHeader } from "@/components/ui/PageHeader";
 
 export const metadata: Metadata = {
   title: "Page not found",

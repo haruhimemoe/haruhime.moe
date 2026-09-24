@@ -1,6 +1,6 @@
 /**
  * @file src/app/layout.tsx
- * @desc Root layout: Nunito font variable, site metadata, dark body, PageShell frame.
+ * @desc Root layout: Nunito font variable, site metadata, dark body, the SiteShell frame.
  * @author David @dvhsh (https://dvh.sh)
  * @created Wed Sep 23, 2026
  * @modified Wed Sep 23, 2026
@@ -9,7 +9,7 @@
 import type { Metadata } from "next";
 import { Nunito } from "next/font/google";
 import type { ReactNode } from "react";
-import { PageShell } from "@/components/layout/PageShell";
+import { SiteShell } from "@/components/layout/SiteShell";
 import { SITE } from "@/constants/site";
 import "./globals.css";
 
@@ -33,7 +33,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en" className={nunito.variable}>
       <body className="bg-b5 font-sans text-c2 antialiased">
-        <PageShell>{children}</PageShell>
+        <SiteShell>{children}</SiteShell>
       </body>
     </html>
   );

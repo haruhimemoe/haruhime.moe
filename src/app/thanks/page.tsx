@@ -6,9 +6,9 @@
  * @modified Wed Sep 23, 2026
  */
 
+import { PageHeader } from "@haruhimemoe/ui";
 import type { Metadata } from "next";
 import { linkStyles } from "@/components/ui/linkStyles";
-import { PageHeader } from "@/components/ui/PageHeader";
 import { THANKS } from "@/content/thanks";
 
 export const metadata: Metadata = {

@@ -8,11 +8,10 @@
  * @modified Wed Sep 23, 2026
  */
 
+import { JsonLd, PageHeader } from "@haruhimemoe/ui";
 import type { Metadata } from "next";
 import { EgcBanner } from "@/components/home/EgcBanner";
 import { ToolCard } from "@/components/home/ToolCard";
-import { JsonLd } from "@/components/ui/JsonLd";
-import { PageHeader } from "@/components/ui/PageHeader";
 import { SITE } from "@/constants/site";
 import { TOOLS } from "@/constants/tools";
 

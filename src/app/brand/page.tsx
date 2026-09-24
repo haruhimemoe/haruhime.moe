@@ -7,10 +7,9 @@
  * @modified Wed Sep 23, 2026
  */
 
+import { Card, PageHeader } from "@haruhimemoe/ui";
 import type { Metadata } from "next";
-import { Card } from "@/components/ui/Card";
 import { linkStyles } from "@/components/ui/linkStyles";
-import { PageHeader } from "@/components/ui/PageHeader";
 import { BANNER_SIZE, BRAND_ASSETS, BRAND_BANNERS, BRAND_COLORS } from "@/constants/brand";
 import { SITE } from "@/constants/site";
 import { TOOLS } from "@/constants/tools";

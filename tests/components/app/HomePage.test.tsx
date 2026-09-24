@@ -1,6 +1,7 @@
 /**
  * @file tests/components/app/HomePage.test.tsx
- * @desc /: title, one h1, the Evergreen Cup banner first, the three tools, Organization + Person data.
+ * @desc /: title, one h1, the Evergreen Cup banner first, the three tools, Organization + Person
+ *       data under the schema.org context.
  * @author David @dvhsh (https://dvh.sh)
  * @created Wed Sep 23, 2026
  * @modified Wed Sep 23, 2026
@@ -45,6 +46,7 @@ describe("/", () => {
     const ld = JSON.parse(
       container.querySelector('script[type="application/ld+json"]')?.textContent ?? "{}",
     );
+    expect(ld["@context"]).toBe("https://schema.org");
     expect(ld["@graph"]).toEqual(
       expect.arrayContaining([
         expect.objectContaining({ "@type": "Person", name: "haruhime" }),

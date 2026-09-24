@@ -7,10 +7,9 @@
  * @modified Wed Sep 23, 2026
  */
 
+import { Card, PageHeader } from "@haruhimemoe/ui";
 import type { Metadata } from "next";
-import { Card } from "@/components/ui/Card";
 import { linkStyles } from "@/components/ui/linkStyles";
-import { PageHeader } from "@/components/ui/PageHeader";
 import { SITE } from "@/constants/site";
 
 export const metadata: Metadata = {
