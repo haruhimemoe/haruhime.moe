@@ -17,8 +17,8 @@ export type ThanksEntry = {
 /** Shown on /thanks in this order. */
 export const THANKS: readonly ThanksEntry[] = [
   {
-    name: "-Tynamo, Varler, RMarc, and the EvergreenCup Staff!",
-    line: "Thanks for giving me a shot and the oppertunity to work with all of you!",
+    name: "-Tynamo, Varler, RMarc, and the Evergreen Cup Staff!",
+    line: "Thanks for giving me a shot and the opportunity to work with all of you!",
   },
   {
     name: "Enslow, Sohlayce, Zyoulou, Drou, Tienei, Wyrd, Rikki",
