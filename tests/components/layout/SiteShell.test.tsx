@@ -100,6 +100,7 @@ describe("SiteShell footer", () => {
     const expected = [
       ["Thanks", "/thanks"],
       ["Brand", "/brand"],
+      ["UI", "/ui"],
       ["Contact", "/contact"],
     ] as const;
     for (const [name, href] of expected) {

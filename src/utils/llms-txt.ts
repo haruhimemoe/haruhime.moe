@@ -22,6 +22,10 @@ const PAGES: Record<(typeof PAGE_PATHS)[number], { title: string; description: s
     title: "Brand",
     description: "The haruhime.moe name, logos, colors, and the packs/pools/sheets icons.",
   },
+  "/ui": {
+    title: "UI",
+    description: "Every @haruhimemoe/ui component (the shared React kit), in its states.",
+  },
   "/contact": {
     title: "Contact",
     description: "How to reach haruhime: email, GitHub, and security reports.",

@@ -4,15 +4,16 @@ Rules for any agent (or human) working in this repo. Authoritative; `CLAUDE.md` 
 
 ## 1. What this is
 
-haruhime.moe: a small static hub for haruhime's osu! tournament tools (packs, pools, sheets), an Evergreen Cup card, and a few plain pages (thanks, brand, contact, disclaimer). It shares its look and brand kit with packs.haruhime.moe.
+haruhime.moe: a small static hub for haruhime's osu! tournament tools (packs, pools, sheets), an Evergreen Cup card, a few plain pages (thanks, brand, contact, disclaimer), and `/ui`, a showcase of every `@haruhimemoe/ui` component. It shares its look and brand kit with packs.haruhime.moe.
 
-**Hard rule: every route is static.** No database, no API routes, no auth, no per-request rendering. `bun run build` must list every route as `○ (Static)`. Keep client JavaScript to what Next needs: no `"use client"` components of our own unless a page can't work without one. (The header's nav list from `@haruhimemoe/ui` is a client component so it can mark the current page.)
+**Hard rule: every route is static.** No database, no API routes, no auth, no per-request rendering. `bun run build` must list every route as `○ (Static)`. Keep client JavaScript to what Next needs: no `"use client"` components of our own unless a page can't work without one. (The header's nav list from `@haruhimemoe/ui` is a client component so it can mark the current page, and `/ui`'s filter demos are one client file.)
 
 ## 2. Layout
 
 ```
 src/app/          routes only (thin; compose components), plus the generated icon/preview files
-src/components/   layout/ (SiteShell: the @haruhimemoe/ui frame), ui/ (linkStyles), home/ (homepage pieces)
+src/components/   layout/ (SiteShell: the @haruhimemoe/ui frame), ui/ (linkStyles), home/ (homepage
+                  pieces), showcase/ (the /ui demos)
 src/constants/    static data (site identity, tools, header and footer links, brand kit, legal dates)
 src/content/      editable copy as data (thanks.ts)
 src/utils/        pure, stateless helpers

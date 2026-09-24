@@ -1,6 +1,6 @@
 # haruhime.moe
 
-The home page for haruhime's osu! tournament tools: [packs](https://packs.haruhime.moe), with pools and sheets on the way. It also has a thanks list, the brand kit, contact details and a disclaimer.
+The home page for haruhime's osu! tournament tools: [packs](https://packs.haruhime.moe), with pools and sheets on the way. It also has a thanks list, the brand kit, a showcase of the shared [UI components](https://www.haruhime.moe/ui), contact details and a disclaimer.
 
 Live at https://haruhime.moe.
 

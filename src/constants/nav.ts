@@ -29,6 +29,7 @@ export const FOOTER_COLUMNS: readonly SiteFooterColumn[] = [
     items: [
       { href: "/thanks", label: "Thanks" },
       { href: "/brand", label: "Brand" },
+      { href: "/ui", label: "UI" },
       { href: "/contact", label: "Contact" },
     ],
   },

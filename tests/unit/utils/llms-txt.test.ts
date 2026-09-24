@@ -39,9 +39,10 @@ describe("buildLlmsTxt", () => {
 
   it("lists every PAGE_PATHS entry as a titled, absolute link", () => {
     for (const path of PAGE_PATHS) {
-      expect(text).toMatch(new RegExp(`^- \\[[A-Z][a-z]+\\]\\(${SITE.url}${path}\\): `, "m"));
+      expect(text).toMatch(new RegExp(`^- \\[[A-Z][A-Za-z]*\\]\\(${SITE.url}${path}\\): `, "m"));
     }
     expect(text).toContain(`- [Thanks](${SITE.url}/thanks): `);
+    expect(text).toContain(`- [UI](${SITE.url}/ui): `);
     expect(text).not.toContain(`[${SITE.url}`);
   });
 

@@ -27,4 +27,4 @@ export const EVERGREEN_CUP = {
 } as const;
 
 /** Every page, for the sitemap. Add a path here when you add a page. */
-export const PAGE_PATHS = ["/", "/thanks", "/brand", "/contact", "/disclaimer"] as const;
+export const PAGE_PATHS = ["/", "/thanks", "/brand", "/ui", "/contact", "/disclaimer"] as const;
