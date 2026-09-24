@@ -5,6 +5,7 @@
     "": {
       "name": "haruhime.moe",
       "dependencies": {
+        "@haruhimemoe/ui": "0.1.0",
         "clsx": "2.1.1",
         "next": "16.3.6",
         "react": "19.3.0",
@@ -91,6 +92,8 @@
     "@exodus/bytes": ["@exodus/bytes@1.16.0", "", { "peerDependencies": { "@noble/hashes": "^1.8.0 || ^2.0.0" }, "optionalPeers": ["@noble/hashes"] }, "sha512-IcpW84uEn3N7ETtNZMlxKhfl6Pec8rUNGOTBtWbK1FKhJxIFAptZyVrvVRVBimAJxJCgc3PxepxkdWWG4DVzfA=="],
 
     "@haruhimemoe/brand": ["@haruhimemoe/brand@0.3.0", "", { "dependencies": { "@resvg/resvg-js": "2.6.2", "opentype.js": "2.0.0" }, "bin": { "haruhime-brand": "dist/cli.js" } }, "sha512-zJiduBLsEnHrjx18z/+dqLZBBAqzlzQyeBC1JkNt7OzVRQX92kwws3ttu+qvFcjfJjROlVCaxUvX9iQxDMyOWg=="],
+
+    "@haruhimemoe/ui": ["@haruhimemoe/ui@0.1.0", "", { "dependencies": { "tailwind-merge": "3.7.0" }, "peerDependencies": { "next": ">=16.0.0 <17", "react": ">=19.0.0", "react-dom": ">=19.0.0", "tailwindcss": ">=4.1.0 <5" } }, "sha512-dC+0TAtjnmGJVvxi8NAyASSiBwSB59MczhXVfAMPpDWWJoYHjOOEvcXIiBFkW2eVk9WECtyzeRFjXbX3+Pid1w=="],
 
     "@img/colour": ["@img/colour@1.1.0", "", {}, "sha512-Td76q7j57o/tLVdgS746cYARfSyxk8iEfRxewL9h4OMzYhbW4TAcppl0mT4eyqXddh6L/jwoM75mo7ixa/pCeQ=="],
 

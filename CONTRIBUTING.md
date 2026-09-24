@@ -46,4 +46,4 @@ for (const key of ["packs", "pools", "sheets"]) {
 }'
 ```
 
-The first command writes `public/brand/haruhime-*` and `src/app/icon.svg`, `apple-icon.png`, `opengraph-image.png` and its alt text. The second writes the tool icons the homepage and `/brand` use. Run `bun run test` afterwards: it checks the palette still matches `src/app/globals.css`. Commit the changes.
+The first command writes `public/brand/haruhime-*` and `src/app/icon.svg`, `apple-icon.png`, `opengraph-image.png` and its alt text. The second writes the tool icons the homepage and `/brand` use. Run `bun run test` afterwards: it checks the palette still matches the [@haruhimemoe/ui](https://github.com/haruhimemoe/ui) theme at the hue `src/app/globals.css` sets. Commit the changes.

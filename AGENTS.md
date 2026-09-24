@@ -54,7 +54,7 @@ Dates match `date "+%a %b %-d, %Y"`. Update `@modified` on edits, never `@create
 
 ## 6. Visual system
 
-The packs look, from tokens in `src/app/globals.css`: `b1`–`b6` backgrounds, `c1`–`c4` text, `h1`/`h2` accent, all from `--hue: 333`. Dark only. Font: Nunito via `--font-sans`.
+The packs look, from the [@haruhimemoe/ui](https://github.com/haruhimemoe/ui) theme that `src/app/globals.css` imports: `b1`–`b6` backgrounds, `c1`–`c4` text, `h1`/`h2` accent, all from `--hue: 333` (set in `globals.css`). Dark only. Font: Nunito via `--font-nunito`. Add only site-specific rules to `globals.css`; tokens and the focus ring belong to the theme.
 
 - Page titles go through `PageHeader`; one h1 per page. Structured data goes through `JsonLd`.
 - Text links use `linkStyles` (`src/components/ui/linkStyles.ts`). Every focusable element keeps the global focus ring.

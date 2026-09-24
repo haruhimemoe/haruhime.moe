@@ -1,30 +1,51 @@
 /**
  * @file tests/unit/constants/brand.test.ts
- * @desc Brand swatches match the tokens in globals.css; brand files and README banners exist,
- *       draw no text, and the banners are the size /brand says.
+ * @desc Brand swatches match the @haruhimemoe/ui theme at the hue globals.css sets; brand files
+ *       and README banners exist, draw no text, and the banners are the size /brand says.
  * @author David @dvhsh (https://dvh.sh)
  * @created Wed Sep 23, 2026
  * @modified Wed Sep 23, 2026
  */
 
 import { existsSync, readFileSync } from "node:fs";
+import { createRequire } from "node:module";
 import path from "node:path";
 import { describe, expect, it } from "vitest";
 import { BANNER_SIZE, BRAND_ASSETS, BRAND_BANNERS, BRAND_COLORS } from "@/constants/brand";
 import { hslToHex } from "@/utils/color";
 
 const css = readFileSync(path.join(process.cwd(), "src/app/globals.css"), "utf8");
+const theme = readFileSync(
+  createRequire(import.meta.url).resolve("@haruhimemoe/ui/theme.css"),
+  "utf8",
+);
 const hue = Number(/--hue:\s*(\d+)/.exec(css)?.[1]);
+
+describe("globals.css", () => {
+  it("loads the @haruhimemoe/ui theme after Tailwind", () => {
+    expect(css.indexOf('@import "tailwindcss";')).toBeGreaterThanOrEqual(0);
+    expect(css.indexOf('@import "@haruhimemoe/ui/theme.css";')).toBeGreaterThan(
+      css.indexOf('@import "tailwindcss";'),
+    );
+  });
+
+  it("keeps the pink hue and the theme's default h1 and h2 lightness", () => {
+    expect(hue).toBe(333);
+    expect(css).not.toMatch(/--h[12]-l/);
+  });
+});
 
 describe("BRAND_COLORS", () => {
   it.each(BRAND_COLORS.map((c) => [c.token, c] as const))(
-    "%s matches globals.css",
+    "%s matches the theme",
     (token, color) => {
-      const match = new RegExp(`--color-${token}: hsl\\(var\\(--hue\\) (\\d+)% (\\d+)%\\)`).exec(
-        css,
-      );
+      // h1 and h2 take their lightness from an override variable with a default:
+      // hsl(var(--hue) 100% var(--h1-l, 70%)).
+      const match = new RegExp(
+        `--color-${token}: hsl\\(var\\(--hue\\) (\\d+)% (?:var\\(--${token}-l, (\\d+)%\\)|(\\d+)%)\\)`,
+      ).exec(theme);
       expect(match).not.toBeNull();
-      const [s, l] = [Number(match?.[1]), Number(match?.[2])];
+      const [s, l] = [Number(match?.[1]), Number(match?.[2] ?? match?.[3])];
       expect(color.hsl).toEqual([hue, s, l]);
       expect(color.hex).toBe(hslToHex(hue, s, l));
     },
