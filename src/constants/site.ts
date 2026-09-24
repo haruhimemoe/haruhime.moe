@@ -15,7 +15,6 @@ export const SITE = {
   description: "haruhime's osu! tournament tools: packs, pools and sheets, built for hosts.",
   contactEmail: "contact@haruhime.moe",
   githubOrg: "https://github.com/haruhimemoe",
-  sourceRepo: "https://github.com/haruhimemoe/haruhime.moe",
   trademarkNotice:
     "Not affiliated with or endorsed by ppy Pty Ltd. osu! is a trademark of ppy Pty Ltd.",
 } as const;

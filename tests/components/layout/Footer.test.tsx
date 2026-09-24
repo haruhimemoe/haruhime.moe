@@ -33,14 +33,13 @@ describe("Footer", () => {
     }
   });
 
-  it("links the site pages and the repo", () => {
+  it("links the site pages", () => {
     render(<Footer />);
     const site = screen.getByRole("navigation", { name: "haruhime.moe" });
     const expected = [
       ["Thanks", "/thanks"],
       ["Brand", "/brand"],
       ["Contact", "/contact"],
-      ["Source", "https://github.com/haruhimemoe/haruhime.moe"],
     ] as const;
     for (const [name, href] of expected) {
       expect(within(site).getByRole("link", { name })).toHaveAttribute("href", href);

@@ -1,6 +1,17 @@
 {
   "name": "haruhime.moe",
   "version": "0.1.0",
+  "description": "haruhime's home page: osu! tournament tools, thanks, brand and contact.",
+  "license": "MIT",
+  "author": "David (https://dvh.sh)",
+  "homepage": "https://haruhime.moe",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/haruhimemoe/haruhime.moe.git"
+  },
+  "bugs": {
+    "url": "https://github.com/haruhimemoe/haruhime.moe/issues"
+  },
   "private": true,
   "type": "module",
   "packageManager": "bun@1.4.2",

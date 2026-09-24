@@ -29,7 +29,6 @@ export const FOOTER_COLUMNS: readonly { title: string; items: readonly FooterIte
       { href: "/thanks", label: "Thanks" },
       { href: "/brand", label: "Brand" },
       { href: "/contact", label: "Contact" },
-      { href: SITE.sourceRepo, label: "Source" },
     ],
   },
   {
