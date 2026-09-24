@@ -4,7 +4,7 @@
  *       notice.
  * @author David @dvhsh (https://dvh.sh)
  * @created Wed Sep 23, 2026
- * @modified Wed Sep 23, 2026
+ * @modified Thu Sep 24, 2026
  */
 
 /** Who and where the site is. Shared by metadata, JSON-LD, the footer and the contact page. */
@@ -19,7 +19,7 @@ export const SITE = {
     "Not affiliated with or endorsed by ppy Pty Ltd. osu! is a trademark of ppy Pty Ltd.",
 } as const;
 
-/** The Evergreen Cup card on the homepage. */
+/** Name, link and line for the Evergreen Cup banner (EgcBanner) on the homepage. */
 export const EVERGREEN_CUP = {
   name: "Evergreen Cup",
   url: "https://evergreencup.org",

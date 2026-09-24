@@ -11,13 +11,17 @@ haruhime.moe: a small static hub for haruhime's osu! tournament tools (packs, po
 ## 2. Layout
 
 ```
-src/app/          routes only (thin; compose components): the pages, llms.txt/ and
-                  .well-known/security.txt/ route handlers, sitemap.ts, robots.ts, plus the
-                  generated icon/preview files
-src/components/   layout/ (SiteShell: the @haruhimemoe/ui frame), ui/ (linkStyles), home/ (homepage
-                  pieces), showcase/ (the /ui demos)
-src/constants/    static data (site.ts: identity and PAGE_PATHS; tools.ts; nav.ts: header and footer
-                  links; brand.ts: brand kit; legal.ts: the disclaimer date)
+src/app/          routes: layout.tsx (font, metadata, SiteShell), globals.css, not-found.tsx, one
+                  page.tsx per page (/, thanks, brand, ui, contact, disclaimer) with its copy and
+                  markup inline, the llms.txt/ and .well-known/security.txt/ route handlers,
+                  sitemap.ts, robots.ts, and the generated icon.svg, apple-icon.png,
+                  opengraph-image.png and opengraph-image.alt.txt
+src/components/   layout/ (SiteShell: the @haruhimemoe/ui frame), ui/ (linkStyles), home/ (ToolCard,
+                  EgcBanner), showcase/ (Demo and DemoGroup frame each /ui demo; FilterDemos holds
+                  the client filter demos; the other demos are inline in ui/page.tsx)
+src/constants/    static data (site.ts: identity, EVERGREEN_CUP and PAGE_PATHS; tools.ts; nav.ts:
+                  header and footer links; brand.ts: which swatches, logos and banners /brand
+                  shows; legal.ts: the disclaimer date)
 src/content/      editable copy as data (thanks.ts)
 src/utils/        pure, stateless helpers (cn, color, date, length, and the llms.txt and
                   security.txt builders)
@@ -32,12 +36,13 @@ llms.txt          repo guide for LLMs (points at the live /llms.txt); not served
 - Biome is the only linter/formatter (`bun run check`, `bun run check:fix`). No ESLint or Prettier.
 - No barrel files of our own. Import exact paths (`@/components/home/ToolCard`).
 - Shared components (buttons, cards, `PageHeader`, `Prose`, `JsonLd`, the header, footer and page frame) come from [@haruhimemoe/ui](https://github.com/haruhimemoe/ui), imported from `"@haruhimemoe/ui"`. Don't copy one into `src/components/`; only site-specific pieces live there.
-- One component per file, PascalCase filename, Tailwind only, no CSS modules.
+- One exported component per file, PascalCase filename. A small private helper can sit beside it (`EvergreenMark` in `EgcBanner.tsx`).
+- Style with Tailwind classes, no CSS modules. Inline `style` is only for values that come from data, like the `/brand` swatch colors.
 - `utils/` is pure.
 
 ## 4. File headers
 
-Every `.ts`, `.tsx`, `.mjs`, and `.css` source file starts with:
+Every `.ts`, `.tsx`, `.mjs`, and `.css` source file starts with this block (`.css` files open it with `/*` instead of `/**`):
 
 ```ts
 /**
@@ -49,11 +54,14 @@ Every `.ts`, `.tsx`, `.mjs`, and `.css` source file starts with:
  */
 ```
 
-Dates match `date "+%a %b %-d, %Y"`. Update `@modified` on edits, never `@created`. Exported functions get a JSDoc block with `@function`, `@param`, `@returns` (and `@throws` when they throw).
+Dates match `date "+%a %b %-d, %Y"`. Update `@modified` on edits, never `@created`. Exported functions outside `src/app/` get a JSDoc block with `@function`, `@param`, `@returns` (and `@throws` when they throw). The Next exports in `src/app/` (page and layout components, the route handlers' `GET`, `sitemap()`, `robots()`) skip it; the file header says what they do.
 
 ## 5. Tests
 
-- Everything under `tests/`, mirroring `src/` paths. Never co-locate tests in `src/`.
+- Everything under `tests/`. Never co-locate tests in `src/`.
+- `tests/unit/` (node) mirrors `src/` paths: `src/utils/color.ts` is tested by `tests/unit/utils/color.test.ts`, `src/app/sitemap.ts` by `tests/unit/app/sitemap.test.ts`.
+- `tests/components/` (jsdom) mirrors `src/components/` without the `components/` segment: `src/components/home/ToolCard.tsx` is tested by `tests/components/home/ToolCard.test.tsx`.
+- Page tests are flat, named after the page's default export: `tests/components/app/<Name>.test.tsx`. `src/app/ui/page.tsx` (`UiPage`) is tested by `tests/components/app/UiPage.test.tsx`, `src/app/page.tsx` by `HomePage.test.tsx`, `src/app/not-found.tsx` by `NotFound.test.tsx`.
 - `bun run test` runs both Vitest projects; `test:unit` and `test:components` run one.
 - The unit project runs with `TZ=America/Los_Angeles` on purpose. Don't remove it.
 - Every page gets a render test (its metadata title and its one h1). Tests never hit the network.

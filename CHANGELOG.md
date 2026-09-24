@@ -6,13 +6,17 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+### Fixed
+
+- `/llms.txt` calls the home page's Evergreen Cup section a banner, as the page does, instead of a card.
+
 ## [0.1.0] - 2026-09-24
 
 ### Added
 
 - The home page: packs, pools and sheets as tool cards (pools and sheets marked "coming soon"), an Evergreen Cup banner at the top, and the site's Organization and Person structured data.
 - `/thanks`: the people and projects the tools lean on.
-- `/brand`: how to write the name, the logos and README banners to download (SVG, and the dark banner as PNG), the color tokens and palette JSON, each tool's icon and hue, and the type.
+- `/brand`: how to write the name, the logos and README banners to download (SVG, and the dark banner as PNG), the color swatches with their hex values, the palette JSON, each tool's icon and hue, and the type.
 - `/ui`: every `@haruhimemoe/ui` component rendered in its states, with working filter demos over a sample mappool.
 - `/contact` and `/disclaimer` (no ppy affiliation, the osu! API and hinai mirror terms, beatmap ownership, the as-is notice, and a note that AI coding tools helped build the site).
 - A header with the tools, and a footer with Tools, haruhime.moe and Legal columns, the trademark line and a GitHub link, all from `@haruhimemoe/ui`.

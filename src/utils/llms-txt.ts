@@ -5,7 +5,7 @@
  *       so the route handler and its tests share one source.
  * @author David @dvhsh (https://dvh.sh)
  * @created Wed Sep 23, 2026
- * @modified Wed Sep 23, 2026
+ * @modified Thu Sep 24, 2026
  */
 
 import { PAGE_PATHS, SITE } from "@/constants/site";
@@ -13,7 +13,7 @@ import { TOOLS, type Tool } from "@/constants/tools";
 
 /** Link title and short description for each page in PAGE_PATHS, for the Pages section. */
 const PAGES: Record<(typeof PAGE_PATHS)[number], { title: string; description: string }> = {
-  "/": { title: "Home", description: "The tools, the Evergreen Cup card, and a short hello." },
+  "/": { title: "Home", description: "The tools, the Evergreen Cup banner, and a short hello." },
   "/thanks": {
     title: "Thanks",
     description: "The people and projects the haruhime.moe tools are built on.",
