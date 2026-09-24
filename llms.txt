@@ -1,0 +1,36 @@
+# haruhime.moe
+
+> Source for https://www.haruhime.moe, the home page for haruhime's osu! tournament tools (packs is live; pools and sheets are coming soon). The site also has a thanks list, the brand kit, a showcase of every @haruhimemoe/ui component, contact details and a disclaimer. It is a static Next.js 16 site built from @haruhimemoe/ui, run with Bun. MIT license. The live site serves its own llms.txt at https://www.haruhime.moe/llms.txt; that one is the canonical guide to the pages and tools. This file covers the repository.
+
+## Site
+
+- [llms.txt on the live site](https://www.haruhime.moe/llms.txt): the canonical guide to the site's pages and tools, built from the same data as the pages
+- [haruhime.moe](https://www.haruhime.moe/): the live site
+- [UI showcase](https://www.haruhime.moe/ui): every @haruhimemoe/ui component rendered in its states
+
+## Docs
+
+- [Pages](https://github.com/haruhimemoe/haruhime.moe#pages): every route and what it shows
+- [Run it locally](https://github.com/haruhimemoe/haruhime.moe#run-it-locally): requirements, install, dev server and production build
+- [Where the content lives](https://github.com/haruhimemoe/haruhime.moe#where-the-content-lives): which file holds the thanks list, the tools, the links and each page's copy
+- [AGENTS.md](https://github.com/haruhimemoe/haruhime.moe/blob/main/AGENTS.md): conventions, invariants (every route static) and file layout for AI coding agents
+
+## Source
+
+- [src/constants/tools.ts](https://github.com/haruhimemoe/haruhime.moe/blob/main/src/constants/tools.ts): the tools, their taglines, hues and links
+- [src/content/thanks.ts](https://github.com/haruhimemoe/haruhime.moe/blob/main/src/content/thanks.ts): the thanks list
+- [src/constants/site.ts](https://github.com/haruhimemoe/haruhime.moe/blob/main/src/constants/site.ts): site identity and the list of pages
+- [src/utils/llms-txt.ts](https://github.com/haruhimemoe/haruhime.moe/blob/main/src/utils/llms-txt.ts): builds the live /llms.txt
+
+## Elsewhere
+
+- [@haruhimemoe/ui](https://github.com/haruhimemoe/ui): the React components and theme the site is built from
+- [@haruhimemoe/brand](https://github.com/haruhimemoe/brand): generates the logos, icons and link preview
+- [packs.haruhime.moe](https://github.com/haruhimemoe/packs.haruhime.moe): source for packs, the first tool
+- [haruhimemoe on GitHub](https://github.com/haruhimemoe): the other tools and packages
+
+## Optional
+
+- [CHANGELOG.md](https://github.com/haruhimemoe/haruhime.moe/blob/main/CHANGELOG.md): what changed on the site
+- [CONTRIBUTING.md](https://github.com/haruhimemoe/haruhime.moe/blob/main/CONTRIBUTING.md): setup, checks, changelog lines and regenerating the brand files
+- [SECURITY.md](https://github.com/haruhimemoe/haruhime.moe/blob/main/SECURITY.md): how to report a vulnerability

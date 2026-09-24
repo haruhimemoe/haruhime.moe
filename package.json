@@ -1,10 +1,10 @@
 {
   "name": "haruhime.moe",
   "version": "0.1.0",
-  "description": "haruhime's home page: osu! tournament tools, thanks, brand and contact.",
+  "description": "haruhime's home page: the osu! tournament tools, thanks, the brand kit, a showcase of @haruhimemoe/ui, contact and a disclaimer.",
   "license": "MIT",
   "author": "David (https://dvh.sh)",
-  "homepage": "https://haruhime.moe",
+  "homepage": "https://www.haruhime.moe",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/haruhimemoe/haruhime.moe.git"

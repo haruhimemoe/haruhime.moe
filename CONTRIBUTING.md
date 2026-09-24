@@ -1,6 +1,8 @@
 # Contributing
 
-Read [AGENTS.md](./AGENTS.md) first; it has the conventions.
+Bug reports and fixes are welcome. For anything bigger than a fix, open an [issue](https://github.com/haruhimemoe/haruhime.moe/issues) first so we can agree on it.
+
+Read [AGENTS.md](./AGENTS.md) before you change code; it has the conventions.
 
 ## Run it locally
 
@@ -25,10 +27,20 @@ bun run check && bun run typecheck && bun run test && bun run build
 | `bun run check` / `check:fix` | Biome lint + format + import order |
 | `bun run typecheck` | Route type generation + `tsc` |
 | `bun run test` | Vitest (unit and components projects) |
-| `bun run test:coverage` | Tests with v8 coverage |
+| `bun run test:coverage` | Tests with v8 coverage; fails under 90% on `src/utils/` |
 | `bun run build` | Production build; every route must show as static (○) |
 
+CI runs the same checks, with `test:coverage` in place of `test`.
+
 `bun install` sets up a lefthook pre-commit hook that runs Biome on staged files.
+
+## Commits and the changelog
+
+Use [Conventional Commits](https://www.conventionalcommits.org/) (`feat:`, `fix:`, `docs:`, `chore:`, `test:`, `refactor:`).
+
+If a visitor would notice the change (a new page, new copy, a tool going live, a fix), add a line under `## [Unreleased]` in [CHANGELOG.md](./CHANGELOG.md), in the matching `### Added`, `### Changed`, `### Fixed` or `### Removed` group. Tests, tooling and repo docs don't need one.
+
+Releases are cut by the maintainers.
 
 ## Brand files
 
