@@ -37,10 +37,12 @@ describe("buildLlmsTxt", () => {
     expect(text).toContain("https://packs.haruhime.moe/llms.txt");
   });
 
-  it("lists every PAGE_PATHS entry with an absolute link", () => {
+  it("lists every PAGE_PATHS entry as a titled, absolute link", () => {
     for (const path of PAGE_PATHS) {
-      expect(text).toContain(`- [${SITE.url}${path}](${SITE.url}${path}):`);
+      expect(text).toMatch(new RegExp(`^- \\[[A-Z][a-z]+\\]\\(${SITE.url}${path}\\): `, "m"));
     }
+    expect(text).toContain(`- [Thanks](${SITE.url}/thanks): `);
+    expect(text).not.toContain(`[${SITE.url}`);
   });
 
   it("links elsewhere: GitHub org, the Claude Code plugin, and npm", () => {

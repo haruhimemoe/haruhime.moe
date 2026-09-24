@@ -11,13 +11,25 @@
 import { PAGE_PATHS, SITE } from "@/constants/site";
 import { TOOLS, type Tool } from "@/constants/tools";
 
-/** Short description for each page in PAGE_PATHS, for the Pages section. */
-const PAGE_DESCRIPTIONS: Record<(typeof PAGE_PATHS)[number], string> = {
-  "/": "Homepage: the tools, the Evergreen Cup card, and a short hello.",
-  "/thanks": "The people and projects the haruhime.moe tools are built on.",
-  "/brand": "The haruhime.moe name, logos, colors, and the packs/pools/sheets icons.",
-  "/contact": "How to reach haruhime: email, GitHub, and security reports.",
-  "/disclaimer": "No ppy affiliation, third-party terms, and the as-is notice.",
+/** Link title and short description for each page in PAGE_PATHS, for the Pages section. */
+const PAGES: Record<(typeof PAGE_PATHS)[number], { title: string; description: string }> = {
+  "/": { title: "Home", description: "The tools, the Evergreen Cup card, and a short hello." },
+  "/thanks": {
+    title: "Thanks",
+    description: "The people and projects the haruhime.moe tools are built on.",
+  },
+  "/brand": {
+    title: "Brand",
+    description: "The haruhime.moe name, logos, colors, and the packs/pools/sheets icons.",
+  },
+  "/contact": {
+    title: "Contact",
+    description: "How to reach haruhime: email, GitHub, and security reports.",
+  },
+  "/disclaimer": {
+    title: "Disclaimer",
+    description: "No ppy affiliation, third-party terms, and the as-is notice.",
+  },
 };
 
 /**
@@ -49,7 +61,7 @@ export const buildLlmsTxt = (): string => {
     "",
     "## Pages",
     ...PAGE_PATHS.map(
-      (path) => `- [${SITE.url}${path}](${SITE.url}${path}): ${PAGE_DESCRIPTIONS[path]}`,
+      (path) => `- [${PAGES[path].title}](${SITE.url}${path}): ${PAGES[path].description}`,
     ),
     "",
     "## Elsewhere",
