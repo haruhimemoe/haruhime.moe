@@ -6,7 +6,7 @@
  *       the filter demos are one small client component.
  * @author David @dvhsh (https://dvh.sh)
  * @created Wed Sep 23, 2026
- * @modified Wed Sep 23, 2026
+ * @modified Thu Sep 24, 2026
  */
 
 import {
@@ -75,8 +75,8 @@ export default function UiPage() {
               <a href={NPM_URL} className={linkStyles}>
                 @haruhimemoe/ui
               </a>
-              , rendered from the package itself. haruhime.moe is built from it, and packs is moving
-              to it. The source is on{" "}
+              , rendered from the package itself. haruhime.moe and packs are built from it. The
+              source is on{" "}
               <a href={REPO_URL} className={linkStyles}>
                 GitHub
               </a>

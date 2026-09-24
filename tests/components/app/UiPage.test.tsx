@@ -6,7 +6,7 @@
  *       and no axe violations.
  * @author David @dvhsh (https://dvh.sh)
  * @created Wed Sep 23, 2026
- * @modified Wed Sep 23, 2026
+ * @modified Thu Sep 24, 2026
  */
 
 import * as ui from "@haruhimemoe/ui";
@@ -47,11 +47,11 @@ describe("/ui", () => {
     expect(screen.getByText(/^Version \d+\.\d+\.\d+, MIT license/)).toBeInTheDocument();
   });
 
-  it("says haruhime.moe is built from the kit and packs is moving to it", () => {
+  it("says haruhime.moe and packs are both built from the kit", () => {
     render(<UiPage />);
     const lead = screen.getByRole("link", { name: "@haruhimemoe/ui" }).closest("p");
-    expect(lead).toHaveTextContent("haruhime.moe is built from it, and packs is moving to it.");
-    expect(lead).not.toHaveTextContent(/packs (is|are) built from/);
+    expect(lead).toHaveTextContent("haruhime.moe and packs are built from it.");
+    expect(lead).not.toHaveTextContent(/moving/);
   });
 
   it("has every group heading, linked from the page's own nav", () => {

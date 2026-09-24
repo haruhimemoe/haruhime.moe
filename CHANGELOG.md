@@ -6,6 +6,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+### Changed
+
+- `/ui` says packs is built from `@haruhimemoe/ui` too, now that it has moved over.
+
 ### Fixed
 
 - `/llms.txt` calls the home page's Evergreen Cup section a banner, as the page does, instead of a card.
