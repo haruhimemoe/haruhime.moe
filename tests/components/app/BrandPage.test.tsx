@@ -1,6 +1,7 @@
 /**
  * @file tests/components/app/BrandPage.test.tsx
- * @desc /brand: title, one h1, name rules, downloadable logos, swatches, product family, type, trademark notice.
+ * @desc /brand: title, one h1, name rules, downloadable logos and README banners, swatches,
+ *       product family, type, trademark notice.
  * @author David @dvhsh (https://dvh.sh)
  * @created Wed Sep 23, 2026
  * @modified Wed Sep 23, 2026
@@ -9,7 +10,7 @@
 import { render, screen, within } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 import BrandPage, { metadata } from "@/app/brand/page";
-import { BRAND_ASSETS, BRAND_COLORS } from "@/constants/brand";
+import { BRAND_ASSETS, BRAND_BANNERS, BRAND_COLORS } from "@/constants/brand";
 import { SITE } from "@/constants/site";
 import { TOOLS } from "@/constants/tools";
 import { hslToHex } from "@/utils/color";
@@ -41,6 +42,29 @@ describe("/brand", () => {
     expect(screen.getByText(/don't recolor or stretch them/)).toBeInTheDocument();
     expect(screen.getByText(/Nunito/)).toBeInTheDocument();
     expect(screen.getByText(SITE.trademarkNotice)).toBeInTheDocument();
+  });
+
+  it("offers the README banner, dark and light, next to the logos", () => {
+    render(<BrandPage />);
+    const logo = screen.getByRole("region", { name: "Logo" });
+    expect(within(logo).getByRole("heading", { level: 3, name: "README banner" })).toBeVisible();
+    expect(within(logo).getByText(/For README headers, like the one on our/)).toHaveTextContent(
+      "For README headers, like the one on our GitHub profile.",
+    );
+    expect(within(logo).getByRole("link", { name: "GitHub profile" })).toHaveAttribute(
+      "href",
+      SITE.githubOrg,
+    );
+    for (const banner of BRAND_BANNERS) {
+      expect(logo.querySelector(`img[src="/${banner.preview}"]`)).not.toBeNull();
+    }
+    for (const [name, href] of [
+      ["Download banner for dark backgrounds", "/brand/haruhime-banner.svg"],
+      ["Download banner for dark backgrounds (PNG)", "/brand/haruhime-banner.png"],
+      ["Download banner for light backgrounds", "/brand/haruhime-banner-on-light.svg"],
+    ]) {
+      expect(within(logo).getByRole("link", { name })).toHaveAttribute("href", href);
+    }
   });
 
   it("shows the product family with icons and hues", () => {

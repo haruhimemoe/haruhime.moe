@@ -1,7 +1,7 @@
 /**
  * @file src/app/brand/page.tsx
- * @desc /brand: how to write the name, logos to download, colors, the product family, type and
- *       usage. Static.
+ * @desc /brand: how to write the name, logos and README banners to download, colors, the product
+ *       family, type and usage. Static.
  * @author David @dvhsh (https://dvh.sh)
  * @created Wed Sep 23, 2026
  * @modified Wed Sep 23, 2026
@@ -11,7 +11,7 @@ import type { Metadata } from "next";
 import { Card } from "@/components/ui/Card";
 import { linkStyles } from "@/components/ui/linkStyles";
 import { PageHeader } from "@/components/ui/PageHeader";
-import { BRAND_ASSETS, BRAND_COLORS } from "@/constants/brand";
+import { BANNER_SIZE, BRAND_ASSETS, BRAND_BANNERS, BRAND_COLORS } from "@/constants/brand";
 import { SITE } from "@/constants/site";
 import { TOOLS } from "@/constants/tools";
 import { cn } from "@/utils/cn";
@@ -60,6 +60,38 @@ export default function BrandPage() {
               <a href={`/${asset.href}`} download className={cn(linkStyles, "text-sm")}>
                 Download {asset.label}
               </a>
+            </li>
+          ))}
+        </ul>
+        <h3 className="mt-6 mb-1 font-bold text-c1">README banner</h3>
+        <p className="mb-4 text-sm">
+          For README headers, like the one on our{" "}
+          <a href={SITE.githubOrg} className={linkStyles}>
+            GitHub profile
+          </a>
+          .
+        </p>
+        <ul className="grid gap-4 sm:grid-cols-2">
+          {BRAND_BANNERS.map((banner) => (
+            <li key={banner.preview} className="flex flex-col gap-2">
+              {/* biome-ignore lint/performance/noImgElement: static SVG preview, no optimization needed */}
+              <img
+                src={`/${banner.preview}`}
+                alt=""
+                width={BANNER_SIZE.width}
+                height={BANNER_SIZE.height}
+                className="h-auto w-full"
+              />
+              {banner.downloads.map((file) => (
+                <a
+                  key={file.href}
+                  href={`/${file.href}`}
+                  download
+                  className={cn(linkStyles, "text-sm")}
+                >
+                  Download {file.label}
+                </a>
+              ))}
             </li>
           ))}
         </ul>
