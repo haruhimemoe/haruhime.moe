@@ -81,7 +81,7 @@ The packs look, from the [@haruhimemoe/ui](https://github.com/haruhimemoe/ui) th
 
 - Copy is short and plain, in David's voice. No marketing, no em dashes.
 - The thanks list is `src/content/thanks.ts`: a name, an optional https link, one line each.
-- Tools live in `src/constants/tools.ts`. A tool gets its `url` the day it launches; until then it shows as "coming soon" (homepage and `/llms.txt`) and "soon" (header and footer) and links nowhere. `tests/unit/constants/tools.test.ts` pins which tools are live, so update it in the same commit.
+- Tools live in `src/constants/tools.ts`. A tool gets its `url` the day it launches; until then it shows as "coming soon" (homepage and `/llms.txt`) and "soon" (header and footer) and links nowhere. A live tool still in beta sets `beta: true`: its homepage card shows a small "beta" label and its `/llms.txt` line says "In beta." (the header and footer stay plain). `about` is the tool's longer `/llms.txt` description and `llmsTxt: true` links the tool's own `/llms.txt`; both are for live tools only. `tests/unit/constants/tools.test.ts` pins which tools are live and which are in beta, so update it in the same commit. Never write that every pool on pools comes from otdb: pools lists pools from several sources.
 - A new page goes in `PAGE_PATHS` (`src/constants/site.ts`) so the sitemap and `/llms.txt` list it. It also needs a title and description in `PAGES` in `src/utils/llms-txt.ts` (typecheck fails without one), a render test, and a footer link in `src/constants/nav.ts` if visitors need one.
 - Disclaimer wording changes bump `DISCLAIMER_UPDATED` in `src/constants/legal.ts` in the same commit. Its test guards the required clauses.
 

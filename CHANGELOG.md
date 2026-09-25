@@ -12,7 +12,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ### Changed
 
-- pools is listed as live: the homepage card, the header and the footer link to https://pools.haruhime.moe.
+- pools is listed as live, in beta: the homepage card (with a small "beta" label), the header and the footer link to https://pools.haruhime.moe, and `/llms.txt` says what pools does and links its own llms.txt.
+- `/llms.txt` says what packs does too.
+- `/thanks` thanks otdb for the okay to list pools from its mappool export, instead of for the packs pool archive.
 - `/ui` says packs is built from `@haruhimemoe/ui` too, now that it has moved over.
 - `/ui` runs `@haruhimemoe/ui` 0.3.0. It shows the new `DiscordIcon`, and the titled card in the `Card` demo sets `headingLevel`, so its heading sits under the demo's.
 - Every page sends less JavaScript: the header's nav renders on the server and no longer brings tailwind-merge to the browser.

@@ -1,7 +1,7 @@
 /**
  * @file tests/unit/utils/llms-txt.test.ts
- * @desc buildLlmsTxt: llmstxt.org section order, absolute links, packs' own llms.txt linked,
- *       no dead links for tools without a url, every PAGE_PATHS entry present, the Discord server
+ * @desc buildLlmsTxt: llmstxt.org section order, absolute links, packs' and pools' own llms.txt
+ *       linked, pools in beta with its sources, no dead links for tools without a url, every PAGE_PATHS entry present, the Discord server
  *       under Elsewhere, one trailing newline.
  * @author David @dvhsh (https://dvh.sh)
  * @created Wed Sep 23, 2026
@@ -33,8 +33,16 @@ describe("buildLlmsTxt", () => {
     }
   });
 
-  it("links packs' own llms.txt", () => {
+  it("links packs' and pools' own llms.txt", () => {
     expect(text).toContain("https://packs.haruhime.moe/llms.txt");
+    expect(text).toContain("https://pools.haruhime.moe/llms.txt");
+  });
+
+  it("lists pools as live, in beta, with its sources and what it does", () => {
+    const pools = text.split("\n").find((line) => line.startsWith("- [pools]"));
+    expect(pools).toMatch(/^- \[pools\]\(https:\/\/pools\.haruhime\.moe\): .+\. In beta\. /);
+    expect(pools).toContain("from several sources");
+    expect(pools).not.toContain("coming soon");
   });
 
   it("lists every PAGE_PATHS entry as a titled, absolute link", () => {
@@ -69,7 +77,7 @@ describe("buildLlmsTxt", () => {
 });
 
 describe("toolLine", () => {
-  it("adds the see-also note only for packs, never for another live tool", () => {
+  it("adds the see-also note only for a tool that serves its own llms.txt", () => {
     expect(
       toolLine({
         name: "packs",
@@ -77,6 +85,7 @@ describe("toolLine", () => {
         tagline: "packs stuff",
         icon: "x",
         url: "https://packs.example",
+        llmsTxt: true,
       }),
     ).toBe(
       "- [packs](https://packs.example): packs stuff. See also its own llms.txt: https://packs.example/llms.txt",
@@ -92,7 +101,27 @@ describe("toolLine", () => {
     ).toBe("- [widgets](https://widgets.example): widget stuff.");
   });
 
-  it("never links a tool without a url", () => {
+  it("says a beta tool is in beta, then what it does, before the see-also note", () => {
+    expect(
+      toolLine({
+        name: "gadgets",
+        hue: 1,
+        tagline: "gadget stuff",
+        icon: "x",
+        url: "https://gadgets.example",
+        beta: true,
+        about: "Makes gadgets.",
+        llmsTxt: true,
+      }),
+    ).toBe(
+      "- [gadgets](https://gadgets.example): gadget stuff. In beta. Makes gadgets. See also its own llms.txt: https://gadgets.example/llms.txt",
+    );
+  });
+
+  it("never links a tool without a url, beta or not", () => {
+    expect(toolLine({ name: "later", hue: 1, tagline: "not yet", icon: "x", beta: true })).toBe(
+      "- later: not yet (coming soon)",
+    );
     expect(toolLine({ name: "soon", hue: 1, tagline: "not yet", icon: "x" })).toBe(
       "- soon: not yet (coming soon)",
     );

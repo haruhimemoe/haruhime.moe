@@ -1,6 +1,6 @@
 # haruhime.moe
 
-The home page for haruhime's osu! tournament tools: [packs](https://packs.haruhime.moe), with pools and sheets on the way. It also has a thanks list, the brand kit, a showcase of the shared [@haruhimemoe/ui](https://github.com/haruhimemoe/ui) components, contact details and a disclaimer.
+The home page for haruhime's osu! tournament tools: [packs](https://packs.haruhime.moe) and [pools](https://pools.haruhime.moe) (in beta), with sheets on the way. It also has a thanks list, the brand kit, a showcase of the shared [@haruhimemoe/ui](https://github.com/haruhimemoe/ui) components, contact details and a disclaimer.
 
 Live at https://www.haruhime.moe.
 
@@ -37,7 +37,7 @@ For a production build, run `bun run build`, then `bun run start` to serve it.
 | To change | Edit |
 | --- | --- |
 | The thanks list | `src/content/thanks.ts`: a name, an optional https link and one line per entry |
-| The tools (name, tagline, icon, hue, link), including the tool icons on `/brand` | `TOOLS` in `src/constants/tools.ts`: a tool without a `url` shows as "coming soon" |
+| The tools (name, tagline, icon, hue, link, beta label, the `/llms.txt` line), including the tool icons on `/brand` | `TOOLS` in `src/constants/tools.ts`: a tool without a `url` shows as "coming soon", and one with `beta: true` gets a "beta" label |
 | Header and footer links | `src/constants/nav.ts` |
 | Site name, address, description, contact email, the Discord invite (the footer icon and `/contact`) | `SITE` in `src/constants/site.ts` |
 | The Evergreen Cup banner's name, link and line | `EVERGREEN_CUP` in `src/constants/site.ts` |

@@ -3,7 +3,7 @@
  * @desc The /thanks list: people and projects the haruhime.moe tools lean on.
  * @author David @dvhsh (https://dvh.sh)
  * @created Wed Sep 23, 2026
- * @modified Wed Sep 23, 2026
+ * @modified Fri Sep 25, 2026
  */
 
 /** One thanks entry: who, where to find them (optional), and one line on what they did. */
@@ -32,7 +32,7 @@ export const THANKS: readonly ThanksEntry[] = [
   {
     name: "Sheppsu",
     url: "https://otdb.sheppsu.me",
-    line: "otdb, and the okay to build the packs pool archive from its mappool export.",
+    line: "otdb, and the okay to list pools from its mappool export.",
   },
   {
     name: "the hinai beatmap mirror",

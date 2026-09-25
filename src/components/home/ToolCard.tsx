@@ -1,10 +1,11 @@
 /**
  * @file src/components/home/ToolCard.tsx
- * @desc One tool on the homepage: icon, name and tagline. A live tool's name links to it; one
- *       that hasn't launched says "coming soon" and links nowhere.
+ * @desc One tool on the homepage: icon, name and tagline. A live tool's name links to it, with a
+ *       small "beta" label while it's in beta; one that hasn't launched says "coming soon" and
+ *       links nowhere.
  * @author David @dvhsh (https://dvh.sh)
  * @created Wed Sep 23, 2026
- * @modified Wed Sep 23, 2026
+ * @modified Fri Sep 25, 2026
  */
 
 import type { Tool } from "@/constants/tools";
@@ -16,6 +17,7 @@ import { cn } from "@/utils/cn";
  * @returns {JSX.Element} a list item card; live tools link to their site
  */
 export function ToolCard({ tool }: { tool: Tool }) {
+  const label = tool.url ? (tool.beta ? "beta" : null) : "coming soon";
   return (
     <li
       className={cn(
@@ -37,9 +39,9 @@ export function ToolCard({ tool }: { tool: Tool }) {
           )}
         </h3>
         <p className="text-sm">{tool.tagline}</p>
-        {tool.url ? null : (
-          <p className="mt-2 font-bold text-c4 text-xs uppercase tracking-wide">coming soon</p>
-        )}
+        {label ? (
+          <p className="mt-2 font-bold text-c4 text-xs uppercase tracking-wide">{label}</p>
+        ) : null}
       </div>
     </li>
   );

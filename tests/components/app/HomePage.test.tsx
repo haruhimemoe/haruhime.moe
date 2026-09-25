@@ -1,10 +1,10 @@
 /**
  * @file tests/components/app/HomePage.test.tsx
- * @desc /: title, one h1, the Evergreen Cup banner first, the three tools, Organization + Person
- *       data under the schema.org context.
+ * @desc /: title, one h1, the Evergreen Cup banner first, the three tools (pools labeled beta),
+ *       Organization + Person data under the schema.org context.
  * @author David @dvhsh (https://dvh.sh)
  * @created Wed Sep 23, 2026
- * @modified Wed Sep 23, 2026
+ * @modified Fri Sep 25, 2026
  */
 
 import { render, screen, within } from "@testing-library/react";
@@ -19,7 +19,7 @@ describe("/", () => {
     expect(screen.getByRole("heading", { level: 1 })).toBeVisible();
   });
 
-  it("shows packs and pools live and sheets coming soon", () => {
+  it("shows packs and pools live, pools in beta, and sheets coming soon", () => {
     render(<HomePage />);
     const tools = screen.getByRole("region", { name: "Tools" });
     expect(within(tools).getAllByRole("listitem")).toHaveLength(3);
@@ -33,6 +33,9 @@ describe("/", () => {
     );
     expect(within(tools).getAllByRole("link")).toHaveLength(2);
     expect(within(tools).getAllByText("coming soon")).toHaveLength(1);
+    const pools = within(tools).getByRole("link", { name: "pools" }).closest("li");
+    expect(pools).toHaveTextContent(/beta$/);
+    expect(within(tools).getAllByText("beta")).toHaveLength(1);
   });
 
   it("puts the Evergreen Cup banner first, above the intro", () => {

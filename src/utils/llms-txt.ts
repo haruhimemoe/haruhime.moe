@@ -39,15 +39,18 @@ const PAGES: Record<(typeof PAGE_PATHS)[number], { title: string; description: s
 /**
  * @function toolLine
  * @param tool {Tool} a tool from TOOLS
- * @returns {string} a live tool as a link with its tagline (packs also points at its own
- *   llms.txt); a tool without a url as plain text marked "coming soon", never a dead link
+ * @returns {string} a live tool as a link with its tagline, then "In beta." for a beta tool, what
+ *   it does, and its own llms.txt when it serves one; a tool without a url as plain text marked
+ *   "coming soon", never a dead link
  */
 export const toolLine = (tool: Tool): string => {
   if (!tool.url) {
     return `- ${tool.name}: ${tool.tagline} (coming soon)`;
   }
-  const seeAlso = tool.name === "packs" ? ` See also its own llms.txt: ${tool.url}/llms.txt` : "";
-  return `- [${tool.name}](${tool.url}): ${tool.tagline}.${seeAlso}`;
+  const beta = tool.beta ? " In beta." : "";
+  const about = tool.about ? ` ${tool.about}` : "";
+  const seeAlso = tool.llmsTxt ? ` See also its own llms.txt: ${tool.url}/llms.txt` : "";
+  return `- [${tool.name}](${tool.url}): ${tool.tagline}.${beta}${about}${seeAlso}`;
 };
 
 /**

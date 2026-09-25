@@ -1,6 +1,6 @@
 # haruhime.moe
 
-> Source for https://www.haruhime.moe, the home page for haruhime's osu! tournament tools (packs is live; pools and sheets are coming soon). The site also has a thanks list, the brand kit, a showcase of every @haruhimemoe/ui component, contact details and a disclaimer. It is a static Next.js 16 site built from @haruhimemoe/ui, run with Bun. MIT license. The live site serves its own llms.txt at https://www.haruhime.moe/llms.txt; that one is the canonical guide to the pages and tools. This file covers the repository.
+> Source for https://www.haruhime.moe, the home page for haruhime's osu! tournament tools (packs is live, pools is live in beta, sheets is coming soon). The site also has a thanks list, the brand kit, a showcase of every @haruhimemoe/ui component, contact details and a disclaimer. It is a static Next.js 16 site built from @haruhimemoe/ui, run with Bun. MIT license. The live site serves its own llms.txt at https://www.haruhime.moe/llms.txt; that one is the canonical guide to the pages and tools. This file covers the repository.
 
 ## Site
 
@@ -27,6 +27,7 @@
 - [@haruhimemoe/ui](https://github.com/haruhimemoe/ui): the React components and theme the site is built from
 - [@haruhimemoe/brand](https://github.com/haruhimemoe/brand): generates the logos, icons and link preview
 - [packs.haruhime.moe](https://github.com/haruhimemoe/packs.haruhime.moe): source for packs, the first tool
+- [pools.haruhime.moe](https://github.com/haruhimemoe/pools.haruhime.moe): source for pools, past tournament mappools and the content-rules check (beta)
 - [haruhimemoe on GitHub](https://github.com/haruhimemoe): the other tools and packages
 
 ## Optional
