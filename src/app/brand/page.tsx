@@ -107,8 +107,8 @@ export default function BrandPage() {
       </Card>
       <Card title="README banners">
         <p className="mb-4 text-sm">
-          One for the top of each haruhimemoe repo's README. packs and pools use their own colors;
-          everything else uses haruhime's pink.
+          One for the top of each haruhimemoe repo's README. pools uses its own blue; everything
+          else, packs included, uses haruhime's pink.
         </p>
         <ul className="grid gap-6 sm:grid-cols-2">
           {REPO_BANNERS.map((banner) => (

@@ -1,8 +1,8 @@
 /**
  * @file tests/unit/utils/llms-txt.test.ts
  * @desc buildLlmsTxt: llmstxt.org section order, absolute links, packs' and pools' own llms.txt
- *       linked, pools in beta with its sources, no dead links for tools without a url, every PAGE_PATHS entry present, the Discord server
- *       under Elsewhere, one trailing newline.
+ *       linked, pools in beta with its sources, no dead links for tools without a url, every
+ *       PAGE_PATHS entry present, the Discord server under Elsewhere, one trailing newline.
  * @author David @dvhsh (https://dvh.sh)
  * @created Wed Sep 23, 2026
  * @modified Fri Sep 25, 2026

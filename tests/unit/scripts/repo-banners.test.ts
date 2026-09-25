@@ -2,9 +2,10 @@
  * @file tests/unit/scripts/repo-banners.test.ts
  * @desc scripts/repo-banners.ts: its list is exactly the 11 haruhimemoe repos, each writes
  *       public/brand/repos/<repo>-banner.svg and <repo>-banner-on-light.svg, tools draw their own
- *       product and packages the parent's hue with an "@haruhimemoe/<name>: " tagline, every
- *       tagline and name fits the banner, the committed files match what the script writes, and
- *       .github's banners (served through next.config's rewrite) are haruhime.moe's.
+ *       product and packages the parent's hue with an "@haruhimemoe/<name>: " tagline
+ *       (claude-plugin's opens "haruhime: "), every tagline and name fits the banner, the committed
+ *       files match what the script writes, and .github's banners (served through next.config's
+ *       rewrite) are haruhime.moe's.
  * @author David @dvhsh (https://dvh.sh)
  * @created Fri Sep 25, 2026
  * @modified Fri Sep 25, 2026

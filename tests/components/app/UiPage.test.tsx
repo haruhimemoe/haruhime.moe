@@ -2,9 +2,8 @@
  * @file tests/components/app/UiPage.test.tsx
  * @desc /ui: title, one h1, the intro links and which sites the lead says use the kit, every group
  *       heading, a demo for every component @haruhimemoe/ui exports (DiscordIcon and Card's
- *       headingLevel included), the states each demo promises,
- *       a working filter panel (Clear filters shows for any filter, the length maximum included),
- *       and no axe violations.
+ *       headingLevel included), the states each demo promises, a working filter panel (Clear
+ *       filters shows for any filter, the length maximum included), and no axe violations.
  * @author David @dvhsh (https://dvh.sh)
  * @created Wed Sep 23, 2026
  * @modified Fri Sep 25, 2026
@@ -48,10 +47,10 @@ describe("/ui", () => {
     expect(screen.getByText(/^Version \d+\.\d+\.\d+, MIT license/)).toBeInTheDocument();
   });
 
-  it("says haruhime.moe and packs are both built from the kit", () => {
+  it("says haruhime.moe, packs and pools are all built from the kit", () => {
     render(<UiPage />);
     const lead = screen.getByRole("link", { name: "@haruhimemoe/ui" }).closest("p");
-    expect(lead).toHaveTextContent("haruhime.moe and packs are built from it.");
+    expect(lead).toHaveTextContent("haruhime.moe, packs and pools are built from it.");
     expect(lead).not.toHaveTextContent(/moving/);
   });
 

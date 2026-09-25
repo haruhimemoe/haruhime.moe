@@ -62,7 +62,7 @@ The first command writes `public/brand/haruhime-*` and `src/app/icon.svg`, `appl
 
 ### Repo banners
 
-`public/brand/repos/` holds a README banner for every haruhimemoe repo, dark and light (`<repo>-banner.svg` and `<repo>-banner-on-light.svg`). The list is `REPO_BANNERS` in `src/constants/brand.ts`: packs and pools draw their own brand, haruhime.moe and `.github` draw haruhime's, and each package draws its name in haruhime's pink over a short `@haruhimemoe/<name>: ...` line. To redraw them after changing the list or updating `@haruhimemoe/brand`:
+`public/brand/repos/` holds a README banner for every haruhimemoe repo, dark and light (`<repo>-banner.svg` and `<repo>-banner-on-light.svg`). The list is `REPO_BANNERS` in `src/constants/brand.ts`: packs and pools draw their own brand, haruhime.moe and `.github` draw haruhime's, and each package draws its name in haruhime's pink over a short `@haruhimemoe/<name>: ...` line (claude-plugin: `haruhime: ...`, since it isn't an npm package). To redraw them after changing the list or updating `@haruhimemoe/brand`:
 
 ```bash
 bun run repo-banners --png /tmp/repo-banners

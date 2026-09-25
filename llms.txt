@@ -12,7 +12,7 @@
 
 - [Pages](https://github.com/haruhimemoe/haruhime.moe#pages): every route and what it shows
 - [Run it locally](https://github.com/haruhimemoe/haruhime.moe#run-it-locally): requirements, install, dev server and production build
-- [Where the content lives](https://github.com/haruhimemoe/haruhime.moe#where-the-content-lives): which file holds the thanks list, the tools, the links and each page's copy
+- [Where the content lives](https://github.com/haruhimemoe/haruhime.moe#where-the-content-lives): which file holds the thanks list, the tools, the links, each page's copy and the repo banners
 - [AGENTS.md](https://github.com/haruhimemoe/haruhime.moe/blob/main/AGENTS.md): conventions, invariants (every route static) and file layout for AI coding agents
 
 ## Source
@@ -27,7 +27,7 @@
 ## Elsewhere
 
 - [@haruhimemoe/ui](https://github.com/haruhimemoe/ui): the React components and theme the site is built from
-- [@haruhimemoe/brand](https://github.com/haruhimemoe/brand): generates the logos, icons and link preview
+- [@haruhimemoe/brand](https://github.com/haruhimemoe/brand): generates the logos, icons, link preview and the repo README banners
 - [packs.haruhime.moe](https://github.com/haruhimemoe/packs.haruhime.moe): source for packs, the first tool
 - [pools.haruhime.moe](https://github.com/haruhimemoe/pools.haruhime.moe): source for pools, past tournament mappools and the content-rules check (beta)
 - [haruhimemoe on GitHub](https://github.com/haruhimemoe): the other tools and packages
