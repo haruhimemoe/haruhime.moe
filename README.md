@@ -12,7 +12,7 @@ Live at https://www.haruhime.moe.
 | [`/thanks`](https://www.haruhime.moe/thanks) | The people and projects the tools lean on |
 | [`/brand`](https://www.haruhime.moe/brand) | The name, logos and README banners to download, colors, type and the tool icons |
 | [`/ui`](https://www.haruhime.moe/ui) | Every @haruhimemoe/ui component, rendered in its states |
-| [`/contact`](https://www.haruhime.moe/contact) | Email, GitHub and where to send security reports |
+| [`/contact`](https://www.haruhime.moe/contact) | Email, the Discord server, GitHub and where to send security reports |
 | [`/disclaimer`](https://www.haruhime.moe/disclaimer) | No ppy affiliation, the osu! API and mirror terms, who owns beatmaps, the as-is notice, the AI-help note |
 
 The site also serves [`/llms.txt`](https://www.haruhime.moe/llms.txt) (a guide to the site for LLMs), [`/.well-known/security.txt`](https://www.haruhime.moe/.well-known/security.txt), `/sitemap.xml` and `/robots.txt`. Every route is static, prerendered at build time. There is no database and nothing to configure.
@@ -39,7 +39,7 @@ For a production build, run `bun run build`, then `bun run start` to serve it.
 | The thanks list | `src/content/thanks.ts`: a name, an optional https link and one line per entry |
 | The tools (name, tagline, icon, hue, link), including the tool icons on `/brand` | `TOOLS` in `src/constants/tools.ts`: a tool without a `url` shows as "coming soon" |
 | Header and footer links | `src/constants/nav.ts` |
-| Site name, address, description, contact email | `SITE` in `src/constants/site.ts` |
+| Site name, address, description, contact email, the Discord invite (the footer icon and `/contact`) | `SITE` in `src/constants/site.ts` |
 | The Evergreen Cup banner's name, link and line | `EVERGREEN_CUP` in `src/constants/site.ts` |
 | The Evergreen Cup banner's colors, tree mark and button text | `src/components/home/EgcBanner.tsx` |
 | Which color swatches, logos and README banners `/brand` shows | `src/constants/brand.ts` |

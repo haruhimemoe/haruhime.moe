@@ -5,7 +5,7 @@
  *       so the route handler and its tests share one source.
  * @author David @dvhsh (https://dvh.sh)
  * @created Wed Sep 23, 2026
- * @modified Thu Sep 24, 2026
+ * @modified Fri Sep 25, 2026
  */
 
 import { PAGE_PATHS, SITE } from "@/constants/site";
@@ -28,7 +28,7 @@ const PAGES: Record<(typeof PAGE_PATHS)[number], { title: string; description: s
   },
   "/contact": {
     title: "Contact",
-    description: "How to reach haruhime: email, GitHub, and security reports.",
+    description: "How to reach haruhime: email, Discord, GitHub, and security reports.",
   },
   "/disclaimer": {
     title: "Disclaimer",
@@ -72,6 +72,7 @@ export const buildLlmsTxt = (): string => {
     `- [GitHub](${SITE.githubOrg}): source and issues for every tool`,
     `- [Claude Code plugin](${SITE.githubOrg}/claude-plugin): haruhime's Claude Code plugin`,
     "- [npm](https://www.npmjs.com/org/haruhimemoe): the @haruhimemoe packages",
+    `- [Discord](${SITE.discordUrl}): questions and feedback about the tools`,
     "",
   ];
   return lines.join("\n");

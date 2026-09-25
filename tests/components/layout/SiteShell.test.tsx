@@ -1,12 +1,13 @@
 /**
  * @file tests/components/layout/SiteShell.test.tsx
  * @desc SiteShell: skip link to #main and one main landmark; the header's wordmark links home and
- *       the three tools sit in the Tools nav with only packs linked; the footer's Tools /
- *       haruhime.moe / Legal columns, unreleased tools as plain text, the GitHub icon link, the
- *       trademark notice, and no parent-site wordmark.
+ *       the three tools sit in the Tools nav with packs and pools linked; the footer's Tools /
+ *       haruhime.moe / Legal columns, unreleased tools as plain text, the Discord and GitHub icon
+ *       links (Discord as an icon only, not in a column), the trademark notice, and no
+ *       parent-site wordmark.
  * @author David @dvhsh (https://dvh.sh)
  * @created Wed Sep 23, 2026
- * @modified Wed Sep 23, 2026
+ * @modified Fri Sep 25, 2026
  */
 
 import { render, screen, within } from "@testing-library/react";
@@ -107,6 +108,8 @@ describe("SiteShell footer", () => {
       ["UI", "/ui"],
       ["Contact", "/contact"],
     ] as const;
+    const links = within(site).getAllByRole("link");
+    expect(links.map((link) => link.textContent)).toEqual(expected.map(([name]) => name));
     for (const [name, href] of expected) {
       expect(within(site).getByRole("link", { name })).toHaveAttribute("href", href);
     }
@@ -124,6 +127,22 @@ describe("SiteShell footer", () => {
     });
     expect(link).toHaveAttribute("href", "https://github.com/haruhimemoe");
     expect(link.querySelector("svg")).toBeInTheDocument();
+  });
+
+  it("links a white Discord icon to the server, before the GitHub icon, in the same tab", () => {
+    renderShell();
+    const footer = screen.getByRole("contentinfo");
+    const discord = within(footer).getByRole("link", { name: "Discord" });
+    expect(discord).toHaveAttribute("href", SITE.discordUrl);
+    expect(discord).not.toHaveAttribute("target");
+    expect(discord).toHaveClass("text-c1");
+    expect(discord.querySelector("svg")).toBeInTheDocument();
+    expect(discord).toHaveTextContent("");
+    const github = within(footer).getByRole("link", { name: "haruhimemoe on GitHub" });
+    expect(discord.compareDocumentPosition(github) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+    for (const column of within(footer).getAllByRole("navigation")) {
+      expect(within(column).queryByRole("link", { name: "Discord" })).not.toBeInTheDocument();
+    }
   });
 
   it("keeps the trademark notice as fine print, with no parent-site wordmark", () => {

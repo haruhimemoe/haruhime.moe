@@ -1,9 +1,10 @@
 /**
  * @file tests/components/app/ContactPage.test.tsx
- * @desc /contact: title, one h1, email as text and mailto, GitHub org, security reports.
+ * @desc /contact: title, one h1, email as text and mailto, the Discord server, GitHub org,
+ *       security reports.
  * @author David @dvhsh (https://dvh.sh)
  * @created Wed Sep 23, 2026
- * @modified Wed Sep 23, 2026
+ * @modified Fri Sep 25, 2026
  */
 
 import { render, screen, within } from "@testing-library/react";
@@ -26,6 +27,14 @@ describe("/contact", () => {
       "href",
       "mailto:contact@haruhime.moe",
     );
+  });
+
+  it("links the Discord server in the same tab", () => {
+    render(<ContactPage />);
+    const discord = screen.getByRole("region", { name: "Discord" });
+    const link = within(discord).getByRole("link", { name: "discord.gg/bKy9kjMV4y" });
+    expect(link).toHaveAttribute("href", "https://discord.gg/bKy9kjMV4y");
+    expect(link).not.toHaveAttribute("target");
   });
 
   it("links the GitHub org and says where security reports go", () => {

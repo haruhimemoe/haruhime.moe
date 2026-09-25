@@ -1,11 +1,11 @@
 /**
  * @file tests/unit/utils/llms-txt.test.ts
  * @desc buildLlmsTxt: llmstxt.org section order, absolute links, packs' own llms.txt linked,
- *       no dead links for tools without a url, every PAGE_PATHS entry present, one trailing
- *       newline.
+ *       no dead links for tools without a url, every PAGE_PATHS entry present, the Discord server
+ *       under Elsewhere, one trailing newline.
  * @author David @dvhsh (https://dvh.sh)
  * @created Wed Sep 23, 2026
- * @modified Wed Sep 23, 2026
+ * @modified Fri Sep 25, 2026
  */
 
 import { describe, expect, it } from "vitest";
@@ -46,10 +46,12 @@ describe("buildLlmsTxt", () => {
     expect(text).not.toContain(`[${SITE.url}`);
   });
 
-  it("links elsewhere: GitHub org, the Claude Code plugin, and npm", () => {
+  it("links elsewhere: GitHub org, the Claude Code plugin, npm, and the Discord server", () => {
     expect(text).toContain(SITE.githubOrg);
     expect(text).toContain("https://github.com/haruhimemoe/claude-plugin");
     expect(text).toContain("https://www.npmjs.com/org/haruhimemoe");
+    const elsewhere = text.slice(text.indexOf("## Elsewhere"));
+    expect(elsewhere).toMatch(/^- \[Discord\]\(https:\/\/discord\.gg\/bKy9kjMV4y\): .+$/m);
   });
 
   it("uses only absolute links", () => {

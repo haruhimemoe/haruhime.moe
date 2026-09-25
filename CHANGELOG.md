@@ -6,6 +6,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+### Added
+
+- A Discord icon in the footer, before the GitHub one, linking the haruhime.moe server. `/contact` lists the server too, and `/llms.txt` links it under Elsewhere.
+
 ### Changed
 
 - pools is listed as live: the homepage card, the header and the footer link to https://pools.haruhime.moe.

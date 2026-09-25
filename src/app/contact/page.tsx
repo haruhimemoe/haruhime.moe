@@ -1,10 +1,10 @@
 /**
  * @file src/app/contact/page.tsx
- * @desc /contact: the email address, the GitHub org, and where to report a security problem.
- *       Static.
+ * @desc /contact: the email address, the Discord server, the GitHub org, and where to report a
+ *       security problem. Static.
  * @author David @dvhsh (https://dvh.sh)
  * @created Wed Sep 23, 2026
- * @modified Wed Sep 23, 2026
+ * @modified Fri Sep 25, 2026
  */
 
 import { Card, PageHeader } from "@haruhimemoe/ui";
@@ -14,7 +14,7 @@ import { SITE } from "@/constants/site";
 
 export const metadata: Metadata = {
   title: "Contact",
-  description: "How to reach haruhime.moe: email, GitHub, and security reports.",
+  description: "How to reach haruhime.moe: email, Discord, GitHub, and security reports.",
   alternates: { canonical: "/contact" },
   openGraph: { url: "/contact" },
 };
@@ -28,6 +28,14 @@ export default function ContactPage() {
         <p className="mt-2 text-sm">
           <a href={`mailto:${SITE.contactEmail}`} className={linkStyles}>
             Send an email
+          </a>
+        </p>
+      </Card>
+      <Card title="Discord">
+        <p className="text-sm">
+          questions and feedback about the tools:{" "}
+          <a href={SITE.discordUrl} className={linkStyles}>
+            {SITE.discordUrl.replace("https://", "")}
           </a>
         </p>
       </Card>

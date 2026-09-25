@@ -2,11 +2,12 @@
  * @file src/components/layout/SiteShell.tsx
  * @desc The site frame, built from @haruhimemoe/ui: PageShell (skip link, #main) with SiteHeader
  *       (the wordmark as a home link, the tools centered beside it) and SiteFooter (Tools,
- *       haruhime.moe and Legal columns, the trademark line, the GitHub icon link). No parent
- *       wordmark in the footer: this is the parent site. The links live in src/constants/nav.ts.
+ *       haruhime.moe and Legal columns, the trademark line, the Discord and GitHub icon links).
+ *       No parent wordmark in the footer: this is the parent site. The links live in
+ *       src/constants/nav.ts.
  * @author David @dvhsh (https://dvh.sh)
  * @created Wed Sep 23, 2026
- * @modified Wed Sep 23, 2026
+ * @modified Fri Sep 25, 2026
  */
 
 import { PageShell, SiteFooter, SiteHeader } from "@haruhimemoe/ui";
@@ -49,6 +50,7 @@ export function SiteShell({ children }: { children: ReactNode }) {
           finePrint={SITE.trademarkNotice}
           parentLink={false}
           githubHref={SITE.githubOrg}
+          discordHref={SITE.discordUrl}
         />
       }
     >

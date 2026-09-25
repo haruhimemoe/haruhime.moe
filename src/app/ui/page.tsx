@@ -453,7 +453,7 @@ export default function UiPage() {
         </Demo>
         <Demo
           name="SiteFooter"
-          note="The footer below: the Tools, haruhime.moe and Legal columns, the trademark line as fine print, and the GitHub icon link. The tool sites also show the haruhime.moe wordmark there; this site turns it off, since it is haruhime.moe."
+          note="The footer below: the Tools, haruhime.moe and Legal columns, the trademark line as fine print, and the Discord and GitHub icon links. The tool sites also show the haruhime.moe wordmark there; this site turns it off, since it is haruhime.moe."
         />
         <Demo
           name="PageShell"
