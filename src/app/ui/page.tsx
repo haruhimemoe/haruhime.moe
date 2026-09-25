@@ -6,7 +6,7 @@
  *       the filter demos are one small client component.
  * @author David @dvhsh (https://dvh.sh)
  * @created Wed Sep 23, 2026
- * @modified Thu Sep 24, 2026
+ * @modified Fri Sep 25, 2026
  */
 
 import {
@@ -16,6 +16,7 @@ import {
   Card,
   Checkbox,
   CopyButton,
+  DiscordIcon,
   fieldClasses,
   GitHubIcon,
   HaruhimeWordmark,
@@ -153,10 +154,15 @@ export default function UiPage() {
           </details>
         </Demo>
 
-        <Demo name="Card" note="The panel, without and with a title. A title makes it a region.">
+        <Demo
+          name="Card"
+          note="The panel, without and with a title. A title makes it a region. Its heading is an h2 unless headingLevel says otherwise."
+        >
           <Card>A card without a title. Just a rounded b4 panel.</Card>
-          <Card title="A card with a title">
-            <p className="text-sm">The title is an h2 that names the card.</p>
+          <Card title="A card with a title" headingLevel={4}>
+            <p className="text-sm">
+              The title names the card. It's an h4 here (headingLevel 4), under this demo's h3.
+            </p>
           </Card>
         </Demo>
 
@@ -369,6 +375,23 @@ export default function UiPage() {
       </DemoGroup>
 
       <DemoGroup id="icons" title="Icons">
+        <Demo
+          name="DiscordIcon"
+          note="The Discord logo in the text color, kept white here as Discord's brand guidelines ask, at the default size and larger. Screen readers skip it, so the link around it carries the name."
+        >
+          <div className="flex flex-wrap items-center gap-4 text-c1">
+            <DiscordIcon />
+            <DiscordIcon className="size-8" />
+            <a
+              href={SITE.discordUrl}
+              aria-label="haruhime.moe on Discord"
+              className="transition-opacity hover:opacity-80"
+            >
+              <DiscordIcon className="size-8" />
+            </a>
+          </div>
+        </Demo>
+
         <Demo
           name="GitHubIcon"
           note="The GitHub mark in the text color, at the default size and larger. Screen readers skip it, so the link around it carries the name."

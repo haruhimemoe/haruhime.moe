@@ -1,12 +1,13 @@
 /**
  * @file tests/components/app/UiPage.test.tsx
  * @desc /ui: title, one h1, the intro links and which sites the lead says use the kit, every group
- *       heading, a demo for every component @haruhimemoe/ui exports, the states each demo promises,
+ *       heading, a demo for every component @haruhimemoe/ui exports (DiscordIcon and Card's
+ *       headingLevel included), the states each demo promises,
  *       a working filter panel (Clear filters shows for any filter, the length maximum included),
  *       and no axe violations.
  * @author David @dvhsh (https://dvh.sh)
  * @created Wed Sep 23, 2026
- * @modified Thu Sep 24, 2026
+ * @modified Fri Sep 25, 2026
  */
 
 import * as ui from "@haruhimemoe/ui";
@@ -102,9 +103,12 @@ describe("/ui", () => {
     expect(external).toHaveAttribute("rel", "noreferrer");
   });
 
-  it("shows a card with and without a title, and every notice tone", () => {
+  it("shows a card with and without a title (an h4 under its demo), and every notice tone", () => {
     render(<UiPage />);
-    expect(screen.getByRole("region", { name: "A card with a title" })).toBeInTheDocument();
+    const titled = screen.getByRole("region", { name: "A card with a title" });
+    expect(
+      within(titled).getByRole("heading", { level: 4, name: "A card with a title" }),
+    ).toBeInTheDocument();
     expect(screen.getByText(/A card without a title/)).toBeInTheDocument();
     const notices = within(demo("Notice"));
     for (const text of [/^Info:/, /^Warning:/, /^Error:/, /couldn't be added/]) {
@@ -177,6 +181,20 @@ describe("/ui", () => {
       within(demo("HaruhimeWordmarkLink")).getByRole("link", { name: "haruhime.moe" }),
     ).toHaveAttribute("href", "https://www.haruhime.moe");
     expect(screen.getByRole("link", { name: "@haruhimemoe/ui on GitHub" })).toBeInTheDocument();
+  });
+
+  it("shows the Discord logo in white, and in a named link to the server", () => {
+    render(<UiPage />);
+    const discord = demo("DiscordIcon");
+    const logos = [...discord.querySelectorAll("svg")];
+    expect(logos).toHaveLength(3);
+    for (const logo of logos) {
+      expect(logo.closest(".text-c1")).not.toBeNull();
+    }
+    expect(within(discord).getByRole("link", { name: "haruhime.moe on Discord" })).toHaveAttribute(
+      "href",
+      "https://discord.gg/bKy9kjMV4y",
+    );
   });
 
   it("shows an open-ended range and an m:ss one", () => {
