@@ -59,3 +59,15 @@ for (const key of ["packs", "pools", "sheets"]) {
 ```
 
 The first command writes `public/brand/haruhime-*` and `src/app/icon.svg`, `apple-icon.png`, `opengraph-image.png` and its alt text. The second writes the tool icons the homepage and `/brand` use. Run `bun run test` afterwards: it checks the palette still matches the [@haruhimemoe/ui](https://github.com/haruhimemoe/ui) theme at the hue `src/app/globals.css` sets. Commit the changes.
+
+### Repo banners
+
+`public/brand/repos/` holds a README banner for every haruhimemoe repo, dark and light (`<repo>-banner.svg` and `<repo>-banner-on-light.svg`). The list is `REPO_BANNERS` in `src/constants/brand.ts`: packs and pools draw their own brand, haruhime.moe and `.github` draw haruhime's, and each package draws its name in haruhime's pink over a short `@haruhimemoe/<name>: ...` line. To redraw them after changing the list or updating `@haruhimemoe/brand`:
+
+```bash
+bun run repo-banners --png /tmp/repo-banners
+```
+
+`--png <dir>` also renders each banner to a PNG there. Open every one and check the text fits and reads on both backgrounds, then commit the SVGs (not the PNGs). A test fails if a committed banner differs from what the script draws, or if a name or tagline gets too wide for the banner.
+
+Next won't serve a file whose name starts with a dot, so `next.config.ts` serves `.github`'s two banners from haruhime.moe's, which are the same drawing.

@@ -20,7 +20,8 @@ const PAGES: Record<(typeof PAGE_PATHS)[number], { title: string; description: s
   },
   "/brand": {
     title: "Brand",
-    description: "The haruhime.moe name, logos, colors, and the packs/pools/sheets icons.",
+    description:
+      "The haruhime.moe name, logos, colors, the packs/pools/sheets icons, and every repo's README banner.",
   },
   "/ui": {
     title: "UI",

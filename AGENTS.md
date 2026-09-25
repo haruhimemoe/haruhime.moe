@@ -21,11 +21,15 @@ src/components/   layout/ (SiteShell: the @haruhimemoe/ui frame), ui/ (linkStyle
                   the client filter demos; the other demos are inline in ui/page.tsx)
 src/constants/    static data (site.ts: identity, EVERGREEN_CUP and PAGE_PATHS; tools.ts; nav.ts:
                   header and footer links; brand.ts: which swatches, logos and banners /brand
-                  shows; legal.ts: the disclaimer date)
+                  shows, and REPO_BANNERS, every repo's README banner; legal.ts: the disclaimer
+                  date)
 src/content/      editable copy as data (thanks.ts)
 src/utils/        pure, stateless helpers (cn, color, date, length, and the llms.txt and
                   security.txt builders)
-public/brand/     generated brand files (see CONTRIBUTING.md); never hand-edit
+public/brand/     generated brand files (see CONTRIBUTING.md); never hand-edit. repos/ holds every
+                  haruhimemoe repo's README banner, written by scripts/repo-banners.ts
+scripts/          repo-banners.ts (`bun run repo-banners`): draws public/brand/repos from
+                  REPO_BANNERS with @haruhimemoe/brand
 tests/            unit/ (node), components/ (jsdom), helpers/ (axe), setup/
 llms.txt          repo guide for LLMs (points at the live /llms.txt); not served by the site
 ```
@@ -59,7 +63,7 @@ Dates match `date "+%a %b %-d, %Y"`. Update `@modified` on edits, never `@create
 ## 5. Tests
 
 - Everything under `tests/`. Never co-locate tests in `src/`.
-- `tests/unit/` (node) mirrors `src/` paths: `src/utils/color.ts` is tested by `tests/unit/utils/color.test.ts`, `src/app/sitemap.ts` by `tests/unit/app/sitemap.test.ts`.
+- `tests/unit/` (node) mirrors `src/` paths: `src/utils/color.ts` is tested by `tests/unit/utils/color.test.ts`, `src/app/sitemap.ts` by `tests/unit/app/sitemap.test.ts`. Scripts follow the same rule: `scripts/repo-banners.ts` by `tests/unit/scripts/repo-banners.test.ts`.
 - `tests/components/` (jsdom) mirrors `src/components/` without the `components/` segment: `src/components/home/ToolCard.tsx` is tested by `tests/components/home/ToolCard.test.tsx`.
 - Page tests are flat, named after the page's default export: `tests/components/app/<Name>.test.tsx`. `src/app/ui/page.tsx` (`UiPage`) is tested by `tests/components/app/UiPage.test.tsx`, `src/app/page.tsx` by `HomePage.test.tsx`, `src/app/not-found.tsx` by `NotFound.test.tsx`.
 - `bun run test` runs both Vitest projects; `test:unit` and `test:components` run one.
@@ -83,6 +87,7 @@ The packs look, from the [@haruhimemoe/ui](https://github.com/haruhimemoe/ui) th
 - The thanks list is `src/content/thanks.ts`: a name, an optional https link, one line each.
 - Tools live in `src/constants/tools.ts`. A tool gets its `url` the day it launches; until then it shows as "coming soon" (homepage and `/llms.txt`) and "soon" (header and footer) and links nowhere. A live tool still in beta sets `beta: true`: its homepage card shows a small "beta" label and its `/llms.txt` line says "In beta." (the header and footer stay plain). `about` is the tool's longer `/llms.txt` description and `llmsTxt: true` links the tool's own `/llms.txt`; both are for live tools only. `tests/unit/constants/tools.test.ts` pins which tools are live and which are in beta, so update it in the same commit. Never write that every pool on pools comes from otdb: pools lists pools from several sources.
 - A new page goes in `PAGE_PATHS` (`src/constants/site.ts`) so the sitemap and `/llms.txt` list it. It also needs a title and description in `PAGES` in `src/utils/llms-txt.ts` (typecheck fails without one), a render test, and a footer link in `src/constants/nav.ts` if visitors need one.
+- Every haruhimemoe repo's README banner comes from `REPO_BANNERS` in `src/constants/brand.ts`. After changing it or `@haruhimemoe/brand`, run `bun run repo-banners --png <dir>`, look at every PNG, and commit the SVGs in `public/brand/repos/` (never the PNGs). Package taglines read `@haruhimemoe/<name>: <a few words>` and must fit the banner; `tests/unit/scripts/repo-banners.test.ts` measures them. Next won't serve a public file whose name starts with a dot, so `next.config.ts` rewrites `.github`'s two banner URLs to haruhime.moe's identical files. If `.github` ever draws something different, drop the rewrite and give its files a name without the leading dot.
 - Disclaimer wording changes bump `DISCLAIMER_UPDATED` in `src/constants/legal.ts` in the same commit. Its test guards the required clauses.
 
 ## 8. Commits and PRs

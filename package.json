@@ -30,6 +30,7 @@
     "test:components": "vitest run --project components",
     "test:coverage": "vitest run --coverage",
     "test:watch": "vitest",
+    "repo-banners": "bun scripts/repo-banners.ts",
     "prepare": "git rev-parse --git-dir >/dev/null 2>&1 && lefthook install || true"
   },
   "dependencies": {

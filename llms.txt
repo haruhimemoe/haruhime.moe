@@ -21,6 +21,8 @@
 - [src/content/thanks.ts](https://github.com/haruhimemoe/haruhime.moe/blob/main/src/content/thanks.ts): the thanks list
 - [src/constants/site.ts](https://github.com/haruhimemoe/haruhime.moe/blob/main/src/constants/site.ts): site identity and the list of pages
 - [src/utils/llms-txt.ts](https://github.com/haruhimemoe/haruhime.moe/blob/main/src/utils/llms-txt.ts): builds the live /llms.txt
+- [src/constants/brand.ts](https://github.com/haruhimemoe/haruhime.moe/blob/main/src/constants/brand.ts): the brand kit /brand shows, and REPO_BANNERS, the list of every haruhimemoe repo's README banner
+- [scripts/repo-banners.ts](https://github.com/haruhimemoe/haruhime.moe/blob/main/scripts/repo-banners.ts): draws those banners into public/brand/repos (`bun run repo-banners`)
 
 ## Elsewhere
 
@@ -33,5 +35,5 @@
 ## Optional
 
 - [CHANGELOG.md](https://github.com/haruhimemoe/haruhime.moe/blob/main/CHANGELOG.md): what changed on the site
-- [CONTRIBUTING.md](https://github.com/haruhimemoe/haruhime.moe/blob/main/CONTRIBUTING.md): setup, checks, changelog lines and regenerating the brand files
+- [CONTRIBUTING.md](https://github.com/haruhimemoe/haruhime.moe/blob/main/CONTRIBUTING.md): setup, checks, changelog lines and regenerating the brand files and repo banners
 - [SECURITY.md](https://github.com/haruhimemoe/haruhime.moe/blob/main/SECURITY.md): how to report a vulnerability

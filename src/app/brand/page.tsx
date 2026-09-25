@@ -1,16 +1,22 @@
 /**
  * @file src/app/brand/page.tsx
- * @desc /brand: how to write the name, logos and README banners to download, colors, the product
- *       family, type and usage. Static.
+ * @desc /brand: how to write the name, logos and README banners to download, every haruhimemoe
+ *       repo's README banner, colors, the product family, type and usage. Static.
  * @author David @dvhsh (https://dvh.sh)
  * @created Wed Sep 23, 2026
- * @modified Wed Sep 23, 2026
+ * @modified Fri Sep 25, 2026
  */
 
 import { Card, PageHeader } from "@haruhimemoe/ui";
 import type { Metadata } from "next";
 import { linkStyles } from "@/components/ui/linkStyles";
-import { BANNER_SIZE, BRAND_ASSETS, BRAND_BANNERS, BRAND_COLORS } from "@/constants/brand";
+import {
+  BANNER_SIZE,
+  BRAND_ASSETS,
+  BRAND_BANNERS,
+  BRAND_COLORS,
+  REPO_BANNERS,
+} from "@/constants/brand";
 import { SITE } from "@/constants/site";
 import { TOOLS } from "@/constants/tools";
 import { cn } from "@/utils/cn";
@@ -19,7 +25,7 @@ import { hslToHex } from "@/utils/color";
 export const metadata: Metadata = {
   title: "Brand",
   description:
-    "The haruhime.moe name, logos, colors, and type, plus the packs, pools and sheets icons.",
+    "The haruhime.moe name, logos, colors, and type, plus the packs, pools and sheets icons and every repo's README banner.",
   alternates: { canonical: "/brand" },
   openGraph: { url: "/brand" },
 };
@@ -98,6 +104,53 @@ export default function BrandPage() {
           Use the logos as they are: don't recolor or stretch them, and don't pair them with the
           osu! logo in a way that suggests ppy is involved.
         </p>
+      </Card>
+      <Card title="README banners">
+        <p className="mb-4 text-sm">
+          One for the top of each haruhimemoe repo's README. packs and pools use their own colors;
+          everything else uses haruhime's pink.
+        </p>
+        <ul className="grid gap-6 sm:grid-cols-2">
+          {REPO_BANNERS.map((banner) => (
+            <li key={banner.repo} className="flex flex-col gap-2">
+              {/* biome-ignore lint/performance/noImgElement: static SVG preview, no optimization needed */}
+              <img
+                src={`/${banner.dark}`}
+                alt=""
+                width={BANNER_SIZE.width}
+                height={BANNER_SIZE.height}
+                loading="lazy"
+                className="h-auto w-full"
+              />
+              <p className="text-sm">
+                <a href={banner.href} className={cn(linkStyles, "font-bold")}>
+                  haruhimemoe/{banner.repo}
+                </a>
+              </p>
+              <p className="text-c3 text-sm">
+                Download for{" "}
+                <a
+                  href={`/${banner.dark}`}
+                  download
+                  aria-label={`Download ${banner.repo} banner for dark backgrounds`}
+                  className={linkStyles}
+                >
+                  dark
+                </a>{" "}
+                or{" "}
+                <a
+                  href={`/${banner.light}`}
+                  download
+                  aria-label={`Download ${banner.repo} banner for light backgrounds`}
+                  className={linkStyles}
+                >
+                  light
+                </a>{" "}
+                backgrounds
+              </p>
+            </li>
+          ))}
+        </ul>
       </Card>
       <Card title="Colors">
         <ul className="grid gap-3 sm:grid-cols-3">
