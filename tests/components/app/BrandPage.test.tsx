@@ -1,7 +1,8 @@
 /**
  * @file tests/components/app/BrandPage.test.tsx
  * @desc /brand: title, one h1, name rules, downloadable logos and README banners, every repo's
- *       README banner linked to its repo, swatches, product family, type, trademark notice.
+ *       README banner linked to its repo, with its tagline as alt text and download names without
+ *       a leading dot, swatches, product family, type, trademark notice.
  * @author David @dvhsh (https://dvh.sh)
  * @created Wed Sep 23, 2026
  * @modified Fri Sep 25, 2026
@@ -47,7 +48,9 @@ describe("/brand", () => {
   it("offers the README banner, dark and light, next to the logos", () => {
     render(<BrandPage />);
     const logo = screen.getByRole("region", { name: "Logo" });
-    expect(within(logo).getByRole("heading", { level: 3, name: "README banner" })).toBeVisible();
+    expect(
+      within(logo).getByRole("heading", { level: 3, name: "haruhime.moe README banner" }),
+    ).toBeVisible();
     expect(within(logo).getByText(/For README headers, like the one on our/)).toHaveTextContent(
       "For README headers, like the one on our GitHub profile.",
     );
@@ -67,7 +70,7 @@ describe("/brand", () => {
     }
   });
 
-  it("shows every repo's README banner, linked to its repo, with both files to download", () => {
+  it("shows every repo's README banner with alt text, its repo link and both files", () => {
     render(<BrandPage />);
     const section = screen.getByRole("region", { name: "README banners" });
     const items = within(section).getAllByRole("listitem");
@@ -78,22 +81,33 @@ describe("/brand", () => {
         "href",
         `https://github.com/haruhimemoe/${banner.repo}`,
       );
-      expect(items[index]?.querySelector("img")).toHaveAttribute(
-        "src",
-        `/brand/repos/${banner.repo}-banner.svg`,
-      );
-      for (const [background, href] of [
-        ["dark", `/${banner.dark}`],
-        ["light", `/${banner.light}`],
+      const preview = item.getByRole("img", { name: `${banner.repo} banner: ${banner.tagline}` });
+      expect(preview).toHaveAttribute("src", `/brand/repos/${banner.repo}-banner.svg`);
+      const name = banner.repo.replace(/^\./, "");
+      for (const [background, href, download] of [
+        ["dark", `/${banner.dark}`, `${name}-banner.svg`],
+        ["light", `/${banner.light}`, `${name}-banner-on-light.svg`],
       ] as const) {
         const link = item.getByRole("link", {
           name: `Download ${banner.repo} banner for ${background} backgrounds`,
         });
         expect(link).toHaveAttribute("href", href);
-        expect(link).toHaveAttribute("download");
+        expect(link).toHaveAttribute("download", download);
         expect(link).toHaveTextContent(background);
       }
     });
+  });
+
+  it("saves .github's banners without the leading dot, which would hide them", () => {
+    render(<BrandPage />);
+    for (const [background, download] of [
+      ["dark", "github-banner.svg"],
+      ["light", "github-banner-on-light.svg"],
+    ]) {
+      expect(
+        screen.getByRole("link", { name: `Download .github banner for ${background} backgrounds` }),
+      ).toHaveAttribute("download", download);
+    }
   });
 
   it("shows the product family with icons and hues", () => {

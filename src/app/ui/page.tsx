@@ -377,7 +377,7 @@ export default function UiPage() {
       <DemoGroup id="icons" title="Icons">
         <Demo
           name="DiscordIcon"
-          note="The Discord logo in the text color, kept white here as Discord's brand guidelines ask, at the default size and larger. Screen readers skip it, so the link around it carries the name."
+          note="The Discord logo in the text color, kept white here (one of the colors Discord's brand guidelines allow), at the default size and larger. Screen readers skip it, so the link around it carries the name."
         >
           <div className="flex flex-wrap items-center gap-4 text-c1">
             <DiscordIcon />

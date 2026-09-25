@@ -1,7 +1,7 @@
 /**
  * @file src/app/brand/page.tsx
- * @desc /brand: how to write the name, logos and README banners to download, every haruhimemoe
- *       repo's README banner, colors, the product family, type and usage. Static.
+ * @desc /brand: how to write the name, the logos and README banners (haruhime.moe's and every
+ *       haruhimemoe repo's) to download, colors, the product family, type and usage. Static.
  * @author David @dvhsh (https://dvh.sh)
  * @created Wed Sep 23, 2026
  * @modified Fri Sep 25, 2026
@@ -29,6 +29,10 @@ export const metadata: Metadata = {
   alternates: { canonical: "/brand" },
   openGraph: { url: "/brand" },
 };
+
+// The name a download saves as: the file's own, minus a leading dot. .github's banners would
+// otherwise save as hidden files on macOS and Linux (and browsers trim the dot anyway).
+const saveAs = (file: string): string => file.slice(file.lastIndexOf("/") + 1).replace(/^\./, "");
 
 export default function BrandPage() {
   return (
@@ -68,7 +72,7 @@ export default function BrandPage() {
             </li>
           ))}
         </ul>
-        <h3 className="mt-6 mb-1 font-bold text-c1">README banner</h3>
+        <h3 className="mt-6 mb-1 font-bold text-c1">haruhime.moe README banner</h3>
         <p className="mb-4 text-sm">
           For README headers, like the one on our{" "}
           <a href={SITE.githubOrg} className={linkStyles}>
@@ -116,7 +120,7 @@ export default function BrandPage() {
               {/* biome-ignore lint/performance/noImgElement: static SVG preview, no optimization needed */}
               <img
                 src={`/${banner.dark}`}
-                alt=""
+                alt={`${banner.repo} banner: ${banner.tagline}`}
                 width={BANNER_SIZE.width}
                 height={BANNER_SIZE.height}
                 loading="lazy"
@@ -131,7 +135,7 @@ export default function BrandPage() {
                 Download for{" "}
                 <a
                   href={`/${banner.dark}`}
-                  download
+                  download={saveAs(banner.dark)}
                   aria-label={`Download ${banner.repo} banner for dark backgrounds`}
                   className={linkStyles}
                 >
@@ -140,7 +144,7 @@ export default function BrandPage() {
                 or{" "}
                 <a
                   href={`/${banner.light}`}
-                  download
+                  download={saveAs(banner.light)}
                   aria-label={`Download ${banner.repo} banner for light backgrounds`}
                   className={linkStyles}
                 >

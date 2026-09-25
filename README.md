@@ -12,7 +12,7 @@ Live at https://www.haruhime.moe.
 | --- | --- |
 | [`/`](https://www.haruhime.moe/) | The tools, an Evergreen Cup banner and a short hello |
 | [`/thanks`](https://www.haruhime.moe/thanks) | The people and projects the tools lean on |
-| [`/brand`](https://www.haruhime.moe/brand) | The name, logos and README banners to download, every haruhimemoe repo's README banner, colors, type and the tool icons |
+| [`/brand`](https://www.haruhime.moe/brand) | The name, logos, README banners for haruhime.moe and every haruhimemoe repo, colors, type and the tool icons |
 | [`/ui`](https://www.haruhime.moe/ui) | Every @haruhimemoe/ui component, rendered in its states |
 | [`/contact`](https://www.haruhime.moe/contact) | Email, the Discord server, GitHub and where to send security reports |
 | [`/disclaimer`](https://www.haruhime.moe/disclaimer) | No ppy affiliation, the osu! API and mirror terms, who owns beatmaps, the as-is notice, the AI-help note |

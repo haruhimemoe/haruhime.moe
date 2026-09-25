@@ -34,7 +34,7 @@ export const markFor = (name: string): string => {
  *          tagline and its GitHub repo
  */
 export const productFor = (banner: RepoBanner): Product =>
-  "product" in banner
+  banner.product
     ? PRODUCTS[banner.product]
     : {
         name: banner.repo,

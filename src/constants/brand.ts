@@ -59,9 +59,17 @@ export const BRAND_BANNERS = [
 
 /**
  * What a repo's banner draws: a tool's own brand, by its @haruhimemoe/brand product key, or, for
- * a package, its name in the parent's pink over a short line of its own.
+ * a package (no `product`), its name in the parent's pink over a short line of its own.
  */
-type RepoBannerSource = { product: "haruhime" | "packs" | "pools" } | { tagline: string };
+type RepoBannerSource = {
+  product?: "haruhime" | "packs" | "pools";
+  /**
+   * The line under the name, which /brand's preview reads out as alt text. A tool's is its
+   * product's tagline, copied here so the page needn't import @haruhimemoe/brand; a test keeps the
+   * two equal.
+   */
+  tagline: string;
+};
 
 /** One haruhimemoe repo's README banner: the repo, what it draws, and its two files. */
 export type RepoBanner = RepoBannerSource & {
@@ -90,10 +98,16 @@ const repoBanner = (repo: string, source: RepoBannerSource): RepoBanner => ({
  * short enough to fit the banner; a test measures them.
  */
 export const REPO_BANNERS: readonly RepoBanner[] = [
-  repoBanner("haruhime.moe", { product: "haruhime" }),
-  repoBanner(".github", { product: "haruhime" }),
-  repoBanner("packs.haruhime.moe", { product: "packs" }),
-  repoBanner("pools.haruhime.moe", { product: "pools" }),
+  repoBanner("haruhime.moe", { product: "haruhime", tagline: "osu! tools for tournament hosts" }),
+  repoBanner(".github", { product: "haruhime", tagline: "osu! tools for tournament hosts" }),
+  repoBanner("packs.haruhime.moe", {
+    product: "packs",
+    tagline: "osu! beatmap packs for tournament hosts",
+  }),
+  repoBanner("pools.haruhime.moe", {
+    product: "pools",
+    tagline: "osu! mappools for tournament hosts",
+  }),
   repoBanner("ui", { tagline: "@haruhimemoe/ui: React components and theme" }),
   repoBanner("osu", { tagline: "@haruhimemoe/osu: osu! API v2 client" }),
   repoBanner("hinai", { tagline: "@haruhimemoe/hinai: hinai beatmap mirror client" }),

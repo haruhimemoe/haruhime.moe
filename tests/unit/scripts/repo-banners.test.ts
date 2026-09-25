@@ -3,9 +3,9 @@
  * @desc scripts/repo-banners.ts: its list is exactly the 11 haruhimemoe repos, each writes
  *       public/brand/repos/<repo>-banner.svg and <repo>-banner-on-light.svg, tools draw their own
  *       product and packages the parent's hue with an "@haruhimemoe/<name>: " tagline
- *       (claude-plugin's opens "haruhime: "), every tagline and name fits the banner, the committed
- *       files match what the script writes, and .github's banners (served through next.config's
- *       rewrite) are haruhime.moe's.
+ *       (claude-plugin's opens "haruhime: "), each entry's tagline is the one its banner draws,
+ *       every tagline and name fits the banner, the committed files match what the script writes,
+ *       and .github's banners (served through next.config's rewrite) are haruhime.moe's.
  * @author David @dvhsh (https://dvh.sh)
  * @created Fri Sep 25, 2026
  * @modified Fri Sep 25, 2026
@@ -107,7 +107,7 @@ describe("productFor", () => {
     expect(byRepo.get("pools.haruhime.moe")).toBe(PRODUCTS.pools);
   });
 
-  it.each(REPO_BANNERS.filter((banner) => "tagline" in banner).map((b) => [b.repo, b] as const))(
+  it.each(REPO_BANNERS.filter((banner) => !banner.product).map((b) => [b.repo, b] as const))(
     "draws %s as a package: its name, the parent's hue, its repo",
     (repo, banner) => {
       const product = productFor(banner);
@@ -120,6 +120,13 @@ describe("productFor", () => {
       const prefix = repo === "claude-plugin" ? "haruhime: " : `@haruhimemoe/${repo}: `;
       expect(product.tagline.startsWith(prefix)).toBe(true);
       expect(product.tagline.length).toBeGreaterThan(prefix.length);
+    },
+  );
+
+  it.each(REPO_BANNERS.map((banner) => [banner.repo, banner] as const))(
+    "%s's tagline, which /brand's alt text reads, is the one its banner draws",
+    (_repo, banner) => {
+      expect(productFor(banner).tagline).toBe(banner.tagline);
     },
   );
 

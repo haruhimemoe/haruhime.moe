@@ -68,6 +68,6 @@ The first command writes `public/brand/haruhime-*` and `src/app/icon.svg`, `appl
 bun run repo-banners --png /tmp/repo-banners
 ```
 
-`--png <dir>` also renders each banner to a PNG there. Open every one and check the text fits and reads on both backgrounds, then commit the SVGs (not the PNGs). A test fails if a committed banner differs from what the script draws, or if a name or tagline gets too wide for the banner.
+`--png <dir>` also renders each banner to a PNG there. Open every one and check the text fits and reads on both backgrounds, then commit the SVGs (not the PNGs). A test fails if a committed banner differs from what the script draws, if a name or tagline gets too wide for the banner, or if a tool's `tagline` in `REPO_BANNERS` (the alt text on `/brand`) no longer matches the one `@haruhimemoe/brand` draws.
 
 Next won't serve a file whose name starts with a dot, so `next.config.ts` serves `.github`'s two banners from haruhime.moe's, which are the same drawing.
