@@ -4,7 +4,7 @@
  *       sources; icons exist; hues match the brand kit.
  * @author David @dvhsh (https://dvh.sh)
  * @created Wed Sep 23, 2026
- * @modified Fri Sep 25, 2026
+ * @modified Sat Sep 26, 2026
  */
 
 import { existsSync, readFileSync } from "node:fs";
@@ -33,7 +33,7 @@ describe("TOOLS", () => {
 
   it("says pools has several sources, never that every pool comes from otdb", () => {
     const about = TOOLS[1]?.about ?? "";
-    expect(about).toMatch(/several sources \(otdb, tournament hosts and community submissions\)/);
+    expect(about).toMatch(/several sources \(tournament hosts, community submissions and otdb\)/);
     expect(about).not.toMatch(/(every|all) pools?\b[^.]*otdb/i);
   });
 

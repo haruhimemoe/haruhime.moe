@@ -6,7 +6,7 @@
  *       A live tool still in beta says so on its homepage card and in /llms.txt.
  * @author David @dvhsh (https://dvh.sh)
  * @created Wed Sep 23, 2026
- * @modified Fri Sep 25, 2026
+ * @modified Sat Sep 26, 2026
  */
 
 /** One tool. `url` is set only once the tool is live. */
@@ -44,7 +44,7 @@ export const TOOLS: readonly Tool[] = [
     url: "https://pools.haruhime.moe",
     beta: true,
     about:
-      "Lists past tournament pools from several sources (otdb, tournament hosts and community submissions), searches every osu! map, leaving out maps that officially supported tournaments can't use, shows where a map was played before, and checks a pool against the content rules.",
+      "Lists past tournament pools from several sources (tournament hosts, community submissions and otdb), searches every osu! map, leaving out maps that officially supported tournaments can't use, shows where a map was played before, and checks a pool against the content rules.",
     llmsTxt: true,
   },
   {
