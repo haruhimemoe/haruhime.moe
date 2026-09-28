@@ -13,6 +13,6 @@ import { UtilityDemos } from "@/components/showcase/UtilityDemos";
 describe("UtilityDemos", () => {
   it("prints what cx makes of conflicting classes", () => {
     render(<UtilityDemos />);
-    expect(screen.getByText(/"rounded-md px-2 text-h1"/)).toBeInTheDocument();
+    expect(screen.getByText(/"px-2 text-h1"/)).toBeInTheDocument();
   });
 });

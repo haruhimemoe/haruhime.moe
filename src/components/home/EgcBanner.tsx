@@ -4,7 +4,7 @@
  *       mark, linking to evergreencup.org. Sits above everything else on the homepage.
  * @author David @dvhsh (https://dvh.sh)
  * @created Wed Sep 23, 2026
- * @modified Thu Sep 24, 2026
+ * @modified Mon Sep 28, 2026
  */
 
 import { useId } from "react";
@@ -36,7 +36,7 @@ export function EgcBanner() {
       className="flex flex-wrap items-center gap-4 rounded-[10px] bg-[#051a0d] p-5 text-[#d5f2de]"
     >
       <EvergreenMark />
-      <div className="flex min-w-0 flex-1 flex-col gap-1">
+      <div className="flex min-w-0 grow basis-48 flex-col gap-1">
         <h2 id={headingId} className="font-bold text-lg text-white">
           {EVERGREEN_CUP.name}
         </h2>

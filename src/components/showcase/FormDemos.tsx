@@ -68,7 +68,11 @@ export function FormDemos() {
         name="fieldClasses"
         note="The field look as a string, for a bare control that labels itself."
       >
-        <select aria-label="Move to" defaultValue="nm" className={fieldClasses("w-auto")}>
+        <select
+          aria-label="Move to"
+          defaultValue="nm"
+          className={fieldClasses("w-auto self-start")}
+        >
           <option value="nm">Move to NM</option>
           <option value="hd">Move to HD</option>
           <option value="dt">Move to DT</option>

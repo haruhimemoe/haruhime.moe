@@ -10,7 +10,7 @@
 import { cx } from "@haruhimemoe/ui";
 import { Demo } from "@/components/showcase/Demo";
 
-const CX_INPUT = `cx("rounded-md px-2 text-c3", false, "text-h1")`;
+const CX_INPUT = `cx("px-2 text-c3", false, "text-h1")`;
 
 /**
  * @function UtilityDemos
@@ -27,7 +27,7 @@ export function UtilityDemos() {
           <code>
             {CX_INPUT}
             {"\n"}
-            {`// "${cx("rounded-md px-2 text-c3", false, "text-h1")}"`}
+            {`// "${cx("px-2 text-c3", false, "text-h1")}"`}
           </code>
         </pre>
       </Demo>

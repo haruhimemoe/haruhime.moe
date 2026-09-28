@@ -19,7 +19,7 @@ const PARTS = [
   ["THead", "The header row group of the table above."],
   ["TBody", "Its body row group, with a line between rows."],
   ["Th", "A column header (scope col by default), or a bold row header with scope row: the slots."],
-  ["Td", "A cell. Numeric ones (stars, length, BPM) sit right with tabular numbers."],
+  ["Td", "A cell. Numeric ones (stars, length, BPM) use tabular numbers, so digits line up."],
 ] as const;
 
 /**
