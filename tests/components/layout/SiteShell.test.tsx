@@ -1,7 +1,7 @@
 /**
  * @file tests/components/layout/SiteShell.test.tsx
  * @desc SiteShell: skip link to #main and one main landmark; the header's wordmark links home and
- *       the three tools sit in the Tools nav with packs and pools linked; the footer's Tools /
+ *       the four tools sit in the Tools nav with packs and pools linked; the footer's Tools /
  *       haruhime.moe / Legal columns, unreleased tools as plain text, the Discord and GitHub icon
  *       links (Discord as an icon only, not in a column), the trademark notice, and no
  *       parent-site wordmark.
@@ -50,7 +50,7 @@ describe("SiteShell header", () => {
     expect(home.querySelector("img")).toBeNull();
   });
 
-  it("centers the three tools, with packs and pools as links", () => {
+  it("centers the four tools, with packs and pools as links", () => {
     renderShell();
     const tools = within(screen.getByRole("banner")).getByRole("navigation", { name: "Tools" });
     expect(within(tools).getByRole("link", { name: "packs" })).toHaveAttribute(
@@ -62,10 +62,12 @@ describe("SiteShell header", () => {
       "https://pools.haruhime.moe",
     );
     expect(within(tools).getAllByRole("link")).toHaveLength(2);
-    expect(within(tools).getAllByRole("listitem")).toHaveLength(3);
-    const item = within(tools).getByText("sheets").closest('[aria-disabled="true"]');
-    expect(item).not.toBeNull();
-    expect(item).toHaveTextContent("sheets soon");
+    expect(within(tools).getAllByRole("listitem")).toHaveLength(4);
+    for (const name of ["bb", "sheets"]) {
+      const item = within(tools).getByText(name).closest('[aria-disabled="true"]');
+      expect(item).not.toBeNull();
+      expect(item).toHaveTextContent(`${name} soon`);
+    }
   });
 });
 
@@ -78,7 +80,7 @@ describe("SiteShell footer", () => {
     }
   });
 
-  it("links packs and pools and shows sheets as plain text marked soon", () => {
+  it("links packs and pools and shows bb and sheets as plain text marked soon", () => {
     renderShell();
     const tools = within(screen.getByRole("contentinfo")).getByRole("navigation", {
       name: "Tools",
@@ -92,6 +94,7 @@ describe("SiteShell footer", () => {
       "https://pools.haruhime.moe",
     );
     expect(within(tools).getAllByRole("link")).toHaveLength(2);
+    expect(within(tools).getByText("bb").closest("li")).toHaveTextContent("bb soon");
     expect(within(tools).getByText("sheets").closest("li")).toHaveTextContent("sheets soon");
   });
 

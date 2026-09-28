@@ -1,10 +1,11 @@
 /**
  * @file tests/components/app/HomePage.test.tsx
- * @desc /: title, one h1, the Evergreen Cup banner first, the three tools (pools labeled beta),
+ * @desc /: title, one h1, the Evergreen Cup banner first, the four tools (pools labeled beta,
+ *       bb and sheets coming soon), the lead naming players, mappers and hosts,
  *       Organization + Person data under the schema.org context.
  * @author David @dvhsh (https://dvh.sh)
  * @created Wed Sep 23, 2026
- * @modified Fri Sep 25, 2026
+ * @modified Mon Sep 28, 2026
  */
 
 import { render, screen, within } from "@testing-library/react";
@@ -13,16 +14,17 @@ import HomePage, { metadata } from "@/app/page";
 
 describe("/", () => {
   it("has its title and one h1", () => {
-    expect(metadata.title).toEqual({ absolute: "haruhime.moe: osu! tournament tools" });
+    expect(metadata.title).toEqual({ absolute: "haruhime.moe: osu! tools" });
     render(<HomePage />);
+    expect(screen.getByText(/osu! tools for players, mappers and tournament hosts/)).toBeVisible();
     expect(screen.getAllByRole("heading", { level: 1 })).toHaveLength(1);
     expect(screen.getByRole("heading", { level: 1 })).toBeVisible();
   });
 
-  it("shows packs and pools live, pools in beta, and sheets coming soon", () => {
+  it("shows packs and pools live, pools in beta, and bb and sheets coming soon", () => {
     render(<HomePage />);
     const tools = screen.getByRole("region", { name: "Tools" });
-    expect(within(tools).getAllByRole("listitem")).toHaveLength(3);
+    expect(within(tools).getAllByRole("listitem")).toHaveLength(4);
     expect(within(tools).getByRole("link", { name: "packs" })).toHaveAttribute(
       "href",
       "https://packs.haruhime.moe",
@@ -32,7 +34,7 @@ describe("/", () => {
       "https://pools.haruhime.moe",
     );
     expect(within(tools).getAllByRole("link")).toHaveLength(2);
-    expect(within(tools).getAllByText("coming soon")).toHaveLength(1);
+    expect(within(tools).getAllByText("coming soon")).toHaveLength(2);
     const pools = within(tools).getByRole("link", { name: "pools" }).closest("li");
     expect(pools).toHaveTextContent(/beta$/);
     expect(within(tools).getAllByText("beta")).toHaveLength(1);

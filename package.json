@@ -1,7 +1,7 @@
 {
   "name": "haruhime.moe",
   "version": "0.1.0",
-  "description": "haruhime's home page: the osu! tournament tools, thanks, the brand kit, a showcase of @haruhimemoe/ui, contact and a disclaimer.",
+  "description": "haruhime's home page: osu! tools for players, mappers and tournament hosts, thanks, the brand kit, a showcase of @haruhimemoe/ui, contact and a disclaimer.",
   "license": "MIT",
   "author": "David (https://dvh.sh)",
   "homepage": "https://www.haruhime.moe",
@@ -41,7 +41,7 @@
   },
   "devDependencies": {
     "@biomejs/biome": "2.5.14",
-    "@haruhimemoe/brand": "0.4.0",
+    "@haruhimemoe/brand": "0.5.0",
     "@tailwindcss/postcss": "4.3.3",
     "@testing-library/dom": "10.4.2",
     "@testing-library/jest-dom": "7.0.1",

@@ -74,7 +74,7 @@ describe("/brand", () => {
     render(<BrandPage />);
     const section = screen.getByRole("region", { name: "README banners" });
     const items = within(section).getAllByRole("listitem");
-    expect(items).toHaveLength(12);
+    expect(items).toHaveLength(14);
     REPO_BANNERS.forEach((banner, index) => {
       const item = within(items[index] as HTMLElement);
       expect(item.getByRole("link", { name: `haruhimemoe/${banner.repo}` })).toHaveAttribute(

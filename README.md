@@ -2,7 +2,7 @@
 
 # haruhime.moe
 
-The home page for haruhime's osu! tournament tools: [packs](https://packs.haruhime.moe), [pools](https://pools.haruhime.moe) (in beta; build a mappool with a mod-lens map search and co-editors, then download it through packs) and, on the way, sheets. It also has a thanks list, the brand kit, a showcase of the shared [@haruhimemoe/ui](https://github.com/haruhimemoe/ui) components, contact details and a disclaimer.
+The home page for haruhime's osu! tools for players, mappers and tournament hosts: [packs](https://packs.haruhime.moe), [pools](https://pools.haruhime.moe) (in beta; build a mappool with a mod-lens map search and co-editors, then download it through packs) and, on the way, bb (an osu! BBCode editor and templates) and sheets. It also has a thanks list, the brand kit, a showcase of the shared [@haruhimemoe/ui](https://github.com/haruhimemoe/ui) components, contact details and a disclaimer.
 
 Live at https://www.haruhime.moe.
 

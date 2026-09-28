@@ -77,7 +77,7 @@ export const BRAND_BANNERS = [
  * a package (no `product`), its name in the parent's pink over a short line of its own.
  */
 type RepoBannerSource = {
-  product?: "haruhime" | "packs" | "pools";
+  product?: "haruhime" | "packs" | "pools" | "bb";
   /**
    * The line under the name, which /brand's preview reads out as alt text. A tool's comes from
    * its TOOLS entry, which copies its product's tagline so the page needn't draw with
@@ -125,7 +125,7 @@ const toolTagline = (name: string): string => {
 };
 
 /** The haruhime product's tagline in @haruhimemoe/brand, under the site's and .github's name. */
-const HARUHIME_TAGLINE = "osu! tools for tournament hosts";
+const HARUHIME_TAGLINE = "osu! tools for players, mappers and hosts";
 
 /**
  * Every haruhimemoe repo's README banner, in /brand's order: the parent site and the org profile
@@ -137,12 +137,14 @@ export const REPO_BANNERS: readonly RepoBanner[] = [
   repoBanner(".github", { product: "haruhime", tagline: HARUHIME_TAGLINE }),
   repoBanner("packs.haruhime.moe", { product: "packs", tagline: toolTagline("packs") }),
   repoBanner("pools.haruhime.moe", { product: "pools", tagline: toolTagline("pools") }),
+  repoBanner("bb.haruhime.moe", { product: "bb", tagline: toolTagline("bb") }),
   repoBanner("ui", { tagline: "@haruhimemoe/ui: React components and theme" }),
   repoBanner("osu", { tagline: "@haruhimemoe/osu: osu! API v2 client" }),
   repoBanner("hinai", { tagline: "@haruhimemoe/hinai: hinai beatmap mirror client" }),
   repoBanner("brand", { tagline: "@haruhimemoe/brand: logos, icons and banners" }),
   repoBanner("pool", { tagline: "@haruhimemoe/pool: osu! mappools as data" }),
   repoBanner("compliance", { tagline: "@haruhimemoe/compliance: osu! content rule checks" }),
+  repoBanner("bbcode", { tagline: "@haruhimemoe/bbcode: parse and render osu! BBCode" }),
   repoBanner("next-kit", { tagline: "@haruhimemoe/next-kit: Next.js server kit" }),
   repoBanner("claude-plugin", { tagline: "haruhime: osu! skills for Claude" }),
 ];

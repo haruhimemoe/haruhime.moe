@@ -11,10 +11,15 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - `/brand` shows a README banner for every haruhimemoe repo (the site, `.github`, packs, pools, the packages and the Claude Code plugin), each linking its repo, with dark and light SVGs to download from `/brand/repos/`.
 - A Discord icon in the footer, before the GitHub one, linking the haruhime.moe server. `/contact` lists the server too, and `/llms.txt` links it under Elsewhere.
 - A README banner for `@haruhimemoe/next-kit`, the Next.js server kit, on `/brand` and in `/brand/repos/`.
+- bb, an osu! BBCode editor with templates, listed as coming soon on the homepage, in the header and footer, on `/brand` and in `/llms.txt`, with its icon from `@haruhimemoe/brand`.
+- README banners for bb.haruhime.moe and `@haruhimemoe/bbcode`, the BBCode parser and renderer, on `/brand` and in `/brand/repos/`.
 - `/ui` shows every component `@haruhimemoe/ui` 0.4.0 adds: `Badge`, `Disclosure`, `TextLink` and `linkClasses`, `RadioGroup`, `InlineConfirm`, `AsyncButton`, `TypeToConfirm`, `Pagination`'s button mode, `ChoiceChips`, a `Chip` blocked with a reason, the table parts over the sample pool, `StarRating`, `BeatmapStats`, `ModBadge`, `LinkTabs`, `HeaderMenu` and `cx`, in new Text, Tables, osu! and Utilities groups.
 
 ### Changed
 
+- haruhime.moe now describes itself as osu! tools for players, mappers and tournament hosts, not just tournament tools: the homepage title and hello, the site description, `/brand`, `/llms.txt` and the link preview's alt text.
+- `@haruhimemoe/brand` 0.5.0: haruhime's new tagline ("osu! tools for players, mappers and hosts") redraws the haruhime banners, the link preview and the haruhime.moe and `.github` repo banners.
+- The homepage's tool cards sit two across on small screens and four across on wide ones.
 - pools is listed as live, in beta: the homepage card (with a small "beta" label), the header and the footer link to https://pools.haruhime.moe, and `/llms.txt` says what pools does and links its own llms.txt.
 - `/llms.txt` says what packs does too.
 - `/thanks` thanks otdb for the okay to list pools from its mappool export, instead of for the packs pool archive.

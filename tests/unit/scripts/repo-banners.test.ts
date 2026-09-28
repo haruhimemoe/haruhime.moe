@@ -1,6 +1,6 @@
 /**
  * @file tests/unit/scripts/repo-banners.test.ts
- * @desc scripts/repo-banners.ts: its list is exactly the 12 haruhimemoe repos, each writes
+ * @desc scripts/repo-banners.ts: its list is exactly the 14 haruhimemoe repos, each writes
  *       public/brand/repos/<repo>-banner.svg and <repo>-banner-on-light.svg, tools draw their own
  *       product and packages the parent's hue with an "@haruhimemoe/<name>: " tagline
  *       (claude-plugin's opens "haruhime: "), each entry's tagline is the one its banner draws,
@@ -24,17 +24,19 @@ const REPOS = [
   ".github",
   "packs.haruhime.moe",
   "pools.haruhime.moe",
+  "bb.haruhime.moe",
   "ui",
   "osu",
   "hinai",
   "brand",
   "pool",
   "compliance",
+  "bbcode",
   "next-kit",
   "claude-plugin",
 ];
 
-// bannerSvg's type sizes (@haruhimemoe/brand 0.4.0): the name at 128px, the tagline at 40px.
+// bannerSvg's type sizes (@haruhimemoe/brand 0.5.0): the name at 128px, the tagline at 40px.
 const TITLE_SIZE = 128;
 const TAGLINE_SIZE = 40;
 // Each line keeps at least 128px clear on both sides of the 1280px banner.
@@ -46,7 +48,7 @@ const inkWidth = (text: string, weight: 400 | 800, size: number): number => {
 };
 
 describe("REPO_BANNERS", () => {
-  it("covers exactly the 12 haruhimemoe repos, in order", () => {
+  it("covers exactly the 14 haruhimemoe repos, in order", () => {
     expect(REPO_BANNERS.map((banner) => banner.repo)).toEqual(REPOS);
   });
 
@@ -106,6 +108,7 @@ describe("productFor", () => {
     expect(byRepo.get(".github")).toBe(PRODUCTS.haruhime);
     expect(byRepo.get("packs.haruhime.moe")).toBe(PRODUCTS.packs);
     expect(byRepo.get("pools.haruhime.moe")).toBe(PRODUCTS.pools);
+    expect(byRepo.get("bb.haruhime.moe")).toBe(PRODUCTS.bb);
   });
 
   it.each(REPO_BANNERS.filter((banner) => !banner.product).map((b) => [b.repo, b] as const))(

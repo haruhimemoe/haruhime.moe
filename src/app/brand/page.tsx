@@ -32,13 +32,13 @@ export default function BrandPage() {
     <div className="flex flex-col gap-8">
       <PageHeader
         title="Brand"
-        lead="haruhime.moe is home to packs, pools and sheets, osu! tools for tournament hosts. For anything not covered here, write to me."
+        lead="haruhime.moe is home to packs, pools, bb and sheets, osu! tools for players, mappers and tournament hosts. For anything not covered here, write to me."
         meta={<TextLink href={`mailto:${SITE.contactEmail}`}>{SITE.contactEmail}</TextLink>}
       />
       <Card title="Name">
         <p className="text-sm">
           The name is written “haruhime.moe” in lower case, or “haruhime” when you mean the person.
-          The tools are “packs”, “pools” and “sheets”, also lower case. Please don't write
+          The tools are “packs”, “pools”, “bb” and “sheets”, also lower case. Please don't write
           “Haruhime” or “HaruHime”.
         </p>
       </Card>
@@ -97,8 +97,8 @@ export default function BrandPage() {
       </Card>
       <Card title="README banners">
         <p className="mb-4 text-sm">
-          One for the top of each haruhimemoe repo's README. pools uses its own blue; everything
-          else, packs included, uses haruhime's pink.
+          One for the top of each haruhimemoe repo's README. pools uses its own blue and bb its own
+          violet; everything else, packs included, uses haruhime's pink.
         </p>
         <ul className="grid gap-6 sm:grid-cols-2">
           {REPO_BANNERS.map((banner) => (

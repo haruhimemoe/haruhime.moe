@@ -18,7 +18,10 @@ export type Tool = {
   url?: string;
   /** A live tool that's still in beta: its homepage card and /llms.txt line say so. */
   beta?: boolean;
-  /** What the tool does, in a sentence or two, for /llms.txt. */
+  /**
+   * What the tool does, in a sentence or two, for /llms.txt. A tool that hasn't launched can
+   * carry it ready; /llms.txt prints it once the tool has a `url`.
+   */
   about?: string;
   /** The tool serves its own /llms.txt, which ours links. */
   llmsTxt?: boolean;
@@ -46,6 +49,14 @@ export const TOOLS: readonly Tool[] = [
     about:
       "Builds tournament mappools: sign in with osu!, search every osu! map under a mod lens (star rating, AR and OD as the mod changes them), add co-editors, and download the finished pool through packs. Past tournament pools from several sources (tournament hosts, community submissions and otdb) are there for reference, with where a map was played before and a check against the content rules for officially supported tournaments.",
     llmsTxt: true,
+  },
+  {
+    name: "bb",
+    hue: 265,
+    tagline: "osu! BBCode editor and templates",
+    icon: "brand/bb-icon.svg",
+    about:
+      "An osu! BBCode editor with a live osu!-style preview, built-in and public templates, flags, colors and a collab (imagemap) maker.",
   },
   {
     name: "sheets",

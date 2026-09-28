@@ -14,7 +14,8 @@ export const SITE = {
   name: "haruhime.moe",
   person: "haruhime",
   url: "https://www.haruhime.moe",
-  description: "haruhime's osu! tournament tools: packs, pools and sheets, built for hosts.",
+  description:
+    "haruhime's osu! tools for players, mappers and tournament hosts: packs, pools, bb and sheets.",
   contactEmail: "contact@haruhime.moe",
   githubOrg: "https://github.com/haruhimemoe",
   discordUrl: "https://discord.gg/bKy9kjMV4y",

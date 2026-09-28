@@ -1,11 +1,11 @@
 /**
  * @file src/app/page.tsx
  * @desc Homepage: the Evergreen Cup banner up top, a short hello, and the tools (packs live, pools
- *       live in beta, sheets coming soon). Static. Also the site's Organization and Person
+ *       live in beta, bb and sheets coming soon). Static. Also the site's Organization and Person
  *       structured data.
  * @author David @dvhsh (https://dvh.sh)
  * @created Wed Sep 23, 2026
- * @modified Fri Sep 25, 2026
+ * @modified Mon Sep 28, 2026
  */
 
 import { JsonLd, PageHeader } from "@haruhimemoe/ui";
@@ -16,7 +16,7 @@ import { SITE } from "@/constants/site";
 import { TOOLS } from "@/constants/tools";
 
 export const metadata: Metadata = {
-  title: { absolute: `${SITE.name}: osu! tournament tools` },
+  title: { absolute: `${SITE.name}: osu! tools` },
   alternates: { canonical: "/" },
   openGraph: { url: "/" },
 };
@@ -28,14 +28,14 @@ export default function HomePage() {
       <div className="flex flex-col gap-6">
         <PageHeader
           title="hellosu haruhime here"
-          lead="this is a small collection of tools intended to help with the production of osu! tournaments"
+          lead="this is a small collection of osu! tools for players, mappers and tournament hosts"
         />
       </div>
       <section aria-labelledby="tools-heading" className="flex flex-col gap-4">
         <h2 id="tools-heading" className="font-bold text-c1 text-xl">
           Tools
         </h2>
-        <ul className="grid gap-4 sm:grid-cols-3">
+        <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {TOOLS.map((tool) => (
             <ToolCard key={tool.name} tool={tool} />
           ))}
