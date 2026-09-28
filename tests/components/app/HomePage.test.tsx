@@ -1,7 +1,7 @@
 /**
  * @file tests/components/app/HomePage.test.tsx
  * @desc /: title, one h1, the Evergreen Cup banner first, the four tools (pools labeled beta,
- *       bb and sheets coming soon), the lead naming players, mappers and hosts,
+ *       bb live, sheets coming soon), the lead naming players, mappers and hosts,
  *       Organization + Person data under the schema.org context.
  * @author David @dvhsh (https://dvh.sh)
  * @created Wed Sep 23, 2026
@@ -21,7 +21,7 @@ describe("/", () => {
     expect(screen.getByRole("heading", { level: 1 })).toBeVisible();
   });
 
-  it("shows packs and pools live, pools in beta, and bb and sheets coming soon", () => {
+  it("shows packs, pools and bb live, pools in beta, and sheets coming soon", () => {
     render(<HomePage />);
     const tools = screen.getByRole("region", { name: "Tools" });
     expect(within(tools).getAllByRole("listitem")).toHaveLength(4);
@@ -33,8 +33,12 @@ describe("/", () => {
       "href",
       "https://pools.haruhime.moe",
     );
-    expect(within(tools).getAllByRole("link")).toHaveLength(2);
-    expect(within(tools).getAllByText("coming soon")).toHaveLength(2);
+    expect(within(tools).getByRole("link", { name: "bb" })).toHaveAttribute(
+      "href",
+      "https://bb.haruhime.moe",
+    );
+    expect(within(tools).getAllByRole("link")).toHaveLength(3);
+    expect(within(tools).getAllByText("coming soon")).toHaveLength(1);
     const pools = within(tools).getByRole("link", { name: "pools" }).closest("li");
     expect(pools).toHaveTextContent(/beta$/);
     expect(within(tools).getAllByText("beta")).toHaveLength(1);

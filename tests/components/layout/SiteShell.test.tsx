@@ -50,7 +50,7 @@ describe("SiteShell header", () => {
     expect(home.querySelector("img")).toBeNull();
   });
 
-  it("centers the four tools, with packs and pools as links", () => {
+  it("centers the four tools, with packs, pools and bb as links", () => {
     renderShell();
     const tools = within(screen.getByRole("banner")).getByRole("navigation", { name: "Tools" });
     expect(within(tools).getByRole("link", { name: "packs" })).toHaveAttribute(
@@ -61,13 +61,15 @@ describe("SiteShell header", () => {
       "href",
       "https://pools.haruhime.moe",
     );
-    expect(within(tools).getAllByRole("link")).toHaveLength(2);
+    expect(within(tools).getByRole("link", { name: "bb" })).toHaveAttribute(
+      "href",
+      "https://bb.haruhime.moe",
+    );
+    expect(within(tools).getAllByRole("link")).toHaveLength(3);
     expect(within(tools).getAllByRole("listitem")).toHaveLength(4);
-    for (const name of ["bb", "sheets"]) {
-      const item = within(tools).getByText(name).closest('[aria-disabled="true"]');
-      expect(item).not.toBeNull();
-      expect(item).toHaveTextContent(`${name} soon`);
-    }
+    const sheets = within(tools).getByText("sheets").closest('[aria-disabled="true"]');
+    expect(sheets).not.toBeNull();
+    expect(sheets).toHaveTextContent("sheets soon");
   });
 });
 
@@ -80,7 +82,7 @@ describe("SiteShell footer", () => {
     }
   });
 
-  it("links packs and pools and shows bb and sheets as plain text marked soon", () => {
+  it("links packs, pools and bb and shows sheets as plain text marked soon", () => {
     renderShell();
     const tools = within(screen.getByRole("contentinfo")).getByRole("navigation", {
       name: "Tools",
@@ -93,8 +95,11 @@ describe("SiteShell footer", () => {
       "href",
       "https://pools.haruhime.moe",
     );
-    expect(within(tools).getAllByRole("link")).toHaveLength(2);
-    expect(within(tools).getByText("bb").closest("li")).toHaveTextContent("bb soon");
+    expect(within(tools).getByRole("link", { name: "bb" })).toHaveAttribute(
+      "href",
+      "https://bb.haruhime.moe",
+    );
+    expect(within(tools).getAllByRole("link")).toHaveLength(3);
     expect(within(tools).getByText("sheets").closest("li")).toHaveTextContent("sheets soon");
   });
 

@@ -55,8 +55,10 @@ export const TOOLS: readonly Tool[] = [
     hue: 265,
     tagline: "osu! BBCode editor and templates",
     icon: "brand/bb-icon.svg",
+    url: "https://bb.haruhime.moe",
     about:
       "An osu! BBCode editor with a live osu!-style preview, built-in and public templates, flags, colors and a collab (imagemap) maker.",
+    llmsTxt: true,
   },
   {
     name: "sheets",

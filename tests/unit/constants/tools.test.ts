@@ -18,8 +18,13 @@ describe("TOOLS", () => {
     expect(TOOLS.map((tool) => tool.name)).toEqual(["packs", "pools", "bb", "sheets"]);
   });
 
-  it("links packs and pools; bb and sheets wait for their launch", () => {
-    expect(TOOLS.filter((tool) => tool.url).map((tool) => tool.name)).toEqual(["packs", "pools"]);
+  it("links packs, pools and bb; sheets waits for its launch", () => {
+    expect(TOOLS.filter((tool) => tool.url).map((tool) => tool.name)).toEqual([
+      "packs",
+      "pools",
+      "bb",
+    ]);
+    expect(TOOLS[2]?.url).toBe("https://bb.haruhime.moe");
     expect(TOOLS[0]?.url).toBe("https://packs.haruhime.moe");
     expect(TOOLS[1]?.url).toBe("https://pools.haruhime.moe");
   });

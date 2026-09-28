@@ -37,6 +37,11 @@ export const THANKS: readonly ThanksEntry[] = [
     line: "otdb, and the okay to list pools from its mappool export.",
   },
   {
+    name: "token",
+    url: "https://github.com/token03/bobert",
+    line: "BoBERT, and the okay to use its map embeddings for similar-map suggestions in pools.",
+  },
+  {
     name: "the hinai beatmap mirror",
     url: "https://mirror.hinamizawa.ai",
     line: "serves the beatmap downloads, so I never host a file.",

@@ -60,7 +60,7 @@ export const PAGES = {
   "/brand": {
     title: "Brand",
     description:
-      "The haruhime.moe name, logos, colors and type, the packs, pools and sheets icons, and every repo's README banner.",
+      "The haruhime.moe name, logos, colors and type, the packs, pools, bb and sheets icons, and every repo's README banner.",
     footer: "haruhime.moe",
   },
   "/ui": {
