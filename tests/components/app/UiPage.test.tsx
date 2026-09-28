@@ -2,20 +2,34 @@
  * @file tests/components/app/UiPage.test.tsx
  * @desc /ui: title, one h1, the intro links and which sites the lead says use the kit, every group
  *       heading, a demo for every component @haruhimemoe/ui exports (DiscordIcon and Card's
- *       headingLevel included), the states each demo promises, a working filter panel (Clear
- *       filters shows for any filter, the length maximum included), and no axe violations.
+ *       headingLevel included), the states each demo promises, JSON-LD from the package's own
+ *       metadata, Pagination in both modes, a working filter panel (Clear filters shows for any
+ *       filter, the length maximum included), and no axe violations. The 0.4.0 demos' behavior is
+ *       tested beside their own files under tests/components/showcase/.
  * @author David @dvhsh (https://dvh.sh)
  * @created Wed Sep 23, 2026
- * @modified Fri Sep 25, 2026
+ * @modified Mon Sep 28, 2026
  */
 
 import * as ui from "@haruhimemoe/ui";
+import uiPackage from "@haruhimemoe/ui/package.json" with { type: "json" };
 import { fireEvent, render, screen, within } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 import UiPage, { metadata } from "@/app/ui/page";
 import { expectNoAxeViolations } from "../../helpers/axe";
 
-const GROUPS = ["Basics", "Forms", "Actions", "Icons", "Filters", "Shell"];
+const GROUPS = [
+  "Basics",
+  "Text",
+  "Forms",
+  "Actions",
+  "Filters",
+  "Tables",
+  "osu!",
+  "Icons",
+  "Shell",
+  "Utilities",
+];
 
 /** The demo block under a component's h3: the h3's wrapper's parent holds the example box. */
 const demo = (name: string): HTMLElement => {
@@ -158,6 +172,14 @@ describe("/ui", () => {
     expect(within(last).queryByRole("link", { name: "Next" })).not.toBeInTheDocument();
   });
 
+  it("pages through results in place with Pagination's buttons", () => {
+    render(<UiPage />);
+    const pages = within(screen.getByRole("navigation", { name: "Pages, button example" }));
+    expect(pages.getByText("Page 1")).toBeInTheDocument();
+    fireEvent.click(pages.getByRole("button", { name: "Next" }));
+    expect(pages.getByText("Page 2")).toBeInTheDocument();
+  });
+
   it("carries JSON-LD for the package", () => {
     const { container } = render(<UiPage />);
     const ld = JSON.parse(
@@ -167,7 +189,9 @@ describe("/ui", () => {
       "@context": "https://schema.org",
       "@type": "SoftwareSourceCode",
       name: "@haruhimemoe/ui",
+      description: uiPackage.description,
       codeRepository: "https://github.com/haruhimemoe/ui",
+      license: `https://spdx.org/licenses/${uiPackage.license}.html`,
     });
   });
 
@@ -220,8 +244,8 @@ describe("/ui", () => {
 
     const mods = within(demo("ChipGroup"));
     expect(mods.getByText("Picked: HD, DT")).toBeInTheDocument();
-    fireEvent.click(mods.getByRole("button", { name: "FL" }));
-    expect(mods.getByText("Picked: HD, DT, FL")).toBeInTheDocument();
+    fireEvent.click(mods.getByRole("button", { name: "HR" }));
+    expect(mods.getByText(/^Picked: /)).toHaveTextContent(/^Picked: (HD|HR|DT)(, (HD|HR|DT)){2}$/);
     expect(mods.getByRole("button", { name: "EZ" })).toBeDisabled();
   });
 

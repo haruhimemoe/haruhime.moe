@@ -4,7 +4,7 @@
  *       security reports.
  * @author David @dvhsh (https://dvh.sh)
  * @created Wed Sep 23, 2026
- * @modified Fri Sep 25, 2026
+ * @modified Mon Sep 28, 2026
  */
 
 import { render, screen, within } from "@testing-library/react";
@@ -44,6 +44,7 @@ describe("/contact", () => {
       "https://github.com/haruhimemoe",
     );
     const security = screen.getByRole("region", { name: "Security" });
-    expect(security).toHaveTextContent("contact@haruhime.moe privately");
+    expect(security).toHaveTextContent("report it privately on GitHub");
+    expect(security).toHaveTextContent("contact@haruhime.moe");
   });
 });

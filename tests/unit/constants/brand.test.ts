@@ -1,18 +1,20 @@
 /**
  * @file tests/unit/constants/brand.test.ts
- * @desc Brand swatches match the @haruhimemoe/ui theme at the hue globals.css sets; brand files
- *       and README banners exist, draw no text, and the banners are the size /brand says.
+ * @desc Brand swatches match the @haruhimemoe/ui theme at the hue globals.css sets and the
+ *       generated palette JSON; brand files and README banners exist, draw no text, and the
+ *       banners are the size /brand says.
  * @author David @dvhsh (https://dvh.sh)
  * @created Wed Sep 23, 2026
- * @modified Wed Sep 23, 2026
+ * @modified Mon Sep 28, 2026
  */
 
 import { existsSync, readFileSync } from "node:fs";
 import { createRequire } from "node:module";
 import path from "node:path";
+import { hslToHex } from "@haruhimemoe/brand/palette";
 import { describe, expect, it } from "vitest";
 import { BANNER_SIZE, BRAND_ASSETS, BRAND_BANNERS, BRAND_COLORS } from "@/constants/brand";
-import { hslToHex } from "@/utils/color";
+import brandPalette from "../../../public/brand/haruhime-palette.json" with { type: "json" };
 
 const css = readFileSync(path.join(process.cwd(), "src/app/globals.css"), "utf8");
 const theme = readFileSync(
@@ -48,6 +50,14 @@ describe("BRAND_COLORS", () => {
       const [s, l] = [Number(match?.[1]), Number(match?.[2] ?? match?.[3])];
       expect(color.hsl).toEqual([hue, s, l]);
       expect(color.hex).toBe(hslToHex(hue, s, l));
+    },
+  );
+
+  it.each(BRAND_COLORS.map((c) => [c.token, c] as const))(
+    "%s matches the generated palette JSON /brand offers",
+    (token, color) => {
+      expect(brandPalette.hue).toBe(hue);
+      expect(color.hex).toBe(brandPalette.colors[token]);
     },
   );
 });

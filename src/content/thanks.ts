@@ -3,18 +3,20 @@
  * @desc The /thanks list: people and projects the haruhime.moe tools lean on.
  * @author David @dvhsh (https://dvh.sh)
  * @created Wed Sep 23, 2026
- * @modified Fri Sep 25, 2026
+ * @modified Mon Sep 28, 2026
  */
 
 /** One thanks entry: who, where to find them (optional), and one line on what they did. */
 export type ThanksEntry = {
+  /** The person or project. */
   name: string;
+  /** Where to find them: an https link (a test enforces it), or none. */
   url?: string;
+  /** One short line on what they did. */
   line: string;
 };
 
-// One entry per person or project: a name, an optional https link, and a short line.
-/** Shown on /thanks in this order. */
+/** Every person or project /thanks lists, one entry each, in this order. */
 export const THANKS: readonly ThanksEntry[] = [
   {
     name: "-Tynamo, Varler, RMarc, and the Evergreen Cup Staff!",

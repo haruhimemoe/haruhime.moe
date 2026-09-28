@@ -5,16 +5,16 @@
  *       a leading dot, swatches, product family, type, trademark notice.
  * @author David @dvhsh (https://dvh.sh)
  * @created Wed Sep 23, 2026
- * @modified Fri Sep 25, 2026
+ * @modified Mon Sep 28, 2026
  */
 
+import { palette } from "@haruhimemoe/brand/palette";
 import { render, screen, within } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 import BrandPage, { metadata } from "@/app/brand/page";
 import { BRAND_ASSETS, BRAND_BANNERS, BRAND_COLORS, REPO_BANNERS } from "@/constants/brand";
 import { SITE } from "@/constants/site";
 import { TOOLS } from "@/constants/tools";
-import { hslToHex } from "@/utils/color";
 
 describe("/brand", () => {
   it("has its title and one h1", () => {
@@ -74,7 +74,7 @@ describe("/brand", () => {
     render(<BrandPage />);
     const section = screen.getByRole("region", { name: "README banners" });
     const items = within(section).getAllByRole("listitem");
-    expect(items).toHaveLength(11);
+    expect(items).toHaveLength(12);
     REPO_BANNERS.forEach((banner, index) => {
       const item = within(items[index] as HTMLElement);
       expect(item.getByRole("link", { name: `haruhimemoe/${banner.repo}` })).toHaveAttribute(
@@ -115,7 +115,7 @@ describe("/brand", () => {
     const family = screen.getByRole("region", { name: "Product family" });
     for (const tool of TOOLS) {
       expect(within(family).getByText(tool.name)).toBeInTheDocument();
-      const hex = hslToHex(tool.hue, 100, 70);
+      const hex = palette(tool.hue).h1;
       expect(within(family).getByText(`hue ${tool.hue}, ${hex}`)).toBeInTheDocument();
       expect(
         within(family).getByRole("link", { name: `Download ${tool.name} icon` }),

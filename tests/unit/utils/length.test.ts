@@ -1,9 +1,10 @@
 /**
  * @file tests/unit/utils/length.test.ts
- * @desc formatLength and parseLength: m:ss both ways, whole minutes, and text that isn't a length.
+ * @desc formatLength and parseLength: m:ss both ways, minutes with dot or comma decimals (as in
+ *       packs and pools), and text that isn't a length.
  * @author David @dvhsh (https://dvh.sh)
  * @created Wed Sep 23, 2026
- * @modified Wed Sep 23, 2026
+ * @modified Mon Sep 28, 2026
  */
 
 import { describe, expect, it } from "vitest";
@@ -29,11 +30,16 @@ describe("parseLength", () => {
     [" 10:00 ", 600],
     ["0:59", 59],
     ["3", 180],
+    ["2:5", 125],
+    ["1:90", 150],
+    ["2.5", 150],
+    ["2,5", 150],
+    [" 0.25 ", 15],
   ])("reads %j as %s seconds", (text, seconds) => {
     expect(parseLength(text)).toBe(seconds);
   });
 
-  it.each(["", "2:5", "2:60", "1:2:3", "abc", "1.5", "-1:00"])("rejects %j", (text) => {
+  it.each(["", "1:2:3", "abc", "-1:00", "2.", ".5", "1,5,0", "2:5.5"])("rejects %j", (text) => {
     expect(parseLength(text)).toBeNull();
   });
 

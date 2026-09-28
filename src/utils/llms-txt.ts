@@ -1,41 +1,15 @@
 /**
  * @file src/utils/llms-txt.ts
  * @desc Builds /llms.txt (llmstxt.org): a summary, the tools, every page, and links elsewhere.
- *       Built from SITE, TOOLS and PAGE_PATHS so a new page or tool shows up on its own. Pure
+ *       Built from SITE, TOOLS and PAGES so a new page or tool shows up on its own. Pure
  *       so the route handler and its tests share one source.
  * @author David @dvhsh (https://dvh.sh)
  * @created Wed Sep 23, 2026
- * @modified Fri Sep 25, 2026
+ * @modified Mon Sep 28, 2026
  */
 
-import { PAGE_PATHS, SITE } from "@/constants/site";
+import { PAGE_PATHS, PAGES, SITE } from "@/constants/site";
 import { TOOLS, type Tool } from "@/constants/tools";
-
-/** Link title and short description for each page in PAGE_PATHS, for the Pages section. */
-const PAGES: Record<(typeof PAGE_PATHS)[number], { title: string; description: string }> = {
-  "/": { title: "Home", description: "The tools, the Evergreen Cup banner, and a short hello." },
-  "/thanks": {
-    title: "Thanks",
-    description: "The people and projects the haruhime.moe tools are built on.",
-  },
-  "/brand": {
-    title: "Brand",
-    description:
-      "The haruhime.moe name, logos, colors, the packs/pools/sheets icons, and every repo's README banner.",
-  },
-  "/ui": {
-    title: "UI",
-    description: "Every @haruhimemoe/ui component (the shared React kit), in its states.",
-  },
-  "/contact": {
-    title: "Contact",
-    description: "How to reach haruhime: email, Discord, GitHub, and security reports.",
-  },
-  "/disclaimer": {
-    title: "Disclaimer",
-    description: "No ppy affiliation, third-party terms, and the as-is notice.",
-  },
-};
 
 /**
  * @function toolLine

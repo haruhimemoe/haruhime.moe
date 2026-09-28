@@ -1,17 +1,16 @@
 /**
  * @file src/components/showcase/FilterDemos.tsx
- * @desc The interactive part of /ui: Chip, ChipGroup, RangeSlider, FilterRow and a FilterPanel
- *       over a sample mappool, with a live result count. A client component because the filters
- *       take callbacks and hold state; the rest of /ui renders on the server.
+ * @desc /ui's Filters group: the chips (ChipDemos), then RangeSlider, FilterRow and a FilterPanel
+ *       over the sample mappool, with a live result count. A client component because the filters
+ *       take callbacks and hold state.
  * @author David @dvhsh (https://dvh.sh)
  * @created Wed Sep 23, 2026
- * @modified Wed Sep 23, 2026
+ * @modified Mon Sep 28, 2026
  */
 
 "use client";
 
 import {
-  Chip,
   ChipGroup,
   type ChipOption,
   FilterPanel,
@@ -20,16 +19,10 @@ import {
   type RangeSliderValue,
 } from "@haruhimemoe/ui";
 import { useState } from "react";
+import { ChipDemos } from "@/components/showcase/ChipDemos";
 import { Demo } from "@/components/showcase/Demo";
+import { SAMPLE_POOL } from "@/constants/showcase";
 import { formatLength, parseLength } from "@/utils/length";
-
-const MODS: ChipOption[] = [
-  { value: "HD", label: "HD" },
-  { value: "HR", label: "HR" },
-  { value: "DT", label: "DT" },
-  { value: "FL", label: "FL" },
-  { value: "EZ", label: "EZ", disabled: true },
-];
 
 const MODES: ChipOption[] = [
   { value: "osu", label: "osu!" },
@@ -42,24 +35,6 @@ const SLOT_MODS: ChipOption[] = ["NM", "HD", "HR", "DT", "FM", "TB"].map((mod) =
   value: mod,
   label: mod,
 }));
-
-/** A made-up mappool for the FilterPanel example: slot, mod, star rating, length in seconds. */
-const SAMPLE_POOL = [
-  { slot: "NM1", mod: "NM", stars: 5.21, length: 128 },
-  { slot: "NM2", mod: "NM", stars: 5.48, length: 154 },
-  { slot: "NM3", mod: "NM", stars: 5.63, length: 97 },
-  { slot: "NM4", mod: "NM", stars: 5.9, length: 201 },
-  { slot: "HD1", mod: "HD", stars: 5.35, length: 142 },
-  { slot: "HD2", mod: "HD", stars: 5.72, length: 118 },
-  { slot: "HR1", mod: "HR", stars: 5.8, length: 133 },
-  { slot: "HR2", mod: "HR", stars: 6.12, length: 176 },
-  { slot: "DT1", mod: "DT", stars: 6.05, length: 88 },
-  { slot: "DT2", mod: "DT", stars: 6.4, length: 104 },
-  { slot: "DT3", mod: "DT", stars: 6.77, length: 92 },
-  { slot: "FM1", mod: "FM", stars: 5.6, length: 146 },
-  { slot: "FM2", mod: "FM", stars: 5.95, length: 163 },
-  { slot: "TB", mod: "TB", stars: 7.1, length: 312 },
-] as const;
 
 /**
  * @function inRange
@@ -79,11 +54,9 @@ const showRange = ([low, high]: RangeSliderValue): string => `[${low}, ${high ??
 
 /**
  * @function FilterDemos
- * @returns {JSX.Element} the Chip, ChipGroup, RangeSlider, FilterRow and FilterPanel examples
+ * @returns {JSX.Element} the chip examples, then the RangeSlider, FilterRow and FilterPanel ones
  */
 export function FilterDemos() {
-  const [loved, setLoved] = useState(true);
-  const [mods, setMods] = useState<string[]>(["HD", "DT"]);
   const [stars, setStars] = useState<RangeSliderValue>([0, null]);
   const [length, setLength] = useState<RangeSliderValue>([60, 300]);
   const [mode, setMode] = useState<string[]>(["osu"]);
@@ -106,29 +79,7 @@ export function FilterDemos() {
 
   return (
     <>
-      <Demo
-        name="Chip"
-        note="A toggle pill with aria-pressed: on, off after a click, and disabled."
-      >
-        <div className="flex flex-wrap items-center gap-2">
-          <Chip pressed={loved} onPressedChange={setLoved}>
-            Loved
-          </Chip>
-          <Chip pressed={false} disabled>
-            Qualified
-          </Chip>
-        </div>
-      </Demo>
-
-      <Demo
-        name="ChipGroup"
-        note="Chips for picking several values. EZ is a disabled option; the second group is disabled as a whole."
-      >
-        <ChipGroup label="Mods" options={MODS} value={mods} onChange={setMods} />
-        <p className="text-c4 text-xs">Picked: {mods.length > 0 ? mods.join(", ") : "none"}</p>
-        <ChipGroup label="Game mode" options={MODES} value={["osu"]} onChange={() => {}} disabled />
-      </Demo>
-
+      <ChipDemos />
       <Demo
         name="RangeSlider"
         note="Two thumbs and a box at each end. Star rating is open-ended (10+ means no limit), length reads and writes m:ss, and BPM is disabled."

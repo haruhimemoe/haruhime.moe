@@ -4,14 +4,14 @@
  *       sources; icons exist; hues match the brand kit.
  * @author David @dvhsh (https://dvh.sh)
  * @created Wed Sep 23, 2026
- * @modified Sat Sep 26, 2026
+ * @modified Mon Sep 28, 2026
  */
 
 import { existsSync, readFileSync } from "node:fs";
 import path from "node:path";
+import { hslToHex } from "@haruhimemoe/brand/palette";
 import { describe, expect, it } from "vitest";
 import { TOOLS } from "@/constants/tools";
-import { hslToHex } from "@/utils/color";
 
 describe("TOOLS", () => {
   it("lists packs, pools and sheets in that order", () => {

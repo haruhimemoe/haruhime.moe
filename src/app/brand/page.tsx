@@ -4,12 +4,12 @@
  *       haruhimemoe repo's) to download, colors, the product family, type and usage. Static.
  * @author David @dvhsh (https://dvh.sh)
  * @created Wed Sep 23, 2026
- * @modified Fri Sep 25, 2026
+ * @modified Mon Sep 28, 2026
  */
 
-import { Card, PageHeader } from "@haruhimemoe/ui";
+import { palette } from "@haruhimemoe/brand/palette";
+import { Card, cx, linkClasses, PageHeader, TextLink } from "@haruhimemoe/ui";
 import type { Metadata } from "next";
-import { linkStyles } from "@/components/ui/linkStyles";
 import {
   BANNER_SIZE,
   BRAND_ASSETS,
@@ -19,16 +19,9 @@ import {
 } from "@/constants/brand";
 import { SITE } from "@/constants/site";
 import { TOOLS } from "@/constants/tools";
-import { cn } from "@/utils/cn";
-import { hslToHex } from "@/utils/color";
+import { pageMetadata } from "@/utils/page-metadata";
 
-export const metadata: Metadata = {
-  title: "Brand",
-  description:
-    "The haruhime.moe name, logos, colors, and type, plus the packs, pools and sheets icons and every repo's README banner.",
-  alternates: { canonical: "/brand" },
-  openGraph: { url: "/brand" },
-};
+export const metadata: Metadata = pageMetadata("/brand");
 
 // The name a download saves as: the file's own, minus a leading dot. .github's banners would
 // otherwise save as hidden files on macOS and Linux (and browsers trim the dot anyway).
@@ -40,11 +33,7 @@ export default function BrandPage() {
       <PageHeader
         title="Brand"
         lead="haruhime.moe is home to packs, pools and sheets, osu! tools for tournament hosts. For anything not covered here, write to me."
-        meta={
-          <a href={`mailto:${SITE.contactEmail}`} className={linkStyles}>
-            {SITE.contactEmail}
-          </a>
-        }
+        meta={<TextLink href={`mailto:${SITE.contactEmail}`}>{SITE.contactEmail}</TextLink>}
       />
       <Card title="Name">
         <p className="text-sm">
@@ -58,7 +47,7 @@ export default function BrandPage() {
           {BRAND_ASSETS.map((asset) => (
             <li key={asset.href} className="flex flex-col gap-2">
               <div
-                className={cn(
+                className={cx(
                   "flex h-28 items-center justify-center rounded-[10px] p-4",
                   asset.background === "dark" ? "bg-b6" : "bg-white",
                 )}
@@ -66,7 +55,7 @@ export default function BrandPage() {
                 {/* biome-ignore lint/performance/noImgElement: static SVG preview, no optimization needed */}
                 <img src={`/${asset.href}`} alt="" className="max-h-16 w-auto" />
               </div>
-              <a href={`/${asset.href}`} download className={cn(linkStyles, "text-sm")}>
+              <a href={`/${asset.href}`} download className={linkClasses({ className: "text-sm" })}>
                 Download {asset.label}
               </a>
             </li>
@@ -75,10 +64,7 @@ export default function BrandPage() {
         <h3 className="mt-6 mb-1 font-bold text-c1">haruhime.moe README banner</h3>
         <p className="mb-4 text-sm">
           For README headers, like the one on our{" "}
-          <a href={SITE.githubOrg} className={linkStyles}>
-            GitHub profile
-          </a>
-          .
+          <TextLink href={SITE.githubOrg}>GitHub profile</TextLink>.
         </p>
         <ul className="grid gap-4 sm:grid-cols-2">
           {BRAND_BANNERS.map((banner) => (
@@ -96,7 +82,7 @@ export default function BrandPage() {
                   key={file.href}
                   href={`/${file.href}`}
                   download
-                  className={cn(linkStyles, "text-sm")}
+                  className={linkClasses({ className: "text-sm" })}
                 >
                   Download {file.label}
                 </a>
@@ -127,9 +113,9 @@ export default function BrandPage() {
                 className="h-auto w-full"
               />
               <p className="text-sm">
-                <a href={banner.href} className={cn(linkStyles, "font-bold")}>
+                <TextLink href={banner.href} variant="plain">
                   haruhimemoe/{banner.repo}
-                </a>
+                </TextLink>
               </p>
               <p className="text-c3 text-sm">
                 Download for{" "}
@@ -137,7 +123,7 @@ export default function BrandPage() {
                   href={`/${banner.dark}`}
                   download={saveAs(banner.dark)}
                   aria-label={`Download ${banner.repo} banner for dark backgrounds`}
-                  className={linkStyles}
+                  className={linkClasses()}
                 >
                   dark
                 </a>{" "}
@@ -146,7 +132,7 @@ export default function BrandPage() {
                   href={`/${banner.light}`}
                   download={saveAs(banner.light)}
                   aria-label={`Download ${banner.repo} banner for light backgrounds`}
-                  className={linkStyles}
+                  className={linkClasses()}
                 >
                   light
                 </a>{" "}
@@ -173,7 +159,7 @@ export default function BrandPage() {
           ))}
         </ul>
         <p className="mt-4 text-sm">
-          <a href="/brand/haruhime-palette.json" download className={cn(linkStyles, "text-sm")}>
+          <a href="/brand/haruhime-palette.json" download className={linkClasses()}>
             Download palette (JSON)
           </a>
         </p>
@@ -185,7 +171,7 @@ export default function BrandPage() {
         </p>
         <ul className="grid gap-4 sm:grid-cols-3">
           {TOOLS.map((tool) => {
-            const hex = hslToHex(tool.hue, 100, 70);
+            const hex = palette(tool.hue).h1;
             return (
               <li key={tool.name} className="flex items-center gap-3">
                 {/* biome-ignore lint/performance/noImgElement: static SVG, no optimization needed */}
@@ -200,7 +186,11 @@ export default function BrandPage() {
                     />
                     hue {tool.hue}, {hex}
                   </span>
-                  <a href={`/${tool.icon}`} download className={cn(linkStyles, "mt-1 block")}>
+                  <a
+                    href={`/${tool.icon}`}
+                    download
+                    className={linkClasses({ className: "mt-1 block" })}
+                  >
                     Download {tool.name} icon
                   </a>
                 </span>

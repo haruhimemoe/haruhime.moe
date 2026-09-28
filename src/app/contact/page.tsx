@@ -4,20 +4,15 @@
  *       security problem. Static.
  * @author David @dvhsh (https://dvh.sh)
  * @created Wed Sep 23, 2026
- * @modified Fri Sep 25, 2026
+ * @modified Mon Sep 28, 2026
  */
 
-import { Card, PageHeader } from "@haruhimemoe/ui";
+import { Card, PageHeader, TextLink } from "@haruhimemoe/ui";
 import type { Metadata } from "next";
-import { linkStyles } from "@/components/ui/linkStyles";
 import { SITE } from "@/constants/site";
+import { pageMetadata } from "@/utils/page-metadata";
 
-export const metadata: Metadata = {
-  title: "Contact",
-  description: "How to reach haruhime.moe: email, Discord, GitHub, and security reports.",
-  alternates: { canonical: "/contact" },
-  openGraph: { url: "/contact" },
-};
+export const metadata: Metadata = pageMetadata("/contact");
 
 export default function ContactPage() {
   return (
@@ -26,31 +21,25 @@ export default function ContactPage() {
       <Card title="Email">
         <p className="select-all font-bold text-c1">{SITE.contactEmail}</p>
         <p className="mt-2 text-sm">
-          <a href={`mailto:${SITE.contactEmail}`} className={linkStyles}>
-            Send an email
-          </a>
+          <TextLink href={`mailto:${SITE.contactEmail}`}>Send an email</TextLink>
         </p>
       </Card>
       <Card title="Discord">
         <p className="text-sm">
           questions and feedback about the tools:{" "}
-          <a href={SITE.discordUrl} className={linkStyles}>
-            {SITE.discordUrl.replace("https://", "")}
-          </a>
+          <TextLink href={SITE.discordUrl}>{SITE.discordUrl.replace("https://", "")}</TextLink>
         </p>
       </Card>
       <Card title="GitHub">
         <p className="text-sm">
           the code for every tool, plus issues and feature requests:{" "}
-          <a href={SITE.githubOrg} className={linkStyles}>
-            github.com/haruhimemoe
-          </a>
+          <TextLink href={SITE.githubOrg}>{SITE.githubOrg.replace("https://", "")}</TextLink>
         </p>
       </Card>
       <Card title="Security">
         <p className="text-sm">
-          found a security problem? email {SITE.contactEmail} privately instead of opening a public
-          issue. I'll reply within 7 days.
+          found a security problem? report it privately on GitHub (the Security tab of the tool's
+          repo) or email {SITE.contactEmail}, not in a public issue. I'll reply within 7 days.
         </p>
       </Card>
     </div>

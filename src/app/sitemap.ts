@@ -1,9 +1,9 @@
 /**
  * @file src/app/sitemap.ts
- * @desc sitemap.xml: every page in PAGE_PATHS. Static.
+ * @desc sitemap.xml: every page in PAGES. Static.
  * @author David @dvhsh (https://dvh.sh)
  * @created Wed Sep 23, 2026
- * @modified Wed Sep 23, 2026
+ * @modified Mon Sep 28, 2026
  */
 
 import type { MetadataRoute } from "next";

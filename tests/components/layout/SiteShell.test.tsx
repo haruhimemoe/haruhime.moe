@@ -7,7 +7,7 @@
  *       parent-site wordmark.
  * @author David @dvhsh (https://dvh.sh)
  * @created Wed Sep 23, 2026
- * @modified Fri Sep 25, 2026
+ * @modified Mon Sep 28, 2026
  */
 
 import { render, screen, within } from "@testing-library/react";
@@ -40,17 +40,14 @@ describe("SiteShell frame", () => {
 });
 
 describe("SiteShell header", () => {
-  it("links the wordmark home", () => {
+  it("links the wordmark home, drawn inline by @haruhimemoe/ui", () => {
     renderShell();
     const banner = screen.getByRole("banner");
-    expect(within(banner).getByRole("link", { name: "haruhime.moe home" })).toHaveAttribute(
-      "href",
-      "/",
-    );
-    expect(within(banner).getByRole("img", { name: "haruhime.moe home" })).toHaveAttribute(
-      "src",
-      "/brand/haruhime-wordmark.svg",
-    );
+    const home = within(banner).getByRole("link", { name: "haruhime.moe home" });
+    expect(home).toHaveAttribute("href", "/");
+    // The inline SVG is decorative: the link carries the name, and no file loads.
+    expect(home.querySelector("svg")).toHaveAttribute("aria-hidden", "true");
+    expect(home.querySelector("img")).toBeNull();
   });
 
   it("centers the three tools, with packs and pools as links", () => {

@@ -5,7 +5,7 @@
  *       in @haruhimemoe/ui's Prose, like packs' legal pages. Static.
  * @author David @dvhsh (https://dvh.sh)
  * @created Wed Sep 23, 2026
- * @modified Wed Sep 23, 2026
+ * @modified Mon Sep 28, 2026
  */
 
 import { PageHeader, Prose } from "@haruhimemoe/ui";
@@ -13,13 +13,9 @@ import type { Metadata } from "next";
 import { DISCLAIMER_UPDATED } from "@/constants/legal";
 import { SITE } from "@/constants/site";
 import { formatIsoDate } from "@/utils/date";
+import { pageMetadata } from "@/utils/page-metadata";
 
-export const metadata: Metadata = {
-  title: "Disclaimer",
-  description: "haruhime.moe isn't affiliated with osu! or ppy, and its tools are provided as is.",
-  alternates: { canonical: "/disclaimer" },
-  openGraph: { url: "/disclaimer" },
-};
+export const metadata: Metadata = pageMetadata("/disclaimer");
 
 export default function DisclaimerPage() {
   return (
