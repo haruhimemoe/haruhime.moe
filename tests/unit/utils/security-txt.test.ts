@@ -1,18 +1,18 @@
 /**
  * @file tests/unit/utils/security-txt.test.ts
- * @desc buildSecurityTxt: RFC 9116 fields in order, absolute links, expiry 365 days out, one
- *       trailing newline.
+ * @desc buildSecurityTxt: RFC 9116 fields in order, absolute links, the pinned expiry by default,
+ *       one trailing newline.
  * @author David @dvhsh (https://dvh.sh)
  * @created Wed Sep 23, 2026
- * @modified Wed Sep 23, 2026
+ * @modified Mon Sep 28, 2026
  */
 
 import { describe, expect, it } from "vitest";
+import { SECURITY_TXT_EXPIRES } from "@/constants/legal";
 import { buildSecurityTxt } from "@/utils/security-txt";
 
 describe("buildSecurityTxt", () => {
-  const now = new Date("2026-09-23T00:00:00.000Z");
-  const text = buildSecurityTxt(now);
+  const text = buildSecurityTxt("2027-09-23T00:00:00.000Z");
   const lines = text.split("\n");
 
   it("has the RFC 9116 fields in order", () => {
@@ -26,10 +26,8 @@ describe("buildSecurityTxt", () => {
     ]);
   });
 
-  it("expires 365 days after now, in ISO 8601 UTC", () => {
-    const expires = new Date(/^Expires: (.+)$/m.exec(text)?.[1] ?? "");
-    expect(expires.getTime() - now.getTime()).toBe(365 * 24 * 60 * 60 * 1000);
-    expect(expires.toISOString()).toBe(/^Expires: (.+)$/m.exec(text)?.[1]);
+  it("uses the pinned SECURITY_TXT_EXPIRES by default", () => {
+    expect(buildSecurityTxt()).toContain(`Expires: ${SECURITY_TXT_EXPIRES}\n`);
   });
 
   it("only uses absolute links", () => {
