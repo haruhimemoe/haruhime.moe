@@ -8,6 +8,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ### Added
 
+- `/ui` shows the @haruhimemoe/ui 0.5.0 components: Tabs (with tabId and tabPanelId), VisibilitySelect (as radios and as a select, with VISIBILITIES and VISIBILITY_TEXT), CharCounter on a live textarea, and ReportDisclosure. The site moves to ui 0.5.0.
 - `/brand` shows a README banner for every haruhimemoe repo (the site, `.github`, packs, pools, the packages and the Claude Code plugin), each linking its repo, with dark and light SVGs to download from `/brand/repos/`.
 - A Discord icon in the footer, before the GitHub one, linking the haruhime.moe server. `/contact` lists the server too, and `/llms.txt` links it under Elsewhere.
 - A README banner for `@haruhimemoe/next-kit`, the Next.js server kit, on `/brand` and in `/brand/repos/`.

@@ -1,7 +1,8 @@
 /**
  * @file src/components/showcase/FormDemos.tsx
  * @desc /ui's Forms group: the text fields (FieldDemos), then Checkbox, RadioGroup and
- *       fieldClasses. Server-rendered; RadioGroup runs uncontrolled with its own client code.
+ *       fieldClasses, VisibilitySelect, CharCounter and ReportDisclosure. Server-rendered;
+ *       RadioGroup runs uncontrolled, and the last three are small client demos.
  * @author David @dvhsh (https://dvh.sh)
  * @created Mon Sep 28, 2026
  * @modified Mon Sep 28, 2026
@@ -10,6 +11,8 @@
 import { Checkbox, fieldClasses, RadioGroup, type RadioOption } from "@haruhimemoe/ui";
 import { Demo } from "@/components/showcase/Demo";
 import { FieldDemos } from "@/components/showcase/FieldDemos";
+import { TextLimitDemos } from "@/components/showcase/TextLimitDemos";
+import { VisibilityDemo } from "@/components/showcase/VisibilityDemo";
 
 const VISIBILITY: readonly RadioOption[] = [
   { value: "private", label: "Private", hint: "Only you and your editors." },
@@ -63,6 +66,9 @@ export function FormDemos() {
           error="Pick how to download the pack."
         />
       </Demo>
+
+      <VisibilityDemo />
+      <TextLimitDemos />
 
       <Demo
         name="fieldClasses"

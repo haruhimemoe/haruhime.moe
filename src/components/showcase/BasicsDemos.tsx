@@ -10,6 +10,7 @@
 import { Badge, Card, Disclosure, Notice } from "@haruhimemoe/ui";
 import { ButtonDemos } from "@/components/showcase/ButtonDemos";
 import { Demo } from "@/components/showcase/Demo";
+import { TabsDemo } from "@/components/showcase/TabsDemo";
 
 /**
  * @function BasicsDemos
@@ -67,6 +68,8 @@ export function BasicsDemos() {
           <p className="text-sm">Ranked and loved maps only, no more than one map per mapper.</p>
         </Disclosure>
       </Demo>
+
+      <TabsDemo />
     </>
   );
 }
