@@ -6,7 +6,7 @@ Rules for any agent (or human) working in this repo. Authoritative; `CLAUDE.md` 
 
 haruhime.moe: a small static hub for haruhime's osu! tournament tools (packs, pools, sheets), an Evergreen Cup banner, a few plain pages (thanks, brand, contact, disclaimer), and `/ui`, a showcase of every `@haruhimemoe/ui` component. It also serves `/llms.txt`, `/.well-known/security.txt`, `/sitemap.xml` and `/robots.txt`. It shares its look and brand kit with packs.haruhime.moe and pools.haruhime.moe. Canonical address: `https://www.haruhime.moe` (`SITE.url`).
 
-**Hard rule: every route is static.** No database, no API routes, no auth, no per-request rendering. The two text route handlers (`llms.txt`, `.well-known/security.txt`) set `dynamic = "force-static"` and render once at build. `bun run build` must list every route as `○ (Static)`. Keep client JavaScript to what Next needs: no `"use client"` components of our own unless a page can't work without one. `/ui`'s filter demos are our one client file. Every page also loads the header nav's client chunk (about 4 KB gzipped, mostly `next/link`), though nothing in the header hydrates. The header lists only the tools, and each is an external URL or text marked soon, so no link can be the current page. Since `@haruhimemoe/ui` 0.2.0, `NavLinks` then renders on the server alone and tailwind-merge stays out of the browser. Next still ships the chunk because `SiteHeader` imports the client list, and the footer's internal links need `next/link` anyway. It is not a reason to add client code of our own.
+**Hard rule: every route is static.** No database, no API routes, no auth, no per-request rendering. The two text route handlers (`llms.txt`, `.well-known/security.txt`) set `dynamic = "force-static"` and render once at build. `bun run build` must list every route as `○ (Static)`. Keep client JavaScript to what Next needs: no `"use client"` components of our own unless a page can't work without one. Our only client files are `/ui`'s demos that take callbacks or hold state (`FilterDemos`, `ChipDemos`, `ConfirmDemos`, `PaginationDemos`); the other demos render on the server, and a `@haruhimemoe/ui` component that needs the browser (Disclosure, RadioGroup, HeaderMenu) brings its own client code. Every page also loads the header nav's client chunk (about 4 KB gzipped, mostly `next/link`), though nothing in the header hydrates. The header lists only the tools, and each is an external URL or text marked soon, so no link can be the current page. Since `@haruhimemoe/ui` 0.2.0, `NavLinks` then renders on the server alone and tailwind-merge stays out of the browser. Next still ships the chunk because `SiteHeader` imports the client list, and the footer's internal links need `next/link` anyway. It is not a reason to add client code of our own.
 
 ## 2. Layout
 
@@ -16,15 +16,16 @@ src/app/          routes: layout.tsx (font, metadata, SiteShell), globals.css, n
                   markup inline, the llms.txt/ and .well-known/security.txt/ route handlers,
                   sitemap.ts, robots.ts, and the generated icon.svg, apple-icon.png,
                   opengraph-image.png and opengraph-image.alt.txt
-src/components/   layout/ (SiteShell: the @haruhimemoe/ui frame), ui/ (linkStyles), home/ (ToolCard,
-                  EgcBanner), showcase/ (Demo and DemoGroup frame each /ui demo; FilterDemos holds
-                  the client filter demos; the other demos are inline in ui/page.tsx)
-src/constants/    static data (site.ts: identity, EVERGREEN_CUP and PAGE_PATHS; tools.ts; nav.ts:
-                  header and footer links; brand.ts: which swatches, logos and banners /brand
-                  shows, and REPO_BANNERS, every repo's README banner; legal.ts: the disclaimer
-                  date)
+src/components/   layout/ (SiteShell: the @haruhimemoe/ui frame), home/ (ToolCard, EgcBanner),
+                  showcase/ (Demo and DemoGroup frame each /ui demo; one <Group>Demos file per
+                  group, listed in GROUPS in ui/page.tsx, split further past ~100 lines)
+src/constants/    static data (site.ts: identity, EVERGREEN_CUP and PAGES, every page's title,
+                  description and footer column; tools.ts; nav.ts: header and footer links;
+                  brand.ts: which swatches, logos and banners /brand shows, and REPO_BANNERS,
+                  every repo's README banner; legal.ts: the disclaimer date and security.txt's
+                  expiry; showcase.ts: /ui's package links and sample pool)
 src/content/      editable copy as data (thanks.ts)
-src/utils/        pure, stateless helpers (cn, color, date, length, and the llms.txt and
+src/utils/        pure, stateless helpers (date, length, pageMetadata, and the llms.txt and
                   security.txt builders)
 public/brand/     generated brand files (see CONTRIBUTING.md); never hand-edit. repos/ holds every
                   haruhimemoe repo's README banner, written by scripts/repo-banners.ts
@@ -39,7 +40,7 @@ llms.txt          repo guide for LLMs (points at the live /llms.txt); not served
 - TypeScript 7, `strict`, `noUncheckedIndexedAccess`. No `any`.
 - Biome is the only linter/formatter (`bun run check`, `bun run check:fix`). No ESLint or Prettier.
 - No barrel files of our own. Import exact paths (`@/components/home/ToolCard`).
-- Shared components (buttons, cards, `PageHeader`, `Prose`, `JsonLd`, the header, footer and page frame) come from [@haruhimemoe/ui](https://github.com/haruhimemoe/ui), imported from `"@haruhimemoe/ui"`. Don't copy one into `src/components/`; only site-specific pieces live there.
+- Shared components (buttons, cards, badges, text links, `PageHeader`, `Prose`, `JsonLd`, the wordmark, the header, footer and page frame) and the `cx` class merger come from [@haruhimemoe/ui](https://github.com/haruhimemoe/ui), imported from `"@haruhimemoe/ui"`. Don't copy one into `src/components/`; only site-specific pieces live there. Brand colors come from `@haruhimemoe/brand/palette` (`palette`, `TOKENS`, `hslToHex`), never a local copy.
 - One exported component per file, PascalCase filename. A small private helper can sit beside it (`EvergreenMark` in `EgcBanner.tsx`).
 - Style with Tailwind classes, no CSS modules. Inline `style` is only for values that come from data, like the `/brand` swatch colors.
 - `utils/` is pure.
@@ -64,7 +65,7 @@ Dates match `date "+%a %b %-d, %Y"`. Update `@modified` on edits, never `@create
 
 - Everything under `tests/`. Never co-locate tests in `src/`.
 - `tests/unit/` (node) mirrors `src/` paths: `src/utils/color.ts` is tested by `tests/unit/utils/color.test.ts`, `src/app/sitemap.ts` by `tests/unit/app/sitemap.test.ts`. Scripts follow the same rule: `scripts/repo-banners.ts` by `tests/unit/scripts/repo-banners.test.ts`.
-- `tests/components/` (jsdom) mirrors `src/components/` without the `components/` segment: `src/components/home/ToolCard.tsx` is tested by `tests/components/home/ToolCard.test.tsx`.
+- `tests/components/` (jsdom) mirrors `src/components/` without the `components/` segment: `src/components/home/ToolCard.tsx` is tested by `tests/components/home/ToolCard.test.tsx`. Each `/ui` demo file with behavior of its own (a new component's states, a callback) gets its own test there too; `UiPage.test.tsx` checks the page, that every export has a demo, and axe.
 - Page tests are flat, named after the page's default export: `tests/components/app/<Name>.test.tsx`. `src/app/ui/page.tsx` (`UiPage`) is tested by `tests/components/app/UiPage.test.tsx`, `src/app/page.tsx` by `HomePage.test.tsx`, `src/app/not-found.tsx` by `NotFound.test.tsx`.
 - `bun run test` runs both Vitest projects; `test:unit` and `test:components` run one.
 - The unit project runs with `TZ=America/Los_Angeles` on purpose. Don't remove it.
@@ -77,7 +78,7 @@ Dates match `date "+%a %b %-d, %Y"`. Update `@modified` on edits, never `@create
 The packs look, from the [@haruhimemoe/ui](https://github.com/haruhimemoe/ui) theme that `src/app/globals.css` imports: `b1`–`b6` backgrounds, `c1`–`c4` text, `h1`/`h2` accent, all from `--hue: 333` (set in `globals.css`). Dark only. Font: Nunito via `--font-nunito`. Add only site-specific rules to `globals.css`; tokens and the focus ring belong to the theme.
 
 - Page titles go through `PageHeader`; one h1 per page. Structured data goes through `JsonLd`. Long-form text goes in `Prose`.
-- Text links use `linkStyles` (`src/components/ui/linkStyles.ts`). Every focusable element keeps the global focus ring.
+- Text links use `TextLink` from `@haruhimemoe/ui` (`accent` in running text, `plain` for names in a list); an anchor `TextLink` can't be (a download) uses `linkClasses()`. Every focusable element keeps the global focus ring.
 - Images need alt text; decorative ones (an icon next to its name) use `alt=""`.
 - Check every page at phone width.
 
@@ -86,9 +87,10 @@ The packs look, from the [@haruhimemoe/ui](https://github.com/haruhimemoe/ui) th
 - Copy is short and plain, in David's voice. No marketing, no em dashes.
 - The thanks list is `src/content/thanks.ts`: a name, an optional https link, one line each.
 - Tools live in `src/constants/tools.ts`. A tool gets its `url` the day it launches; until then it shows as "coming soon" (homepage and `/llms.txt`) and "soon" (header and footer) and links nowhere. A live tool still in beta sets `beta: true`: its homepage card shows a small "beta" label and its `/llms.txt` line says "In beta." (the header and footer stay plain). `about` is the tool's longer `/llms.txt` description and `llmsTxt: true` links the tool's own `/llms.txt`; both are for live tools only. `tests/unit/constants/tools.test.ts` pins which tools are live and which are in beta, so update it in the same commit. Never write that every pool on pools comes from otdb: pools lists pools from several sources.
-- A new page goes in `PAGE_PATHS` (`src/constants/site.ts`) so the sitemap and `/llms.txt` list it. It also needs a title and description in `PAGES` in `src/utils/llms-txt.ts` (typecheck fails without one), a render test, and a footer link in `src/constants/nav.ts` if visitors need one.
-- Every haruhimemoe repo's README banner comes from `REPO_BANNERS` in `src/constants/brand.ts`. After changing it or `@haruhimemoe/brand`, run `bun run repo-banners --png <dir>`, look at every PNG, and commit the SVGs in `public/brand/repos/` (never the PNGs). Package taglines read `@haruhimemoe/<name>: <a few words>` (claude-plugin: `haruhime: ...`, since it isn't an npm package) and must fit the banner; `tests/unit/scripts/repo-banners.test.ts` measures them. A tool's entry copies its product's tagline from `@haruhimemoe/brand` too, since `/brand` reads each tagline out as the preview's alt text without importing the package; the same test fails when the copy drifts. Next won't serve a public file whose name starts with a dot, so `next.config.ts` rewrites `.github`'s two banner URLs to haruhime.moe's identical files. If `.github` ever draws something different, drop the rewrite and give its files a name without the leading dot. `/brand` already saves them without it, since a download named `.github-banner.svg` would be a hidden file.
+- A new page gets an entry in `PAGES` (`src/constants/site.ts`): its title, description and, if visitors need a footer link, its footer column. The sitemap, `/llms.txt` and the footer read it, and the page's metadata is `pageMetadata("/path")`. It also needs a render test.
+- Every haruhimemoe repo's README banner comes from `REPO_BANNERS` in `src/constants/brand.ts`. After changing it or `@haruhimemoe/brand`, run `bun run repo-banners --png <dir>`, look at every PNG, and commit the SVGs in `public/brand/repos/` (never the PNGs). Package taglines read `@haruhimemoe/<name>: <a few words>` (claude-plugin: `haruhime: ...`, since it isn't an npm package) and must fit the banner; `tests/unit/scripts/repo-banners.test.ts` measures them. A tool's entry takes its tagline from its `TOOLS` entry, the one copy of its product's `@haruhimemoe/brand` tagline in this repo (`/brand` reads each tagline out as the preview's alt text without drawing with the package); the same test fails when the copy drifts. Next won't serve a public file whose name starts with a dot, so `next.config.ts` rewrites `.github`'s two banner URLs to haruhime.moe's identical files. If `.github` ever draws something different, drop the rewrite and give its files a name without the leading dot. `/brand` already saves them without it, since a download named `.github-banner.svg` would be a hidden file.
 - Disclaimer wording changes bump `DISCLAIMER_UPDATED` in `src/constants/legal.ts` in the same commit. Its test guards the required clauses.
+- `SECURITY_TXT_EXPIRES` in `src/constants/legal.ts` is security.txt's Expires, fixed at build. When `tests/unit/constants/legal.test.ts` fails (60 days out), move it up to a year ahead and redeploy.
 
 ## 8. Commits and PRs
 

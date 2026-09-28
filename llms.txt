@@ -1,6 +1,6 @@
 # haruhime.moe
 
-> Source for https://www.haruhime.moe, the home page for haruhime's osu! tournament tools (packs is live, pools is live in beta, sheets is coming soon). The site also has a thanks list, the brand kit, a showcase of every @haruhimemoe/ui component, contact details and a disclaimer. It is a static Next.js 16 site built from @haruhimemoe/ui, run with Bun. MIT license. The live site serves its own llms.txt at https://www.haruhime.moe/llms.txt; that one is the canonical guide to the pages and tools. This file covers the repository.
+> Source for https://www.haruhime.moe, the home page for haruhime's osu! tournament tools (packs is live; pools, a mappool builder, is live in beta; sheets is coming soon). The site also has a thanks list, the brand kit, a showcase of every @haruhimemoe/ui component, contact details and a disclaimer. It is a static Next.js 16 site built from @haruhimemoe/ui, run with Bun. MIT license. The live site serves its own llms.txt at https://www.haruhime.moe/llms.txt; that one is the canonical guide to the pages and tools. This file covers the repository.
 
 ## Site
 
@@ -19,9 +19,10 @@
 
 - [src/constants/tools.ts](https://github.com/haruhimemoe/haruhime.moe/blob/main/src/constants/tools.ts): the tools, their taglines, hues and links
 - [src/content/thanks.ts](https://github.com/haruhimemoe/haruhime.moe/blob/main/src/content/thanks.ts): the thanks list
-- [src/constants/site.ts](https://github.com/haruhimemoe/haruhime.moe/blob/main/src/constants/site.ts): site identity and the list of pages
+- [src/constants/site.ts](https://github.com/haruhimemoe/haruhime.moe/blob/main/src/constants/site.ts): site identity and PAGES, every page's title and description (read by page metadata, the sitemap, /llms.txt and the footer)
 - [src/utils/llms-txt.ts](https://github.com/haruhimemoe/haruhime.moe/blob/main/src/utils/llms-txt.ts): builds the live /llms.txt
 - [src/constants/brand.ts](https://github.com/haruhimemoe/haruhime.moe/blob/main/src/constants/brand.ts): the brand kit /brand shows, and REPO_BANNERS, the list of every haruhimemoe repo's README banner
+- [src/components/showcase/](https://github.com/haruhimemoe/haruhime.moe/tree/main/src/components/showcase): the /ui demos, one file per group
 - [scripts/repo-banners.ts](https://github.com/haruhimemoe/haruhime.moe/blob/main/scripts/repo-banners.ts): draws those banners into public/brand/repos (`bun run repo-banners`)
 
 ## Elsewhere
@@ -29,11 +30,11 @@
 - [@haruhimemoe/ui](https://github.com/haruhimemoe/ui): the React components and theme the site is built from
 - [@haruhimemoe/brand](https://github.com/haruhimemoe/brand): generates the logos, icons, link preview and the repo README banners
 - [packs.haruhime.moe](https://github.com/haruhimemoe/packs.haruhime.moe): source for packs, the first tool
-- [pools.haruhime.moe](https://github.com/haruhimemoe/pools.haruhime.moe): source for pools, past tournament mappools and the content-rules check (beta)
+- [pools.haruhime.moe](https://github.com/haruhimemoe/pools.haruhime.moe): source for pools, the mappool builder (a mod-lens map search, co-editors, download through packs), with past tournament pools for reference and the content-rules check (beta)
 - [haruhimemoe on GitHub](https://github.com/haruhimemoe): the other tools and packages
 
 ## Optional
 
 - [CHANGELOG.md](https://github.com/haruhimemoe/haruhime.moe/blob/main/CHANGELOG.md): what changed on the site
 - [CONTRIBUTING.md](https://github.com/haruhimemoe/haruhime.moe/blob/main/CONTRIBUTING.md): setup, checks, changelog lines and regenerating the brand files and repo banners
-- [SECURITY.md](https://github.com/haruhimemoe/haruhime.moe/blob/main/SECURITY.md): how to report a vulnerability
+- [SECURITY.md](https://github.com/haruhimemoe/haruhime.moe/blob/main/SECURITY.md): how to report a vulnerability (GitHub private vulnerability reporting first, or email)
