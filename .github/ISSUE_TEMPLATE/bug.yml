@@ -1,0 +1,23 @@
+name: Bug report
+description: Something on haruhime.moe is broken
+labels: [bug]
+body:
+  - type: input
+    id: page
+    attributes:
+      label: Page URL
+      placeholder: https://www.haruhime.moe/brand
+    validations:
+      required: true
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened?
+      description: What you expected, and what you saw instead.
+    validations:
+      required: true
+  - type: input
+    id: browser
+    attributes:
+      label: Browser and OS
+      placeholder: Chrome 140 on macOS
