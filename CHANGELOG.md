@@ -8,6 +8,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ### Added
 
+- `/ui` shows `@haruhimemoe/ui` 0.6.0's "haruhime tools" footer column (`SiteFooter`'s `tools` prop, `HARUHIME_TOOLS`, `haruhimeToolsColumn`), which packs, pools and bb now use. This site's own footer keeps its Tools column, which already lists every tool (sheets as soon). next-kit moves to 0.4.0 and brand to 0.6.0.
+
 - Each live tool's homepage card has one sentence on what you do with it and a link to its main task: Make a pack, Make a pool, Make a collab banner.
 - `sitemap.xml` dates every page with the day its content last changed.
 - The homepage's structured data adds a WebSite with packs, pools and bb as its parts, and the organization lists the Discord server and the npm org alongside GitHub.

@@ -98,6 +98,7 @@ The packs look, from the [@haruhimemoe/ui](https://github.com/haruhimemoe/ui) th
 ## 8. Commits and PRs
 
 - Conventional Commits (`feat:`, `fix:`, `chore:`, `docs:`, `test:`, `refactor:`).
+- The footer doesn't use ui's `tools` prop (the "haruhime tools" column the tool sites add): its Tools column already lists every tool, sheets included. `/ui` demos that column instead.
 - Before pushing: `bun run check && bun run typecheck && bun run test && bun run build`.
 - A change a visitor would notice gets a line under `## [Unreleased]` in `CHANGELOG.md` ([Keep a Changelog 1.1.0](https://keepachangelog.com/en/1.1.0/)). Never rewrite a released entry. Don't bump `version` in `package.json` or tag; releases are cut by the maintainers.
 - When a change affects conventions, update this file in the same PR. When it moves a docs file or a README heading, update the links in the root `llms.txt` too.

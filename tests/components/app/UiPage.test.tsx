@@ -92,6 +92,23 @@ describe("/ui", () => {
     }
   });
 
+  it("lists the live tools and the tools column without the current tool", () => {
+    render(<UiPage />);
+    const tools = within(demo("HARUHIME_TOOLS")).getAllByRole("link");
+    expect(tools.map((link) => link.getAttribute("href"))).toEqual([
+      "https://packs.haruhime.moe",
+      "https://pools.haruhime.moe",
+      "https://bb.haruhime.moe",
+    ]);
+    const column = within(demo("haruhimeToolsColumn"));
+    expect(column.getByText("haruhime tools")).toBeInTheDocument();
+    expect(column.queryByRole("link", { name: /^pools/ })).toBeNull();
+    expect(column.getByRole("link", { name: "All tools" })).toHaveAttribute(
+      "href",
+      "https://www.haruhime.moe",
+    );
+  });
+
   it("shows every button variant and size, and disabled ones", () => {
     render(<UiPage />);
     const buttons = within(demo("Button")).getAllByRole("button");
