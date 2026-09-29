@@ -39,9 +39,10 @@ For a production build, run `bun run build`, then `bun run start` to serve it.
 | To change | Edit |
 | --- | --- |
 | The thanks list | `src/content/thanks.ts`: a name, an optional https link and one line per entry |
-| The tools (name, tagline, icon, hue, link, beta label, the `/llms.txt` line), including the tool icons on `/brand` | `TOOLS` in `src/constants/tools.ts`: a tool without a `url` shows as "coming soon", and one with `beta: true` gets a "beta" label |
+| The tools (name, tagline, icon, hue, link, beta label, the homepage card's sentence and task link, the `/llms.txt` line), including the tool icons on `/brand` | `TOOLS` in `src/constants/tools.ts`: a tool without a `url` shows as "coming soon", and one with `beta: true` gets a "beta" label |
 | Header and footer links | `src/constants/nav.ts` (the page links follow each page's `footer` in `PAGES`) |
-| A page's title and description (its metadata, `/llms.txt` line and footer label) | `PAGES` in `src/constants/site.ts` |
+| A page's label, search title, description and last-updated day (its metadata, sitemap date, `/llms.txt` line and footer label) | `PAGES` in `src/constants/site.ts` |
+| The homepage's search title, the link preview image entry | `SEO_SITE` in `src/constants/seo.ts` |
 | Site name, address, description, contact email, the Discord invite (the footer icon and `/contact`) | `SITE` in `src/constants/site.ts` |
 | The Evergreen Cup banner's name, link and line | `EVERGREEN_CUP` in `src/constants/site.ts` |
 | The Evergreen Cup banner's colors, tree mark and button text | `src/components/home/EgcBanner.tsx` |

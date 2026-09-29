@@ -8,6 +8,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ### Added
 
+- Each live tool's homepage card has one sentence on what you do with it and a link to its main task: Make a pack, Make a pool, Make a collab banner.
+- `sitemap.xml` dates every page with the day its content last changed.
+- The homepage's structured data adds a WebSite with packs, pools and bb as its parts, and the organization lists the Discord server and the npm org alongside GitHub.
 - bb.haruhime.moe is live: its homepage card, header and footer links and `/llms.txt` line (with a link to bb's own `/llms.txt`).
 - /thanks thanks token for BoBERT and the okay to use its map embeddings for similar-map suggestions in pools.
 
@@ -21,6 +24,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ### Changed
 
+- Search titles name what each page is, as "keywords · haruhime.moe" (the homepage: "osu! tools for players, mappers and hosts · haruhime.moe"), and every page has its own 140-160 character description.
+- The homepage's heading is now "osu! tools for players, mappers and tournament hosts", with the hello and a line on what each tool does under it. The Evergreen Cup banner stays on top, without a heading of its own.
+- Metadata, `robots.txt`, `sitemap.xml`, `/llms.txt` and the structured data come from `@haruhimemoe/next-kit` 0.3.0's SEO helpers, shared with packs, pools and bb. `@haruhimemoe/ui` 0.5.1.
+- `robots.txt` names every AI crawler in its own allow group, so the allow-all stance is written down. Nothing is blocked.
+- `/llms.txt` opens with a note on what the site is and that it isn't affiliated with ppy, and lists sheets as coming soon in a note instead of a line under Tools.
 - haruhime.moe now describes itself as osu! tools for players, mappers and tournament hosts, not just tournament tools: the homepage title and hello, the site description, `/brand`, `/llms.txt` and the link preview's alt text.
 - `@haruhimemoe/brand` 0.5.0: haruhime's new tagline ("osu! tools for players, mappers and hosts") redraws the haruhime banners, the link preview and the haruhime.moe and `.github` repo banners.
 - The homepage's tool cards sit two across on small screens and four across on wide ones.
@@ -42,6 +50,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ### Fixed
 
+- Links to `/thanks`, `/brand`, `/ui`, `/contact` and `/disclaimer` unfurl with the link preview image and the site name again (a page's own Open Graph data used to replace the site's).
 - `/llms.txt` calls the home page's Evergreen Cup section a banner, as the page does, instead of a card.
 
 ## [0.1.0] - 2026-09-24
