@@ -1,8 +1,9 @@
 /**
  * @file tests/components/app/HomePage.test.tsx
- * @desc /: title, one h1, the Evergreen Cup banner first, the four tools (pools labeled beta,
- *       bb live, sheets coming soon), the lead naming players, mappers and hosts,
- *       Organization + Person data under the schema.org context.
+ * @desc /: keyword title, canonical and og:image, one h1 naming players, mappers and hosts with
+ *       no heading above it, the Evergreen Cup banner first, the four tools (pools labeled beta,
+ *       bb live, sheets coming soon) with task links, and the Organization (stable @id), Person
+ *       and WebSite graph under the schema.org context.
  * @author David @dvhsh (https://dvh.sh)
  * @created Wed Sep 23, 2026
  * @modified Mon Sep 28, 2026
@@ -14,11 +15,23 @@ import HomePage, { metadata } from "@/app/page";
 
 describe("/", () => {
   it("has its title and one h1", () => {
-    expect(metadata.title).toEqual({ absolute: "haruhime.moe: osu! tools" });
+    expect(metadata.title).toEqual({
+      absolute: "osu! tools for players, mappers and hosts · haruhime.moe",
+    });
+    expect(metadata.alternates?.canonical).toBe("https://www.haruhime.moe/");
+    expect(metadata.openGraph).toMatchObject({
+      url: "https://www.haruhime.moe/",
+      images: [expect.objectContaining({ url: "/opengraph-image.png" })],
+    });
     render(<HomePage />);
-    expect(screen.getByText(/osu! tools for players, mappers and tournament hosts/)).toBeVisible();
     expect(screen.getAllByRole("heading", { level: 1 })).toHaveLength(1);
-    expect(screen.getByRole("heading", { level: 1 })).toBeVisible();
+    expect(screen.getByRole("heading", { level: 1 })).toHaveTextContent(
+      "osu! tools for players, mappers and tournament hosts",
+    );
+    expect(screen.getAllByRole("heading")[0]).toBe(screen.getByRole("heading", { level: 1 }));
+    expect(screen.getByText(/hellosu, haruhime here/)).toHaveTextContent(
+      /none of it is made by or tied to ppy/,
+    );
   });
 
   it("shows packs, pools and bb live, pools in beta, and sheets coming soon", () => {
@@ -37,7 +50,19 @@ describe("/", () => {
       "href",
       "https://bb.haruhime.moe",
     );
-    expect(within(tools).getAllByRole("link")).toHaveLength(3);
+    expect(within(tools).getAllByRole("link")).toHaveLength(6);
+    expect(within(tools).getByRole("link", { name: "Make a pack" })).toHaveAttribute(
+      "href",
+      "https://packs.haruhime.moe/new",
+    );
+    expect(within(tools).getByRole("link", { name: "Make a pool" })).toHaveAttribute(
+      "href",
+      "https://pools.haruhime.moe/new",
+    );
+    expect(within(tools).getByRole("link", { name: "Make a collab banner" })).toHaveAttribute(
+      "href",
+      "https://bb.haruhime.moe/collab",
+    );
     expect(within(tools).getAllByText("coming soon")).toHaveLength(1);
     const pools = within(tools).getByRole("link", { name: "pools" }).closest("li");
     expect(pools).toHaveTextContent(/beta$/);
@@ -54,7 +79,7 @@ describe("/", () => {
     expect(container.firstElementChild?.firstElementChild).toBe(egc);
   });
 
-  it("describes the site and its person as structured data", () => {
+  it("describes the site, its organization and its person as structured data", () => {
     const { container } = render(<HomePage />);
     const ld = JSON.parse(
       container.querySelector('script[type="application/ld+json"]')?.textContent ?? "{}",
@@ -69,6 +94,19 @@ describe("/", () => {
           url: "https://www.haruhime.moe",
           email: "contact@haruhime.moe",
           logo: "https://www.haruhime.moe/apple-icon.png",
+          "@id": "https://www.haruhime.moe/#organization",
+          founder: { "@id": "https://www.haruhime.moe/#person" },
+          sameAs: expect.arrayContaining(["https://discord.gg/bKy9kjMV4y"]),
+        }),
+        expect.objectContaining({
+          "@type": "WebSite",
+          "@id": "https://www.haruhime.moe/#website",
+          publisher: { "@id": "https://www.haruhime.moe/#organization" },
+          hasPart: [
+            { "@id": "https://packs.haruhime.moe/#website" },
+            { "@id": "https://pools.haruhime.moe/#website" },
+            { "@id": "https://bb.haruhime.moe/#website" },
+          ],
         }),
       ]),
     );

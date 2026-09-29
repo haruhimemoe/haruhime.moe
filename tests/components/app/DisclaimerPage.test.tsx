@@ -3,7 +3,7 @@
  * @desc /disclaimer: title, one h1, the headed sections, the required clauses, last-updated date.
  * @author David @dvhsh (https://dvh.sh)
  * @created Wed Sep 23, 2026
- * @modified Wed Sep 23, 2026
+ * @modified Mon Sep 28, 2026
  */
 
 import { render, screen } from "@testing-library/react";
@@ -13,7 +13,9 @@ import { DISCLAIMER_UPDATED } from "@/constants/legal";
 
 describe("/disclaimer", () => {
   it("has its title and one h1", () => {
-    expect(metadata.title).toBe("Disclaimer");
+    expect(metadata.title).toEqual({
+      absolute: "Disclaimer: no ppy affiliation, as-is notice · haruhime.moe",
+    });
     render(<DisclaimerPage />);
     expect(screen.getAllByRole("heading", { level: 1 })).toHaveLength(1);
     expect(screen.getByRole("heading", { level: 1, name: "Disclaimer" })).toBeInTheDocument();

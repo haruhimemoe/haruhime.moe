@@ -41,7 +41,9 @@ const demo = (name: string): HTMLElement => {
 
 describe("/ui", () => {
   it("has its title and one h1", () => {
-    expect(metadata.title).toBe("UI");
+    expect(metadata.title).toEqual({
+      absolute: "@haruhimemoe/ui: React kit for osu! tools · haruhime.moe",
+    });
     expect(metadata.description).toMatch(/@haruhimemoe\/ui/);
     render(<UiPage />);
     expect(screen.getAllByRole("heading", { level: 1 })).toHaveLength(1);

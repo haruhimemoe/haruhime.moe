@@ -13,7 +13,9 @@ import ContactPage, { metadata } from "@/app/contact/page";
 
 describe("/contact", () => {
   it("has its title and one h1", () => {
-    expect(metadata.title).toBe("Contact");
+    expect(metadata.title).toEqual({
+      absolute: "Contact haruhime: email, Discord, GitHub · haruhime.moe",
+    });
     render(<ContactPage />);
     expect(screen.getAllByRole("heading", { level: 1 })).toHaveLength(1);
     expect(screen.getByRole("heading", { level: 1, name: "Contact" })).toBeInTheDocument();

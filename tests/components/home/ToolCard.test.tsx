@@ -1,10 +1,11 @@
 /**
  * @file tests/components/home/ToolCard.test.tsx
- * @desc ToolCard: a live tool links to its site, labeled "beta" while in beta; a coming-soon tool
- *       says so and links nowhere.
+ * @desc ToolCard: a live tool links to its site, labeled "beta" while in beta, with its sentence
+ *       and a task link on the tool's site; a coming-soon tool says so and links nowhere, even
+ *       with a summary and task set.
  * @author David @dvhsh (https://dvh.sh)
  * @created Wed Sep 23, 2026
- * @modified Fri Sep 25, 2026
+ * @modified Mon Sep 28, 2026
  */
 
 import { render, screen } from "@testing-library/react";
@@ -71,6 +72,26 @@ describe("ToolCard", () => {
     expect(screen.getByText(soon.tagline)).toBeInTheDocument();
     expect(screen.getByText("coming soon")).toBeInTheDocument();
     expect(container.querySelector("img")).toHaveAttribute("src", "/brand/sheets-icon.svg");
+  });
+
+  it("shows a live tool's sentence and links its main task on the tool's site", () => {
+    renderCard({
+      ...live,
+      summary: "Paste IDs, get a zip.",
+      task: { label: "Make a pack", path: "/new" },
+    });
+    expect(screen.getByText("Paste IDs, get a zip.")).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: "Make a pack" })).toHaveAttribute(
+      "href",
+      "https://packs.haruhime.moe/new",
+    );
+    expect(screen.getAllByRole("link")).toHaveLength(2);
+  });
+
+  it("never shows a sentence or task link for a tool that hasn't launched", () => {
+    renderCard({ ...soon, summary: "Later.", task: { label: "Make a sheet", path: "/new" } });
+    expect(screen.queryByText("Later.")).not.toBeInTheDocument();
+    expect(screen.queryByRole("link")).not.toBeInTheDocument();
   });
 
   it("gives the icon empty alt text, since the name is right next to it", () => {

@@ -1,7 +1,8 @@
 /**
  * @file src/components/home/EgcBanner.tsx
  * @desc Homepage banner for the Evergreen Cup: Evergreen Cup's own dark green ground and tree
- *       mark, linking to evergreencup.org. Sits above everything else on the homepage.
+ *       mark, linking to evergreencup.org. Sits above everything else on the homepage, so its name
+ *       is a plain paragraph, not a heading: the page's h1 comes first in the outline.
  * @author David @dvhsh (https://dvh.sh)
  * @created Wed Sep 23, 2026
  * @modified Mon Sep 28, 2026
@@ -37,9 +38,9 @@ export function EgcBanner() {
     >
       <EvergreenMark />
       <div className="flex min-w-0 grow basis-48 flex-col gap-1">
-        <h2 id={headingId} className="font-bold text-lg text-white">
+        <p id={headingId} className="font-bold text-lg text-white">
           {EVERGREEN_CUP.name}
-        </h2>
+        </p>
         <p className="text-sm">{EVERGREEN_CUP.line}</p>
       </div>
       <a

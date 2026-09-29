@@ -3,7 +3,7 @@
  * @desc /thanks: title, one h1, every entry from the thanks list.
  * @author David @dvhsh (https://dvh.sh)
  * @created Wed Sep 23, 2026
- * @modified Wed Sep 23, 2026
+ * @modified Mon Sep 28, 2026
  */
 
 import { render, screen } from "@testing-library/react";
@@ -13,7 +13,9 @@ import { THANKS } from "@/content/thanks";
 
 describe("/thanks", () => {
   it("has its title and one h1", () => {
-    expect(metadata.title).toBe("Thanks");
+    expect(metadata.title).toEqual({
+      absolute: "Thanks and credits for haruhime's osu! tools · haruhime.moe",
+    });
     render(<ThanksPage />);
     expect(screen.getAllByRole("heading", { level: 1 })).toHaveLength(1);
     expect(screen.getByRole("heading", { level: 1, name: "Thanks" })).toBeInTheDocument();

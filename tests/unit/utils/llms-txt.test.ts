@@ -1,17 +1,19 @@
 /**
  * @file tests/unit/utils/llms-txt.test.ts
- * @desc buildLlmsTxt: llmstxt.org section order, absolute links, packs' and pools' own llms.txt
- *       linked, pools in beta with its sources, no dead links for tools without a url, every
- *       PAGE_PATHS entry present, the Discord server under Elsewhere, one trailing newline.
+ * @desc buildLlmsTxt: llmstxt.org section order, the what-it-is note with the ppy notice,
+ *       absolute links, packs' and pools' own llms.txt linked, pools in beta with its sources, no
+ *       dead links for tools without a url (a coming-soon note instead), every PAGE_PATHS entry
+ *       present, the Discord server under Elsewhere, one trailing newline. toolLink and
+ *       comingSoonNote on their own.
  * @author David @dvhsh (https://dvh.sh)
  * @created Wed Sep 23, 2026
- * @modified Fri Sep 25, 2026
+ * @modified Mon Sep 28, 2026
  */
 
 import { describe, expect, it } from "vitest";
 import { PAGE_PATHS, SITE } from "@/constants/site";
 import { TOOLS } from "@/constants/tools";
-import { buildLlmsTxt, toolLine } from "@/utils/llms-txt";
+import { buildLlmsTxt, comingSoonNote, toolLink } from "@/utils/llms-txt";
 
 describe("buildLlmsTxt", () => {
   const text = buildLlmsTxt();
@@ -27,10 +29,16 @@ describe("buildLlmsTxt", () => {
       if (tool.url) {
         expect(text).toContain(`- [${tool.name}](${tool.url}): ${tool.tagline}.`);
       } else {
-        expect(text).not.toContain(`(${tool.name})`);
-        expect(text).toContain(`- ${tool.name}: ${tool.tagline} (coming soon)`);
+        expect(text).not.toContain(`[${tool.name}]`);
+        expect(text).toContain(`${tool.name} (${tool.tagline})`);
       }
     }
+  });
+
+  it("says what the site is, that the tools are free, and that ppy isn't involved", () => {
+    expect(text).toContain("is the home page of haruhime's osu! tools");
+    expect(text).toContain("free to use");
+    expect(text).toContain(SITE.trademarkNotice);
   });
 
   it("links packs' and pools' own llms.txt", () => {
@@ -76,10 +84,10 @@ describe("buildLlmsTxt", () => {
   });
 });
 
-describe("toolLine", () => {
+describe("toolLink", () => {
   it("adds the see-also note only for a tool that serves its own llms.txt", () => {
     expect(
-      toolLine({
+      toolLink({
         name: "packs",
         hue: 333,
         tagline: "packs stuff",
@@ -87,23 +95,25 @@ describe("toolLine", () => {
         url: "https://packs.example",
         llmsTxt: true,
       }),
-    ).toBe(
-      "- [packs](https://packs.example): packs stuff. See also its own llms.txt: https://packs.example/llms.txt",
-    );
+    ).toEqual({
+      title: "packs",
+      url: "https://packs.example",
+      note: "packs stuff. See also its own llms.txt: https://packs.example/llms.txt",
+    });
     expect(
-      toolLine({
+      toolLink({
         name: "widgets",
         hue: 1,
         tagline: "widget stuff",
         icon: "x",
         url: "https://widgets.example",
       }),
-    ).toBe("- [widgets](https://widgets.example): widget stuff.");
+    ).toEqual({ title: "widgets", url: "https://widgets.example", note: "widget stuff." });
   });
 
   it("says a beta tool is in beta, then what it does, before the see-also note", () => {
     expect(
-      toolLine({
+      toolLink({
         name: "gadgets",
         hue: 1,
         tagline: "gadget stuff",
@@ -112,18 +122,27 @@ describe("toolLine", () => {
         beta: true,
         about: "Makes gadgets.",
         llmsTxt: true,
-      }),
+      }).note,
     ).toBe(
-      "- [gadgets](https://gadgets.example): gadget stuff. In beta. Makes gadgets. See also its own llms.txt: https://gadgets.example/llms.txt",
+      "gadget stuff. In beta. Makes gadgets. See also its own llms.txt: https://gadgets.example/llms.txt",
     );
   });
 
-  it("never links a tool without a url, beta or not", () => {
-    expect(toolLine({ name: "later", hue: 1, tagline: "not yet", icon: "x", beta: true })).toBe(
-      "- later: not yet (coming soon)",
-    );
-    expect(toolLine({ name: "soon", hue: 1, tagline: "not yet", icon: "x" })).toBe(
-      "- soon: not yet (coming soon)",
-    );
+  it("refuses to link a tool without a url, beta or not", () => {
+    expect(() =>
+      toolLink({ name: "later", hue: 1, tagline: "not yet", icon: "x", beta: true }),
+    ).toThrow(/hasn't launched/);
+  });
+});
+
+describe("comingSoonNote", () => {
+  it("names every tool without a url, with its tagline", () => {
+    const soon = TOOLS.filter((tool) => !tool.url);
+    expect(soon.length).toBeGreaterThan(0);
+    for (const tool of soon) expect(comingSoonNote()).toContain(`${tool.name} (${tool.tagline})`);
+  });
+
+  it("is blank once every tool is live, so llms.txt drops the note", () => {
+    expect(comingSoonNote(TOOLS.filter((tool) => tool.url))).toBe("");
   });
 });

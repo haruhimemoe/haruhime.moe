@@ -1,17 +1,19 @@
 /**
  * @file tests/unit/app/sitemap.test.ts
- * @desc sitemap.xml lists every page, and robots.txt allows everything and points at it.
+ * @desc sitemap.xml lists every page with its real lastUpdated, and robots.txt allows everything,
+ *       names every AI bot in its own allow group, and points at the sitemap.
  * @author David @dvhsh (https://dvh.sh)
  * @created Wed Sep 23, 2026
- * @modified Wed Sep 23, 2026
+ * @modified Mon Sep 28, 2026
  */
 
 import { readdirSync } from "node:fs";
 import path from "node:path";
+import { AI_BOTS } from "@haruhimemoe/next-kit/seo";
 import { describe, expect, it } from "vitest";
 import robots from "@/app/robots";
 import sitemap from "@/app/sitemap";
-import { PAGE_PATHS } from "@/constants/site";
+import { PAGE_PATHS, PAGES } from "@/constants/site";
 
 /** Every route path under src/app that has its own page.tsx, derived straight from the filesystem. */
 const routePathsOnDisk = (): string[] => {
@@ -37,16 +39,31 @@ describe("sitemap", () => {
     ]);
   });
 
+  it("dates every page with its PAGES lastUpdated, never a build time", () => {
+    for (const [i, entry] of sitemap().entries()) {
+      const path = PAGE_PATHS[i] as (typeof PAGE_PATHS)[number];
+      expect(entry.lastModified).toBe(new Date(PAGES[path].lastUpdated).toISOString());
+    }
+  });
+
   it("matches every page.tsx under src/app, so a new page can't miss the sitemap", () => {
     expect([...PAGE_PATHS].sort()).toEqual(routePathsOnDisk());
   });
 });
 
 describe("robots", () => {
-  it("allows everything and names the sitemap", () => {
-    expect(robots()).toEqual({
-      rules: [{ userAgent: "*", allow: "/" }],
-      sitemap: "https://www.haruhime.moe/sitemap.xml",
-    });
+  const txt = robots();
+  const rules = [txt.rules].flat();
+
+  it("allows everything for every crawler and names the sitemap and host", () => {
+    expect(rules[0]).toEqual({ userAgent: "*", allow: ["/"] });
+    expect(txt.sitemap).toBe("https://www.haruhime.moe/sitemap.xml");
+    expect(txt.host).toBe("https://www.haruhime.moe");
+    for (const rule of rules) expect(rule.disallow ?? []).toEqual([]);
+  });
+
+  it("names every AI bot in an allow group, so the stance is explicit", () => {
+    const named = rules.flatMap((rule) => [rule.userAgent ?? []].flat());
+    for (const bot of AI_BOTS) expect(named).toContain(bot.userAgent);
   });
 });

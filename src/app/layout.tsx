@@ -1,33 +1,23 @@
 /**
  * @file src/app/layout.tsx
- * @desc Root layout: Nunito font variable, site metadata, dark body, the SiteShell frame.
+ * @desc Root layout: Nunito font variable, site metadata (next-kit siteMetadata: title template,
+ *       description, Open Graph with the site image), dark body, the SiteShell frame.
  * @author David @dvhsh (https://dvh.sh)
  * @created Wed Sep 23, 2026
- * @modified Wed Sep 23, 2026
+ * @modified Mon Sep 28, 2026
  */
 
+import { siteMetadata } from "@haruhimemoe/next-kit/seo";
 import type { Metadata } from "next";
 import { Nunito } from "next/font/google";
 import type { ReactNode } from "react";
 import { SiteShell } from "@/components/layout/SiteShell";
-import { SITE } from "@/constants/site";
+import { SEO_SITE } from "@/constants/seo";
 import "./globals.css";
 
 const nunito = Nunito({ subsets: ["latin"], variable: "--font-nunito", display: "swap" });
 
-export const metadata: Metadata = {
-  metadataBase: new URL(SITE.url),
-  title: { default: SITE.name, template: `%s · ${SITE.name}` },
-  description: SITE.description,
-  applicationName: SITE.name,
-  openGraph: {
-    type: "website",
-    siteName: SITE.name,
-    locale: "en_US",
-    // No title/description here: Next then fills og:title/description from each page's own.
-  },
-  twitter: { card: "summary_large_image" },
-};
+export const metadata: Metadata = siteMetadata(SEO_SITE);
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (

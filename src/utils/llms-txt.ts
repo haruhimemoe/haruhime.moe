@@ -1,31 +1,42 @@
 /**
  * @file src/utils/llms-txt.ts
- * @desc Builds /llms.txt (llmstxt.org): a summary, the tools, every page, and links elsewhere.
- *       Built from SITE, TOOLS and PAGES so a new page or tool shows up on its own. Pure
- *       so the route handler and its tests share one source.
+ * @desc Builds /llms.txt (llmstxt.org) with @haruhimemoe/next-kit/seo's llmsTxt: a summary, notes
+ *       on what the site is and which tools haven't launched, then the live tools, every page, and
+ *       links elsewhere. Built from SITE, TOOLS and PAGES so a new page or tool shows up on its
+ *       own. Pure so the route handler and its tests share one source.
  * @author David @dvhsh (https://dvh.sh)
  * @created Wed Sep 23, 2026
  * @modified Mon Sep 28, 2026
  */
 
+import { type LlmsLink, llmsTxt } from "@haruhimemoe/next-kit/seo";
 import { PAGE_PATHS, PAGES, SITE } from "@/constants/site";
 import { TOOLS, type Tool } from "@/constants/tools";
 
 /**
- * @function toolLine
- * @param tool {Tool} a tool from TOOLS
- * @returns {string} a live tool as a link with its tagline, then "In beta." for a beta tool, what
- *   it does, and its own llms.txt when it serves one; a tool without a url as plain text marked
- *   "coming soon", never a dead link
+ * @function toolLink
+ * @param tool {Tool} a live tool from TOOLS (one with a url)
+ * @returns {LlmsLink} the tool as a link, its note the tagline, then "In beta." for a beta tool,
+ *   what it does, and its own llms.txt when it serves one
+ * @throws {Error} when the tool has no url: a tool that hasn't launched is never linked
  */
-export const toolLine = (tool: Tool): string => {
-  if (!tool.url) {
-    return `- ${tool.name}: ${tool.tagline} (coming soon)`;
-  }
+export const toolLink = (tool: Tool): LlmsLink => {
+  if (!tool.url) throw new Error(`llms.txt: ${tool.name} hasn't launched, so it has no link`);
   const beta = tool.beta ? " In beta." : "";
   const about = tool.about ? ` ${tool.about}` : "";
   const seeAlso = tool.llmsTxt ? ` See also its own llms.txt: ${tool.url}/llms.txt` : "";
-  return `- [${tool.name}](${tool.url}): ${tool.tagline}.${beta}${about}${seeAlso}`;
+  return { title: tool.name, url: tool.url, note: `${tool.tagline}.${beta}${about}${seeAlso}` };
+};
+
+/**
+ * @function comingSoonNote
+ * @param tools {readonly Tool[]} the tools to look through (default TOOLS)
+ * @returns {string} one sentence naming the tools without a url as coming soon, or "" when every
+ *   tool is live (llmsTxt drops a blank note)
+ */
+export const comingSoonNote = (tools: readonly Tool[] = TOOLS): string => {
+  const soon = tools.filter((tool) => !tool.url).map((tool) => `${tool.name} (${tool.tagline})`);
+  return soon.length ? `Coming soon, not live yet: ${soon.join(", ")}.` : "";
 };
 
 /**
@@ -33,25 +44,44 @@ export const toolLine = (tool: Tool): string => {
  * @returns {string} the llms.txt body (llmstxt.org format), ending with a trailing newline
  */
 export const buildLlmsTxt = (): string => {
-  const lines = [
-    `# ${SITE.name}`,
-    "",
-    `> ${SITE.description}`,
-    "",
-    "## Tools",
-    ...TOOLS.map(toolLine),
-    "",
-    "## Pages",
-    ...PAGE_PATHS.map(
-      (path) => `- [${PAGES[path].title}](${SITE.url}${path}): ${PAGES[path].description}`,
-    ),
-    "",
-    "## Elsewhere",
-    `- [GitHub](${SITE.githubOrg}): source and issues for every tool`,
-    `- [Claude Code plugin](${SITE.githubOrg}/claude-plugin): haruhime's Claude Code plugin`,
-    "- [npm](https://www.npmjs.com/org/haruhimemoe): the @haruhimemoe packages",
-    `- [Discord](${SITE.discordUrl}): questions and feedback about the tools`,
-    "",
-  ];
-  return lines.join("\n");
+  return llmsTxt({
+    title: SITE.name,
+    summary: SITE.description,
+    notes: [
+      `${SITE.name} is the home page of haruhime's osu! tools. Each tool lives on its own subdomain and is free to use. ${SITE.trademarkNotice}`,
+      comingSoonNote(),
+    ],
+    sections: [
+      { heading: "Tools", links: TOOLS.filter((tool) => tool.url).map(toolLink) },
+      {
+        heading: "Pages",
+        links: PAGE_PATHS.map((path) => ({
+          title: PAGES[path].title,
+          url: `${SITE.url}${path}`,
+          note: PAGES[path].description,
+        })),
+      },
+      {
+        heading: "Elsewhere",
+        links: [
+          { title: "GitHub", url: SITE.githubOrg, note: "source and issues for every tool" },
+          {
+            title: "Claude Code plugin",
+            url: `${SITE.githubOrg}/claude-plugin`,
+            note: "haruhime's Claude Code plugin",
+          },
+          {
+            title: "npm",
+            url: "https://www.npmjs.com/org/haruhimemoe",
+            note: "the @haruhimemoe packages",
+          },
+          {
+            title: "Discord",
+            url: SITE.discordUrl,
+            note: "questions and feedback about the tools",
+          },
+        ],
+      },
+    ],
+  });
 };

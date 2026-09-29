@@ -18,7 +18,9 @@ import { TOOLS } from "@/constants/tools";
 
 describe("/brand", () => {
   it("has its title and one h1", () => {
-    expect(metadata.title).toBe("Brand");
+    expect(metadata.title).toEqual({
+      absolute: "Brand kit: logos, colors and README banners · haruhime.moe",
+    });
     render(<BrandPage />);
     expect(screen.getAllByRole("heading", { level: 1 })).toHaveLength(1);
     expect(screen.getByRole("heading", { level: 1, name: "Brand" })).toBeInTheDocument();
