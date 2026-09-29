@@ -34,7 +34,8 @@
     "prepare": "git rev-parse --git-dir >/dev/null 2>&1 && lefthook install || true"
   },
   "dependencies": {
-    "@haruhimemoe/ui": "0.5.0",
+    "@haruhimemoe/next-kit": "0.3.0",
+    "@haruhimemoe/ui": "0.5.1",
     "next": "16.3.6",
     "react": "19.3.0",
     "react-dom": "19.3.0"
