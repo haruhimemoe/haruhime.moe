@@ -7,7 +7,7 @@
  *       founder, and the WebSite with each live tool's site as a part.
  * @author David @dvhsh (https://dvh.sh)
  * @created Wed Sep 23, 2026
- * @modified Mon Sep 28, 2026
+ * @modified Fri Oct 2, 2026
  */
 
 import { HARUHIME_ORG, homeMetadata, ld } from "@haruhimemoe/next-kit/seo";
@@ -35,17 +35,17 @@ const HOME_LD = ld.graph(
 
 export default function HomePage() {
   return (
-    <div className="flex flex-col gap-10">
+    <div className="flex flex-col gap-12">
       <EgcBanner />
       <PageHeader
         title="osu! tools for players, mappers and tournament hosts"
         lead="hellosu, haruhime here. these are free tools i make for osu!: packs turns a mappool into one download, pools is for building and looking up tournament pools, and bb is a BBCode editor for userpages and forum posts. none of it is made by or tied to ppy."
       />
-      <section aria-labelledby="tools-heading" className="flex flex-col gap-4">
-        <h2 id="tools-heading" className="font-bold text-c1 text-xl">
+      <section aria-labelledby="tools-heading" className="flex flex-col gap-5">
+        <h2 id="tools-heading" className="font-bold text-2xl text-c1">
           Tools
         </h2>
-        <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        <ul className="grid gap-4 sm:grid-cols-2 sm:gap-5">
           {TOOLS.map((tool) => (
             <ToolCard key={tool.name} tool={tool} />
           ))}

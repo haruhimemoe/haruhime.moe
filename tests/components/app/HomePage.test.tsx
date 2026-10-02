@@ -6,7 +6,7 @@
  *       and WebSite graph under the schema.org context.
  * @author David @dvhsh (https://dvh.sh)
  * @created Wed Sep 23, 2026
- * @modified Mon Sep 28, 2026
+ * @modified Fri Oct 2, 2026
  */
 
 import { render, screen, within } from "@testing-library/react";
@@ -65,14 +65,15 @@ describe("/", () => {
     );
     expect(within(tools).getAllByText("coming soon")).toHaveLength(1);
     const pools = within(tools).getByRole("link", { name: "pools" }).closest("li");
-    expect(pools).toHaveTextContent(/beta$/);
+    // The beta pill sits right beside the name, before the tagline.
+    expect(pools).toHaveTextContent(/^poolsbeta/);
     expect(within(tools).getAllByText("beta")).toHaveLength(1);
   });
 
   it("puts the Evergreen Cup banner first, above the intro", () => {
     const { container } = render(<HomePage />);
     const egc = screen.getByRole("region", { name: "Evergreen Cup" });
-    expect(within(egc).getByRole("link", { name: "Visit evergreencup.org" })).toHaveAttribute(
+    expect(within(egc).getByRole("link", { name: "evergreencup.org" })).toHaveAttribute(
       "href",
       "https://evergreencup.org",
     );

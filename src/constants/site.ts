@@ -6,7 +6,7 @@
  *       sitemap, /llms.txt and the footer read.
  * @author David @dvhsh (https://dvh.sh)
  * @created Wed Sep 23, 2026
- * @modified Mon Sep 28, 2026
+ * @modified Fri Oct 2, 2026
  */
 
 import { DISCLAIMER_UPDATED } from "@/constants/legal";
@@ -61,7 +61,7 @@ export const PAGES = {
   "/": {
     title: "Home",
     description: "The tools, the Evergreen Cup banner, and a short hello.",
-    lastUpdated: "2026-09-28",
+    lastUpdated: "2026-10-02",
   },
   "/thanks": {
     title: "Thanks",
