@@ -8,7 +8,12 @@
  */
 
 import { describe, expect, it } from "vitest";
-import { DISCLAIMER_UPDATED, SECURITY_TXT_EXPIRES } from "@/constants/legal";
+import {
+  DISCLAIMER_UPDATED,
+  PRIVACY_UPDATED,
+  SECURITY_TXT_EXPIRES,
+  TERMS_UPDATED,
+} from "@/constants/legal";
 
 const DAY_MS = 24 * 60 * 60 * 1000;
 
@@ -34,5 +39,12 @@ describe("DISCLAIMER_UPDATED", () => {
     expect(new Date(`${DISCLAIMER_UPDATED}T00:00:00Z`).toISOString().slice(0, 10)).toBe(
       DISCLAIMER_UPDATED,
     );
+  });
+});
+
+describe("TERMS_UPDATED and PRIVACY_UPDATED", () => {
+  it.each([TERMS_UPDATED, PRIVACY_UPDATED])("%s is a real YYYY-MM-DD date", (date) => {
+    expect(date).toMatch(/^\d{4}-\d{2}-\d{2}$/);
+    expect(new Date(`${date}T00:00:00Z`).toISOString().slice(0, 10)).toBe(date);
   });
 });

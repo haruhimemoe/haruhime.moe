@@ -74,12 +74,24 @@ describe("SiteShell header", () => {
 });
 
 describe("SiteShell footer", () => {
-  it("has three labelled columns", () => {
+  it("has four labelled columns, in order", () => {
     renderShell();
     const footer = screen.getByRole("contentinfo");
-    for (const name of ["Tools", "haruhime.moe", "Legal"]) {
-      expect(within(footer).getByRole("navigation", { name })).toBeInTheDocument();
-    }
+    const names = within(footer)
+      .getAllByRole("navigation")
+      .map((nav) => nav.getAttribute("aria-label"));
+    expect(names).toEqual(["Tools", "Libraries", "haruhime.moe", "Legal"]);
+  });
+
+  it("puts the libraries hub and the UI showcase in the Libraries column", () => {
+    renderShell();
+    const footer = screen.getByRole("contentinfo");
+    const libs = within(footer).getByRole("navigation", { name: "Libraries" });
+    const links = within(libs).getAllByRole("link");
+    expect(links.map((link) => [link.textContent, link.getAttribute("href")])).toEqual([
+      ["Libraries", "/libraries"],
+      ["UI", "/ui"],
+    ]);
   });
 
   it("links packs, pools and bb and shows sheets as plain text marked soon", () => {
@@ -110,7 +122,6 @@ describe("SiteShell footer", () => {
     const expected = [
       ["Thanks", "/thanks"],
       ["Brand", "/brand"],
-      ["UI", "/ui"],
       ["Contact", "/contact"],
     ] as const;
     const links = within(site).getAllByRole("link");
@@ -119,10 +130,12 @@ describe("SiteShell footer", () => {
       expect(within(site).getByRole("link", { name })).toHaveAttribute("href", href);
     }
     const legal = within(footer).getByRole("navigation", { name: "Legal" });
-    expect(within(legal).getByRole("link", { name: "Disclaimer" })).toHaveAttribute(
-      "href",
-      "/disclaimer",
-    );
+    const legalLinks = within(legal).getAllByRole("link");
+    expect(legalLinks.map((link) => [link.textContent, link.getAttribute("href")])).toEqual([
+      ["Disclaimer", "/disclaimer"],
+      ["Terms", "/terms"],
+      ["Privacy", "/privacy"],
+    ]);
   });
 
   it("links a GitHub icon to the org, with an accessible name", () => {

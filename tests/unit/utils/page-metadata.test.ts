@@ -6,7 +6,7 @@
  *       unique titles, real lastUpdated dates.
  * @author David @dvhsh (https://dvh.sh)
  * @created Mon Sep 28, 2026
- * @modified Mon Sep 28, 2026
+ * @modified Fri Oct 2, 2026
  */
 
 import { describe, expect, it } from "vitest";
@@ -45,7 +45,7 @@ describe("PAGES", () => {
     for (const path of PAGE_PATHS) {
       const footer = (PAGES[path] as { footer?: string }).footer;
       if (path === "/") expect(footer).toBeUndefined();
-      else expect(footer).toMatch(/^(haruhime\.moe|Legal)$/);
+      else expect(footer).toMatch(/^(Libraries|haruhime\.moe|Legal)$/);
     }
   });
 

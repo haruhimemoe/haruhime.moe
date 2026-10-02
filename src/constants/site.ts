@@ -9,7 +9,7 @@
  * @modified Fri Oct 2, 2026
  */
 
-import { DISCLAIMER_UPDATED } from "@/constants/legal";
+import { DISCLAIMER_UPDATED, PRIVACY_UPDATED, TERMS_UPDATED } from "@/constants/legal";
 
 /** Who and where the site is. Shared by metadata, JSON-LD, the footer and the contact page. */
 export const SITE = {
@@ -33,7 +33,7 @@ export const EVERGREEN_CUP = {
 } as const;
 
 /** A footer column that can list a page. */
-export type FooterColumnTitle = "haruhime.moe" | "Legal";
+export type FooterColumnTitle = "Libraries" | "haruhime.moe" | "Legal";
 
 /** One page's copy, read by its metadata, the sitemap, /llms.txt and the footer. */
 export interface PageInfo {
@@ -79,13 +79,21 @@ export const PAGES = {
     lastUpdated: "2026-09-28",
     footer: "haruhime.moe",
   },
+  "/libraries": {
+    title: "Libraries",
+    seoTitle: "Libraries: the @haruhimemoe packages",
+    description:
+      "The eight @haruhimemoe npm packages the osu! tools are built from, each with its version, downloads, stars and a docs page: ui, next-kit, osu, pool and more.",
+    lastUpdated: "2026-10-02",
+    footer: "Libraries",
+  },
   "/ui": {
     title: "UI",
     seoTitle: "@haruhimemoe/ui: React kit for osu! tools",
     description:
       "Every @haruhimemoe/ui component, the React kit behind haruhime's osu! tools, live in its states: buttons, cards, forms, filters, tables and osu! pieces.",
     lastUpdated: "2026-09-28",
-    footer: "haruhime.moe",
+    footer: "Libraries",
   },
   "/contact": {
     title: "Contact",
@@ -101,6 +109,22 @@ export const PAGES = {
     description:
       "haruhime.moe and its osu! tools aren't affiliated with ppy. They use the osu! API and the hinai mirror under their terms, host no beatmaps, and come as is.",
     lastUpdated: DISCLAIMER_UPDATED,
+    footer: "Legal",
+  },
+  "/terms": {
+    title: "Terms",
+    seoTitle: "Terms of use for haruhime.moe",
+    description:
+      "The terms for using haruhime.moe itself: what the site is, the MIT-licensed libraries, that each tool has its own terms, no warranty, and how to reach haruhime.",
+    lastUpdated: TERMS_UPDATED,
+    footer: "Legal",
+  },
+  "/privacy": {
+    title: "Privacy",
+    seoTitle: "Privacy policy for haruhime.moe",
+    description:
+      "What this site collects: nothing of its own. No accounts, cookies or analytics, only Vercel's request logs. Stats come from npm and GitHub server to server.",
+    lastUpdated: PRIVACY_UPDATED,
     footer: "Legal",
   },
 } as const satisfies Record<`/${string}`, PageInfo>;

@@ -30,7 +30,7 @@ describe("/", () => {
     );
     expect(screen.getAllByRole("heading")[0]).toBe(screen.getByRole("heading", { level: 1 }));
     expect(screen.getByText(/hellosu, haruhime here/)).toHaveTextContent(
-      /none of it is made by or tied to ppy/,
+      /bb is a BBCode editor for userpages and forum posts\.$/,
     );
   });
 

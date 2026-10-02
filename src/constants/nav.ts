@@ -5,7 +5,7 @@
  *       columns come from each page's footer column in PAGES.
  * @author David @dvhsh (https://dvh.sh)
  * @created Wed Sep 23, 2026
- * @modified Mon Sep 28, 2026
+ * @modified Fri Oct 2, 2026
  */
 
 import type { SiteFooterColumn, SiteLinkItem } from "@haruhimemoe/ui";
@@ -33,9 +33,10 @@ const pageLinks = (column: FooterColumnTitle): SiteLinkItem[] =>
     (path) => (PAGES[path] as { footer?: FooterColumnTitle }).footer === column,
   ).map((path) => ({ href: path, label: PAGES[path].title }));
 
-/** The three footer columns, in order. */
+/** The four footer columns, in order. */
 export const FOOTER_COLUMNS: readonly SiteFooterColumn[] = [
   { title: "Tools", items: TOOLS.map(toolLink) },
+  { title: "Libraries", items: pageLinks("Libraries") },
   { title: "haruhime.moe", items: pageLinks("haruhime.moe") },
   { title: "Legal", items: pageLinks("Legal") },
 ];

@@ -13,18 +13,23 @@ import { AI_BOTS } from "@haruhimemoe/next-kit/seo";
 import { describe, expect, it } from "vitest";
 import robots from "@/app/robots";
 import sitemap from "@/app/sitemap";
+import { LIBRARIES } from "@/constants/libraries";
 import { PAGE_PATHS, PAGES } from "@/constants/site";
 
 /** Every route path under src/app that has its own page.tsx, derived straight from the filesystem. */
 const routePathsOnDisk = (): string[] => {
   const appDir = path.join(process.cwd(), "src/app");
-  return readdirSync(appDir, { recursive: true })
-    .filter((entry) => entry.toString().endsWith("page.tsx"))
-    .map((entry) => {
-      const dir = path.posix.dirname(entry.toString().split(path.sep).join("/"));
-      return dir === "." ? "/" : `/${dir}`;
-    })
-    .sort();
+  return (
+    readdirSync(appDir, { recursive: true })
+      .filter((entry) => entry.toString().endsWith("page.tsx"))
+      // A dynamic segment ([name]) is listed from its own data, not from PAGES.
+      .filter((entry) => !entry.toString().includes("["))
+      .map((entry) => {
+        const dir = path.posix.dirname(entry.toString().split(path.sep).join("/"));
+        return dir === "." ? "/" : `/${dir}`;
+      })
+      .sort()
+  );
 };
 
 describe("sitemap", () => {
@@ -33,14 +38,25 @@ describe("sitemap", () => {
       "https://www.haruhime.moe/",
       "https://www.haruhime.moe/thanks",
       "https://www.haruhime.moe/brand",
+      "https://www.haruhime.moe/libraries",
       "https://www.haruhime.moe/ui",
       "https://www.haruhime.moe/contact",
       "https://www.haruhime.moe/disclaimer",
+      "https://www.haruhime.moe/terms",
+      "https://www.haruhime.moe/privacy",
+      ...LIBRARIES.map((lib) => `https://www.haruhime.moe/libraries/${lib.name}`),
     ]);
   });
 
+  it("gives a library docs page no lastModified: the README's date isn't known at build", () => {
+    const docs = sitemap().filter((entry) => entry.url.includes("/libraries/"));
+    expect(docs).toHaveLength(LIBRARIES.length);
+    for (const entry of docs) expect(entry.lastModified).toBeUndefined();
+  });
+
   it("dates every page with its PAGES lastUpdated, never a build time", () => {
-    for (const [i, entry] of sitemap().entries()) {
+    const pages = sitemap().slice(0, PAGE_PATHS.length);
+    for (const [i, entry] of pages.entries()) {
       const path = PAGE_PATHS[i] as (typeof PAGE_PATHS)[number];
       expect(entry.lastModified).toBe(new Date(PAGES[path].lastUpdated).toISOString());
     }

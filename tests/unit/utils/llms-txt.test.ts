@@ -59,6 +59,9 @@ describe("buildLlmsTxt", () => {
     }
     expect(text).toContain(`- [Thanks](${SITE.url}/thanks): `);
     expect(text).toContain(`- [UI](${SITE.url}/ui): `);
+    expect(text).toContain(`- [Libraries](${SITE.url}/libraries): `);
+    expect(text).toContain(`- [Terms](${SITE.url}/terms): `);
+    expect(text).toContain(`- [Privacy](${SITE.url}/privacy): `);
     expect(text).not.toContain(`[${SITE.url}`);
   });
 
