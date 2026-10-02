@@ -1,6 +1,6 @@
 /**
  * @file tests/unit/utils/readme.test.ts
- * @desc README transforms: the leading banner paragraph goes (the page has its own header),
+ * @desc README transforms: the leading banner paragraph and title go (the page has its own header),
  *       relative links point at the file on GitHub and relative images at the raw file; absolute
  *       links, anchors and mailto stay; prepareReadme runs both.
  * @author David @dvhsh (https://dvh.sh)
@@ -9,7 +9,7 @@
  */
 
 import { describe, expect, it } from "vitest";
-import { prepareReadme, rewriteRelativeUrls, stripBanner } from "@/utils/readme";
+import { prepareReadme, rewriteRelativeUrls, stripBanner, stripTitle } from "@/utils/readme";
 
 const BANNER = `<p align="center"><a href="https://github.com/haruhimemoe/ui"><picture><source media="(prefers-color-scheme: light)" srcset="https://www.haruhime.moe/brand/repos/ui-banner-on-light.svg"><img alt="ui" src="https://www.haruhime.moe/brand/repos/ui-banner.svg"></picture></a></p>
 
@@ -31,6 +31,17 @@ describe("stripBanner", () => {
     expect(stripBanner('# Title\n\n<p align="center">later</p>')).toBe(
       '# Title\n\n<p align="center">later</p>',
     );
+  });
+});
+
+describe("stripTitle", () => {
+  it("removes a leading # title line and the blank lines after it", () => {
+    expect(stripTitle("# @haruhimemoe/ui\n\nBody.")).toBe("Body.");
+  });
+
+  it("leaves a README that starts with prose or an h2 alone", () => {
+    expect(stripTitle("Body first.\n\n# later")).toBe("Body first.\n\n# later");
+    expect(stripTitle("## Install")).toBe("## Install");
   });
 });
 
@@ -61,9 +72,9 @@ describe("rewriteRelativeUrls", () => {
 });
 
 describe("prepareReadme", () => {
-  it("strips the banner and rewrites links", () => {
+  it("strips the banner and the title and rewrites links", () => {
     expect(prepareReadme(`${BANNER}\n\n[log](CHANGELOG.md)`, "ui")).toBe(
-      "# @haruhimemoe/ui\n\nBody.\n\n[log](https://github.com/haruhimemoe/ui/blob/main/CHANGELOG.md)",
+      "Body.\n\n[log](https://github.com/haruhimemoe/ui/blob/main/CHANGELOG.md)",
     );
   });
 });

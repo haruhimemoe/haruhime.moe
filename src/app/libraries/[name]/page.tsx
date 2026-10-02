@@ -69,14 +69,12 @@ export default async function LibraryDocsPage({ params }: PageProps<"/libraries/
   return (
     <article className="flex flex-col gap-8">
       <div className="flex flex-col gap-4">
-        <PageHeader
-          title={library.pkg}
-          lead={library.description}
-          meta={meta || undefined}
-          actions={<CopyButton text={install} label="Copy install" />}
-        />
-        <div className="flex flex-wrap items-center gap-x-6 gap-y-2">
-          <code className="rounded bg-b6 px-2 py-1 text-c2 text-sm">{install}</code>
+        <PageHeader title={library.pkg} lead={library.description} meta={meta || undefined} />
+        <div className="flex flex-wrap items-center gap-x-6 gap-y-3">
+          <span className="inline-flex items-center gap-2">
+            <code className="rounded bg-b6 px-2 py-1 text-c2 text-sm">{install}</code>
+            <CopyButton text={install} label="Copy" />
+          </span>
           <LibraryLinks library={library} />
         </div>
       </div>

@@ -1,7 +1,7 @@
 /**
  * @file src/utils/readme.ts
  * @desc Pure transforms a README gets before /libraries/<name> renders it: the leading banner
- *       paragraph goes (the page has its own header), and relative links and images point at
+ *       paragraph and the `# title` line go (the page has its own header), and relative links and images point at
  *       GitHub (the file's blob page for links, the raw file for images) so they still resolve
  *       off the repo. Absolute URLs, anchors and mailto links stay as they are.
  * @author David @dvhsh (https://dvh.sh)
@@ -11,6 +11,9 @@
 
 /** A README that opens with a centered paragraph (our banner), through its closing tag. */
 const LEADING_BANNER = /^\s*<p align="center">[\s\S]*?<\/p>\s*/;
+
+/** The README's own title: a first-line `# heading` (after the banner) and the blank lines after. */
+const LEADING_TITLE = /^#\s[^\n]*\n\s*/;
 
 /** A Markdown link or image: `[text](target "title")`, with the `!` for images. */
 const LINK = /(!?)\[([^\]]*)\]\(([^)\s]+)((?:\s+"[^"]*")?)\)/g;
@@ -24,6 +27,14 @@ const ABSOLUTE = /^(?:[a-z][a-z0-9+.-]*:|#|\/\/)/i;
  * @returns {string} the README without a leading `<p align="center">…</p>` block
  */
 export const stripBanner = (markdown: string): string => markdown.replace(LEADING_BANNER, "");
+
+/**
+ * @function stripTitle
+ * @param markdown {string} a README without its banner
+ * @returns {string} the README without a leading `# title` line: the page's own h1 names the
+ *   package, and a second h1 would duplicate it
+ */
+export const stripTitle = (markdown: string): string => markdown.replace(LEADING_TITLE, "");
 
 /**
  * @function rewriteRelativeUrls
@@ -46,7 +57,8 @@ export const rewriteRelativeUrls = (markdown: string, repo: string): string =>
  * @function prepareReadme
  * @param markdown {string} a README as fetched
  * @param repo {string} the repo name under haruhimemoe
- * @returns {string} the README ready to render: banner stripped, relative URLs rewritten
+ * @returns {string} the README ready to render: banner and title stripped, relative URLs
+ *   rewritten
  */
 export const prepareReadme = (markdown: string, repo: string): string =>
-  rewriteRelativeUrls(stripBanner(markdown), repo);
+  rewriteRelativeUrls(stripTitle(stripBanner(markdown)), repo);

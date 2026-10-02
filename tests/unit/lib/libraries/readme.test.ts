@@ -24,7 +24,7 @@ describe("fetchReadme", () => {
     );
     vi.stubGlobal("fetch", fetchMock);
     await expect(fetchReadme(pool)).resolves.toBe(
-      "# pool\n\n[k](https://github.com/haruhimemoe/pool/blob/main/docs/pack-key.md)",
+      "[k](https://github.com/haruhimemoe/pool/blob/main/docs/pack-key.md)",
     );
     const [url, init] = fetchMock.mock.calls[0] as unknown as [string, RequestInit];
     expect(url).toBe("https://raw.githubusercontent.com/haruhimemoe/pool/main/README.md");

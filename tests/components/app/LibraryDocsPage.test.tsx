@@ -68,7 +68,7 @@ describe("/libraries/[name]", () => {
     ).toBeInTheDocument();
     expect(screen.getByText("Version 0.2.0, MIT")).toBeInTheDocument();
     expect(screen.getByText("bun add @haruhimemoe/pool")).toBeInTheDocument();
-    expect(screen.getByRole("button", { name: "Copy install" })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Copy" })).toBeInTheDocument();
     expect(screen.getByRole("link", { name: "npm" })).toHaveAttribute(
       "href",
       "https://www.npmjs.com/package/@haruhimemoe/pool",
