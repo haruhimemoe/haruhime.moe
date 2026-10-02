@@ -8,7 +8,7 @@
  *       tested beside their own files under tests/components/showcase/.
  * @author David @dvhsh (https://dvh.sh)
  * @created Wed Sep 23, 2026
- * @modified Mon Sep 28, 2026
+ * @modified Fri Oct 2, 2026
  */
 
 import * as ui from "@haruhimemoe/ui";
@@ -63,11 +63,15 @@ describe("/ui", () => {
     expect(screen.getByText(/^Version \d+\.\d+\.\d+, MIT license/)).toBeInTheDocument();
   });
 
-  it("says haruhime.moe, packs and pools are all built from the kit", () => {
+  it("says every site is built from the kit and links the README docs page", () => {
     render(<UiPage />);
     const lead = screen.getByRole("link", { name: "@haruhimemoe/ui" }).closest("p");
-    expect(lead).toHaveTextContent("haruhime.moe, packs and pools are built from it.");
+    expect(lead).toHaveTextContent("haruhime.moe, packs, pools and bb are built from it.");
     expect(lead).not.toHaveTextContent(/moving/);
+    expect(screen.getByRole("link", { name: "/libraries/ui" })).toHaveAttribute(
+      "href",
+      "/libraries/ui",
+    );
   });
 
   it("has every group heading, linked from the page's own nav", () => {

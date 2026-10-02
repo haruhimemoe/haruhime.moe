@@ -6,7 +6,7 @@
  *       shell examples. Static; the demos that take callbacks are small client components.
  * @author David @dvhsh (https://dvh.sh)
  * @created Wed Sep 23, 2026
- * @modified Mon Sep 28, 2026
+ * @modified Fri Oct 2, 2026
  */
 
 import { CopyButton, JsonLd, PageHeader, TextLink } from "@haruhimemoe/ui";
@@ -53,8 +53,9 @@ export default function UiPage() {
           lead={
             <>
               Every component in <TextLink href={UI_NPM_URL}>@haruhimemoe/ui</TextLink>, rendered
-              from the package itself. haruhime.moe, packs and pools are built from it. The source
-              is on <TextLink href={UI_REPO_URL}>GitHub</TextLink>.
+              from the package itself. haruhime.moe, packs, pools and bb are built from it. The
+              source is on <TextLink href={UI_REPO_URL}>GitHub</TextLink>, and its README is at{" "}
+              <TextLink href="/libraries/ui">/libraries/ui</TextLink>.
             </>
           }
           meta={`Version ${uiPackage.version}, ${uiPackage.license} license. Install: ${UI_INSTALL}`}
