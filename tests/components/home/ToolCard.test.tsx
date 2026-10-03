@@ -5,7 +5,7 @@
  *       with a summary and task set.
  * @author David @dvhsh (https://dvh.sh)
  * @created Wed Sep 23, 2026
- * @modified Fri Oct 2, 2026
+ * @modified Sat Oct 3, 2026
  */
 
 import { render, screen } from "@testing-library/react";
@@ -72,6 +72,18 @@ describe("ToolCard", () => {
     expect(screen.getByText(soon.tagline)).toBeInTheDocument();
     expect(screen.getByText("coming soon")).toBeInTheDocument();
     expect(container.querySelector("img")).toHaveAttribute("src", "/brand/sheets-icon.svg");
+  });
+
+  it("dims only the icon of an unreleased tool, so its text keeps its contrast", () => {
+    const { container } = renderCard(soon);
+    expect(container.querySelector("img")).toHaveClass("opacity-60");
+    expect(container.querySelector(".opacity-70")).toBeNull();
+    expect(screen.getByText(soon.tagline).closest("[class*='opacity-']")).toBeNull();
+  });
+
+  it("does not dim a live tool's icon", () => {
+    const { container } = renderCard(live);
+    expect(container.querySelector("img")).not.toHaveClass("opacity-60");
   });
 
   it("shows a live tool's sentence and links its main task on the tool's site", () => {

@@ -7,7 +7,7 @@
  *       parent-site wordmark.
  * @author David @dvhsh (https://dvh.sh)
  * @created Wed Sep 23, 2026
- * @modified Mon Sep 28, 2026
+ * @modified Sat Oct 3, 2026
  */
 
 import { render, screen, within } from "@testing-library/react";
@@ -67,20 +67,25 @@ describe("SiteShell header", () => {
     );
     expect(within(tools).getAllByRole("link")).toHaveLength(3);
     expect(within(tools).getAllByRole("listitem")).toHaveLength(4);
-    const sheets = within(tools).getByText("sheets").closest('[aria-disabled="true"]');
-    expect(sheets).not.toBeNull();
+    // Plain text, not a disabled control: nothing to focus, so no aria-disabled either.
+    const sheets = within(tools).getByText("sheets").closest("li");
     expect(sheets).toHaveTextContent("sheets soon");
+    expect(sheets?.querySelector("[aria-disabled]")).toBeNull();
   });
 });
 
 describe("SiteShell footer", () => {
-  it("has three labelled columns, in order", () => {
+  it("has one Footer nav holding three headed columns, in order", () => {
     renderShell();
     const footer = screen.getByRole("contentinfo");
-    const names = within(footer)
-      .getAllByRole("navigation")
-      .map((nav) => nav.getAttribute("aria-label"));
+    const nav = within(footer).getByRole("navigation", { name: "Footer" });
+    expect(within(footer).getAllByRole("navigation")).toHaveLength(1);
+    const names = within(nav)
+      .getAllByRole("region")
+      .map((column) => column.getAttribute("aria-labelledby"))
+      .map((id) => document.getElementById(id ?? "")?.textContent);
     expect(names).toEqual(["Tools", "haruhime.moe", "Legal"]);
+    expect(within(nav).getAllByRole("heading", { level: 2 })).toHaveLength(3);
   });
 
   it("never links /ui from the footer: the libraries page and the ui card reach it", () => {
@@ -91,9 +96,7 @@ describe("SiteShell footer", () => {
 
   it("links packs, pools and bb and shows sheets as plain text marked soon", () => {
     renderShell();
-    const tools = within(screen.getByRole("contentinfo")).getByRole("navigation", {
-      name: "Tools",
-    });
+    const tools = within(screen.getByRole("contentinfo")).getByRole("region", { name: "Tools" });
     expect(within(tools).getByRole("link", { name: "packs" })).toHaveAttribute(
       "href",
       "https://packs.haruhime.moe",
@@ -113,7 +116,7 @@ describe("SiteShell footer", () => {
   it("links the site pages", () => {
     renderShell();
     const footer = screen.getByRole("contentinfo");
-    const site = within(footer).getByRole("navigation", { name: "haruhime.moe" });
+    const site = within(footer).getByRole("region", { name: "haruhime.moe" });
     const expected = [
       ["Thanks", "/thanks"],
       ["Libraries", "/libraries"],
@@ -125,7 +128,7 @@ describe("SiteShell footer", () => {
     for (const [name, href] of expected) {
       expect(within(site).getByRole("link", { name })).toHaveAttribute("href", href);
     }
-    const legal = within(footer).getByRole("navigation", { name: "Legal" });
+    const legal = within(footer).getByRole("region", { name: "Legal" });
     const legalLinks = within(legal).getAllByRole("link");
     expect(legalLinks.map((link) => [link.textContent, link.getAttribute("href")])).toEqual([
       ["Disclaimer", "/disclaimer"],
@@ -154,7 +157,7 @@ describe("SiteShell footer", () => {
     expect(discord).toHaveTextContent("");
     const github = within(footer).getByRole("link", { name: "haruhimemoe on GitHub" });
     expect(discord.compareDocumentPosition(github) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
-    for (const column of within(footer).getAllByRole("navigation")) {
+    for (const column of within(footer).getAllByRole("region")) {
       expect(within(column).queryByRole("link", { name: "Discord" })).not.toBeInTheDocument();
     }
   });

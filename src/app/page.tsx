@@ -7,7 +7,7 @@
  *       founder, and the WebSite with each live tool's site as a part.
  * @author David @dvhsh (https://dvh.sh)
  * @created Wed Sep 23, 2026
- * @modified Fri Oct 2, 2026
+ * @modified Sat Oct 3, 2026
  */
 
 import { HARUHIME_ORG, homeMetadata, ld } from "@haruhimemoe/next-kit/seo";
@@ -41,10 +41,10 @@ export default function HomePage() {
         title="osu! tools for players, mappers and tournament hosts"
         lead="hellosu, haruhime here. these are free tools i make for osu!: packs turns a mappool into one download, pools is for building and looking up tournament pools, and bb is a BBCode editor for userpages and forum posts."
       />
-      <section aria-labelledby="tools-heading" className="flex flex-col gap-5">
-        <h2 id="tools-heading" className="font-bold text-2xl text-c1">
-          Tools
-        </h2>
+      {/* Not a labelled region: the footer already has a "Tools" region, and two landmarks with
+          one name would read the same. The h2 is enough structure here. */}
+      <section className="flex flex-col gap-5">
+        <h2 className="font-bold text-2xl text-c1">Tools</h2>
         <ul className="grid gap-4 sm:grid-cols-2 sm:gap-5">
           {TOOLS.map((tool) => (
             <ToolCard key={tool.name} tool={tool} />

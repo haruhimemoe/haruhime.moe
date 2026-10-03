@@ -38,7 +38,8 @@ src/utils/        pure, stateless helpers (date, length, pageMetadata, readme tr
 public/brand/     generated brand files (see CONTRIBUTING.md); never hand-edit. repos/ holds every
                   haruhimemoe repo's README banner, written by scripts/repo-banners.ts
 scripts/          repo-banners.ts (`bun run repo-banners`): draws public/brand/repos from
-                  REPO_BANNERS with @haruhimemoe/brand
+                  REPO_BANNERS with @haruhimemoe/brand; axe.ts (`bun run test:a11y`): axe in a
+                  real browser over every page of a production build, contrast on
 tests/            unit/ (node), components/ (jsdom), helpers/ (axe), setup/
 llms.txt          repo guide for LLMs (points at the live /llms.txt); not served by the site
 ```
@@ -80,6 +81,7 @@ Dates match `date "+%a %b %-d, %Y"`. Update `@modified` on edits, never `@create
 - Every page gets a render test (its metadata title and its one h1). Tests never hit the network.
 - `/ui`'s test also runs axe through `tests/helpers/axe.ts`.
 - Coverage floor: 90% on `src/utils/**`, enforced by `bun run test:coverage` (what CI runs).
+- `bun run test:a11y` (after `bun run build`) runs axe-core in headless Chromium over every page at a desktop and a phone width with color contrast on, WCAG 2.2 AA plus best practices, and fails on any violation. CI runs it after the build; `bunx playwright install chromium` once locally. The jsdom axe runs can't check contrast, so this is where a dim text color or a duplicate landmark shows.
 
 ## 6. Visual system
 
@@ -106,7 +108,8 @@ The packs look, from the [@haruhimemoe/ui](https://github.com/haruhimemoe/ui) th
 
 - Conventional Commits (`feat:`, `fix:`, `chore:`, `docs:`, `test:`, `refactor:`).
 - The footer doesn't use ui's `tools` prop (the "haruhime tools" column the tool sites add): its Tools column already lists every tool, sheets included. `/ui` demos that column instead.
-- Before pushing: `bun run check && bun run typecheck && bun run test && bun run build`. The build fetches from npm and GitHub for `/libraries`; offline it still passes, with dashes.
+- Before pushing: `bun run check && bun run typecheck && bun run test && bun run build && bun run test:a11y`. The build fetches from npm and GitHub for `/libraries`; offline it still passes, with dashes.
+- Accessibility rules the site adds to ui's: dim an unreleased tool's art, never its text (`opacity` on a card drops `text-c4` under 4.5:1); one landmark per name (the footer's columns are regions named Tools, haruhime.moe and Legal, so a page section with one of those names stays unlabelled); card headings sit one level under the page's h1; README code blocks are focusable (`Markdown`'s `pre`), since a wide one scrolls.
 - A change a visitor would notice gets a line under `## [Unreleased]` in `CHANGELOG.md` ([Keep a Changelog 1.1.0](https://keepachangelog.com/en/1.1.0/)). Never rewrite a released entry. Don't bump `version` in `package.json` or tag; releases are cut by the maintainers.
 - When a change affects conventions, update this file in the same PR. When it moves a docs file or a README heading, update the links in the root `llms.txt` too.
 

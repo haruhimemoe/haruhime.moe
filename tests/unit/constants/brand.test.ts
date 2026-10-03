@@ -5,7 +5,7 @@
  *       banners are the size /brand says.
  * @author David @dvhsh (https://dvh.sh)
  * @created Wed Sep 23, 2026
- * @modified Mon Sep 28, 2026
+ * @modified Sat Oct 3, 2026
  */
 
 import { existsSync, readFileSync } from "node:fs";
@@ -42,14 +42,20 @@ describe("BRAND_COLORS", () => {
     "%s matches the theme",
     (token, color) => {
       // h1 and h2 take their lightness from an override variable with a default:
-      // hsl(var(--hue) 100% var(--h1-l, 70%)).
+      // hsl(var(--hue) 100% var(--h1-l, 76%)).
       const match = new RegExp(
         `--color-${token}: hsl\\(var\\(--hue\\) (\\d+)% (?:var\\(--${token}-l, (\\d+)%\\)|(\\d+)%)\\)`,
       ).exec(theme);
       expect(match).not.toBeNull();
       const [s, l] = [Number(match?.[1]), Number(match?.[2] ?? match?.[3])];
-      expect(color.hsl).toEqual([hue, s, l]);
-      expect(color.hex).toBe(hslToHex(hue, s, l));
+      const [brandHue, brandS, brandL] = color.hsl;
+      expect([brandHue, brandS]).toEqual([hue, s]);
+      // The brand pink is the logo color, baked into every icon, wordmark and banner. The ui
+      // theme lightens its text accent (h1) past that so links clear 4.5:1 on the surfaces, so
+      // the theme may only ever be lighter than the brand swatch, never darker or a different hue.
+      if (match?.[2]) expect(l).toBeGreaterThanOrEqual(brandL);
+      else expect(l).toBe(brandL);
+      expect(color.hex).toBe(hslToHex(hue, s, brandL));
     },
   );
 

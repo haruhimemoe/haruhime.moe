@@ -6,7 +6,7 @@
  *       links sit above the card-wide cover so each one is its own click.
  * @author David @dvhsh (https://dvh.sh)
  * @created Fri Oct 2, 2026
- * @modified Fri Oct 2, 2026
+ * @modified Sat Oct 3, 2026
  */
 
 import { Card } from "@haruhimemoe/ui";
@@ -33,14 +33,14 @@ export function LibraryCard({ library, stats }: { library: Library; stats: Libra
           className="aspect-[4/1] w-full object-cover"
         />
         <div className="flex flex-col gap-1">
-          <h3 className="font-extrabold text-c1 text-xl leading-tight">
+          <h2 className="font-extrabold text-c1 text-xl leading-tight">
             <a
               href={libraryUrls(library).docs}
               className="after:absolute after:inset-0 after:rounded-[10px]"
             >
               {library.pkg}
             </a>
-          </h3>
+          </h2>
           <p className="text-c3 text-sm">{library.description}</p>
         </div>
         <code className="w-fit rounded bg-b6 px-2 py-1 text-c2 text-sm">bun add {library.pkg}</code>

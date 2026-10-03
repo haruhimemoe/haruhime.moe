@@ -29,13 +29,14 @@
     "test:unit": "vitest run --project unit",
     "test:components": "vitest run --project components",
     "test:coverage": "vitest run --coverage",
+    "test:a11y": "bun scripts/axe.ts",
     "test:watch": "vitest",
     "repo-banners": "bun scripts/repo-banners.ts",
     "prepare": "git rev-parse --git-dir >/dev/null 2>&1 && lefthook install || true"
   },
   "dependencies": {
     "@haruhimemoe/next-kit": "0.4.0",
-    "@haruhimemoe/ui": "0.6.0",
+    "@haruhimemoe/ui": "0.7.0",
     "next": "16.3.6",
     "react": "19.3.0",
     "react-dom": "19.3.0",
@@ -46,6 +47,7 @@
     "remark-gfm": "^4.0.1"
   },
   "devDependencies": {
+    "@axe-core/playwright": "4.13.0",
     "@biomejs/biome": "2.5.14",
     "@haruhimemoe/brand": "0.6.0",
     "@tailwindcss/postcss": "4.3.3",
@@ -60,6 +62,7 @@
     "axe-core": "4.13.0",
     "jsdom": "30.1.1",
     "lefthook": "2.1.14",
+    "playwright": "1.63.0",
     "tailwindcss": "4.3.3",
     "typescript": "7.0.2",
     "vitest": "5.0.1"

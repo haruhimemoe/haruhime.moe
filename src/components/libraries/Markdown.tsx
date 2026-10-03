@@ -5,10 +5,11 @@
  *       The sanitizer is GitHub's default schema plus the ids on headings and the picture and
  *       source tags our banners use.
  *       Our own READMEs are the only input, so this is defense in depth, not the trust boundary.
- *       External links open in a new tab.
+ *       External links open in a new tab. Code blocks are focusable, so a keyboard user can scroll
+ *       a wide one.
  * @author David @dvhsh (https://dvh.sh)
  * @created Fri Oct 2, 2026
- * @modified Fri Oct 2, 2026
+ * @modified Sat Oct 3, 2026
  */
 
 import { Prose } from "@haruhimemoe/ui";
@@ -37,6 +38,11 @@ const SCHEMA = {
 };
 
 const COMPONENTS: Components = {
+  // A wide code block scrolls sideways; tabIndex lets the keyboard reach it (WCAG 2.1.1).
+  pre: ({ node: _node, ...props }) => (
+    // biome-ignore lint/a11y/noNoninteractiveTabindex: a scrollable region needs keyboard focus
+    <pre tabIndex={0} {...props} />
+  ),
   a: ({ href, children, ...props }) => {
     const external = typeof href === "string" && /^https?:\/\//.test(href);
     return (

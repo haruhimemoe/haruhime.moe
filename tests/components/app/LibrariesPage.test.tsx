@@ -4,7 +4,7 @@
  *       the install line, stats and links, a dash where a lookup failed, and no axe violations.
  * @author David @dvhsh (https://dvh.sh)
  * @created Fri Oct 2, 2026
- * @modified Fri Oct 2, 2026
+ * @modified Sat Oct 3, 2026
  */
 
 import { render, screen, within } from "@testing-library/react";
@@ -38,6 +38,9 @@ describe("/libraries", () => {
     await renderPage();
     expect(screen.getAllByRole("heading", { level: 1 })).toHaveLength(1);
     expect(screen.getByRole("heading", { level: 1, name: "Libraries" })).toBeInTheDocument();
+    // Each card's name is an h2, straight under the page's h1: no skipped level.
+    expect(screen.getAllByRole("heading", { level: 2 })).toHaveLength(LIBRARIES.length);
+    expect(screen.queryAllByRole("heading", { level: 3 })).toHaveLength(0);
   });
 
   it("shows a card per library, its name linking to its docs page", async () => {

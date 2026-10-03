@@ -64,6 +64,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ### Fixed
 
+- Accessibility: a coming-soon tool card dims only its icon, so its tagline keeps full contrast; `/libraries` card names are h2s under the page's h1; README code blocks on `/libraries/<name>` can be reached with the keyboard; the homepage's Tools section no longer doubles the footer's Tools landmark. The site moves to `@haruhimemoe/ui` 0.7.0 (its accessibility release: one footer nav with headed columns, lighter accent links, a visible focus ring on fields).
 - Links to `/thanks`, `/brand`, `/ui`, `/contact` and `/disclaimer` unfurl with the link preview image and the site name again (a page's own Open Graph data used to replace the site's).
 - `/llms.txt` calls the home page's Evergreen Cup section a banner, as the page does, instead of a card.
 

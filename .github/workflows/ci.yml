@@ -42,3 +42,9 @@ jobs:
 
       - name: Build
         run: bun run build
+
+      - name: Install Chromium
+        run: bunx playwright install --with-deps chromium
+
+      - name: Axe (browser, contrast on)
+        run: bun run test:a11y

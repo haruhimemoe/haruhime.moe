@@ -6,7 +6,7 @@
  *       and WebSite graph under the schema.org context.
  * @author David @dvhsh (https://dvh.sh)
  * @created Wed Sep 23, 2026
- * @modified Fri Oct 2, 2026
+ * @modified Sat Oct 3, 2026
  */
 
 import { render, screen, within } from "@testing-library/react";
@@ -36,7 +36,9 @@ describe("/", () => {
 
   it("shows packs, pools and bb live, pools in beta, and sheets coming soon", () => {
     render(<HomePage />);
-    const tools = screen.getByRole("region", { name: "Tools" });
+    // The section is headed, not a landmark: the footer's "Tools" region owns that name.
+    expect(screen.queryByRole("region", { name: "Tools" })).toBeNull();
+    const tools = screen.getByRole("heading", { name: "Tools" }).closest("section") as HTMLElement;
     expect(within(tools).getAllByRole("listitem")).toHaveLength(4);
     expect(within(tools).getByRole("link", { name: "packs" })).toHaveAttribute(
       "href",

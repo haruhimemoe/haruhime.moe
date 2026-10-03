@@ -5,7 +5,7 @@
  *       in Prose.
  * @author David @dvhsh (https://dvh.sh)
  * @created Fri Oct 2, 2026
- * @modified Fri Oct 2, 2026
+ * @modified Sat Oct 3, 2026
  */
 
 import { render, screen } from "@testing-library/react";
@@ -20,6 +20,8 @@ describe("Markdown", () => {
     expect(container.querySelector("table")).toBeInTheDocument();
     expect(screen.getByRole("columnheader", { name: "a" })).toBeInTheDocument();
     expect(container.querySelector("pre code")).toHaveTextContent("bun add x");
+    // A wide block scrolls sideways, so the keyboard has to be able to reach it.
+    expect(container.querySelector("pre")).toHaveAttribute("tabindex", "0");
   });
 
   it("gives headings slug ids so the page's anchors work", () => {
