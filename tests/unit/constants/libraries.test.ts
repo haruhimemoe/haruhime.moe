@@ -64,3 +64,12 @@ describe("libraryUrls", () => {
     });
   });
 });
+
+describe("README banners", () => {
+  it("exist in public/brand/repos for every library, so the cards never 404", async () => {
+    const { existsSync } = await import("node:fs");
+    for (const lib of LIBRARIES) {
+      expect(existsSync(`public/brand/repos/${lib.repo}-banner.svg`)).toBe(true);
+    }
+  });
+});

@@ -1,8 +1,9 @@
 /**
  * @file src/components/libraries/LibraryCard.tsx
- * @desc One library on /libraries: its name linking to its docs page (the link covers the whole
- *       card), the description, the install line, its stats and its links. The links sit above
- *       the card-wide cover so each one is its own click.
+ * @desc One library on /libraries: its README banner across the top (the same SVG the repo's
+ *       README shows, from public/brand/repos), its name linking to its docs page (the link
+ *       covers the whole card), the description, the install line, its stats and its links. The
+ *       links sit above the card-wide cover so each one is its own click.
  * @author David @dvhsh (https://dvh.sh)
  * @created Fri Oct 2, 2026
  * @modified Fri Oct 2, 2026
@@ -22,7 +23,15 @@ import type { LibraryStats } from "@/lib/libraries/stats";
 export function LibraryCard({ library, stats }: { library: Library; stats: LibraryStats }) {
   return (
     <li className="flex">
-      <Card className="relative flex w-full flex-col gap-4 transition-colors focus-within:bg-b3 hover:bg-b3 sm:p-6">
+      <Card className="relative flex w-full flex-col gap-4 overflow-hidden p-0 transition-colors focus-within:bg-b3 hover:bg-b3 [&>*:not(:first-child)]:mx-5 sm:[&>*:not(:first-child)]:mx-6 [&>:last-child]:mb-5 sm:[&>:last-child]:mb-6">
+        {/* biome-ignore lint/performance/noImgElement: static SVG, no optimization needed */}
+        <img
+          src={`/brand/repos/${library.repo}-banner.svg`}
+          alt=""
+          width={1280}
+          height={320}
+          className="aspect-[4/1] w-full object-cover"
+        />
         <div className="flex flex-col gap-1">
           <h3 className="font-extrabold text-c1 text-xl leading-tight">
             <a

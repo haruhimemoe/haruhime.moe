@@ -11,14 +11,14 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - `/libraries`: the eight `@haruhimemoe` packages (ui, next-kit, osu, hinai, pool, compliance, bbcode, brand), one card each with its description, install line, npm version and downloads over the last month, GitHub stars and latest release, and links to GitHub, npm and the changelog (and the showcase for ui). The numbers refresh about once a day.
 - `/libraries/<name>`: each package's README, rendered from its repo, under its version, license, an install line to copy and its links. When the README can't be fetched the page points at it on GitHub.
 - `/terms` and `/privacy` for this site: short, since the site has no accounts, cookies or analytics; each links the tools' own terms and privacy pages.
-- A Libraries column in the footer (Libraries and UI) and Terms and Privacy under Legal.
+- Libraries in the footer's haruhime.moe column, after Thanks, and Terms and Privacy under Legal. Each library card carries the repo's README banner.
 - The Evergreen Cup banner shows Evergreen Cup's Seattle skyline art: a looping video (still under reduced motion), its name and line, and one link to evergreencup.org. Wide on desktop, taller on phones.
 
 ### Changed
 
 - The homepage's lead no longer ends with the ppy sentence; the footer line and `/disclaimer` carry it.
 - Tool cards sit two to a row above phone width, with the icon, name and beta or coming-soon pill on one line and the tagline under it.
-- `/ui` moves from the haruhime.moe footer column to the Libraries column and links its README at `/libraries/ui`.
+- `/ui` leaves the footer: `/libraries` and the ui card link it, and it links its README at `/libraries/ui`.
 
 - `/ui` shows `@haruhimemoe/ui` 0.6.0's "haruhime tools" footer column (`SiteFooter`'s `tools` prop, `HARUHIME_TOOLS`, `haruhimeToolsColumn`), which packs, pools and bb now use. This site's own footer keeps its Tools column, which already lists every tool (sheets as soon). next-kit moves to 0.4.0 and brand to 0.6.0.
 

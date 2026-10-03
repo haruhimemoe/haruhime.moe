@@ -41,11 +41,12 @@ describe("pageMetadata", () => {
 });
 
 describe("PAGES", () => {
-  it("gives every page but home a footer column", () => {
+  it("gives every page but home and /ui a footer column", () => {
     for (const path of PAGE_PATHS) {
       const footer = (PAGES[path] as { footer?: string }).footer;
-      if (path === "/") expect(footer).toBeUndefined();
-      else expect(footer).toMatch(/^(Libraries|haruhime\.moe|Legal)$/);
+      // /ui is reached from /libraries and the ui card, not the footer.
+      if (path === "/" || path === "/ui") expect(footer).toBeUndefined();
+      else expect(footer).toMatch(/^(haruhime\.moe|Legal)$/);
     }
   });
 

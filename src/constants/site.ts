@@ -33,7 +33,7 @@ export const EVERGREEN_CUP = {
 } as const;
 
 /** A footer column that can list a page. */
-export type FooterColumnTitle = "Libraries" | "haruhime.moe" | "Legal";
+export type FooterColumnTitle = "haruhime.moe" | "Legal";
 
 /** One page's copy, read by its metadata, the sitemap, /llms.txt and the footer. */
 export interface PageInfo {
@@ -71,6 +71,14 @@ export const PAGES = {
     lastUpdated: "2026-09-28",
     footer: "haruhime.moe",
   },
+  "/libraries": {
+    title: "Libraries",
+    seoTitle: "Libraries: the @haruhimemoe packages",
+    description:
+      "The eight @haruhimemoe npm packages the osu! tools are built from, each with its version, downloads, stars and a docs page: ui, next-kit, osu, pool and more.",
+    lastUpdated: "2026-10-02",
+    footer: "haruhime.moe",
+  },
   "/brand": {
     title: "Brand",
     seoTitle: "Brand kit: logos, colors and README banners",
@@ -79,21 +87,12 @@ export const PAGES = {
     lastUpdated: "2026-09-28",
     footer: "haruhime.moe",
   },
-  "/libraries": {
-    title: "Libraries",
-    seoTitle: "Libraries: the @haruhimemoe packages",
-    description:
-      "The eight @haruhimemoe npm packages the osu! tools are built from, each with its version, downloads, stars and a docs page: ui, next-kit, osu, pool and more.",
-    lastUpdated: "2026-10-02",
-    footer: "Libraries",
-  },
   "/ui": {
     title: "UI",
     seoTitle: "@haruhimemoe/ui: React kit for osu! tools",
     description:
       "Every @haruhimemoe/ui component, the React kit behind haruhime's osu! tools, live in its states: buttons, cards, forms, filters, tables and osu! pieces.",
     lastUpdated: "2026-09-28",
-    footer: "Libraries",
   },
   "/contact": {
     title: "Contact",

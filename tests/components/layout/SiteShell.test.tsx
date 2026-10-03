@@ -74,24 +74,19 @@ describe("SiteShell header", () => {
 });
 
 describe("SiteShell footer", () => {
-  it("has four labelled columns, in order", () => {
+  it("has three labelled columns, in order", () => {
     renderShell();
     const footer = screen.getByRole("contentinfo");
     const names = within(footer)
       .getAllByRole("navigation")
       .map((nav) => nav.getAttribute("aria-label"));
-    expect(names).toEqual(["Tools", "Libraries", "haruhime.moe", "Legal"]);
+    expect(names).toEqual(["Tools", "haruhime.moe", "Legal"]);
   });
 
-  it("puts the libraries hub and the UI showcase in the Libraries column", () => {
+  it("never links /ui from the footer: the libraries page and the ui card reach it", () => {
     renderShell();
     const footer = screen.getByRole("contentinfo");
-    const libs = within(footer).getByRole("navigation", { name: "Libraries" });
-    const links = within(libs).getAllByRole("link");
-    expect(links.map((link) => [link.textContent, link.getAttribute("href")])).toEqual([
-      ["Libraries", "/libraries"],
-      ["UI", "/ui"],
-    ]);
+    expect(within(footer).queryByRole("link", { name: "UI" })).toBeNull();
   });
 
   it("links packs, pools and bb and shows sheets as plain text marked soon", () => {
@@ -121,6 +116,7 @@ describe("SiteShell footer", () => {
     const site = within(footer).getByRole("navigation", { name: "haruhime.moe" });
     const expected = [
       ["Thanks", "/thanks"],
+      ["Libraries", "/libraries"],
       ["Brand", "/brand"],
       ["Contact", "/contact"],
     ] as const;

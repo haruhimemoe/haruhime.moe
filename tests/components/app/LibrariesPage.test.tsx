@@ -61,6 +61,18 @@ describe("/libraries", () => {
     }
   });
 
+  it("shows each library's README banner, decorative, from public/brand/repos", async () => {
+    await renderPage();
+    for (const library of LIBRARIES) {
+      const card = screen
+        .getByRole("link", { name: library.pkg })
+        .closest("section") as HTMLElement;
+      const img = card.querySelector("img");
+      expect(img).toHaveAttribute("src", `/brand/repos/${library.repo}-banner.svg`);
+      expect(img).toHaveAttribute("alt", "");
+    }
+  });
+
   it("links the ui showcase from the ui card only", async () => {
     await renderPage();
     const showcases = screen.getAllByRole("link", { name: "Showcase" });

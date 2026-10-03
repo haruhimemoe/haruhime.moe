@@ -33,10 +33,9 @@ const pageLinks = (column: FooterColumnTitle): SiteLinkItem[] =>
     (path) => (PAGES[path] as { footer?: FooterColumnTitle }).footer === column,
   ).map((path) => ({ href: path, label: PAGES[path].title }));
 
-/** The four footer columns, in order. */
+/** The three footer columns, in order. /ui has no footer link: /libraries and the ui card reach it. */
 export const FOOTER_COLUMNS: readonly SiteFooterColumn[] = [
   { title: "Tools", items: TOOLS.map(toolLink) },
-  { title: "Libraries", items: pageLinks("Libraries") },
   { title: "haruhime.moe", items: pageLinks("haruhime.moe") },
   { title: "Legal", items: pageLinks("Legal") },
 ];

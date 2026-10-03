@@ -37,8 +37,8 @@ describe("sitemap", () => {
     expect(sitemap().map((entry) => entry.url)).toEqual([
       "https://www.haruhime.moe/",
       "https://www.haruhime.moe/thanks",
-      "https://www.haruhime.moe/brand",
       "https://www.haruhime.moe/libraries",
+      "https://www.haruhime.moe/brand",
       "https://www.haruhime.moe/ui",
       "https://www.haruhime.moe/contact",
       "https://www.haruhime.moe/disclaimer",
