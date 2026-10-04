@@ -42,10 +42,11 @@ describe("BRAND_COLORS", () => {
   it.each(BRAND_COLORS.map((c) => [c.token, c] as const))(
     "%s matches the theme",
     (token, color) => {
-      // h1 and h2 take their lightness from an override variable with a default:
-      // hsl(var(--hue) 100% var(--h1-l, 76%)).
+      // c2 to c4, h1 and h2 take their lightness from an override variable with a default,
+      // plus the more-contrast lift (0% unless the visitor asks for more contrast):
+      // hsl(var(--hue) 100% calc(var(--h1-l, 76%) + var(--contrast-lift))).
       const match = new RegExp(
-        `--color-${token}: hsl\\(var\\(--hue\\) (\\d+)% (?:var\\(--${token}-l, (\\d+)%\\)|(\\d+)%)\\)`,
+        `--color-${token}: hsl\\(var\\(--hue\\) (\\d+)% (?:calc\\(var\\(--${token}-l, (\\d+)%\\) [+-] var\\(--contrast-lift\\)(?: / 2)?\\)|(\\d+)%)\\)`,
       ).exec(theme);
       expect(match).not.toBeNull();
       const [s, l] = [Number(match?.[1]), Number(match?.[2] ?? match?.[3])];
@@ -53,8 +54,9 @@ describe("BRAND_COLORS", () => {
       expect([brandHue, brandS]).toEqual([hue, s]);
       // The brand pink is the logo color, baked into every icon, wordmark and banner. The ui
       // theme lightens its text accent (h1) past that so links clear 4.5:1 on the surfaces, so
-      // the theme may only ever be lighter than the brand swatch, never darker or a different hue.
-      if (match?.[2]) expect(l).toBeGreaterThanOrEqual(brandL);
+      // the accents may only ever be lighter than the brand swatch, never darker or a different
+      // hue. Every other token matches the brand exactly.
+      if (token.startsWith("h")) expect(l).toBeGreaterThanOrEqual(brandL);
       else expect(l).toBe(brandL);
       expect(color.hex).toBe(hslToHex(hue, s, brandL));
     },
