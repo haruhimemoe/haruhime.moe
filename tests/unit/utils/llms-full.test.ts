@@ -1,8 +1,8 @@
 /**
  * @file tests/unit/utils/llms-full.test.ts
  * @desc buildLlmsFull: the head title and summary, one document per part in order (brand, every
- *       library, then the three legal pages), each with its absolute source URL, the brand facts,
- *       each library's real description and install line, each legal page's sections, absolute
+ *       library, then every legal page from the content registry), each with its absolute source URL, the brand facts,
+ *       each library's real description and install line, each legal page's sections (the terms text once), absolute
  *       links only, one trailing newline. With changelogs: a document per loaded repo after the
  *       libraries (three newest releases each, "No releases yet." when a loaded repo has none),
  *       skipped for a repo that failed, no documents at all with no argument.
@@ -11,7 +11,7 @@
  * @modified Sun Oct 4, 2026
  */
 
-import { describe, expect, it } from "vitest";
+import { beforeAll, describe, expect, it } from "vitest";
 import { BRAND_COLORS } from "@/constants/brand";
 import { CHANGELOG_SOURCES } from "@/constants/changelogs";
 import { LIBRARIES } from "@/constants/libraries";
@@ -19,7 +19,10 @@ import { SITE } from "@/constants/site";
 import { buildLlmsFull } from "@/utils/llms-full";
 
 describe("buildLlmsFull", () => {
-  const text = buildLlmsFull();
+  let text = "";
+  beforeAll(async () => {
+    text = await buildLlmsFull();
+  });
 
   it("opens with the head title and summary, then a document per part in order", () => {
     const titles = [...text.matchAll(/^# (.+)$/gm)].map((m) => m[1]);
@@ -46,9 +49,9 @@ describe("buildLlmsFull", () => {
     for (const library of LIBRARIES) {
       expect(text).toContain(`Source: ${SITE.url}/libraries/${library.name}`);
     }
-    expect(text).toContain(`Source: ${SITE.url}/disclaimer`);
-    expect(text).toContain(`Source: ${SITE.url}/terms`);
-    expect(text).toContain(`Source: ${SITE.url}/privacy`);
+    expect(text).toContain(`Source: ${SITE.url}/legal/disclaimer`);
+    expect(text).toContain(`Source: ${SITE.url}/legal/terms`);
+    expect(text).toContain(`Source: ${SITE.url}/legal/privacy`);
   });
 
   it("carries the brand page's real facts: the name rule, the colors and the osu! notice", () => {
@@ -73,6 +76,16 @@ describe("buildLlmsFull", () => {
     expect(text).toContain("## Library stats");
   });
 
+  it("carries the terms text exactly once, from content/legal/terms.mdx", () => {
+    const line = "Using the site means you accept these terms.";
+    expect(text.split(line)).toHaveLength(2);
+  });
+
+  it("makes the legal pages' own links absolute", () => {
+    expect(text).toContain(`[Libraries](${SITE.url}/libraries)`);
+    expect(text).not.toContain("](/");
+  });
+
   it("separates documents with a horizontal rule", () => {
     expect(text).toContain("\n\n---\n\n");
   });
@@ -93,10 +106,13 @@ describe("buildLlmsFull with changelogs", () => {
     date: "2026-10-01",
     sections: [{ name: "Added" as const, items: [`thing ${version}`] }],
   }));
-  const text = buildLlmsFull([
-    { source: ui, changelog: { unreleased: [], releases, references: [] } },
-    { source: pools, error: true },
-  ]);
+  let text = "";
+  beforeAll(async () => {
+    text = await buildLlmsFull([
+      { source: ui, changelog: { unreleased: [], releases, references: [] } },
+      { source: pools, error: true },
+    ]);
+  });
 
   it("adds a document per loaded repo after the libraries, three newest releases each", () => {
     const titles = [...text.matchAll(/^# (.+)$/gm)].map((m) => m[1]);
@@ -109,11 +125,11 @@ describe("buildLlmsFull with changelogs", () => {
     expect(text).not.toContain("thing 0.1.0");
   });
 
-  it("says a loaded repo with no releases has none yet", () => {
+  it("says a loaded repo with no releases has none yet", async () => {
     const nextKit = CHANGELOG_SOURCES.find(
       (s) => s.slug === "next-kit",
     ) as (typeof CHANGELOG_SOURCES)[number];
-    const empty = buildLlmsFull([
+    const empty = await buildLlmsFull([
       { source: nextKit, changelog: { unreleased: [], releases: [], references: [] } },
     ]);
     const titles = [...empty.matchAll(/^# (.+)$/gm)].map((m) => m[1]);
@@ -121,11 +137,11 @@ describe("buildLlmsFull with changelogs", () => {
     expect(empty).toContain("No releases yet.");
   });
 
-  it("drops the parenthesized date for an undated release", () => {
+  it("drops the parenthesized date for an undated release", async () => {
     const osu = CHANGELOG_SOURCES.find(
       (s) => s.slug === "osu",
     ) as (typeof CHANGELOG_SOURCES)[number];
-    const undated = buildLlmsFull([
+    const undated = await buildLlmsFull([
       {
         source: osu,
         changelog: {

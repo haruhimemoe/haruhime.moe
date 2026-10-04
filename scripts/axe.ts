@@ -14,7 +14,9 @@
 import { spawn } from "node:child_process";
 import path from "node:path";
 import AxeBuilder from "@axe-core/playwright";
+import { contentPath } from "@haruhimemoe/next-kit/docs";
 import { chromium } from "playwright";
+import { CONTENT } from "@/constants/content";
 import { LIBRARIES } from "@/constants/libraries";
 import { PAGE_PATHS } from "@/constants/site";
 
@@ -39,12 +41,15 @@ export const AXE_TAGS = ["wcag2a", "wcag2aa", "wcag21a", "wcag21aa", "wcag22aa",
 
 /**
  * @function axePages
- * @returns {string[]} every HTML route: the pages in PAGES, then a docs page per library, one
+ * @returns {string[]} every HTML route: the pages in PAGES, /legal and each legal page, then a
+ *   docs page per library, one
  *   kind feed and two repo changelogs (the text routes, llms.txt and security.txt, have no DOM to
  *   check)
  */
 export const axePages = (): string[] => [
   ...PAGE_PATHS,
+  "/legal",
+  ...CONTENT.entries.legal.map((entry) => contentPath("legal", entry.slug)),
   ...LIBRARIES.map((library) => `/libraries/${library.name}`),
   // One kind feed and two repo changelogs stand for their routes (haruhime.moe proves a slug with
   // a dot serves a page, not a 404); /changelog is in PAGE_PATHS.

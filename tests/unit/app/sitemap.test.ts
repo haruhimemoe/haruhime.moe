@@ -14,6 +14,7 @@ import { describe, expect, it } from "vitest";
 import robots from "@/app/robots";
 import sitemap from "@/app/sitemap";
 import { CHANGELOG_SOURCES } from "@/constants/changelogs";
+import { CONTENT } from "@/constants/content";
 import { LIBRARIES } from "@/constants/libraries";
 import { PAGE_PATHS, PAGES } from "@/constants/site";
 
@@ -43,14 +44,22 @@ describe("sitemap", () => {
       "https://www.haruhime.moe/brand",
       "https://www.haruhime.moe/ui",
       "https://www.haruhime.moe/contact",
-      "https://www.haruhime.moe/disclaimer",
-      "https://www.haruhime.moe/terms",
-      "https://www.haruhime.moe/privacy",
+      "https://www.haruhime.moe/legal",
+      ...CONTENT.entries.legal.map((e) => `https://www.haruhime.moe/legal/${e.slug}`),
       ...LIBRARIES.map((lib) => `https://www.haruhime.moe/libraries/${lib.name}`),
       "https://www.haruhime.moe/changelog/kind/apps",
       "https://www.haruhime.moe/changelog/kind/packages",
       ...CHANGELOG_SOURCES.map((s) => `https://www.haruhime.moe/changelog/${s.slug}`),
     ]);
+  });
+
+  it("dates each legal page from the registry and /legal from the newest of them", () => {
+    const legal = sitemap().filter((entry) => entry.url.includes("/legal"));
+    const dates = CONTENT.entries.legal.map((e) => e.lastUpdated);
+    const newest = [...dates].sort().at(-1) as string;
+    expect(legal.map((entry) => entry.lastModified)).toEqual(
+      [newest, ...dates].map((d) => new Date(d).toISOString()),
+    );
   });
 
   it("gives the changelog filter and repo pages no lastModified: their files live on GitHub", () => {
@@ -74,7 +83,8 @@ describe("sitemap", () => {
   });
 
   it("matches every page.tsx under src/app, so a new page can't miss the sitemap", () => {
-    expect([...PAGE_PATHS].sort()).toEqual(routePathsOnDisk());
+    // /legal's index comes from the content registry, its pages from [slug].
+    expect([...PAGE_PATHS, "/legal"].sort()).toEqual(routePathsOnDisk());
   });
 });
 

@@ -1,27 +1,30 @@
 /**
  * @file src/utils/llms-full.ts
- * @desc Builds /llms-full.txt (llmstxt.org) with @haruhimemoe/next-kit/seo's llmsFull: the brand
- *       page's facts, each library's docs page (its real description and links), each loaded
- *       repo's newest changelog entries, then the three legal pages, each as its own document.
- *       Built from BRAND_COLORS, TOOLS, LIBRARIES, the fetched changelogs and the legal pages' own
- *       copy, so nothing here is invented and a new library, repo or legal change shows up on its
- *       own. Pure so the route handler and its tests share one source.
+ * @desc Builds /llms-full.txt (llmstxt.org) with @haruhimemoe/next-kit/docs's contentLlmsFull: the
+ *       brand page's facts, each library's docs page (its real description and links) and each
+ *       loaded repo's newest changelog entries, then every legal page from the content registry
+ *       (content/legal/*.mdx, read as its .md mirror), each as its own document. Built from
+ *       BRAND_COLORS, TOOLS, LIBRARIES, the fetched changelogs and the MDX files, so nothing here
+ *       is invented and a new library, repo or legal change shows up on its own. Shared by the
+ *       route handler and its tests; the legal pages are read from disk.
  * @author David @dvhsh (https://dvh.sh)
  * @created Sat Oct 3, 2026
  * @modified Sun Oct 4, 2026
  */
 
 import { palette } from "@haruhimemoe/brand/palette";
-import { type LlmsFullPart, llmsFull } from "@haruhimemoe/next-kit/seo";
+import { type ContentSection, contentLlmsFull } from "@haruhimemoe/next-kit/docs";
+import { readContentMarkdown } from "@haruhimemoe/next-kit/docs/files";
+import type { LlmsFullPart } from "@haruhimemoe/next-kit/seo";
 import { BRAND_COLORS } from "@/constants/brand";
 import { type ChangelogSource, changelogUrls } from "@/constants/changelogs";
-import { DISCLAIMER_UPDATED, PRIVACY_UPDATED, TERMS_UPDATED } from "@/constants/legal";
+import { CONTENT } from "@/constants/content";
 import { LIBRARIES, type Library, libraryUrls } from "@/constants/libraries";
+import { SEO_SITE } from "@/constants/seo";
 import { SITE } from "@/constants/site";
 import { TOOLS } from "@/constants/tools";
 import { type Changelog, sectionMarkdown } from "@/utils/changelog";
 import type { ChangelogResult } from "@/utils/changelog-feed";
-import { formatIsoDate } from "@/utils/date";
 
 /**
  * @function brandPart
@@ -114,157 +117,34 @@ export const changelogPart = (source: ChangelogSource, changelog: Changelog): Ll
   };
 };
 
-/** The tools with their own terms and privacy pages, as /terms and /privacy link them. */
-const LIVE_TOOLS = TOOLS.filter((tool) => tool.url);
-
 /**
- * @function disclaimerPart
- * @returns {LlmsFullPart} /disclaimer's sections verbatim, as Markdown
+ * @function readLegal
+ * @param section {ContentSection} a content section (only legal here)
+ * @param slug {string} a registered slug
+ * @returns {Promise<string>} the page's Markdown mirror, or "" when it isn't registered
  */
-const disclaimerPart = (): LlmsFullPart => {
-  const markdown = [
-    `Last updated ${formatIsoDate(DISCLAIMER_UPDATED)}.`,
-    "",
-    "## Not affiliated",
-    "",
-    "haruhime.moe and its tools are not affiliated with or endorsed by ppy Pty Ltd. osu! is a " +
-      "trademark of ppy Pty Ltd.",
-    "",
-    "## The osu! API and the hinai mirror",
-    "",
-    "The tools use the osu! API and the hinai beatmap mirror (mirror.hinamizawa.ai), under each " +
-      "one's terms. Neither is run by me.",
-    "",
-    "## Beatmaps belong to their creators",
-    "",
-    "Beatmaps belong to their mappers, and the music and art in them to their artists. The tools " +
-      "point to beatmaps; they don't host them or claim them.",
-    "",
-    "## Provided as is",
-    "",
-    `Everything here is provided as is, without warranty of any kind. Use it at your own risk. ` +
-      `Questions go to ${SITE.contactEmail}.`,
-    "",
-    "## Made with AI help",
-    "",
-    "AI coding tools (Claude, Claude Code by Anthropic) were used during the making of this site " +
-      "and its child tooling.",
-  ].join("\n");
-  return { title: "Disclaimer", url: `${SITE.url}/disclaimer`, markdown };
-};
-
-/**
- * @function termsPart
- * @returns {LlmsFullPart} /terms's sections verbatim, as Markdown
- */
-const termsPart = (): LlmsFullPart => {
-  const toolLinks = LIVE_TOOLS.map(
-    (tool) => `- [${tool.name} terms](${tool.url}/legal/terms)`,
-  ).join("\n");
-  const markdown = [
-    `Last updated ${formatIsoDate(TERMS_UPDATED)}.`,
-    "",
-    "## What this site is",
-    "",
-    `${SITE.name} is the home page for haruhime's osu! tools: it describes them, links to them, ` +
-      `lists the libraries they're built from and shows their README files. It has no accounts ` +
-      `and stores nothing you type. Using the site means you accept these terms.`,
-    "",
-    "## The libraries",
-    "",
-    `The @haruhimemoe packages shown on [Libraries](${SITE.url}/libraries) are released under ` +
-      `the MIT license. Each package's license file governs its use; the docs pages here are a ` +
-      `rendering of each repo's README and may lag the repo.`,
-    "",
-    "## Each tool has its own terms",
-    "",
-    "The tools run on their own subdomains with their own accounts and data, so each has its own " +
-      "terms, which apply there instead of these:",
-    "",
-    toolLinks,
-    "",
-    "## No warranty",
-    "",
-    "The site and everything it links to are provided as is, without warranty of any kind. " +
-      "haruhime isn't liable for any loss that comes from using them. The site isn't affiliated " +
-      "with or endorsed by ppy Pty Ltd.",
-    "",
-    "## Changes",
-    "",
-    "These terms can change. The date at the top is the last time they did, and the current " +
-      "version is always at this address.",
-    "",
-    "## Contact",
-    "",
-    `Questions about these terms go to [${SITE.contactEmail}](mailto:${SITE.contactEmail}).`,
-  ].join("\n");
-  return { title: "Terms", url: `${SITE.url}/terms`, markdown };
-};
-
-/**
- * @function privacyPart
- * @returns {LlmsFullPart} /privacy's sections verbatim, as Markdown
- */
-const privacyPart = (): LlmsFullPart => {
-  const toolLinks = LIVE_TOOLS.map(
-    (tool) => `- [${tool.name} privacy policy](${tool.url}/legal/privacy)`,
-  ).join("\n");
-  const markdown = [
-    `Last updated ${formatIsoDate(PRIVACY_UPDATED)}.`,
-    "",
-    "## What this site collects",
-    "",
-    `Nothing of its own. ${SITE.name} has no accounts, sets no cookies, runs no analytics and ` +
-      `has no forms. Every page is static. Nothing you do here is tied to you or shared with ` +
-      `anyone.`,
-    "",
-    "## Our host",
-    "",
-    "The site is served by Vercel, which keeps standard request logs (such as your IP address, " +
-      "browser type and the page requested) for security and operations, under " +
-      "[Vercel's privacy policy](https://vercel.com/legal/privacy-policy). We don't read them.",
-    "",
-    "## Library stats",
-    "",
-    `The numbers on [Libraries](${SITE.url}/libraries) (versions, downloads, stars, releases) ` +
-      `and each README come from npm and GitHub. Our server fetches them about once a day and ` +
-      `keeps a copy; your browser never contacts npm or GitHub for them, so neither sees your ` +
-      `visit.`,
-    "",
-    "## Each tool has its own policy",
-    "",
-    "The tools run on their own subdomains, and the ones with accounts store data there. Each " +
-      "has its own privacy policy, which applies there instead of this one:",
-    "",
-    toolLinks,
-    "",
-    "## Contact",
-    "",
-    `Questions about privacy go to [${SITE.contactEmail}](mailto:${SITE.contactEmail}).`,
-  ].join("\n");
-  return { title: "Privacy", url: `${SITE.url}/privacy`, markdown };
-};
+const readLegal = (section: ContentSection, slug: string): Promise<string> =>
+  readContentMarkdown(CONTENT, section, slug, { siteUrl: SITE.url }).then((md) => md ?? "");
 
 /**
  * @function buildLlmsFull
  * @param changelogs {readonly ChangelogResult[]} every fetched repo (default none)
- * @returns {string} the llms-full.txt body: the brand page, every library's docs page, each
- *   loaded repo's changelog, then the three legal pages, each as its own document (llmsFull),
- *   ending with a trailing newline
+ * @returns {Promise<string>} the llms-full.txt body (next-kit's contentLlmsFull): the brand page,
+ *   every library's docs page and each loaded repo's changelog, then every legal page from the
+ *   content registry, each as its own document, ending with a trailing newline
  */
-export const buildLlmsFull = (changelogs: readonly ChangelogResult[] = []): string => {
-  const parts: LlmsFullPart[] = [
-    brandPart(),
-    ...LIBRARIES.map(libraryPart),
-    ...changelogs.flatMap((result) =>
-      "changelog" in result ? [changelogPart(result.source, result.changelog)] : [],
-    ),
-    disclaimerPart(),
-    termsPart(),
-    privacyPart(),
-  ];
-  return llmsFull(parts, {
+export const buildLlmsFull = (changelogs: readonly ChangelogResult[] = []): Promise<string> =>
+  contentLlmsFull({
+    site: SEO_SITE,
     title: `${SITE.name}: brand, libraries, changelogs and legal`,
     summary: SITE.description,
+    content: CONTENT,
+    read: readLegal,
+    before: [
+      brandPart(),
+      ...LIBRARIES.map(libraryPart),
+      ...changelogs.flatMap((result) =>
+        "changelog" in result ? [changelogPart(result.source, result.changelog)] : [],
+      ),
+    ],
   });
-};

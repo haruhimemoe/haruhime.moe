@@ -1,10 +1,10 @@
 /**
  * @file tests/unit/utils/llms-txt.test.ts
- * @desc buildLlmsTxt: llmstxt.org section order, the what-it-is note with the ppy notice,
+ * @desc buildLlmsTxt: llmstxt.org order (the link groups as notes, then Legal from the registry), the what-it-is note with the ppy notice,
  *       absolute links, packs' and pools' own llms.txt linked, pools in beta with its sources, no
  *       dead links for tools without a url (a coming-soon note instead), every PAGE_PATHS entry
  *       present, every CHANGELOG_SOURCES entry linked under Changelogs, the Discord server under
- *       Elsewhere, one trailing newline. toolLink and comingSoonNote on their own.
+ *       Elsewhere, every legal page's .md mirror under Legal, one trailing newline. toolLink and comingSoonNote on their own.
  * @author David @dvhsh (https://dvh.sh)
  * @created Wed Sep 23, 2026
  * @modified Sun Oct 4, 2026
@@ -12,6 +12,7 @@
 
 import { describe, expect, it } from "vitest";
 import { CHANGELOG_SOURCES } from "@/constants/changelogs";
+import { CONTENT } from "@/constants/content";
 import { PAGE_PATHS, SITE } from "@/constants/site";
 import { TOOLS } from "@/constants/tools";
 import { buildLlmsTxt, comingSoonNote, toolLink } from "@/utils/llms-txt";
@@ -21,13 +22,12 @@ describe("buildLlmsTxt", () => {
 
   it("opens with the title, a summary blockquote, then the sections in order", () => {
     const headingOrder = [...text.matchAll(/^(#|##) .+$/gm)].map((m) => m[0]);
-    expect(headingOrder).toEqual([
-      `# ${SITE.name}`,
-      "## Tools",
-      "## Pages",
-      "## Changelogs",
-      "## Elsewhere",
-    ]);
+    // No Docs, Guides or API: haruhime.moe has none, so Legal is the only section.
+    expect(headingOrder).toEqual([`# ${SITE.name}`, "## Legal"]);
+    const groups = ["Tools:", "Pages:", "Changelogs:", "Elsewhere:", "## Legal"];
+    const at = groups.map((label) => text.indexOf(`\n${label}\n`));
+    expect(at.every((i) => i > 0)).toBe(true);
+    expect([...at].sort((a, b) => a - b)).toEqual(at);
     expect(text).toContain(`> ${SITE.description}`);
   });
 
@@ -75,16 +75,25 @@ describe("buildLlmsTxt", () => {
     expect(text).toContain(`- [Thanks](${SITE.url}/thanks): `);
     expect(text).toContain(`- [UI](${SITE.url}/ui): `);
     expect(text).toContain(`- [Libraries](${SITE.url}/libraries): `);
-    expect(text).toContain(`- [Terms](${SITE.url}/terms): `);
-    expect(text).toContain(`- [Privacy](${SITE.url}/privacy): `);
+    expect(text).not.toContain(`${SITE.url}/terms`);
+    expect(text).not.toContain(`${SITE.url}/privacy`);
     expect(text).not.toContain(`[${SITE.url}`);
+  });
+
+  it("links every legal page's Markdown mirror under Legal, from the registry", () => {
+    const legal = text.slice(text.indexOf("## Legal"));
+    for (const entry of CONTENT.entries.legal) {
+      expect(legal).toContain(
+        `- [${entry.title}](${SITE.url}/legal/${entry.slug}.md): ${entry.description}`,
+      );
+    }
   });
 
   it("links elsewhere: GitHub org, the Claude Code plugin, npm, and the Discord server", () => {
     expect(text).toContain(SITE.githubOrg);
     expect(text).toContain("https://github.com/haruhimemoe/claude-plugin");
     expect(text).toContain("https://www.npmjs.com/org/haruhimemoe");
-    const elsewhere = text.slice(text.indexOf("## Elsewhere"));
+    const elsewhere = text.slice(text.indexOf("\nElsewhere:\n"));
     expect(elsewhere).toMatch(/^- \[Discord\]\(https:\/\/discord\.gg\/bKy9kjMV4y\): .+$/m);
   });
 

@@ -21,15 +21,18 @@ import {
 } from "../../../scripts/axe";
 
 describe("axePages", () => {
-  it("lists every page in PAGES, a docs page per library, a kind feed and a repo changelog", () => {
+  it("lists every page in PAGES, /legal and each legal page, a docs page per library, a kind feed and a repo changelog", () => {
     const pages = axePages();
     for (const path of PAGE_PATHS) expect(pages).toContain(path);
+    for (const slug of ["disclaimer", "terms", "privacy"])
+      expect(pages).toContain(`/legal/${slug}`);
+    expect(pages).toContain("/legal");
     for (const library of LIBRARIES) expect(pages).toContain(`/libraries/${library.name}`);
     expect(pages).toContain("/changelog/kind/packages");
     expect(pages).toContain("/changelog/ui");
     expect(pages).toContain("/changelog/haruhime.moe");
     expect(new Set(pages).size).toBe(pages.length);
-    expect(pages).toHaveLength(PAGE_PATHS.length + LIBRARIES.length + 3);
+    expect(pages).toHaveLength(PAGE_PATHS.length + 4 + LIBRARIES.length + 3);
   });
 });
 

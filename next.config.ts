@@ -1,18 +1,32 @@
 /**
  * @file next.config.ts
- * @desc Next.js config: strict mode, security headers on every static page, no X-Powered-By, and
- *       one rewrite so the .github repo's README banners load. Every page is static; there are no
- *       API routes.
+ * @desc Next.js config: MDX page extensions (content/legal runs through @haruhimemoe/ui/remark,
+ *       passed by module name since Turbopack only takes MDX plugins that way), strict mode,
+ *       security headers on every static page, no X-Powered-By, one rewrite so the .github repo's
+ *       README banners load, the legal MDX traced into /llms-full.txt (it revalidates daily), and
+ *       next-kit's rewrite that serves each legal page's Markdown mirror
+ *       at /legal/<slug>.md. Every page is static; there are no API routes.
  * @author David @dvhsh (https://dvh.sh)
  * @created Wed Sep 23, 2026
- * @modified Mon Sep 28, 2026
+ * @modified Sun Oct 4, 2026
  */
 
+import { contentRewrites } from "@haruhimemoe/next-kit/docs";
+import createMDX from "@next/mdx";
 import type { NextConfig } from "next";
 
+const withMDX = createMDX({
+  extension: /\.mdx?$/,
+  options: { remarkPlugins: ["@haruhimemoe/ui/remark"] },
+});
+
 const nextConfig: NextConfig = {
+  pageExtensions: ["ts", "tsx", "md", "mdx"],
   reactStrictMode: true,
   poweredByHeader: false,
+  // /llms-full.txt rebuilds once a day on the server and reads content/legal's MDX each time, so
+  // the files ship with it.
+  outputFileTracingIncludes: { "/llms-full.txt": ["./content/legal/*.mdx"] },
   async headers() {
     return [
       {
@@ -39,10 +53,11 @@ const nextConfig: NextConfig = {
       beforeFiles: [
         { source: "/brand/repos/.github-:file", destination: "/brand/repos/haruhime.moe-:file" },
       ],
-      afterFiles: [],
+      // A dynamic segment can't end in ".md", so /legal/x.md maps to the route at /legal/x/md.
+      afterFiles: [...contentRewrites()],
       fallback: [],
     };
   },
 };
 
-export default nextConfig;
+export default withMDX(nextConfig);

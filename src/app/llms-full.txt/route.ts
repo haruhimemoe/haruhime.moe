@@ -18,7 +18,7 @@ export const dynamic = "force-static";
 export const revalidate = 86400;
 
 export async function GET(): Promise<Response> {
-  return textResponse(buildLlmsFull(await fetchAllChangelogs()), {
+  return textResponse(await buildLlmsFull(await fetchAllChangelogs()), {
     maxAge: 3600,
     sMaxAge: 86400,
   });

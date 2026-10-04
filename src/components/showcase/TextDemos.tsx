@@ -4,7 +4,7 @@
  *       element it styles. Server-rendered.
  * @author David @dvhsh (https://dvh.sh)
  * @created Mon Sep 28, 2026
- * @modified Mon Sep 28, 2026
+ * @modified Sun Oct 4, 2026
  */
 
 import { linkClasses, Prose, TextLink } from "@haruhimemoe/ui";
@@ -28,7 +28,7 @@ export function TextDemos() {
         note="A text link. Accent (underlined pink) for running text; plain (bold, underlined on hover) for names in a list. Paths use next/link."
       >
         <p className="text-sm">
-          Read the <TextLink href="/disclaimer">disclaimer</TextLink>, or the{" "}
+          Read the <TextLink href="/legal/disclaimer">disclaimer</TextLink>, or the{" "}
           <TextLink href={UI_REPO_URL}>source on GitHub</TextLink>.
         </p>
         <ul className="flex flex-col gap-1 text-sm">
@@ -58,8 +58,8 @@ export function TextDemos() {
         name="Prose"
         note={
           <>
-            Long-form text. The <TextLink href="/disclaimer">disclaimer</TextLink> uses it with h2
-            headings.
+            Long-form text. The <TextLink href="/legal/disclaimer">disclaimer</TextLink> uses it
+            with h2 headings.
           </>
         }
       >
