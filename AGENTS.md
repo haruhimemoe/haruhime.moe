@@ -110,7 +110,7 @@ The packs look, from the [@haruhimemoe/ui](https://github.com/haruhimemoe/ui) th
 - The footer doesn't use ui's `tools` prop (the "haruhime tools" column the tool sites add): its Tools column already lists every tool, sheets included. `/ui` demos that column instead.
 - Before pushing: `bun run check && bun run typecheck && bun run test && bun run build && bun run test:a11y`. The build fetches from npm and GitHub for `/libraries`; offline it still passes, with dashes.
 - Accessibility rules the site adds to ui's: dim an unreleased tool's art, never its text (`opacity` on a card drops `text-c4` under 4.5:1); one landmark per name (the footer's columns are regions named Tools, haruhime.moe and Legal, so a page section with one of those names stays unlabelled); card headings sit one level under the page's h1; README code blocks are focusable (`Markdown`'s `pre`), since a wide one scrolls.
-- A change a visitor would notice gets a line under `## [Unreleased]` in `CHANGELOG.md` ([Keep a Changelog 1.1.0](https://keepachangelog.com/en/1.1.0/)). Never rewrite a released entry. Don't bump `version` in `package.json` or tag; releases are cut by the maintainers.
+- Keep a Changelog 1.1.0 + semver, `## [Unreleased]` on top. A change a visitor would notice gets a line there in the same PR. Never rewrite a released entry. A release is cut by moving Unreleased into `## [x.y.z] - YYYY-MM-DD`, bumping `package.json` and tagging `vx.y.z` with a GitHub release whose notes are that section (the owner tags).
 - When a change affects conventions, update this file in the same PR. When it moves a docs file or a README heading, update the links in the root `llms.txt` too.
 
 <!-- BEGIN:nextjs-agent-rules -->
