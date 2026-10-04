@@ -20,6 +20,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - `@haruhimemoe/ui` 0.11.0, `@haruhimemoe/next-kit` 0.6.1, `@haruhimemoe/brand` 0.7.0.
 - `@haruhimemoe/ui` 0.11.1: decorative alt on brand page previews.
 - `@haruhimemoe/ui` 0.11.2: Copy as Markdown works on Safari and iOS.
+- Depends on `@haruhimemoe/ui` 0.12.0: on touch screens buttons, chips and form fields are 44px tall, motion stops when your system asks for reduced motion, colors get stronger when it asks for more contrast, the code samples on /ui are highlighted, and /ui shows Text, textClasses, useMotionAllowed, hidden field labels, download links and all 17 ModBadge colors.
 
 ## [0.3.0] - 2026-10-04
 
