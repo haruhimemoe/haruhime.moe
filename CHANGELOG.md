@@ -16,6 +16,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ### Changed
 
+- `/libraries/<name>` renders READMEs through `@haruhimemoe/ui` 0.9.0's shared MDX components: `mdxComponents` and its own remark plugin (`@haruhimemoe/ui/remark`) replace this site's hand-rolled `pre`/external-link overrides and `rehype-slug`. Headings get a visible `#` anchor link beside them (h2/h3 only, down from h1-h6), fenced code gets a copy button and Shiki syntax highlighting (`shiki` 4.5.0, `@haruhimemoe/ui/shiki`), and a GitHub-style `> [!NOTE]`/`[!TIP]`/`[!WARNING]` blockquote renders as a labelled `role="note"` Callout. The sanitize schema now allows the attributes the remark plugin writes (a code block's `language-*` class and fence `data-meta`, a callout blockquote's `data-callout`) instead of `rehype-slug`'s ids. The site moves to `@haruhimemoe/ui` 0.9.0.
 - The homepage's lead no longer ends with the ppy sentence; the footer line and `/disclaimer` carry it.
 - Tool cards sit two to a row above phone width, with the icon, name and beta or coming-soon pill on one line and the tagline under it.
 - `/ui` leaves the footer: `/libraries` and the ui card link it, and it links its README at `/libraries/ui`.

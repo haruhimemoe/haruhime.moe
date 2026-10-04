@@ -19,7 +19,7 @@ src/app/          routes: layout.tsx (font, metadata, SiteShell), globals.css, n
                   opengraph-image.png and opengraph-image.alt.txt
 src/components/   layout/ (SiteShell: the @haruhimemoe/ui frame), home/ (ToolCard, EgcBanner),
                   libraries/ (LibraryCard, StatsRow, LibraryLinks, Markdown: the README renderer,
-                  react-markdown + remark-gfm + rehype-raw + rehype-slug + rehype-sanitize),
+                  react-markdown + @haruhimemoe/ui's mdx/remark/shiki + rehype-raw + rehype-sanitize),
                   showcase/ (Demo and DemoGroup frame each /ui demo; one <Group>Demos file per
                   group, listed in GROUPS in ui/page.tsx, split further past ~100 lines)
 src/constants/    static data (site.ts: identity, EVERGREEN_CUP and PAGES, every page's label,
