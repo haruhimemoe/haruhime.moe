@@ -11,7 +11,7 @@
  * @modified Sun Oct 4, 2026
  */
 
-import { Disclosure, TextLink } from "@haruhimemoe/ui";
+import { Disclosure, Text, TextLink } from "@haruhimemoe/ui";
 import { ChangelogFailures } from "@/components/changelog/ChangelogFailures";
 import { ReleaseDate } from "@/components/changelog/ReleaseDate";
 import { ReleaseNotes } from "@/components/changelog/ReleaseNotes";
@@ -64,9 +64,9 @@ export function ChangelogFeed({ feed }: { feed: Feed }) {
         </ol>
       )}
       {feed.more ? (
-        <p className="text-c3 text-sm">
+        <Text tone="muted">
           Older releases are on each repo's page, linked in the filters above.
-        </p>
+        </Text>
       ) : null}
     </div>
   );

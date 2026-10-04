@@ -9,6 +9,7 @@
  * @modified Sun Oct 4, 2026
  */
 
+import { Text } from "@haruhimemoe/ui";
 import { Markdown } from "@/components/libraries/Markdown";
 import { type ChangeSection, sectionMarkdown } from "@/utils/changelog";
 
@@ -25,7 +26,7 @@ export function ReleaseNotes({
   sections: readonly ChangeSection[];
   references: readonly string[];
 }) {
-  if (sections.length === 0) return <p className="text-c3 text-sm">No notes for this release.</p>;
+  if (sections.length === 0) return <Text tone="muted">No notes for this release.</Text>;
   return (
     <div className="flex flex-col gap-4">
       {sections.map((section) => (

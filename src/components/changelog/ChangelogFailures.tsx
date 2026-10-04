@@ -7,7 +7,7 @@
  * @modified Sun Oct 4, 2026
  */
 
-import { TextLink } from "@haruhimemoe/ui";
+import { Text, TextLink } from "@haruhimemoe/ui";
 import { type ChangelogSource, changelogUrls } from "@/constants/changelogs";
 
 /**
@@ -20,13 +20,13 @@ export function ChangelogFailures({ sources }: { sources: readonly ChangelogSour
   return (
     <div className="flex flex-col gap-1">
       {sources.map((source) => (
-        <p key={source.slug} className="text-c3 text-sm">
+        <Text key={source.slug} tone="muted">
           Couldn't load the {source.label} changelog right now. Read{" "}
           <TextLink href={changelogUrls(source).file}>
             the {source.label} CHANGELOG.md on GitHub
           </TextLink>
           .
-        </p>
+        </Text>
       ))}
     </div>
   );

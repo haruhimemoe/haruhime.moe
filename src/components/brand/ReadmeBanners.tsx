@@ -8,7 +8,7 @@
  * @modified Sun Oct 4, 2026
  */
 
-import { Card, TextLink } from "@haruhimemoe/ui";
+import { Card, Text, TextLink } from "@haruhimemoe/ui";
 import { BANNER_SIZE, REPO_BANNERS } from "@/constants/brand";
 
 // The name a download saves as: the file's own, minus a leading dot. .github's banners would
@@ -43,7 +43,7 @@ export function ReadmeBanners() {
                 haruhimemoe/{banner.repo}
               </TextLink>
             </p>
-            <p className="text-c3 text-sm">
+            <Text tone="muted">
               Download for{" "}
               <TextLink
                 href={`/${banner.dark}`}
@@ -63,7 +63,7 @@ export function ReadmeBanners() {
                 light
               </TextLink>{" "}
               backgrounds
-            </p>
+            </Text>
           </li>
         ))}
       </ul>

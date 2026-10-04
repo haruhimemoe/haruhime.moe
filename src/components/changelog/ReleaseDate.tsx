@@ -7,6 +7,7 @@
  * @modified Sun Oct 4, 2026
  */
 
+import { Text, textClasses } from "@haruhimemoe/ui";
 import { formatIsoDate } from "@/utils/date";
 
 /**
@@ -15,9 +16,14 @@ import { formatIsoDate } from "@/utils/date";
  * @returns {JSX.Element} the date as a <time>, or "No date"
  */
 export function ReleaseDate({ date }: { date: string | null }) {
-  if (!date) return <span className="text-c3 text-sm">No date</span>;
+  if (!date)
+    return (
+      <Text as="span" tone="muted">
+        No date
+      </Text>
+    );
   return (
-    <time dateTime={date} className="text-c3 text-sm">
+    <time dateTime={date} className={textClasses({ tone: "muted" })}>
       {formatIsoDate(date)}
     </time>
   );

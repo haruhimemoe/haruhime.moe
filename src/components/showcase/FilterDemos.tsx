@@ -5,7 +5,7 @@
  *       take callbacks and hold state.
  * @author David @dvhsh (https://dvh.sh)
  * @created Wed Sep 23, 2026
- * @modified Mon Sep 28, 2026
+ * @modified Sun Oct 4, 2026
  */
 
 "use client";
@@ -17,6 +17,7 @@ import {
   FilterRow,
   RangeSlider,
   type RangeSliderValue,
+  Text,
 } from "@haruhimemoe/ui";
 import { useState } from "react";
 import { ChipDemos } from "@/components/showcase/ChipDemos";
@@ -175,11 +176,11 @@ export function FilterDemos() {
             />
           </FilterRow>
         </FilterPanel>
-        <p className="text-c3 text-sm">
+        <Text tone="muted">
           {matches.length > 0
             ? `Matching: ${matches.map((map) => map.slot).join(", ")}`
             : "No slots match."}
-        </p>
+        </Text>
       </Demo>
     </>
   );

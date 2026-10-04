@@ -4,9 +4,10 @@
  *       bordered box (a border, not a panel, so Card and FilterPanel's own b4 still shows).
  * @author David @dvhsh (https://dvh.sh)
  * @created Wed Sep 23, 2026
- * @modified Wed Sep 23, 2026
+ * @modified Sun Oct 4, 2026
  */
 
+import { Text } from "@haruhimemoe/ui";
 import type { ReactNode } from "react";
 
 type DemoProps = {
@@ -28,7 +29,7 @@ export function Demo({ name, note, children }: DemoProps) {
     <div className="flex flex-col gap-3">
       <div>
         <h3 className="font-bold text-c1 text-lg">{name}</h3>
-        <p className="text-c3 text-sm">{note}</p>
+        <Text tone="muted">{note}</Text>
       </div>
       {children ? (
         <div className="flex flex-col gap-4 rounded-[10px] border border-b4 p-5">{children}</div>

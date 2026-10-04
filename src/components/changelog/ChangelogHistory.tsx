@@ -8,6 +8,7 @@
  * @modified Sun Oct 4, 2026
  */
 
+import { Text } from "@haruhimemoe/ui";
 import { ReleaseDate } from "@/components/changelog/ReleaseDate";
 import { ReleaseNotes } from "@/components/changelog/ReleaseNotes";
 import { type Changelog, releaseAnchor } from "@/utils/changelog";
@@ -29,7 +30,7 @@ export function ChangelogHistory({ changelog }: { changelog: Changelog }) {
           <h2 id="unreleased" className="scroll-mt-20 font-bold text-c1 text-xl">
             Not released yet
           </h2>
-          <p className="text-c3 text-sm">On main, waiting for the next release.</p>
+          <Text tone="muted">On main, waiting for the next release.</Text>
           <ReleaseNotes sections={unreleased} references={references} />
         </div>
       ) : null}

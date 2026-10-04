@@ -6,10 +6,10 @@
  *       links sit above the card-wide cover so each one is its own click.
  * @author David @dvhsh (https://dvh.sh)
  * @created Fri Oct 2, 2026
- * @modified Sat Oct 3, 2026
+ * @modified Sun Oct 4, 2026
  */
 
-import { Card } from "@haruhimemoe/ui";
+import { Card, Text } from "@haruhimemoe/ui";
 import { LibraryLinks } from "@/components/libraries/LibraryLinks";
 import { StatsRow } from "@/components/libraries/StatsRow";
 import { type Library, libraryUrls } from "@/constants/libraries";
@@ -41,7 +41,7 @@ export function LibraryCard({ library, stats }: { library: Library; stats: Libra
               {library.pkg}
             </a>
           </h2>
-          <p className="text-c3 text-sm">{library.description}</p>
+          <Text tone="muted">{library.description}</Text>
         </div>
         <code className="w-fit rounded bg-b6 px-2 py-1 text-c2 text-sm">bun add {library.pkg}</code>
         <StatsRow stats={stats} />
