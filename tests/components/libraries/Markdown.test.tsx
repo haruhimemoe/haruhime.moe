@@ -9,13 +9,14 @@
  *
  *       CodeBlock is an async Server Component, which react-dom's client renderer (what
  *       @testing-library/react uses under jsdom) can't mount directly; a Suspense boundary plus
- *       `act` lets it resolve the same way Next's RSC renderer would.
+ *       `act` lets it resolve the same way Next's RSC renderer would, and the helper then waits
+ *       for the boundary to show (a slow Shiki load under coverage outlasts `act`).
  * @author David @dvhsh (https://dvh.sh)
  * @created Fri Oct 2, 2026
- * @modified Sat Oct 3, 2026
+ * @modified Sun Oct 4, 2026
  */
 
-import { act, render, screen } from "@testing-library/react";
+import { act, render, screen, waitFor } from "@testing-library/react";
 import { Suspense } from "react";
 import { describe, expect, it } from "vitest";
 import { Markdown } from "@/components/libraries/Markdown";
@@ -26,6 +27,9 @@ const renderMarkdown = async (source: string) => {
   await act(async () => {
     ({ container } = render(<Suspense fallback={null}>{await Markdown({ source })}</Suspense>));
   });
+  // Under coverage, act can return before Shiki has loaded and every CodeBlock resolved; the
+  // boundary holds the whole output, so wait until it shows.
+  await waitFor(() => expect(container.childElementCount).toBeGreaterThan(0), { timeout: 5000 });
   return container;
 };
 

@@ -29,6 +29,7 @@ const renderDemos = async () => {
 describe("UtilityDemos", () => {
   it("prints what cx makes of conflicting classes", async () => {
     await renderDemos();
-    expect(screen.getByText(/"px-2 text-h1"/)).toBeInTheDocument();
+    // findByText: under coverage, act can return before the CodeBlock has resolved.
+    expect(await screen.findByText(/"px-2 text-h1"/, {}, { timeout: 5000 })).toBeInTheDocument();
   });
 });

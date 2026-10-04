@@ -43,7 +43,11 @@ const GROUPS = [
   "Utilities",
 ];
 
-/** /ui shows CodeBlock, an async Server Component: render it the way Markdown.test.tsx does. */
+/**
+ * /ui shows CodeBlock, an async Server Component: render it the way Markdown.test.tsx does. The
+ * Suspense boundary holds the whole page, so waiting for the h1 waits out a slow Shiki load
+ * (under coverage, act can return before every CodeBlock has resolved).
+ */
 const renderUi = async () => {
   let result!: ReturnType<typeof render>;
   await act(async () => {
@@ -53,6 +57,7 @@ const renderUi = async () => {
       </Suspense>,
     );
   });
+  await screen.findByRole("heading", { level: 1 }, { timeout: 5000 });
   return result;
 };
 
