@@ -5,18 +5,26 @@
  *       headingLevel included), the states each demo promises, JSON-LD from the package's own
  *       metadata, Pagination in both modes, a working filter panel (Clear filters shows for any
  *       filter, the length maximum included), and no axe violations. The 0.4.0 demos' behavior is
- *       tested beside their own files under tests/components/showcase/.
+ *       tested beside their own files under tests/components/showcase/. The Palette group's
+ *       CommandPalette needs next/navigation's useRouter/usePathname, which aren't mounted
+ *       outside a real Next tree, so this file mocks next/navigation.js the way ui's own
+ *       CommandPalette tests do.
  * @author David @dvhsh (https://dvh.sh)
  * @created Wed Sep 23, 2026
- * @modified Fri Oct 2, 2026
+ * @modified Sat Oct 3, 2026
  */
 
 import * as ui from "@haruhimemoe/ui";
 import uiPackage from "@haruhimemoe/ui/package.json" with { type: "json" };
 import { fireEvent, render, screen, within } from "@testing-library/react";
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 import UiPage, { metadata } from "@/app/ui/page";
 import { expectNoAxeViolations } from "../../helpers/axe";
+
+vi.mock("next/navigation.js", () => ({
+  useRouter: () => ({ push: vi.fn() }),
+  usePathname: () => "/ui",
+}));
 
 const GROUPS = [
   "Basics",
@@ -28,6 +36,7 @@ const GROUPS = [
   "osu!",
   "Icons",
   "Shell",
+  "Palette",
   "Utilities",
 ];
 
@@ -301,6 +310,19 @@ describe("/ui", () => {
     fireEvent.click(within(panel).getByRole("button", { name: "Clear filters" }));
     expect(within(panel).getByText("14 of 14 slots")).toBeInTheDocument();
     expect(maxLength).toHaveValue("10:00+");
+  });
+
+  it("opens the command palette from its demo button", () => {
+    render(<UiPage />);
+    expect(screen.queryByRole("combobox", { name: "Command palette" })).not.toBeInTheDocument();
+    fireEvent.click(within(demo("CommandPaletteButton")).getByRole("button", { name: /Search/ }));
+    expect(screen.getByRole("combobox", { name: "Command palette" })).toBeInTheDocument();
+  });
+
+  it("opens the command palette from openCommandPalette(), with no ref", () => {
+    render(<UiPage />);
+    fireEvent.click(within(demo("openCommandPalette")).getByRole("button"));
+    expect(screen.getByRole("combobox", { name: "Command palette" })).toBeInTheDocument();
   });
 
   it("has no axe violations", async () => {

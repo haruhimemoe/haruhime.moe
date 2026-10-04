@@ -45,6 +45,10 @@ export default defineConfig({
           environment: "jsdom",
           include: ["tests/components/**/*.test.tsx"],
           setupFiles: ["tests/setup/components.ts"],
+          // @haruhimemoe/ui's CommandPalette imports next/navigation.js itself; inlining the
+          // package (instead of letting Vitest externalize it) lets vi.mock("next/navigation.js")
+          // intercept that import too.
+          server: { deps: { inline: [/@haruhimemoe\/ui/] } },
         },
       },
     ],
