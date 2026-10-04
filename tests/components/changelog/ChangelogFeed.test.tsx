@@ -2,7 +2,8 @@
  * @file tests/components/changelog/ChangelogFeed.test.tsx
  * @desc ChangelogFeed: one h2 per release linking its anchor on the repo page, the date, a
  *       Disclosure per release with a unique button name, the newest five open; the "more" line;
- *       one note per failed repo with its GitHub link; an empty feed; no duplicate ids; axe.
+ *       one note per failed repo with its GitHub link; an empty feed; "No releases yet." only
+ *       when there are no entries AND no failures; no duplicate ids; axe.
  * @author David @dvhsh (https://dvh.sh)
  * @created Sun Oct 4, 2026
  * @modified Sun Oct 4, 2026
@@ -79,6 +80,12 @@ describe("ChangelogFeed", () => {
   it("says so when there are no releases", () => {
     render(<ChangelogFeed feed={feed(0)} />);
     expect(screen.getByText("No releases yet.")).toBeInTheDocument();
+  });
+
+  it("doesn't say 'No releases yet.' when every source failed", () => {
+    render(<ChangelogFeed feed={feed(0, { failed: [pools] })} />);
+    expect(screen.getByText(/Couldn't load the pools changelog/)).toBeInTheDocument();
+    expect(screen.queryByText("No releases yet.")).not.toBeInTheDocument();
   });
 
   it("has no axe violations", async () => {

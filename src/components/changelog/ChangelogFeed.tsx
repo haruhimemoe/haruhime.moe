@@ -4,7 +4,8 @@
  *       linking its anchor on the repo page) with its date and a Disclosure holding its notes.
  *       The title sits outside the Disclosure because its button can't hold a link; the button
  *       reads "Changes" plus a visually hidden release name, so each one is distinct. The newest
- *       FEED_OPEN start open.
+ *       FEED_OPEN start open. "No releases yet." only shows when there are no entries AND no
+ *       failed sources; a feed where every source failed shows just the failure lines.
  * @author David @dvhsh (https://dvh.sh)
  * @created Sun Oct 4, 2026
  * @modified Sun Oct 4, 2026
@@ -27,7 +28,7 @@ export function ChangelogFeed({ feed }: { feed: Feed }) {
   return (
     <div className="flex flex-col gap-6">
       <ChangelogFailures sources={feed.failed} />
-      {feed.entries.length === 0 ? (
+      {feed.entries.length === 0 && feed.failed.length === 0 ? (
         <p className="text-c3">No releases yet.</p>
       ) : (
         <ol className="flex flex-col gap-6">
