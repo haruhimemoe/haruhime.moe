@@ -19,6 +19,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - `/llms.txt` lists the legal pages under Legal, linking their Markdown.
 - `@haruhimemoe/ui` 0.11.0, `@haruhimemoe/next-kit` 0.6.1, `@haruhimemoe/brand` 0.7.0.
 - `@haruhimemoe/ui` 0.11.1: decorative alt on brand page previews.
+- `@haruhimemoe/ui` 0.11.2: Copy as Markdown works on Safari and iOS.
 
 ## [0.3.0] - 2026-10-04
 
