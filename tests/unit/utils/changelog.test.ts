@@ -168,6 +168,32 @@ describe("parseChangelog on drift", () => {
   it("ignores items before any section", () => {
     expect(parseChangelog("- loose\n## [Unreleased]\n- loose too\n").unreleased).toEqual([]);
   });
+
+  it("doesn't take an item whose line starts and ends with a backtick fence as unclosed, so a later release still parses", () => {
+    const log = parseChangelog(
+      "## [1.0.0] - 2026-01-01\n### Added\n- ```x``` inline\n## [2.0.0] - 2026-02-01\n### Added\n- next\n",
+    );
+    expect(log.releases.map((r) => r.version)).toEqual(["1.0.0", "2.0.0"]);
+    expect(log.releases[0]?.sections[0]?.items).toEqual(["```x``` inline"]);
+    expect(log.releases[1]?.sections[0]?.items).toEqual(["next"]);
+  });
+
+  it("doesn't take a continuation line's inline ```x``` as an unclosed fence either", () => {
+    const log = parseChangelog(
+      "## [1.0.0] - 2026-01-01\n### Added\n- first\n  ```x``` inline\n## [2.0.0] - 2026-02-01\n### Added\n- next\n",
+    );
+    expect(log.releases.map((r) => r.version)).toEqual(["1.0.0", "2.0.0"]);
+    expect(log.releases[0]?.sections[0]?.items).toEqual(["first\n  ```x``` inline"]);
+    expect(log.releases[1]?.sections[0]?.items).toEqual(["next"]);
+  });
+
+  it("ends an unclosed fence at the next release heading, so it swallows at most its own release", () => {
+    const log = parseChangelog(
+      "## [1.0.0] - 2026-01-01\n### Added\n- ```\nunclosed fence\n## [2.0.0] - 2026-01-01\n### Added\n- next\n",
+    );
+    expect(log.releases.map((r) => r.version)).toEqual(["1.0.0", "2.0.0"]);
+    expect(log.releases[1]?.sections[0]?.items).toEqual(["next"]);
+  });
 });
 
 describe("releaseAnchor", () => {

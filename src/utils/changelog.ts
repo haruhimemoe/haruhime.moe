@@ -4,8 +4,11 @@
  *       link definitions, so /changelog can show every repo's history. Lenient on purpose: it
  *       never throws, skips headings and sections it doesn't know, keeps each list item's
  *       Markdown (links, code, nested lists) as written, gives a bad date null and keeps only the
- *       first of a repeated version. Also a release's anchor id and the Markdown one section
- *       renders from. Pure.
+ *       first of a repeated version. A line only opens a fence when nothing after its opening run
+ *       of backticks/tildes closes it on the same line (CommonMark: a backtick fence's info
+ *       string can't contain backticks), and a `## ` heading always closes an open fence/item
+ *       first, so an unclosed fence can swallow at most the rest of its own release. Also a
+ *       release's anchor id and the Markdown one section renders from. Pure.
  * @author David @dvhsh (https://dvh.sh)
  * @created Sun Oct 4, 2026
  * @modified Sun Oct 4, 2026
@@ -51,8 +54,26 @@ const SECTION = /^###\s+(.+?)\s*$/;
 const ITEM = /^[-*]\s+(.*)$/;
 const REFERENCE = /^\[[^\]]+\]:\s*\S/;
 const FENCE = /^\s*(?:```|~~~)/;
+const FENCE_OPEN = /^\s*(`{3,}|~{3,})/;
+const HEADING_START = /^##\s/;
 
 type DraftSection = { name: SectionName; items: string[] };
+
+/**
+ * @function opensFence
+ * @param line {string} one line of the changelog
+ * @returns {boolean} true only when the line's opening run of 3+ backticks or tildes isn't
+ *   closed by another run of the same character, of equal or greater length, later on the line
+ *   (an inline ```x``` doesn't open a fence)
+ */
+const opensFence = (line: string): boolean => {
+  const open = FENCE_OPEN.exec(line);
+  if (!open) return false;
+  const run = open[1] as string;
+  const rest = line.slice(open[0].length);
+  const closer = new RegExp(`${run[0]}{${run.length},}`);
+  return !closer.test(rest);
+};
 
 const isSectionName = (value: string): value is SectionName =>
   (SECTION_NAMES as readonly string[]).includes(value);
@@ -105,9 +126,13 @@ export const parseChangelog = (markdown: string): Changelog => {
     const line = raw.endsWith("\r") ? raw.slice(0, -1) : raw;
 
     if (fenced) {
-      item?.push(line);
-      if (FENCE.test(line)) fenced = false;
-      continue;
+      if (HEADING_START.test(line)) {
+        fenced = false;
+      } else {
+        item?.push(line);
+        if (FENCE.test(line)) fenced = false;
+        continue;
+      }
     }
 
     if (REFERENCE.test(line)) {
@@ -156,14 +181,14 @@ export const parseChangelog = (markdown: string): Changelog => {
       closeItem();
       const first = start[1] ?? "";
       item = [first];
-      if (FENCE.test(first)) fenced = true;
+      if (opensFence(first)) fenced = true;
       blank = false;
       continue;
     }
 
     if (item && (!blank || /^\s/.test(line))) {
       item.push(line);
-      if (FENCE.test(line)) fenced = true;
+      if (opensFence(line)) fenced = true;
     } else {
       closeItem();
     }
