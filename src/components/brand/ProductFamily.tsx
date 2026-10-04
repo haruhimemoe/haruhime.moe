@@ -9,7 +9,7 @@
  */
 
 import { palette } from "@haruhimemoe/brand/palette";
-import { Card, linkClasses } from "@haruhimemoe/ui";
+import { Card, TextLink } from "@haruhimemoe/ui";
 import { TOOLS } from "@/constants/tools";
 
 /**
@@ -40,13 +40,9 @@ export function ProductFamily() {
                   />
                   hue {tool.hue}, {hex}
                 </span>
-                <a
-                  href={`/${tool.icon}`}
-                  download
-                  className={linkClasses({ className: "mt-1 block" })}
-                >
+                <TextLink href={`/${tool.icon}`} download className="mt-1 block text-sm">
                   Download {tool.name} icon
-                </a>
+                </TextLink>
               </span>
             </li>
           );
