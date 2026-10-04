@@ -8,7 +8,8 @@
  *       tested beside their own files under tests/components/showcase/. The Palette group's
  *       CommandPalette needs next/navigation's useRouter/usePathname, which aren't mounted
  *       outside a real Next tree, so this file mocks next/navigation.js the way ui's own
- *       CommandPalette tests do.
+ *       CommandPalette tests do. /ui shows CodeBlock, an async Server Component, so every test
+ *       renders the page inside Suspense under `act` (renderUi), the way Markdown.test.tsx does.
  * @author David @dvhsh (https://dvh.sh)
  * @created Wed Sep 23, 2026
  * @modified Sun Oct 4, 2026
@@ -16,7 +17,8 @@
 
 import * as ui from "@haruhimemoe/ui";
 import uiPackage from "@haruhimemoe/ui/package.json" with { type: "json" };
-import { fireEvent, render, screen, within } from "@testing-library/react";
+import { act, fireEvent, render, screen, within } from "@testing-library/react";
+import { Suspense } from "react";
 import { describe, expect, it, vi } from "vitest";
 import UiPage, { metadata } from "@/app/ui/page";
 import { expectNoAxeViolations } from "../../helpers/axe";
@@ -41,6 +43,19 @@ const GROUPS = [
   "Utilities",
 ];
 
+/** /ui shows CodeBlock, an async Server Component: render it the way Markdown.test.tsx does. */
+const renderUi = async () => {
+  let result!: ReturnType<typeof render>;
+  await act(async () => {
+    result = render(
+      <Suspense fallback={null}>
+        <UiPage />
+      </Suspense>,
+    );
+  });
+  return result;
+};
+
 /** The demo block under a component's h3: the h3's wrapper's parent holds the example box. */
 const demo = (name: string): HTMLElement => {
   const heading = screen.getByRole("heading", { level: 3, name });
@@ -50,18 +65,18 @@ const demo = (name: string): HTMLElement => {
 };
 
 describe("/ui", () => {
-  it("has its title and one h1", () => {
+  it("has its title and one h1", async () => {
     expect(metadata.title).toEqual({
       absolute: "@haruhimemoe/ui: React kit for osu! tools · haruhime.moe",
     });
     expect(metadata.description).toMatch(/@haruhimemoe\/ui/);
-    render(<UiPage />);
+    await renderUi();
     expect(screen.getAllByRole("heading", { level: 1 })).toHaveLength(1);
     expect(screen.getByRole("heading", { level: 1, name: "UI" })).toBeInTheDocument();
   });
 
-  it("links the package on npm and its source on GitHub", () => {
-    render(<UiPage />);
+  it("links the package on npm and its source on GitHub", async () => {
+    await renderUi();
     expect(screen.getByRole("link", { name: "@haruhimemoe/ui" })).toHaveAttribute(
       "href",
       "https://www.npmjs.com/package/@haruhimemoe/ui",
@@ -73,8 +88,8 @@ describe("/ui", () => {
     expect(screen.getByText(/^Version \d+\.\d+\.\d+, MIT license/)).toBeInTheDocument();
   });
 
-  it("says every site is built from the kit and links the README docs page", () => {
-    render(<UiPage />);
+  it("says every site is built from the kit and links the README docs page", async () => {
+    await renderUi();
     const lead = screen.getByRole("link", { name: "@haruhimemoe/ui" }).closest("p");
     expect(lead).toHaveTextContent("haruhime.moe, packs, pools and bb are built from it.");
     expect(lead).not.toHaveTextContent(/moving/);
@@ -84,8 +99,8 @@ describe("/ui", () => {
     );
   });
 
-  it("has every group heading, linked from the page's own nav", () => {
-    render(<UiPage />);
+  it("has every group heading, linked from the page's own nav", async () => {
+    await renderUi();
     const onThisPage = screen.getByRole("navigation", { name: "On this page" });
     for (const name of GROUPS) {
       const heading = screen.getByRole("heading", { level: 2, name });
@@ -97,8 +112,8 @@ describe("/ui", () => {
     }
   });
 
-  it("has a demo for every component the package exports", () => {
-    render(<UiPage />);
+  it("has a demo for every component the package exports", async () => {
+    await renderUi();
     const exported = Object.keys(ui).sort();
     expect(exported.length).toBeGreaterThan(20);
     // One role query, not one per export: ~90 full-page getByRole scans outran CI's 5s timeout.
@@ -109,8 +124,8 @@ describe("/ui", () => {
     expect(missing).toEqual([]);
   });
 
-  it("lists the live tools and the tools column without the current tool", () => {
-    render(<UiPage />);
+  it("lists the live tools and the tools column without the current tool", async () => {
+    await renderUi();
     const tools = within(demo("HARUHIME_TOOLS")).getAllByRole("link");
     expect(tools.map((link) => link.getAttribute("href"))).toEqual([
       "https://packs.haruhime.moe",
@@ -126,8 +141,8 @@ describe("/ui", () => {
     );
   });
 
-  it("shows every button variant and size, and disabled ones", () => {
-    render(<UiPage />);
+  it("shows every button variant and size, and disabled ones", async () => {
+    await renderUi();
     const buttons = within(demo("Button")).getAllByRole("button");
     expect(buttons.map((b) => b.textContent)).toEqual([
       "Primary",
@@ -143,8 +158,8 @@ describe("/ui", () => {
     expect(buttons.filter((b) => b.hasAttribute("disabled"))).toHaveLength(3);
   });
 
-  it("shows ButtonLink as an internal link and an external one in a new tab", () => {
-    render(<UiPage />);
+  it("shows ButtonLink as an internal link and an external one in a new tab", async () => {
+    await renderUi();
     const links = within(demo("ButtonLink"));
     expect(links.getByRole("link", { name: "Brand page" })).toHaveAttribute("href", "/brand");
     const external = links.getByRole("link", { name: "Source on GitHub (new tab)" });
@@ -152,8 +167,8 @@ describe("/ui", () => {
     expect(external).toHaveAttribute("rel", "noreferrer");
   });
 
-  it("shows a card with and without a title (an h4 under its demo), and every notice tone", () => {
-    render(<UiPage />);
+  it("shows a card with and without a title (an h4 under its demo), and every notice tone", async () => {
+    await renderUi();
     const titled = screen.getByRole("region", { name: "A card with a title" });
     expect(
       within(titled).getByRole("heading", { level: 4, name: "A card with a title" }),
@@ -165,8 +180,8 @@ describe("/ui", () => {
     }
   });
 
-  it("shows every form field with a hint, and with an error", () => {
-    render(<UiPage />);
+  it("shows every form field with a hint, and with an error", async () => {
+    await renderUi();
     for (const [label, hint, error] of [
       ["Link name", "Letters, numbers and dashes.", "Use letters, numbers and dashes only."],
       ["Beatmap ids", "One per line.", "abc isn't a beatmap id."],
@@ -193,8 +208,8 @@ describe("/ui", () => {
     expect(screen.getByRole("combobox", { name: "Move to" })).toBeInTheDocument();
   });
 
-  it("shows pagination on the first, a middle and the last page", () => {
-    render(<UiPage />);
+  it("shows pagination on the first, a middle and the last page", async () => {
+    await renderUi();
     const first = screen.getByRole("navigation", { name: "Pages, first page example" });
     expect(within(first).queryByRole("link", { name: "Previous" })).not.toBeInTheDocument();
     expect(within(first).getByRole("link", { name: "Next" })).toHaveAttribute(
@@ -208,16 +223,16 @@ describe("/ui", () => {
     expect(within(last).queryByRole("link", { name: "Next" })).not.toBeInTheDocument();
   });
 
-  it("pages through results in place with Pagination's buttons", () => {
-    render(<UiPage />);
+  it("pages through results in place with Pagination's buttons", async () => {
+    await renderUi();
     const pages = within(screen.getByRole("navigation", { name: "Pages, button example" }));
     expect(pages.getByText("Page 1")).toBeInTheDocument();
     fireEvent.click(pages.getByRole("button", { name: "Next" }));
     expect(pages.getByText("Page 2")).toBeInTheDocument();
   });
 
-  it("carries JSON-LD for the package", () => {
-    const { container } = render(<UiPage />);
+  it("carries JSON-LD for the package", async () => {
+    const { container } = await renderUi();
     const ld = JSON.parse(
       container.querySelector('script[type="application/ld+json"]')?.textContent ?? "{}",
     );
@@ -231,8 +246,8 @@ describe("/ui", () => {
     });
   });
 
-  it("shows the wordmark, its link, and the GitHub icon in a named link", () => {
-    render(<UiPage />);
+  it("shows the wordmark, its link, and the GitHub icon in a named link", async () => {
+    await renderUi();
     expect(
       within(demo("HaruhimeWordmark")).getAllByRole("img", { name: "haruhime.moe" }),
     ).toHaveLength(2);
@@ -242,8 +257,8 @@ describe("/ui", () => {
     expect(screen.getByRole("link", { name: "@haruhimemoe/ui on GitHub" })).toBeInTheDocument();
   });
 
-  it("shows the Discord logo in white, and in a named link to the server", () => {
-    render(<UiPage />);
+  it("shows the Discord logo in white, and in a named link to the server", async () => {
+    await renderUi();
     const discord = demo("DiscordIcon");
     const logos = [...discord.querySelectorAll("svg")];
     expect(logos).toHaveLength(3);
@@ -256,8 +271,8 @@ describe("/ui", () => {
     );
   });
 
-  it("shows an open-ended range and an m:ss one", () => {
-    render(<UiPage />);
+  it("shows an open-ended range and an m:ss one", async () => {
+    await renderUi();
     const sliders = within(demo("RangeSlider"));
     const stars = sliders.getByRole("group", { name: "Star rating" });
     expect(within(stars).getByRole("textbox", { name: "Maximum Star rating" })).toHaveValue("10+");
@@ -271,8 +286,8 @@ describe("/ui", () => {
     }
   });
 
-  it("toggles chips", () => {
-    render(<UiPage />);
+  it("toggles chips", async () => {
+    await renderUi();
     const loved = within(demo("Chip")).getByRole("button", { name: "Loved" });
     expect(loved).toHaveAttribute("aria-pressed", "true");
     fireEvent.click(loved);
@@ -285,8 +300,8 @@ describe("/ui", () => {
     expect(mods.getByRole("button", { name: "EZ" })).toBeDisabled();
   });
 
-  it("filters the sample pool with a live count, and clears", () => {
-    render(<UiPage />);
+  it("filters the sample pool with a live count, and clears", async () => {
+    await renderUi();
     const panel = screen.getByRole("region", { name: "Sample pool" });
     const count = within(panel).getByText("14 of 14 slots");
     expect(count.closest("output")).toHaveAttribute("aria-live", "polite");
@@ -316,21 +331,21 @@ describe("/ui", () => {
     expect(maxLength).toHaveValue("10:00+");
   });
 
-  it("opens the command palette from its demo button", () => {
-    render(<UiPage />);
+  it("opens the command palette from its demo button", async () => {
+    await renderUi();
     expect(screen.queryByRole("combobox", { name: "Command palette" })).not.toBeInTheDocument();
     fireEvent.click(within(demo("CommandPaletteButton")).getByRole("button", { name: /Search/ }));
     expect(screen.getByRole("combobox", { name: "Command palette" })).toBeInTheDocument();
   });
 
-  it("opens the command palette from openCommandPalette(), with no ref", () => {
-    render(<UiPage />);
+  it("opens the command palette from openCommandPalette(), with no ref", async () => {
+    await renderUi();
     fireEvent.click(within(demo("openCommandPalette")).getByRole("button"));
     expect(screen.getByRole("combobox", { name: "Command palette" })).toBeInTheDocument();
   });
 
   it("has no axe violations", async () => {
-    const { container } = render(<UiPage />);
+    const { container } = await renderUi();
     await expectNoAxeViolations(container);
   });
 });

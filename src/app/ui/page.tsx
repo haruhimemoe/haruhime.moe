@@ -10,6 +10,9 @@
  */
 
 import { CopyButton, JsonLd, PageHeader, TextLink } from "@haruhimemoe/ui";
+// Highlights the CodeBlock samples in the Palette and Utilities groups. Nothing else on /ui's
+// module graph loads Shiki (only mdx-components.tsx and Markdown.tsx import it).
+import "@haruhimemoe/ui/shiki";
 import uiPackage from "@haruhimemoe/ui/package.json" with { type: "json" };
 import type { Metadata } from "next";
 import type { JSX } from "react";
