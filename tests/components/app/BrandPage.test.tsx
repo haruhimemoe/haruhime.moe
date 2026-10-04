@@ -1,20 +1,23 @@
 /**
  * @file tests/components/app/BrandPage.test.tsx
- * @desc /brand: title, one h1, name rules, downloadable logos and README banners, every repo's
- *       README banner linked to its repo, with its tagline as alt text and download names without
- *       a leading dot, swatches, product family, type, trademark notice.
+ * @desc /brand: title, one h1, brandPageData("haruhime") through ui's BrandPage (name, logo and
+ *       banner files, swatches, type, usage, the brand contact), no Family link on the family's
+ *       own page, every repo's README banner right after the logos (linked to its repo, its
+ *       tagline as alt text, download names without a leading dot), the product family last,
+ *       no axe violations.
  * @author David @dvhsh (https://dvh.sh)
  * @created Wed Sep 23, 2026
- * @modified Mon Sep 28, 2026
+ * @modified Sun Oct 4, 2026
  */
 
 import { palette } from "@haruhimemoe/brand/palette";
+import { brandPageData } from "@haruhimemoe/brand/products";
 import { render, screen, within } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 import BrandPage, { metadata } from "@/app/brand/page";
-import { BRAND_ASSETS, BRAND_BANNERS, BRAND_COLORS, REPO_BANNERS } from "@/constants/brand";
-import { SITE } from "@/constants/site";
+import { REPO_BANNERS } from "@/constants/brand";
 import { TOOLS } from "@/constants/tools";
+import { expectNoAxeViolations } from "../../helpers/axe";
 
 describe("/brand", () => {
   it("has its title and one h1", () => {
@@ -26,50 +29,35 @@ describe("/brand", () => {
     expect(screen.getByRole("heading", { level: 1, name: "Brand" })).toBeInTheDocument();
   });
 
-  it("covers name, logos, colors, type, and usage", () => {
+  it('renders brandPageData("haruhime"): name, logo files, colors, type and usage', () => {
     render(<BrandPage />);
-    expect(screen.getByText(/written “haruhime.moe” in lower case/)).toBeInTheDocument();
-    for (const asset of BRAND_ASSETS) {
-      expect(screen.getByRole("link", { name: `Download ${asset.label}` })).toHaveAttribute(
-        "href",
-        `/${asset.href}`,
-      );
+    const data = brandPageData("haruhime");
+    expect(screen.getByText(data.writing)).toBeInTheDocument();
+    for (const asset of data.assets) {
+      expect(screen.getByRole("link", { name: asset.label })).toHaveAttribute("href", asset.href);
     }
-    expect(screen.getByRole("link", { name: "Download palette (JSON)" })).toHaveAttribute(
-      "href",
-      "/brand/haruhime-palette.json",
-    );
-    for (const color of BRAND_COLORS) {
-      expect(screen.getByText(color.hex)).toBeInTheDocument();
+    for (const hex of Object.values(data.palette)) {
+      expect(screen.getAllByText(hex).length).toBeGreaterThan(0);
     }
-    expect(screen.getByText(/don't recolor or stretch them/)).toBeInTheDocument();
+    expect(screen.getByText(data.donts[0] as string)).toBeInTheDocument();
     expect(screen.getByText(/Nunito/)).toBeInTheDocument();
-    expect(screen.getByText(SITE.trademarkNotice)).toBeInTheDocument();
+    expect(screen.getByText(/osu! is a trademark of ppy Pty Ltd/)).toBeInTheDocument();
   });
 
-  it("offers the README banner, dark and light, next to the logos", () => {
+  it("puts the README banners right after the logos and the product family last", () => {
     render(<BrandPage />);
-    const logo = screen.getByRole("region", { name: "Logo" });
-    expect(
-      within(logo).getByRole("heading", { level: 3, name: "haruhime.moe README banner" }),
-    ).toBeVisible();
-    expect(within(logo).getByText(/For README headers, like the one on our/)).toHaveTextContent(
-      "For README headers, like the one on our GitHub profile.",
-    );
-    expect(within(logo).getByRole("link", { name: "GitHub profile" })).toHaveAttribute(
-      "href",
-      SITE.githubOrg,
-    );
-    for (const banner of BRAND_BANNERS) {
-      expect(logo.querySelector(`img[src="/${banner.preview}"]`)).not.toBeNull();
-    }
-    for (const [name, href] of [
-      ["Download banner for dark backgrounds", "/brand/haruhime-banner.svg"],
-      ["Download banner for dark backgrounds (PNG)", "/brand/haruhime-banner.png"],
-      ["Download banner for light backgrounds", "/brand/haruhime-banner-on-light.svg"],
-    ]) {
-      expect(within(logo).getByRole("link", { name })).toHaveAttribute("href", href);
-    }
+    const names = screen
+      .getAllByRole("region")
+      .map((region) => region.getAttribute("aria-labelledby"))
+      .map((id) => (id ? document.getElementById(id)?.textContent : null));
+    expect(names.indexOf("README banners")).toBe(names.indexOf("Logo") + 1);
+    expect(names.at(-1)).toBe("Product family");
+  });
+
+  it("hides the Family link on the family's own page", () => {
+    render(<BrandPage />);
+    expect(screen.queryByRole("region", { name: "Family" })).toBeNull();
+    expect(screen.queryByText("Part of the haruhime.moe family.")).toBeNull();
   });
 
   it("shows every repo's README banner with alt text, its repo link and both files", () => {
@@ -125,11 +113,16 @@ describe("/brand", () => {
     }
   });
 
-  it("links the contact email", () => {
+  it("links the brand contact from brandPageData", () => {
     render(<BrandPage />);
-    expect(screen.getByRole("link", { name: "contact@haruhime.moe" })).toHaveAttribute(
+    expect(screen.getByRole("link", { name: "haruhime@haruhime.moe" })).toHaveAttribute(
       "href",
-      "mailto:contact@haruhime.moe",
+      "mailto:haruhime@haruhime.moe",
     );
+  });
+
+  it("has no axe violations", async () => {
+    const { container } = render(<BrandPage />);
+    await expectNoAxeViolations(container);
   });
 });
