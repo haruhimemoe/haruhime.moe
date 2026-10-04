@@ -5,7 +5,7 @@
  *       violation with its targets, and gives up on a server that never answers.
  * @author David @dvhsh (https://dvh.sh)
  * @created Sat Oct 3, 2026
- * @modified Sat Oct 3, 2026
+ * @modified Sun Oct 4, 2026
  */
 
 import { describe, expect, it } from "vitest";
@@ -21,12 +21,15 @@ import {
 } from "../../../scripts/axe";
 
 describe("axePages", () => {
-  it("lists every page in PAGES and a docs page per library, nothing twice", () => {
+  it("lists every page in PAGES, a docs page per library, a kind feed and a repo changelog", () => {
     const pages = axePages();
     for (const path of PAGE_PATHS) expect(pages).toContain(path);
     for (const library of LIBRARIES) expect(pages).toContain(`/libraries/${library.name}`);
+    expect(pages).toContain("/changelog/kind/packages");
+    expect(pages).toContain("/changelog/ui");
+    expect(pages).toContain("/changelog/haruhime.moe");
     expect(new Set(pages).size).toBe(pages.length);
-    expect(pages).toHaveLength(PAGE_PATHS.length + LIBRARIES.length);
+    expect(pages).toHaveLength(PAGE_PATHS.length + LIBRARIES.length + 3);
   });
 });
 

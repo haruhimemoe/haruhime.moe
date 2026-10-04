@@ -4,7 +4,7 @@
  *       names every AI bot in its own allow group, and points at the sitemap.
  * @author David @dvhsh (https://dvh.sh)
  * @created Wed Sep 23, 2026
- * @modified Mon Sep 28, 2026
+ * @modified Sun Oct 4, 2026
  */
 
 import { readdirSync } from "node:fs";
@@ -13,6 +13,7 @@ import { AI_BOTS } from "@haruhimemoe/next-kit/seo";
 import { describe, expect, it } from "vitest";
 import robots from "@/app/robots";
 import sitemap from "@/app/sitemap";
+import { CHANGELOG_SOURCES } from "@/constants/changelogs";
 import { LIBRARIES } from "@/constants/libraries";
 import { PAGE_PATHS, PAGES } from "@/constants/site";
 
@@ -38,6 +39,7 @@ describe("sitemap", () => {
       "https://www.haruhime.moe/",
       "https://www.haruhime.moe/thanks",
       "https://www.haruhime.moe/libraries",
+      "https://www.haruhime.moe/changelog",
       "https://www.haruhime.moe/brand",
       "https://www.haruhime.moe/ui",
       "https://www.haruhime.moe/contact",
@@ -45,7 +47,16 @@ describe("sitemap", () => {
       "https://www.haruhime.moe/terms",
       "https://www.haruhime.moe/privacy",
       ...LIBRARIES.map((lib) => `https://www.haruhime.moe/libraries/${lib.name}`),
+      "https://www.haruhime.moe/changelog/kind/apps",
+      "https://www.haruhime.moe/changelog/kind/packages",
+      ...CHANGELOG_SOURCES.map((s) => `https://www.haruhime.moe/changelog/${s.slug}`),
     ]);
+  });
+
+  it("gives the changelog filter and repo pages no lastModified: their files live on GitHub", () => {
+    const pages = sitemap().filter((entry) => /\/changelog\/.+/.test(entry.url));
+    expect(pages).toHaveLength(2 + CHANGELOG_SOURCES.length);
+    for (const entry of pages) expect(entry.lastModified).toBeUndefined();
   });
 
   it("gives a library docs page no lastModified: the README's date isn't known at build", () => {

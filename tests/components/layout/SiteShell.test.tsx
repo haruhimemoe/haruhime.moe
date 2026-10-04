@@ -7,7 +7,7 @@
  *       parent-site wordmark.
  * @author David @dvhsh (https://dvh.sh)
  * @created Wed Sep 23, 2026
- * @modified Sat Oct 3, 2026
+ * @modified Sun Oct 4, 2026
  */
 
 import { render, screen, within } from "@testing-library/react";
@@ -120,6 +120,7 @@ describe("SiteShell footer", () => {
     const expected = [
       ["Thanks", "/thanks"],
       ["Libraries", "/libraries"],
+      ["Changelog", "/changelog"],
       ["Brand", "/brand"],
       ["Contact", "/contact"],
     ] as const;

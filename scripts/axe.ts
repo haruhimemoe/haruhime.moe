@@ -8,7 +8,7 @@
  *       build (`bun run test:a11y`).
  * @author David @dvhsh (https://dvh.sh)
  * @created Sat Oct 3, 2026
- * @modified Sat Oct 3, 2026
+ * @modified Sun Oct 4, 2026
  */
 
 import { spawn } from "node:child_process";
@@ -39,12 +39,18 @@ export const AXE_TAGS = ["wcag2a", "wcag2aa", "wcag21a", "wcag21aa", "wcag22aa",
 
 /**
  * @function axePages
- * @returns {string[]} every HTML route: the pages in PAGES, then a docs page per library (the
- *   text routes, llms.txt and security.txt, have no DOM to check)
+ * @returns {string[]} every HTML route: the pages in PAGES, then a docs page per library, one
+ *   kind feed and two repo changelogs (the text routes, llms.txt and security.txt, have no DOM to
+ *   check)
  */
 export const axePages = (): string[] => [
   ...PAGE_PATHS,
   ...LIBRARIES.map((library) => `/libraries/${library.name}`),
+  // One kind feed and two repo changelogs stand for their routes (haruhime.moe proves a slug with
+  // a dot serves a page, not a 404); /changelog is in PAGE_PATHS.
+  "/changelog/kind/packages",
+  "/changelog/ui",
+  "/changelog/haruhime.moe",
 ];
 
 /** The shape of axe's `analyze()` result this script reads. */

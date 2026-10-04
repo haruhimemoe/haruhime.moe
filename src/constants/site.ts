@@ -6,7 +6,7 @@
  *       sitemap, /llms.txt and the footer read.
  * @author David @dvhsh (https://dvh.sh)
  * @created Wed Sep 23, 2026
- * @modified Fri Oct 2, 2026
+ * @modified Sun Oct 4, 2026
  */
 
 import { DISCLAIMER_UPDATED, PRIVACY_UPDATED, TERMS_UPDATED } from "@/constants/legal";
@@ -77,6 +77,14 @@ export const PAGES = {
     description:
       "The eight @haruhimemoe npm packages the osu! tools are built from, each with its version, downloads, stars and a docs page: ui, next-kit, osu, pool and more.",
     lastUpdated: "2026-10-02",
+    footer: "haruhime.moe",
+  },
+  "/changelog": {
+    title: "Changelog",
+    seoTitle: "Changelog: haruhime's osu! tools and packages",
+    description:
+      "What changed in each of haruhime's osu! tools and @haruhimemoe packages, release by release: packs, pools, bb, this site, the libraries and the Claude plugin.",
+    lastUpdated: "2026-10-04",
     footer: "haruhime.moe",
   },
   "/brand": {
