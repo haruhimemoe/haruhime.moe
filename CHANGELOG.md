@@ -18,6 +18,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - `/brand` is the shared brand page every haruhime site uses: name, logo and banner files, colors, type, do's and don'ts and the brand contact (haruhime@haruhime.moe), with every repo's README banner and the product family kept.
 - `/llms.txt` lists the legal pages under Legal, linking their Markdown.
 - `@haruhimemoe/ui` 0.11.0, `@haruhimemoe/next-kit` 0.6.1, `@haruhimemoe/brand` 0.7.0.
+- `@haruhimemoe/ui` 0.11.1: decorative alt on brand page previews.
 
 ## [0.3.0] - 2026-10-04
 
