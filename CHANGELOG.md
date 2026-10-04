@@ -9,11 +9,15 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 ### Added
 
 - /thanks: an osu!-style player card for every osu! player thanked (avatar, cover, flags, linked to their osu! profile when we know which account is theirs). The cards come from a snapshot taken once, so the page still never calls osu!.
-- /ui: a PlayerCard demo in the osu! group.
+- /ui: a PlayerCard demo in the osu! group, and a Content group for ui's docs, legal and brand page components.
+- `/legal`, an index of the legal pages, and each legal page as Markdown at `/legal/<page>.md` (linked from `/llms.txt`, with a Copy as Markdown button on the page).
 
 ### Changed
 
-- `@haruhimemoe/ui` 0.10.0.
+- The disclaimer, terms and privacy policy moved to `/legal/disclaimer`, `/legal/terms` and `/legal/privacy`, the same addresses the tools use. The old addresses are gone.
+- `/brand` is the shared brand page every haruhime site uses: name, logo and banner files, colors, type, do's and don'ts and the brand contact (haruhime@haruhime.moe), with every repo's README banner and the product family kept.
+- `/llms.txt` lists the legal pages under Legal, linking their Markdown.
+- `@haruhimemoe/ui` 0.11.0, `@haruhimemoe/next-kit` 0.6.1, `@haruhimemoe/brand` 0.7.0.
 
 ## [0.3.0] - 2026-10-04
 
