@@ -2,7 +2,7 @@
   "compilerOptions": {
     "target": "ES2024",
     "lib": ["dom", "dom.iterable", "esnext"],
-    "types": ["node"],
+    "types": ["node", "mdx"],
     "strict": true,
     "noUncheckedIndexedAccess": true,
     "noEmit": true,
@@ -19,7 +19,8 @@
       }
     ],
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./src/*"],
+      "@content/*": ["./content/*"]
     },
     "allowJs": true,
     "esModuleInterop": true

@@ -8,7 +8,7 @@
  *       PNGs aren't committed).
  * @author David @dvhsh (https://dvh.sh)
  * @created Fri Sep 25, 2026
- * @modified Fri Sep 25, 2026
+ * @modified Sun Oct 4, 2026
  */
 
 import { mkdirSync, writeFileSync } from "node:fs";
@@ -42,6 +42,10 @@ export const productFor = (banner: RepoBanner): Product =>
         hue: PRODUCTS.haruhime.hue,
         tagline: banner.tagline,
         url: banner.href,
+        // Brand-page copy, which a banner never draws.
+        writing: banner.repo,
+        dos: [],
+        donts: [],
       };
 
 /** One file the script writes: its path under public/ and its SVG. */
