@@ -3,19 +3,21 @@
  * @desc Homepage banner for the Evergreen Cup: Evergreen Cup's own Seattle skyline art (the
  *       hero loop from evergreencup.org, clouds drifting over the Space Needle and a line of
  *       conifers) under its name, its line and one link to evergreencup.org. The poster paints at
- *       once; the muted looping video mounts after hydration and only when the visitor hasn't
- *       asked for reduced motion, so they never download it otherwise. Sits above everything
+ *       once; the muted looping video mounts after hydration through @haruhimemoe/ui's
+ *       useMotionAllowed, and only when the visitor hasn't asked for reduced motion, so they
+ *       never download it otherwise. Sits above everything
  *       else on the homepage, so its name is a plain paragraph, not a heading: the page's h1
  *       comes first in the outline. Short and wide on desktop, taller on phones so the Space
  *       Needle stays in frame beside the copy.
  * @author David @dvhsh (https://dvh.sh)
  * @created Wed Sep 23, 2026
- * @modified Fri Oct 2, 2026
+ * @modified Sun Oct 4, 2026
  */
 
 "use client";
 
-import { useEffect, useId, useState } from "react";
+import { useMotionAllowed } from "@haruhimemoe/ui";
+import { useId } from "react";
 import { EVERGREEN_CUP } from "@/constants/site";
 
 /** The skyline loop and its first frame, re-encoded from evergreencup.org's hero at 1600x900. */
@@ -25,24 +27,8 @@ const ART = {
   mp4: "/egc/skyline.mp4",
 } as const;
 
-const REDUCED_MOTION = "(prefers-reduced-motion: reduce)";
-
 /** Where the art sits in the crop: the Space Needle left of center, the trees along the bottom. */
 const ART_CLASS = "absolute inset-0 size-full object-cover object-[35%_85%]";
-
-/** True once mounted and the visitor allows motion; false on the server and under reduced motion. */
-function useMotionAllowed() {
-  const [allowed, setAllowed] = useState(false);
-  useEffect(() => {
-    if (typeof window.matchMedia !== "function") return;
-    const query = window.matchMedia(REDUCED_MOTION);
-    const update = () => setAllowed(!query.matches);
-    update();
-    query.addEventListener("change", update);
-    return () => query.removeEventListener("change", update);
-  }, []);
-  return allowed;
-}
 
 /**
  * @function EgcBanner
