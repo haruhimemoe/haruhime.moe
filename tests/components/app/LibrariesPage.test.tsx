@@ -4,7 +4,7 @@
  *       the install line, stats and links, a dash where a lookup failed, and no axe violations.
  * @author David @dvhsh (https://dvh.sh)
  * @created Fri Oct 2, 2026
- * @modified Sat Oct 3, 2026
+ * @modified Sun Oct 4, 2026
  */
 
 import { render, screen, within } from "@testing-library/react";

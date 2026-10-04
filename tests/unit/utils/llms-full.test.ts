@@ -3,10 +3,12 @@
  * @desc buildLlmsFull: the head title and summary, one document per part in order (brand, every
  *       library, then the three legal pages), each with its absolute source URL, the brand facts,
  *       each library's real description and install line, each legal page's sections, absolute
- *       links only, one trailing newline.
+ *       links only, one trailing newline. With changelogs: a document per loaded repo after the
+ *       libraries (three newest releases each, "No releases yet." when a loaded repo has none),
+ *       skipped for a repo that failed, no documents at all with no argument.
  * @author David @dvhsh (https://dvh.sh)
  * @created Sat Oct 3, 2026
- * @modified Sat Oct 3, 2026
+ * @modified Sun Oct 4, 2026
  */
 
 import { describe, expect, it } from "vitest";
@@ -105,5 +107,35 @@ describe("buildLlmsFull with changelogs", () => {
     expect(text).toContain("## 0.4.0 (2026-10-01)");
     expect(text).toContain("- thing 0.2.0");
     expect(text).not.toContain("thing 0.1.0");
+  });
+
+  it("says a loaded repo with no releases has none yet", () => {
+    const nextKit = CHANGELOG_SOURCES.find(
+      (s) => s.slug === "next-kit",
+    ) as (typeof CHANGELOG_SOURCES)[number];
+    const empty = buildLlmsFull([
+      { source: nextKit, changelog: { unreleased: [], releases: [], references: [] } },
+    ]);
+    const titles = [...empty.matchAll(/^# (.+)$/gm)].map((m) => m[1]);
+    expect(titles).toContain("next-kit changelog");
+    expect(empty).toContain("No releases yet.");
+  });
+
+  it("drops the parenthesized date for an undated release", () => {
+    const osu = CHANGELOG_SOURCES.find(
+      (s) => s.slug === "osu",
+    ) as (typeof CHANGELOG_SOURCES)[number];
+    const undated = buildLlmsFull([
+      {
+        source: osu,
+        changelog: {
+          unreleased: [],
+          releases: [{ version: "0.1.0", date: null, sections: [] }],
+          references: [],
+        },
+      },
+    ]);
+    expect(undated).toContain("## 0.1.0\n");
+    expect(undated).not.toContain("## 0.1.0 (");
   });
 });

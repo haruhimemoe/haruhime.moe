@@ -5,7 +5,7 @@
  *       npm, the changelog, the raw README and the docs page, and ui the only showcase.
  * @author David @dvhsh (https://dvh.sh)
  * @created Fri Oct 2, 2026
- * @modified Fri Oct 2, 2026
+ * @modified Sun Oct 4, 2026
  */
 
 import { describe, expect, it } from "vitest";

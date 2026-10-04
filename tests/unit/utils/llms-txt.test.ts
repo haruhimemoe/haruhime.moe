@@ -3,11 +3,11 @@
  * @desc buildLlmsTxt: llmstxt.org section order, the what-it-is note with the ppy notice,
  *       absolute links, packs' and pools' own llms.txt linked, pools in beta with its sources, no
  *       dead links for tools without a url (a coming-soon note instead), every PAGE_PATHS entry
- *       present, the Discord server under Elsewhere, one trailing newline. toolLink and
- *       comingSoonNote on their own.
+ *       present, every CHANGELOG_SOURCES entry linked under Changelogs, the Discord server under
+ *       Elsewhere, one trailing newline. toolLink and comingSoonNote on their own.
  * @author David @dvhsh (https://dvh.sh)
  * @created Wed Sep 23, 2026
- * @modified Mon Sep 28, 2026
+ * @modified Sun Oct 4, 2026
  */
 
 import { describe, expect, it } from "vitest";
