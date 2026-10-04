@@ -36,6 +36,7 @@ const GROUPS = [
   "osu!",
   "Icons",
   "Shell",
+  "Content",
   "Palette",
   "Utilities",
 ];
