@@ -6,6 +6,16 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ## [Unreleased]
 
+### Added
+
+- `/changelog`: every haruhimemoe repo's releases in one feed, newest first, read from each repo's `CHANGELOG.md` and refreshed about once a day. Filter links narrow it to the apps (`/changelog/kind/apps`), the packages (`/changelog/kind/packages`) or one repo. The newest five releases start open.
+- `/changelog/<repo>`: one repo's whole changelog (haruhime.moe, packs, pools, bb, each `@haruhimemoe` package and the Claude plugin), with what's on main but not released yet on top and an anchor per release (`#v0-9-0`).
+- Changelog in the footer's haruhime.moe column, after Libraries. `/llms.txt` lists every changelog page and `/llms-full.txt` carries each repo's three newest releases.
+
+### Changed
+
+- A library's Changelog link (on `/libraries` and its docs page) opens its changelog page here instead of the file on GitHub.
+
 ## [0.2.0] - 2026-10-04
 
 ### Added

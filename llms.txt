@@ -5,8 +5,10 @@
 ## Site
 
 - [llms.txt on the live site](https://www.haruhime.moe/llms.txt): the canonical guide to the site's pages and tools, built from the same data as the pages
+- [llms-full.txt on the live site](https://www.haruhime.moe/llms-full.txt): the brand page, every library's docs page, each repo's newest changelog entries and the three legal pages, each in full
 - [haruhime.moe](https://www.haruhime.moe/): the live site
 - [Libraries](https://www.haruhime.moe/libraries): the eight @haruhimemoe packages with version, downloads, stars and latest release, each linking its docs page
+- [Changelog](https://www.haruhime.moe/changelog): every haruhimemoe repo's releases, newest first, filterable to apps, packages or one repo, each with its own page at `/changelog/<repo>`
 - [UI showcase](https://www.haruhime.moe/ui): every @haruhimemoe/ui component rendered in its states
 
 ## Docs

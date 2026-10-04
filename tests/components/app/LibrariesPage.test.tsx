@@ -59,7 +59,7 @@ describe("/libraries", () => {
       );
       expect(within(card).getByRole("link", { name: "Changelog" })).toHaveAttribute(
         "href",
-        `https://github.com/haruhimemoe/${library.repo}/blob/main/CHANGELOG.md`,
+        `/changelog/${library.name}`,
       );
     }
   });

@@ -11,6 +11,7 @@
  */
 
 import { describe, expect, it } from "vitest";
+import { CHANGELOG_SOURCES } from "@/constants/changelogs";
 import { PAGE_PATHS, SITE } from "@/constants/site";
 import { TOOLS } from "@/constants/tools";
 import { buildLlmsTxt, comingSoonNote, toolLink } from "@/utils/llms-txt";
@@ -20,8 +21,22 @@ describe("buildLlmsTxt", () => {
 
   it("opens with the title, a summary blockquote, then the sections in order", () => {
     const headingOrder = [...text.matchAll(/^(#|##) .+$/gm)].map((m) => m[0]);
-    expect(headingOrder).toEqual([`# ${SITE.name}`, "## Tools", "## Pages", "## Elsewhere"]);
+    expect(headingOrder).toEqual([
+      `# ${SITE.name}`,
+      "## Tools",
+      "## Pages",
+      "## Changelogs",
+      "## Elsewhere",
+    ]);
     expect(text).toContain(`> ${SITE.description}`);
+  });
+
+  it("links every repo's changelog page", () => {
+    for (const source of CHANGELOG_SOURCES) {
+      expect(text).toContain(
+        `- [${source.label} changelog](${SITE.url}/changelog/${source.slug}): every ${source.label} release, newest first`,
+      );
+    }
   });
 
   it("links every live tool with its tagline, and never links a tool without a url", () => {

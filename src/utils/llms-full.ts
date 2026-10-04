@@ -1,22 +1,26 @@
 /**
  * @file src/utils/llms-full.ts
  * @desc Builds /llms-full.txt (llmstxt.org) with @haruhimemoe/next-kit/seo's llmsFull: the brand
- *       page's facts, each library's docs page (its real description and links), then the three
- *       legal pages, each as its own document. Built from BRAND_COLORS, TOOLS, LIBRARIES and the
- *       legal pages' own copy, so nothing here is invented and a new library or legal change shows
- *       up on its own. Pure so the route handler and its tests share one source.
+ *       page's facts, each library's docs page (its real description and links), each loaded
+ *       repo's newest changelog entries, then the three legal pages, each as its own document.
+ *       Built from BRAND_COLORS, TOOLS, LIBRARIES, the fetched changelogs and the legal pages' own
+ *       copy, so nothing here is invented and a new library, repo or legal change shows up on its
+ *       own. Pure so the route handler and its tests share one source.
  * @author David @dvhsh (https://dvh.sh)
  * @created Sat Oct 3, 2026
- * @modified Sat Oct 3, 2026
+ * @modified Sun Oct 4, 2026
  */
 
 import { palette } from "@haruhimemoe/brand/palette";
 import { type LlmsFullPart, llmsFull } from "@haruhimemoe/next-kit/seo";
 import { BRAND_COLORS } from "@/constants/brand";
+import { type ChangelogSource, changelogUrls } from "@/constants/changelogs";
 import { DISCLAIMER_UPDATED, PRIVACY_UPDATED, TERMS_UPDATED } from "@/constants/legal";
 import { LIBRARIES, type Library, libraryUrls } from "@/constants/libraries";
 import { SITE } from "@/constants/site";
 import { TOOLS } from "@/constants/tools";
+import { type Changelog, sectionMarkdown } from "@/utils/changelog";
+import type { ChangelogResult } from "@/utils/changelog-feed";
 import { formatIsoDate } from "@/utils/date";
 
 /**
@@ -71,9 +75,43 @@ const libraryPart = (library: Library): LlmsFullPart => {
     "",
     `- [npm](${urls.npm})`,
     `- [GitHub](${urls.github})`,
-    `- [Changelog](${urls.changelog})`,
+    `- [Changelog](${SITE.url}${urls.changelogPage})`,
   ].join("\n");
   return { title: library.pkg, url: `${SITE.url}${urls.docs}`, markdown };
+};
+
+/** How many releases each repo's llms-full document carries, newest first. */
+const RELEASES_PER_REPO = 3;
+
+/**
+ * @function changelogPart
+ * @param source {ChangelogSource} a repo
+ * @param changelog {Changelog} its parsed changelog
+ * @returns {LlmsFullPart} its page here as Markdown: the newest three releases, each section as a
+ *   list
+ */
+export const changelogPart = (source: ChangelogSource, changelog: Changelog): LlmsFullPart => {
+  const releases = changelog.releases.slice(0, RELEASES_PER_REPO);
+  const markdown = releases.length
+    ? releases
+        .map((release) =>
+          [
+            `## ${release.version}${release.date ? ` (${release.date})` : ""}`,
+            ...release.sections.flatMap((section) => [
+              "",
+              `### ${section.name}`,
+              "",
+              sectionMarkdown(section),
+            ]),
+          ].join("\n"),
+        )
+        .join("\n\n")
+    : "No releases yet.";
+  return {
+    title: `${source.label} changelog`,
+    url: `${SITE.url}${changelogUrls(source).page}`,
+    markdown,
+  };
 };
 
 /** The tools with their own terms and privacy pages, as /terms and /privacy link them. */
@@ -209,19 +247,24 @@ const privacyPart = (): LlmsFullPart => {
 
 /**
  * @function buildLlmsFull
- * @returns {string} the llms-full.txt body: the brand page, every library's docs page, then the
- *   three legal pages, each as its own document (llmsFull), ending with a trailing newline
+ * @param changelogs {readonly ChangelogResult[]} every fetched repo (default none)
+ * @returns {string} the llms-full.txt body: the brand page, every library's docs page, each
+ *   loaded repo's changelog, then the three legal pages, each as its own document (llmsFull),
+ *   ending with a trailing newline
  */
-export const buildLlmsFull = (): string => {
+export const buildLlmsFull = (changelogs: readonly ChangelogResult[] = []): string => {
   const parts: LlmsFullPart[] = [
     brandPart(),
     ...LIBRARIES.map(libraryPart),
+    ...changelogs.flatMap((result) =>
+      "changelog" in result ? [changelogPart(result.source, result.changelog)] : [],
+    ),
     disclaimerPart(),
     termsPart(),
     privacyPart(),
   ];
   return llmsFull(parts, {
-    title: `${SITE.name}: brand, libraries and legal`,
+    title: `${SITE.name}: brand, libraries, changelogs and legal`,
     summary: SITE.description,
   });
 };

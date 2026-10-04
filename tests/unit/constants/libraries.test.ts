@@ -60,6 +60,7 @@ describe("libraryUrls", () => {
       github: "https://github.com/haruhimemoe/pool",
       npm: "https://www.npmjs.com/package/@haruhimemoe/pool",
       changelog: "https://github.com/haruhimemoe/pool/blob/main/CHANGELOG.md",
+      changelogPage: "/changelog/pool",
       readme: "https://raw.githubusercontent.com/haruhimemoe/pool/main/README.md",
     });
   });

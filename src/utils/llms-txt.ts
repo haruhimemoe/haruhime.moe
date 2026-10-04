@@ -1,15 +1,17 @@
 /**
  * @file src/utils/llms-txt.ts
  * @desc Builds /llms.txt (llmstxt.org) with @haruhimemoe/next-kit/seo's llmsTxt: a summary, notes
- *       on what the site is and which tools haven't launched, then the live tools, every page, and
- *       links elsewhere. Built from SITE, TOOLS and PAGES so a new page or tool shows up on its
- *       own. Pure so the route handler and its tests share one source.
+ *       on what the site is and which tools haven't launched, then the live tools, every page,
+ *       every repo's changelog page, and links elsewhere. Built from SITE, TOOLS, PAGES and
+ *       CHANGELOG_SOURCES so a new page, tool or repo shows up on its own. Pure so the route
+ *       handler and its tests share one source.
  * @author David @dvhsh (https://dvh.sh)
  * @created Wed Sep 23, 2026
- * @modified Mon Sep 28, 2026
+ * @modified Sun Oct 4, 2026
  */
 
 import { type LlmsLink, llmsTxt } from "@haruhimemoe/next-kit/seo";
+import { CHANGELOG_SOURCES, changelogUrls } from "@/constants/changelogs";
 import { PAGE_PATHS, PAGES, SITE } from "@/constants/site";
 import { TOOLS, type Tool } from "@/constants/tools";
 
@@ -59,6 +61,14 @@ export const buildLlmsTxt = (): string => {
           title: PAGES[path].title,
           url: `${SITE.url}${path}`,
           note: PAGES[path].description,
+        })),
+      },
+      {
+        heading: "Changelogs",
+        links: CHANGELOG_SOURCES.map((source) => ({
+          title: `${source.label} changelog`,
+          url: `${SITE.url}${changelogUrls(source).page}`,
+          note: `every ${source.label} release, newest first`,
         })),
       },
       {

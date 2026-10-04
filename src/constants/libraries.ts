@@ -6,7 +6,7 @@
  *       libraryUrls derives the rest. Descriptions match each package.json's first sentence.
  * @author David @dvhsh (https://dvh.sh)
  * @created Fri Oct 2, 2026
- * @modified Fri Oct 2, 2026
+ * @modified Sun Oct 4, 2026
  */
 
 import { SITE } from "@/constants/site";
@@ -103,14 +103,16 @@ export type LibraryUrls = {
   readonly github: string;
   readonly npm: string;
   readonly changelog: string;
+  /** The repo's changelog page on this site. */
+  readonly changelogPage: `/changelog/${string}`;
   readonly readme: string;
 };
 
 /**
  * @function libraryUrls
  * @param library {Library} a library
- * @returns {LibraryUrls} its docs page here, repo and changelog on GitHub, package on npm, and
- *   the raw README the docs page renders
+ * @returns {LibraryUrls} its docs page here, repo and changelog on GitHub, package on npm, its
+ *   changelog page here, and the raw README the docs page renders
  */
 export const libraryUrls = (library: Library): LibraryUrls => {
   const github = `${SITE.githubOrg}/${library.repo}`;
@@ -119,6 +121,7 @@ export const libraryUrls = (library: Library): LibraryUrls => {
     github,
     npm: `https://www.npmjs.com/package/${library.pkg}`,
     changelog: `${github}/blob/main/CHANGELOG.md`,
+    changelogPage: `/changelog/${library.name}`,
     readme: `https://raw.githubusercontent.com/haruhimemoe/${library.repo}/main/README.md`,
   };
 };

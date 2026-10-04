@@ -11,6 +11,7 @@
 
 import { describe, expect, it } from "vitest";
 import { BRAND_COLORS } from "@/constants/brand";
+import { CHANGELOG_SOURCES } from "@/constants/changelogs";
 import { LIBRARIES } from "@/constants/libraries";
 import { SITE } from "@/constants/site";
 import { buildLlmsFull } from "@/utils/llms-full";
@@ -21,7 +22,7 @@ describe("buildLlmsFull", () => {
   it("opens with the head title and summary, then a document per part in order", () => {
     const titles = [...text.matchAll(/^# (.+)$/gm)].map((m) => m[1]);
     expect(titles).toEqual([
-      `${SITE.name}: brand, libraries and legal`,
+      `${SITE.name}: brand, libraries, changelogs and legal`,
       "Brand",
       ...LIBRARIES.map((library) => library.pkg),
       "Disclaimer",
@@ -29,6 +30,13 @@ describe("buildLlmsFull", () => {
       "Privacy",
     ]);
     expect(text).toContain(`> ${SITE.description}`);
+  });
+
+  it("has no changelog parts when called with no argument", () => {
+    const titles = [...text.matchAll(/^# (.+)$/gm)].map((m) => m[1]);
+    for (const source of CHANGELOG_SOURCES) {
+      expect(titles).not.toContain(`${source.label} changelog`);
+    }
   });
 
   it("gives every document an absolute Source link", () => {
@@ -70,5 +78,32 @@ describe("buildLlmsFull", () => {
   it("ends with exactly one trailing newline", () => {
     expect(text.endsWith("\n")).toBe(true);
     expect(text.endsWith("\n\n")).toBe(false);
+  });
+});
+
+describe("buildLlmsFull with changelogs", () => {
+  const ui = CHANGELOG_SOURCES.find((s) => s.slug === "ui") as (typeof CHANGELOG_SOURCES)[number];
+  const pools = CHANGELOG_SOURCES.find(
+    (s) => s.slug === "pools",
+  ) as (typeof CHANGELOG_SOURCES)[number];
+  const releases = ["0.4.0", "0.3.0", "0.2.0", "0.1.0"].map((version) => ({
+    version,
+    date: "2026-10-01",
+    sections: [{ name: "Added" as const, items: [`thing ${version}`] }],
+  }));
+  const text = buildLlmsFull([
+    { source: ui, changelog: { unreleased: [], releases, references: [] } },
+    { source: pools, error: true },
+  ]);
+
+  it("adds a document per loaded repo after the libraries, three newest releases each", () => {
+    const titles = [...text.matchAll(/^# (.+)$/gm)].map((m) => m[1]);
+    expect(titles).toContain("ui changelog");
+    expect(titles).not.toContain("pools changelog");
+    expect(titles.indexOf("ui changelog")).toBeGreaterThan(titles.indexOf("@haruhimemoe/brand"));
+    expect(text).toContain(`Source: ${SITE.url}/changelog/ui`);
+    expect(text).toContain("## 0.4.0 (2026-10-01)");
+    expect(text).toContain("- thing 0.2.0");
+    expect(text).not.toContain("thing 0.1.0");
   });
 });

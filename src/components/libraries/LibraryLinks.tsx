@@ -1,10 +1,11 @@
 /**
  * @file src/components/libraries/LibraryLinks.tsx
- * @desc The links under a library, on its card and its docs page: GitHub, npm, Changelog and,
- *       for ui, the showcase. The docs link is the card's own (its name), so it isn't here.
+ * @desc The links under a library, on its card and its docs page: GitHub, npm, the changelog page
+ *       here and, for ui, the showcase. The docs link is the card's own (its name), so it isn't
+ *       here.
  * @author David @dvhsh (https://dvh.sh)
  * @created Fri Oct 2, 2026
- * @modified Fri Oct 2, 2026
+ * @modified Sun Oct 4, 2026
  */
 
 import { cx, TextLink } from "@haruhimemoe/ui";
@@ -20,7 +21,7 @@ export function LibraryLinks({ library, className }: { library: Library; classNa
   const links: readonly [string, string][] = [
     ["GitHub", urls.github],
     ["npm", urls.npm],
-    ["Changelog", urls.changelog],
+    ["Changelog", urls.changelogPage],
     ...(library.showcase ? ([["Showcase", library.showcase]] as [string, string][]) : []),
   ];
   return (

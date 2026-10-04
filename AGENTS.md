@@ -4,43 +4,51 @@ Rules for any agent (or human) working in this repo. Authoritative; `CLAUDE.md` 
 
 ## 1. What this is
 
-haruhime.moe: a small static hub for haruhime's osu! tools for players, mappers and tournament hosts (packs, pools, bb, sheets), an Evergreen Cup banner, a few plain pages (thanks, brand, contact, disclaimer, terms, privacy), `/libraries` (the eight `@haruhimemoe` packages with live npm and GitHub numbers, and each package's README rendered at `/libraries/<name>`), and `/ui`, a showcase of every `@haruhimemoe/ui` component. It also serves `/llms.txt`, `/.well-known/security.txt`, `/sitemap.xml` and `/robots.txt`. It shares its look and brand kit with packs.haruhime.moe, pools.haruhime.moe and bb.haruhime.moe. Canonical address: `https://www.haruhime.moe` (`SITE.url`).
+haruhime.moe: a small static hub for haruhime's osu! tools for players, mappers and tournament hosts (packs, pools, bb, sheets), an Evergreen Cup banner, a few plain pages (thanks, brand, contact, disclaimer, terms, privacy), `/libraries` (the eight `@haruhimemoe` packages with live npm and GitHub numbers, and each package's README rendered at `/libraries/<name>`), `/changelog` (every haruhimemoe repo's releases, one feed and one page per repo), and `/ui`, a showcase of every `@haruhimemoe/ui` component. It also serves `/llms.txt`, `/llms-full.txt`, `/.well-known/security.txt`, `/sitemap.xml` and `/robots.txt`. It shares its look and brand kit with packs.haruhime.moe, pools.haruhime.moe and bb.haruhime.moe. Canonical address: `https://www.haruhime.moe` (`SITE.url`).
 
-**Hard rule: every route is static.** No database, no API routes, no auth, no per-request rendering. The two text route handlers (`llms.txt`, `.well-known/security.txt`) set `dynamic = "force-static"` and render once at build. `bun run build` must list every route as `○ (Static)` or, for the two library routes only, `○`/`●` with a 1d revalidate: `/libraries` and `/libraries/[name]` prerender at build from npm and GitHub (`src/lib/libraries/`, keyless public APIs, every fetch `next: { revalidate: 86400 }`) and Next rebuilds them in the background at most once a day. A visitor never waits on npm or GitHub, and a failed lookup renders a dash (or a "read it on GitHub" line for a README), never an error. Keep client JavaScript to what Next needs: no `"use client"` components of our own unless a page can't work without one. Our only client files are `EgcBanner` (it mounts the skyline video after hydration, and only when the visitor allows motion) and `/ui`'s demos that take callbacks or hold state (`FilterDemos`, `ChipDemos`, `ConfirmDemos`, `PaginationDemos`); the other demos render on the server, and a `@haruhimemoe/ui` component that needs the browser (Disclosure, RadioGroup, HeaderMenu) brings its own client code. Every page also loads the header nav's client chunk (about 4 KB gzipped, mostly `next/link`), though nothing in the header hydrates. The header lists only the tools, and each is an external URL or text marked soon, so no link can be the current page. Since `@haruhimemoe/ui` 0.2.0, `NavLinks` then renders on the server alone and tailwind-merge stays out of the browser. Next still ships the chunk because `SiteHeader` imports the client list, and the footer's internal links need `next/link` anyway. It is not a reason to add client code of our own.
+**Hard rule: every route is static.** No database, no API routes, no auth, no per-request rendering. The two text route handlers (`llms.txt`, `.well-known/security.txt`) set `dynamic = "force-static"` and render once at build. `bun run build` must list every route as `○ (Static)` or, for the library and changelog routes only, `○`/`●` with a 1d revalidate: `/libraries` and `/libraries/[name]` prerender at build from npm and GitHub (`src/lib/libraries/`, keyless public APIs, every fetch `next: { revalidate: 86400 }`) and Next rebuilds them in the background at most once a day; `/changelog`, `/changelog/[slug]`, `/changelog/kind/[kind]` and `/llms-full.txt` do the same, fetching each repo's raw `CHANGELOG.md` (`src/lib/changelogs.ts`). A visitor never waits on npm or GitHub, and a failed lookup renders a dash (or a "read it on GitHub" line for a README), never an error. Keep client JavaScript to what Next needs: no `"use client"` components of our own unless a page can't work without one. Our only client files are `EgcBanner` (it mounts the skyline video after hydration, and only when the visitor allows motion) and `/ui`'s demos that take callbacks or hold state (`FilterDemos`, `ChipDemos`, `ConfirmDemos`, `PaginationDemos`); the other demos render on the server, and a `@haruhimemoe/ui` component that needs the browser (Disclosure, RadioGroup, HeaderMenu) brings its own client code. Every page also loads the header nav's client chunk (about 4 KB gzipped, mostly `next/link`), though nothing in the header hydrates. The header lists only the tools, and each is an external URL or text marked soon, so no link can be the current page. Since `@haruhimemoe/ui` 0.2.0, `NavLinks` then renders on the server alone and tailwind-merge stays out of the browser. Next still ships the chunk because `SiteHeader` imports the client list, and the footer's internal links need `next/link` anyway. It is not a reason to add client code of our own.
 
 ## 2. Layout
 
 ```
 src/app/          routes: layout.tsx (font, metadata, SiteShell), globals.css, not-found.tsx, one
-                  page.tsx per page (/, thanks, brand, libraries, libraries/[name], ui, contact,
-                  disclaimer, terms, privacy) with its copy and markup inline, the llms.txt/ and
+                  page.tsx per page (/, thanks, brand, libraries, libraries/[name], changelog
+                  (feed, kind/[kind], [slug]), ui, contact, disclaimer, terms, privacy) with its
+                  copy and markup inline, the llms.txt/, llms-full.txt/ and
                   .well-known/security.txt/ route handlers,
                   sitemap.ts, robots.ts, and the generated icon.svg, apple-icon.png,
                   opengraph-image.png and opengraph-image.alt.txt
 src/components/   layout/ (SiteShell: the @haruhimemoe/ui frame), home/ (ToolCard, EgcBanner),
                   libraries/ (LibraryCard, StatsRow, LibraryLinks, Markdown: the README renderer,
                   react-markdown + @haruhimemoe/ui's mdx/remark/shiki + rehype-raw + rehype-sanitize),
-                  showcase/ (Demo and DemoGroup frame each /ui demo; one <Group>Demos file per
-                  group, listed in GROUPS in ui/page.tsx, split further past ~100 lines)
+                  changelog/ (the feed, filter nav and release components /changelog and its
+                  subpages share), showcase/ (Demo and DemoGroup frame each /ui demo; one
+                  <Group>Demos file per group, listed in GROUPS in ui/page.tsx, split further past
+                  ~100 lines)
 src/constants/    static data (site.ts: identity, EVERGREEN_CUP and PAGES, every page's label,
                   search title, description, last-updated day and footer column; seo.ts:
                   SEO_SITE, the site for @haruhimemoe/next-kit/seo; tools.ts; nav.ts: header and
                   footer links;
                   brand.ts: which swatches, logos and banners /brand shows, and REPO_BANNERS,
                   every repo's README banner; libraries.ts: the eight packages, isLibraryName,
-                  findLibrary and libraryUrls; legal.ts: the disclaimer, terms and privacy dates
+                  findLibrary and libraryUrls; changelogs.ts: every repo with a changelog (built
+                  from TOOLS and LIBRARIES), changelogUrls and the /changelog/kind/<segment>
+                  filters; legal.ts: the disclaimer, terms and privacy dates
                   and security.txt's expiry; showcase.ts: /ui's package links and sample pool)
 src/content/      editable copy as data (thanks.ts)
 src/lib/          the only code that fetches: libraries/ (fetch-json, npm, github, stats, readme),
-                  each lookup null on failure, cached by Next for a day
+                  changelogs.ts (each repo's raw CHANGELOG.md), each lookup null or a failure
+                  result, cached by Next for a day
 src/utils/        pure, stateless helpers (date, length, pageMetadata, readme transforms, the
-                  stat formatters, and the llms.txt and security.txt builders)
+                  stat formatters, changelog.ts (the Keep a Changelog parser), changelog-feed.ts
+                  (the /changelog feed), and the llms.txt, llms-full.txt and security.txt builders)
 public/brand/     generated brand files (see CONTRIBUTING.md); never hand-edit. repos/ holds every
                   haruhimemoe repo's README banner, written by scripts/repo-banners.ts
 scripts/          repo-banners.ts (`bun run repo-banners`): draws public/brand/repos from
                   REPO_BANNERS with @haruhimemoe/brand; axe.ts (`bun run test:a11y`): axe in a
                   real browser over every page of a production build, contrast on
-tests/            unit/ (node), components/ (jsdom), helpers/ (axe), setup/
+tests/            unit/ (node), components/ (jsdom), fixtures/ (sample CHANGELOG.md files),
+                  helpers/ (axe), setup/
 llms.txt          repo guide for LLMs (points at the live /llms.txt); not served by the site
 ```
 
@@ -103,6 +111,7 @@ The packs look, from the [@haruhimemoe/ui](https://github.com/haruhimemoe/ui) th
 - Disclaimer, terms and privacy wording changes bump `DISCLAIMER_UPDATED`, `TERMS_UPDATED` or `PRIVACY_UPDATED` in `src/constants/legal.ts` in the same commit. Each page's test guards its required clauses. The terms and privacy pages cover this site only and link each live tool's own `/legal/terms` and `/legal/privacy`.
 - A new `@haruhimemoe` package gets an entry in `LIBRARIES` (`src/constants/libraries.ts`): its short name (also the repo and the URL segment), hue, a one-line description under 160 characters, and `showcase` only when this site has a page that demos it. `/libraries`, `/libraries/<name>`, the sitemap and `/llms.txt` read it. Its card shows `public/brand/repos/<name>-banner.svg`, so a new package needs its banner drawn first (`REPO_BANNERS`). The docs page renders the repo's `README.md` from `main` through `src/utils/readme.ts` (the banner paragraph and the `# title` line are dropped, relative links point at GitHub) and `Markdown` (GitHub's sanitize schema plus heading ids and picture/source). READMEs are our own, so the sanitizer is defense in depth, not the trust boundary.
 - `SECURITY_TXT_EXPIRES` in `src/constants/legal.ts` is security.txt's Expires, fixed at build. When `tests/unit/constants/legal.test.ts` fails (60 days out), move it up to a year ahead and redeploy.
+- Every repo in `CHANGELOG_SOURCES` (`src/constants/changelogs.ts`) has its changelog at `/changelog/<slug>`, read raw from `main` and parsed by `src/utils/changelog.ts`. A new live tool or package joins on its own; a new repo of another kind gets a line there. The parser follows the plugin's `haruhime-repo-standards` skill; a file that drifts still renders, minus what it can't read. Filters are routes (`/changelog/kind/<segment>`), never query strings, so the pages stay static. Angle-bracket placeholders in an entry go in backticks.
 
 ## 8. Commits and PRs
 

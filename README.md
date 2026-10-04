@@ -15,13 +15,15 @@ Live at https://www.haruhime.moe.
 | [`/brand`](https://www.haruhime.moe/brand) | The name, logos, README banners for haruhime.moe and every haruhimemoe repo, colors, type and the tool icons |
 | [`/libraries`](https://www.haruhime.moe/libraries) | The eight @haruhimemoe packages: description, install line, npm version and downloads, GitHub stars and latest release, links |
 | [`/libraries/<name>`](https://www.haruhime.moe/libraries/ui) | A package's README, rendered from its repo's main branch, under its version, license, install line and links |
+| [`/changelog`](https://www.haruhime.moe/changelog) | Every haruhimemoe repo's releases in one feed, newest first, filterable to apps, packages or one repo |
+| [`/changelog/<repo>`](https://www.haruhime.moe/changelog/haruhime.moe) | One repo's whole changelog, with what's on main but not released yet on top |
 | [`/ui`](https://www.haruhime.moe/ui) | Every @haruhimemoe/ui component, rendered in its states: basics, text, forms, confirms and async actions, filters, tables, osu! pieces, icons and the shell |
 | [`/contact`](https://www.haruhime.moe/contact) | Email, the Discord server, GitHub and where to send security reports |
 | [`/disclaimer`](https://www.haruhime.moe/disclaimer) | No ppy affiliation, the osu! API and mirror terms, who owns beatmaps, the as-is notice, the AI-help note |
 | [`/terms`](https://www.haruhime.moe/terms) | Terms for this site only: what it is, the MIT libraries, no warranty; each tool's own terms are linked |
 | [`/privacy`](https://www.haruhime.moe/privacy) | What this site collects (nothing of its own), Vercel's logs, the server-side stats fetches; each tool's own policy is linked |
 
-The site also serves [`/llms.txt`](https://www.haruhime.moe/llms.txt) (a guide to the site for LLMs), [`/.well-known/security.txt`](https://www.haruhime.moe/.well-known/security.txt), `/sitemap.xml` and `/robots.txt`. Every route is static, prerendered at build time. There is no database and nothing to configure. The two library routes fetch their numbers and READMEs from npm and GitHub at build and again in the background at most once a day; nothing is fetched per visit.
+The site also serves [`/llms.txt`](https://www.haruhime.moe/llms.txt) (a guide to the site for LLMs), [`/llms-full.txt`](https://www.haruhime.moe/llms-full.txt) (the brand page, every library's docs page, each repo's newest changelog entries and the three legal pages, in full), [`/.well-known/security.txt`](https://www.haruhime.moe/.well-known/security.txt), `/sitemap.xml` and `/robots.txt`. Every route is static, prerendered at build time. There is no database and nothing to configure. The library and changelog routes fetch their numbers, READMEs and CHANGELOG.md files from npm and GitHub at build and again in the background at most once a day; nothing is fetched per visit.
 
 ## Run it locally
 
@@ -55,6 +57,7 @@ For a production build, run `bun run build`, then `bun run start` to serve it.
 | The `/brand` copy and the palette download link | `src/app/brand/page.tsx` |
 | The disclaimer, terms and privacy policy | `src/app/disclaimer/page.tsx`, `src/app/terms/page.tsx`, `src/app/privacy/page.tsx`, and their dates in `src/constants/legal.ts` |
 | Which libraries `/libraries` lists, each one's description and showcase link | `LIBRARIES` in `src/constants/libraries.ts` |
+| Which repos `/changelog` reads, built from the live tools and the libraries | `CHANGELOG_SOURCES` in `src/constants/changelogs.ts` |
 | How a README is cleaned up before rendering (banner, title, relative links) | `src/utils/readme.ts` |
 | Where the library numbers come from | `src/lib/libraries/` (npm registry and downloads API, GitHub repos and releases) |
 | When `/.well-known/security.txt` expires | `SECURITY_TXT_EXPIRES` in `src/constants/legal.ts` (a test fails 60 days before it) |
