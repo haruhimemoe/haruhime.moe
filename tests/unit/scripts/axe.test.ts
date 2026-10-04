@@ -1,7 +1,8 @@
 /**
  * @file tests/unit/scripts/axe.test.ts
  * @desc scripts/axe.ts: it checks every HTML route (the pages plus a docs page per library) at a
- *       desktop and a phone width with WCAG 2.2 AA tags, trims axe's result to one line per
+ *       desktop and a touch phone with WCAG 2.2 AA tags, runs /ui again under more contrast
+ *       and reduced motion, trims axe's result to one line per
  *       violation with its targets, and gives up on a server that never answers.
  * @author David @dvhsh (https://dvh.sh)
  * @created Sat Oct 3, 2026
@@ -14,9 +15,10 @@ import { PAGE_PATHS } from "@/constants/site";
 import {
   AXE_TAGS,
   axePages,
+  CONTEXTS,
   collectViolations,
   formatViolation,
-  VIEWPORTS,
+  MEDIA_RUNS,
   waitForServer,
 } from "../../../scripts/axe";
 
@@ -36,12 +38,27 @@ describe("axePages", () => {
   });
 });
 
-describe("VIEWPORTS and AXE_TAGS", () => {
-  it("checks a desktop and a phone width against WCAG 2.2 AA and best practices", () => {
-    expect(Object.keys(VIEWPORTS)).toEqual(["desktop", "phone"]);
-    expect(VIEWPORTS.phone.width).toBeLessThan(VIEWPORTS.desktop.width);
-    expect(AXE_TAGS).toContain("wcag22aa");
-    expect(AXE_TAGS).toContain("best-practice");
+describe("CONTEXTS, MEDIA_RUNS and AXE_TAGS", () => {
+  it("checks a desktop and a touch phone against WCAG 2.2 AA and best practices", () => {
+    expect(Object.keys(CONTEXTS)).toEqual(["desktop", "phone"]);
+    expect(CONTEXTS.phone.viewport?.width).toBeLessThan(CONTEXTS.desktop.viewport?.width ?? 0);
+    expect(CONTEXTS.phone).toMatchObject({ isMobile: true, hasTouch: true });
+    expect(AXE_TAGS).toEqual([
+      "wcag2a",
+      "wcag2aa",
+      "wcag21a",
+      "wcag21aa",
+      "wcag22aa",
+      "best-practice",
+    ]);
+  });
+  it("runs /ui again under more contrast and reduced motion", () => {
+    expect(MEDIA_RUNS.map((run) => [run.name, run.route])).toEqual([
+      ["contrast-more", "/ui"],
+      ["reduced-motion", "/ui"],
+    ]);
+    expect(MEDIA_RUNS[0]?.options).toMatchObject({ contrast: "more" });
+    expect(MEDIA_RUNS[1]?.options).toMatchObject({ reducedMotion: "reduce" });
   });
 });
 

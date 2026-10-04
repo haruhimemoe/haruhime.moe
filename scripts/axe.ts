@@ -1,9 +1,10 @@
 /**
  * @file scripts/axe.ts
  * @desc Runs axe-core in a real browser against every page of a production build
- *       (`bun run build` first), at a desktop and a phone width, with color contrast on: the
- *       jsdom tests turn contrast off because jsdom has no layout, so this is where contrast
- *       regressions show. Starts `next start` on a spare port, drives Chromium through
+ *       (`bun run build` first), at a desktop and a touch phone (coarse pointer, so the 44px
+ *       targets are what gets measured), then /ui again under more contrast and under reduced
+ *       motion, with color contrast on: the jsdom tests turn contrast off because jsdom has no
+ *       layout, so this is where contrast regressions show. Starts `next start` on a spare port, drives Chromium through
  *       Playwright, prints every violation and exits 1 if there are any. CI runs it after the
  *       build (`bun run test:a11y`).
  * @author David @dvhsh (https://dvh.sh)
@@ -15,7 +16,7 @@ import { spawn } from "node:child_process";
 import path from "node:path";
 import AxeBuilder from "@axe-core/playwright";
 import { contentPath } from "@haruhimemoe/next-kit/docs";
-import { chromium } from "playwright";
+import { type BrowserContextOptions, chromium } from "playwright";
 import { CONTENT } from "@/constants/content";
 import { LIBRARIES } from "@/constants/libraries";
 import { PAGE_PATHS } from "@/constants/site";
@@ -30,11 +31,25 @@ export type Violation = {
   readonly targets: readonly string[];
 };
 
-/** The widths checked: a desktop and a phone, so the header's two layouts both run. */
-export const VIEWPORTS = {
-  desktop: { width: 1280, height: 900 },
-  phone: { width: 390, height: 844 },
-} as const;
+/** The pages run at a desktop and a touch phone (coarse pointer, so 44px targets are measured). */
+export const CONTEXTS = {
+  desktop: { viewport: { width: 1280, height: 900 } },
+  phone: { viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true },
+} as const satisfies Record<string, BrowserContextOptions>;
+
+/** /ui renders every kit export, so it runs again under the media a visitor can ask for. */
+export const MEDIA_RUNS = [
+  {
+    name: "contrast-more",
+    route: "/ui",
+    options: { viewport: { width: 1280, height: 900 }, contrast: "more" },
+  },
+  {
+    name: "reduced-motion",
+    route: "/ui",
+    options: { viewport: { width: 1280, height: 900 }, reducedMotion: "reduce" },
+  },
+] as const satisfies readonly { name: string; route: "/ui"; options: BrowserContextOptions }[];
 
 /** WCAG 2.2 AA and axe's best practices. Contrast is on: this runs in a real browser. */
 export const AXE_TAGS = ["wcag2a", "wcag2aa", "wcag21a", "wcag21aa", "wcag22aa", "best-practice"];
@@ -132,8 +147,8 @@ if (import.meta.main) {
   try {
     await waitForServer(origin, 30000);
     const browser = await chromium.launch();
-    for (const [name, viewport] of Object.entries(VIEWPORTS)) {
-      const context = await browser.newContext({ viewport, colorScheme: "dark" });
+    for (const [name, options] of Object.entries(CONTEXTS)) {
+      const context = await browser.newContext({ ...options, colorScheme: "dark" });
       const page = await context.newPage();
       for (const route of axePages()) {
         const response = await page.goto(`${origin}${route}`, { waitUntil: "networkidle" });
@@ -145,6 +160,23 @@ if (import.meta.main) {
         violations.push(...found);
         console.log(`${name} ${route}: ${found.length ? `${found.length} violations` : "ok"}`);
       }
+      await context.close();
+    }
+    for (const run of MEDIA_RUNS) {
+      const context = await browser.newContext({ ...run.options, colorScheme: "dark" });
+      const page = await context.newPage();
+      const response = await page.goto(`${origin}${run.route}`, { waitUntil: "networkidle" });
+      if (response?.status() !== 200)
+        throw new Error(`${run.route} answered ${response?.status() ?? "nothing"}`);
+      const found = collectViolations(
+        run.route,
+        run.name,
+        await new AxeBuilder({ page }).withTags(AXE_TAGS).analyze(),
+      );
+      violations.push(...found);
+      console.log(
+        `${run.name} ${run.route}: ${found.length ? `${found.length} violations` : "ok"}`,
+      );
       await context.close();
     }
     await browser.close();
