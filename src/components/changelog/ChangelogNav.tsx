@@ -1,7 +1,8 @@
 /**
  * @file src/components/changelog/ChangelogNav.tsx
  * @desc The changelog filters, as links (no JS, shareable): All, Apps, Packages, then every repo's
- *       page. The current one is bold and marked aria-current="page".
+ *       page. The current one is marked aria-current="page", underlined and text-c1; the others
+ *       are muted to font-normal text-c2.
  * @author David @dvhsh (https://dvh.sh)
  * @created Sun Oct 4, 2026
  * @modified Sun Oct 4, 2026
@@ -27,7 +28,7 @@ export function ChangelogNav({ current }: { current: string }) {
                 href={filter.href}
                 variant="plain"
                 aria-current={here ? "page" : undefined}
-                className={here ? "font-bold text-c1" : undefined}
+                className={here ? "text-c1 underline" : "font-normal text-c2"}
               >
                 {filter.label}
               </TextLink>
