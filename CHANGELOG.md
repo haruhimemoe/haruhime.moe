@@ -8,6 +8,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ### Added
 
+- `/llms-full.txt`: the brand page, every library's docs page and the three legal pages in one Markdown file, built with `@haruhimemoe/next-kit` 0.5.0's `llmsFull`.
 - `/libraries`: the eight `@haruhimemoe` packages (ui, next-kit, osu, hinai, pool, compliance, bbcode, brand), one card each with its description, install line, npm version and downloads over the last month, GitHub stars and latest release, and links to GitHub, npm and the changelog (and the showcase for ui). The numbers refresh about once a day.
 - `/libraries/<name>`: each package's README, rendered from its repo, under its version, license, an install line to copy and its links. When the README can't be fetched the page points at it on GitHub.
 - `/terms` and `/privacy` for this site: short, since the site has no accounts, cookies or analytics; each links the tools' own terms and privacy pages.
