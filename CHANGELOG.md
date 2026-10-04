@@ -6,6 +6,15 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ## [Unreleased]
 
+### Added
+
+- /thanks: an osu!-style player card for every osu! player thanked (avatar, cover, flags, linked to their osu! profile when we know which account is theirs). The cards come from a snapshot taken once, so the page still never calls osu!.
+- /ui: a PlayerCard demo in the osu! group.
+
+### Changed
+
+- `@haruhimemoe/ui` 0.10.0.
+
 ## [0.3.0] - 2026-10-04
 
 ### Added

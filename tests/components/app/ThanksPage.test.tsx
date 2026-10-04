@@ -1,9 +1,10 @@
 /**
  * @file tests/components/app/ThanksPage.test.tsx
- * @desc /thanks: title, one h1, every entry from the thanks list.
+ * @desc /thanks: title, one h1, every entry from the thanks list, and a player card for every
+ *       osu! player (profile links for the ones with an account, name only for the rest).
  * @author David @dvhsh (https://dvh.sh)
  * @created Wed Sep 23, 2026
- * @modified Mon Sep 28, 2026
+ * @modified Sun Oct 4, 2026
  */
 
 import { render, screen } from "@testing-library/react";
@@ -26,10 +27,32 @@ describe("/thanks", () => {
     for (const entry of THANKS) {
       expect(screen.getByText(entry.line)).toBeInTheDocument();
       if (entry.url) {
-        expect(screen.getByRole("link", { name: entry.name })).toHaveAttribute("href", entry.url);
+        const links = screen.getAllByRole("link", { name: entry.name });
+        expect(links.filter((link) => link.getAttribute("href") === entry.url)).toHaveLength(1);
       } else {
         expect(screen.getByText(entry.name)).toBeInTheDocument();
       }
     }
+  });
+
+  it("draws a player card for every osu! player, linked to the profile when known", () => {
+    const { container } = render(<ThanksPage />);
+    const profiles = [...container.querySelectorAll('a[href^="https://osu.ppy.sh/users/"]')];
+    expect(profiles).toHaveLength(11);
+    expect(screen.getByRole("link", { name: "peppy" })).toHaveAttribute(
+      "href",
+      "https://osu.ppy.sh/users/2",
+    );
+    for (const name of ["Wyrd", "Rikki", "token"]) {
+      expect(screen.getAllByText(name).length).toBeGreaterThan(0);
+      const cardLinks = screen
+        .queryAllByRole("link", { name })
+        .filter((link) => link.getAttribute("href")?.startsWith("https://osu.ppy.sh/users/"));
+      expect(cardLinks).toHaveLength(0);
+    }
+    expect(screen.getByText("formerly RMarc")).toBeInTheDocument();
+    expect(screen.getByText("formerly Sohlayce")).toBeInTheDocument();
+    expect(screen.getAllByText("osu!cafe")).toHaveLength(7);
+    expect(screen.queryByText(/^(Online|Offline)$/)).toBeNull();
   });
 });

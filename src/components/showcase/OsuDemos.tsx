@@ -1,21 +1,37 @@
 /**
  * @file src/components/showcase/OsuDemos.tsx
  * @desc /ui's osu! group: StarRating across osu!'s star spectrum, BeatmapStats from plain numbers,
- *       and ModBadge for every slot bucket. Server-rendered.
+ *       ModBadge for every slot bucket, and PlayerCard (sample data: offline, online and name-only).
+ *       Server-rendered.
  * @author David @dvhsh (https://dvh.sh)
  * @created Mon Sep 28, 2026
- * @modified Mon Sep 28, 2026
+ * @modified Sun Oct 4, 2026
  */
 
-import { BeatmapStats, ModBadge, StarRating } from "@haruhimemoe/ui";
+import { BeatmapStats, ModBadge, PlayerCard, StarRating } from "@haruhimemoe/ui";
 import { Demo } from "@/components/showcase/Demo";
 
 const STARS = [1.8, 3.2, 4.6, 5.9, 6.8, 8.1] as const;
 const MODS = ["NM", "HD", "HR", "DT", "FM", "TB", "EZ", "HT", "FL"] as const;
 
+/** peppy's public profile as of Oct 4, 2026: the sample player. */
+const PEPPY = {
+  username: "peppy",
+  userId: 2,
+  countryCode: "AU",
+  coverUrl:
+    "https://assets.ppy.sh/user-profile-covers/2/baba245ef60834b769694178f8f6d4f6166c5188c740de084656ad2b80f1eea7.jpeg",
+  team: {
+    name: "mom?",
+    flagUrl:
+      "https://assets.ppy.sh/teams/flag/1/b46fb10dbfd8a35dc50e6c00296c0dc6172dffc3ed3d3a4b379277ba498399fe.png",
+  },
+  supporter: true,
+} as const;
+
 /**
  * @function OsuDemos
- * @returns {JSX.Element} the StarRating, BeatmapStats and ModBadge demos
+ * @returns {JSX.Element} the StarRating, BeatmapStats, ModBadge and PlayerCard demos
  */
 export function OsuDemos() {
   return (
@@ -45,6 +61,26 @@ export function OsuDemos() {
             <ModBadge key={mod} mod={mod} />
           ))}
         </div>
+      </Demo>
+
+      <Demo
+        name="PlayerCard"
+        note="osu!-web's user card from a snapshot: cover, avatar, country and team flags, supporter heart, and the whole card links to the profile. It never fetches. The statuses here are sample data; leave status out for static data and the ring goes away."
+      >
+        <ul className="grid gap-2.5 sm:grid-cols-2">
+          <li>
+            <PlayerCard {...PEPPY} status="offline" statusNote="Last seen 29 days ago" />
+          </li>
+          <li>
+            <PlayerCard {...PEPPY} status="online" />
+          </li>
+          <li>
+            <PlayerCard {...PEPPY} statusText="osu!" statusNote="a role instead of a status" />
+          </li>
+          <li>
+            <PlayerCard username="sample player" statusText="no account given: name only" />
+          </li>
+        </ul>
       </Demo>
     </>
   );

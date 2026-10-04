@@ -68,7 +68,7 @@ export const PAGES = {
     seoTitle: "Thanks and credits for haruhime's osu! tools",
     description:
       "The people and projects haruhime's osu! tools are built on: Evergreen Cup staff, the osu!cafe crew, omc-api, otdb, BoBERT, the hinai mirror, and ppy.",
-    lastUpdated: "2026-09-28",
+    lastUpdated: "2026-10-04",
     footer: "haruhime.moe",
   },
   "/libraries": {
@@ -100,7 +100,7 @@ export const PAGES = {
     seoTitle: "@haruhimemoe/ui: React kit for osu! tools",
     description:
       "Every @haruhimemoe/ui component, the React kit behind haruhime's osu! tools, live in its states: buttons, cards, forms, filters, tables and osu! pieces.",
-    lastUpdated: "2026-09-28",
+    lastUpdated: "2026-10-04",
   },
   "/contact": {
     title: "Contact",

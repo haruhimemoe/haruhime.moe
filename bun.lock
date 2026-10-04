@@ -6,7 +6,7 @@
       "name": "haruhime.moe",
       "dependencies": {
         "@haruhimemoe/next-kit": "0.5.0",
-        "@haruhimemoe/ui": "0.9.0",
+        "@haruhimemoe/ui": "0.10.0",
         "next": "16.3.6",
         "react": "19.3.0",
         "react-dom": "19.3.0",
@@ -104,7 +104,7 @@
 
     "@haruhimemoe/next-kit": ["@haruhimemoe/next-kit@0.5.0", "", { "peerDependencies": { "@haruhimemoe/osu": "^0.2.0 || ^0.3.0 || ^0.4.0", "@haruhimemoe/ui": "^0.5.0 || ^0.6.0 || ^0.7.0 || ^0.8.0 || ^0.9.0", "better-auth": "^1.7.5", "mongodb": "^7.6.0", "mongodb-memory-server": "^11.3.0", "mongoose": "^9.10.2", "msw": "^2.15.0", "next": "^16.3.6", "react": "^19.3.0", "vitest": "^5.0.1", "zod": "^4.6.5" }, "optionalPeers": ["@haruhimemoe/osu", "@haruhimemoe/ui", "better-auth", "mongodb", "mongodb-memory-server", "mongoose", "msw", "next", "react", "vitest"], "bin": { "next-kit": "dist/check/cli.js" } }, "sha512-ixx3NYLZoF8ga3ITIPi19DnIBny6U21xWUsfiSLSvQ3lmIttTvyMx1lFfRB69XuhF0SyqrsOqkp47iff2ZEYbA=="],
 
-    "@haruhimemoe/ui": ["@haruhimemoe/ui@0.9.0", "", { "dependencies": { "tailwind-merge": "3.7.0" }, "peerDependencies": { "next": ">=16.0.0 <17", "react": ">=19.0.0", "react-dom": ">=19.0.0", "shiki": ">=4.5.0 <5", "tailwindcss": ">=4.1.0 <5" }, "optionalPeers": ["shiki"] }, "sha512-qMEXgKAL5V2h9GI93hm+7OEqBJUSQJL2TxkFRiZemskna1+7pkVgCJF+uQTDP7NmM8ipkH4YRKYqUjRCF/9eDQ=="],
+    "@haruhimemoe/ui": ["@haruhimemoe/ui@0.10.0", "", { "dependencies": { "tailwind-merge": "3.7.0" }, "peerDependencies": { "next": ">=16.0.0 <17", "react": ">=19.0.0", "react-dom": ">=19.0.0", "shiki": ">=4.5.0 <5", "tailwindcss": ">=4.1.0 <5" }, "optionalPeers": ["shiki"] }, "sha512-0zM7iaHgAtzeVB4EdfjPwqLbq5gg4lL8Sju7+pSSGN8A1KfNcnwHmfopOSr7UxfacxFC/WoIRwq/5m7iWckdAw=="],
 
     "@img/colour": ["@img/colour@1.1.0", "", {}, "sha512-Td76q7j57o/tLVdgS746cYARfSyxk8iEfRxewL9h4OMzYhbW4TAcppl0mT4eyqXddh6L/jwoM75mo7ixa/pCeQ=="],
 
