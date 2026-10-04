@@ -11,7 +11,7 @@
  *       CommandPalette tests do.
  * @author David @dvhsh (https://dvh.sh)
  * @created Wed Sep 23, 2026
- * @modified Sat Oct 3, 2026
+ * @modified Sun Oct 4, 2026
  */
 
 import * as ui from "@haruhimemoe/ui";
@@ -100,9 +100,12 @@ describe("/ui", () => {
     render(<UiPage />);
     const exported = Object.keys(ui).sort();
     expect(exported.length).toBeGreaterThan(20);
-    for (const name of exported) {
-      expect(screen.getByRole("heading", { level: 3, name })).toBeInTheDocument();
-    }
+    // One role query, not one per export: ~90 full-page getByRole scans outran CI's 5s timeout.
+    const demos = new Set(
+      screen.getAllByRole("heading", { level: 3 }).map((heading) => heading.textContent),
+    );
+    const missing = exported.filter((name) => !demos.has(name));
+    expect(missing).toEqual([]);
   });
 
   it("lists the live tools and the tools column without the current tool", () => {
