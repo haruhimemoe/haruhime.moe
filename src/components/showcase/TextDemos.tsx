@@ -1,7 +1,8 @@
 /**
  * @file src/components/showcase/TextDemos.tsx
- * @desc /ui's Text group: PageHeader, TextLink and linkClasses in both looks, and Prose over every
- *       element it styles. Server-rendered.
+ * @desc /ui's Text group: Text and textClasses (ToneDemos), PageHeader, TextLink in both looks
+ *       and as a download, linkClasses on a button, and Prose over every element it styles.
+ *       Server-rendered.
  * @author David @dvhsh (https://dvh.sh)
  * @created Mon Sep 28, 2026
  * @modified Sun Oct 4, 2026
@@ -9,15 +10,18 @@
 
 import { linkClasses, Prose, TextLink } from "@haruhimemoe/ui";
 import { Demo } from "@/components/showcase/Demo";
+import { ToneDemos } from "@/components/showcase/ToneDemos";
 import { UI_INSTALL, UI_REPO_URL } from "@/constants/showcase";
 
 /**
  * @function TextDemos
- * @returns {JSX.Element} the PageHeader, TextLink, linkClasses and Prose demos
+ * @returns {JSX.Element} the tone, PageHeader, TextLink, linkClasses and Prose demos
  */
 export function TextDemos() {
   return (
     <>
+      <ToneDemos />
+
       <Demo
         name="PageHeader"
         note="The top of this page: the title in the page's one h1, a lead line with links, a meta line, and a CopyButton as the action."
@@ -25,7 +29,7 @@ export function TextDemos() {
 
       <Demo
         name="TextLink"
-        note="A text link. Accent (underlined pink) for running text; plain (bold, underlined on hover) for names in a list. Paths use next/link."
+        note="A text link. Accent (underlined pink) for running text; plain (bold, underlined on hover) for names in a list. Paths use next/link; a download is a plain link, never prefetched."
       >
         <p className="text-sm">
           Read the <TextLink href="/legal/disclaimer">disclaimer</TextLink>, or the{" "}
@@ -43,15 +47,20 @@ export function TextDemos() {
             </TextLink>
           </li>
         </ul>
+        <p className="text-sm">
+          <TextLink href="/brand/haruhime-palette.json" download>
+            Download the palette (JSON)
+          </TextLink>
+        </p>
       </Demo>
 
       <Demo
         name="linkClasses"
-        note="The link look as a string, for an anchor TextLink can't be: here, a download."
+        note="The link look as a string, for an element TextLink can't be: here, a button that reads as a link."
       >
-        <a href="/brand/haruhime-palette.json" download className={linkClasses()}>
-          Download the palette (JSON)
-        </a>
+        <button type="button" className={linkClasses()}>
+          Looks like a link
+        </button>
       </Demo>
 
       <Demo

@@ -1,18 +1,45 @@
 /**
  * @file src/components/showcase/OsuDemos.tsx
  * @desc /ui's osu! group: StarRating across osu!'s star spectrum, BeatmapStats from plain numbers,
- *       ModBadge for every slot bucket, and PlayerCard (sample data: offline, online and name-only).
+ *       ModBadge for every slot bucket and every color, and PlayerCard (sample data: offline, online and name-only).
  *       Server-rendered.
  * @author David @dvhsh (https://dvh.sh)
  * @created Mon Sep 28, 2026
  * @modified Sun Oct 4, 2026
  */
 
-import { BeatmapStats, ModBadge, PlayerCard, StarRating } from "@haruhimemoe/ui";
+import {
+  BeatmapStats,
+  ModBadge,
+  type ModBadgeColor,
+  PlayerCard,
+  StarRating,
+} from "@haruhimemoe/ui";
 import { Demo } from "@/components/showcase/Demo";
 
 const STARS = [1.8, 3.2, 4.6, 5.9, 6.8, 8.1] as const;
 const MODS = ["NM", "HD", "HR", "DT", "FM", "TB", "EZ", "HT", "FL"] as const;
+
+/** Every color a custom slot bucket can take through ModBadge's color prop. */
+const COLORS: readonly ModBadgeColor[] = [
+  "sky",
+  "amber",
+  "rose",
+  "violet",
+  "emerald",
+  "orange",
+  "green",
+  "teal",
+  "pink",
+  "lime",
+  "cyan",
+  "fuchsia",
+  "yellow",
+  "red",
+  "indigo",
+  "stone",
+  "neutral",
+];
 
 /** peppy's public profile as of Oct 4, 2026: the sample player. */
 const PEPPY = {
@@ -55,10 +82,20 @@ export function OsuDemos() {
         <BeatmapStats ar={10.33} od={10} bpm={270} lengthSeconds={88} />
       </Demo>
 
-      <Demo name="ModBadge" note="A slot pill, colored by its mod bucket.">
+      <Demo
+        name="ModBadge"
+        note="A slot pill, colored by its mod bucket, then all 17 colors a custom bucket can take with color."
+      >
         <div className="flex flex-wrap items-center gap-2">
           {MODS.map((mod) => (
             <ModBadge key={mod} mod={mod} />
+          ))}
+        </div>
+        <div className="flex flex-wrap items-center gap-2">
+          {COLORS.map((color) => (
+            <ModBadge key={color} mod="C1" color={color}>
+              {color}
+            </ModBadge>
           ))}
         </div>
       </Demo>

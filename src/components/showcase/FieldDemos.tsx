@@ -1,10 +1,11 @@
 /**
  * @file src/components/showcase/FieldDemos.tsx
  * @desc The text field demos at the top of /ui's Forms group: TextInput, Textarea and Select,
- *       each with a hint, then with a hint and an error. Server-rendered.
+ *       each with a hint, then with a hint and an error, and TextInput with a hidden label.
+ *       Server-rendered.
  * @author David @dvhsh (https://dvh.sh)
  * @created Mon Sep 28, 2026
- * @modified Mon Sep 28, 2026
+ * @modified Sun Oct 4, 2026
  */
 
 import { Select, Textarea, TextInput } from "@haruhimemoe/ui";
@@ -17,7 +18,10 @@ import { Demo } from "@/components/showcase/Demo";
 export function FieldDemos() {
   return (
     <>
-      <Demo name="TextInput" note="With a hint, then with a hint and an error.">
+      <Demo
+        name="TextInput"
+        note="With a hint, then with a hint and an error, then with hideLabel, where the label is only for screen readers."
+      >
         <div className="grid gap-4 sm:grid-cols-2">
           <TextInput
             id="ui-name"
@@ -31,6 +35,12 @@ export function FieldDemos() {
             hint="Letters, numbers and dashes."
             defaultValue="my pack!"
             error="Use letters, numbers and dashes only."
+          />
+          <TextInput
+            id="ui-hidden-label"
+            label="Search pools"
+            hideLabel
+            placeholder="Search pools"
           />
         </div>
       </Demo>

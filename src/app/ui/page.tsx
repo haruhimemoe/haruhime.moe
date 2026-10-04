@@ -62,7 +62,8 @@ export default function UiPage() {
               Every component in <TextLink href={UI_NPM_URL}>@haruhimemoe/ui</TextLink>, rendered
               from the package itself. haruhime.moe, packs, pools and bb are built from it. The
               source is on <TextLink href={UI_REPO_URL}>GitHub</TextLink>, and its README is at{" "}
-              <TextLink href="/libraries/ui">/libraries/ui</TextLink>.
+              <TextLink href="/libraries/ui">/libraries/ui</TextLink>. On a touch screen, buttons,
+              chips, rows and fields are 44px tall.
             </>
           }
           meta={`Version ${uiPackage.version}, ${uiPackage.license} license. Install: ${UI_INSTALL}`}

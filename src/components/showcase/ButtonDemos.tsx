@@ -1,10 +1,10 @@
 /**
  * @file src/components/showcase/ButtonDemos.tsx
  * @desc The button demos at the top of /ui's Basics group: Button in every variant and size,
- *       ButtonLink inside and off the site, and buttonClasses on a summary. Server-rendered.
+ *       ButtonLink inside and off the site and as a download, and buttonClasses on a summary. Server-rendered.
  * @author David @dvhsh (https://dvh.sh)
  * @created Mon Sep 28, 2026
- * @modified Mon Sep 28, 2026
+ * @modified Sun Oct 4, 2026
  */
 
 import { Button, ButtonLink, buttonClasses } from "@haruhimemoe/ui";
@@ -32,7 +32,10 @@ const ButtonRow = ({ size, disabled }: { size?: "lg"; disabled?: boolean }) => (
 export function ButtonDemos() {
   return (
     <>
-      <Demo name="Button" note="Primary, secondary and ghost, at md and lg, then disabled.">
+      <Demo
+        name="Button"
+        note="Primary, secondary and ghost, at md and lg, then disabled. On a touch screen they grow to 44px tall."
+      >
         <ButtonRow />
         <ButtonRow size="lg" />
         <ButtonRow disabled />
@@ -40,7 +43,7 @@ export function ButtonDemos() {
 
       <Demo
         name="ButtonLink"
-        note="A link that looks like a button. Paths use next/link; a URL with a scheme is a plain link."
+        note="A link that looks like a button. Paths use next/link; a URL with a scheme is a plain link, and so is a download (a plain link, never prefetched)."
       >
         <div className="flex flex-wrap items-center gap-2">
           <ButtonLink href="/brand">Brand page</ButtonLink>
@@ -49,6 +52,9 @@ export function ButtonDemos() {
           </ButtonLink>
           <ButtonLink href="/" variant="ghost" size="lg">
             Home
+          </ButtonLink>
+          <ButtonLink href="/brand/haruhime-palette.json" download variant="secondary">
+            Download the palette
           </ButtonLink>
         </div>
       </Demo>

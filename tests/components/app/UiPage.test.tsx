@@ -344,6 +344,12 @@ describe("/ui", () => {
     expect(screen.getByRole("combobox", { name: "Command palette" })).toBeInTheDocument();
   });
 
+  it("shows all 17 ModBadge colors and a hidden-label field", async () => {
+    await renderUi();
+    expect(within(demo("ModBadge")).getByText("fuchsia")).toHaveClass("bg-fuchsia-400");
+    expect(screen.getByLabelText("Search pools")).toBeInTheDocument();
+  });
+
   it("has no axe violations", async () => {
     const { container } = await renderUi();
     await expectNoAxeViolations(container);
