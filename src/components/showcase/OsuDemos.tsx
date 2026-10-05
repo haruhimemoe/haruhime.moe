@@ -1,11 +1,11 @@
 /**
  * @file src/components/showcase/OsuDemos.tsx
  * @desc /ui's osu! group: StarRating across osu!'s star spectrum, BeatmapStats from plain numbers,
- *       ModBadge for every slot bucket and every color, and PlayerCard (sample data: offline, online and name-only).
- *       Server-rendered.
+ *       ModBadge for every slot bucket and every color, PlayerCard (sample data: offline, online
+ *       and name-only), and the map display demos (MapDemos). Server-rendered.
  * @author David @dvhsh (https://dvh.sh)
  * @created Mon Sep 28, 2026
- * @modified Sun Oct 4, 2026
+ * @modified Mon Oct 5, 2026
  */
 
 import {
@@ -16,6 +16,7 @@ import {
   StarRating,
 } from "@haruhimemoe/ui";
 import { Demo } from "@/components/showcase/Demo";
+import { MapDemos } from "@/components/showcase/MapDemos";
 
 const STARS = [1.8, 3.2, 4.6, 5.9, 6.8, 8.1] as const;
 const MODS = ["NM", "HD", "HR", "DT", "FM", "TB", "EZ", "HT", "FL"] as const;
@@ -58,7 +59,7 @@ const PEPPY = {
 
 /**
  * @function OsuDemos
- * @returns {JSX.Element} the StarRating, BeatmapStats, ModBadge and PlayerCard demos
+ * @returns {JSX.Element} the StarRating, BeatmapStats, ModBadge, PlayerCard and map display demos
  */
 export function OsuDemos() {
   return (
@@ -119,6 +120,8 @@ export function OsuDemos() {
           </li>
         </ul>
       </Demo>
+
+      <MapDemos />
     </>
   );
 }
