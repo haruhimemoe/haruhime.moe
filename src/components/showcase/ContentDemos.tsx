@@ -7,7 +7,7 @@
  *       own h1 and landmarks can't sit inside this page.
  * @author David @dvhsh (https://dvh.sh)
  * @created Sun Oct 4, 2026
- * @modified Sun Oct 4, 2026
+ * @modified Mon Oct 5, 2026
  */
 
 import { palette } from "@haruhimemoe/brand/palette";
@@ -52,7 +52,7 @@ export function ContentDemos() {
       />
       <Demo
         name="ContentPage"
-        note="One content page: its h1, description, last update, a Copy as Markdown button and the MDX body. Every /legal/<slug> page is one."
+        note="One content page: its h1, description, a Copy as Markdown button and the MDX body, plus optional authors, published and last-updated dates, reading time, a toc and a footer. Every /legal/<slug> page is one (a size-sm Prose, no toc or footer: legal text is short and stands alone). Its own h1 can't sit on this page, so there's no live example here."
       />
       <Demo name="ContentIndex" note="A section's pages as cards, each with its description.">
         <ContentIndex items={ITEMS} />

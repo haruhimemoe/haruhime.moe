@@ -17,6 +17,7 @@ import uiPackage from "@haruhimemoe/ui/package.json" with { type: "json" };
 import type { Metadata } from "next";
 import type { JSX } from "react";
 import { ActionDemos } from "@/components/showcase/ActionDemos";
+import { ArticleDemos } from "@/components/showcase/ArticleDemos";
 import { BasicsDemos } from "@/components/showcase/BasicsDemos";
 import { ContentDemos } from "@/components/showcase/ContentDemos";
 import { DemoGroup } from "@/components/showcase/DemoGroup";
@@ -52,6 +53,7 @@ const GROUPS: readonly { id: string; title: string; Demos: () => JSX.Element }[]
   { id: "shell", title: "Shell", Demos: ShellDemos },
   { id: "content", title: "Content", Demos: ContentDemos },
   { id: "palette", title: "Palette", Demos: PaletteDemos },
+  { id: "articles", title: "Articles", Demos: ArticleDemos },
   { id: "utilities", title: "Utilities", Demos: UtilityDemos },
 ];
 

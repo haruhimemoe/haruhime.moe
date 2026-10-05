@@ -1,10 +1,11 @@
 /**
  * @file tests/components/libraries/Markdown.test.tsx
- * @desc Markdown: GFM tables and task lists render, ui's mdxComponents give h2/h3 a slug id and
- *       a visible anchor link, a fenced code block renders as CodeBlock (shiki highlighting,
+ * @desc Markdown: GFM tables and task lists render, ui's mdxComponents give h2/h3/h4 a slug id
+ *       and a visible anchor link, a fenced code block renders as CodeBlock (shiki highlighting,
  *       title and highlighted lines from the fence meta), a GitHub-style callout becomes a
- *       Callout, raw HTML that could run (script, event handlers, javascript: links) is gone,
- *       the sanitize allowlist keeps exactly the attributes ui's remark plugin writes, and the
+ *       Callout, a lone image becomes a captioned figure, a footnote reference links its note,
+ *       raw HTML that could run (script, event handlers, javascript: links) is gone, the
+ *       sanitize allowlist keeps exactly the attributes ui's remark plugins write, and the
  *       output sits in Prose.
  *
  *       CodeBlock is an async Server Component, which react-dom's client renderer (what
@@ -13,7 +14,7 @@
  *       for the boundary to show (a slow Shiki load under coverage outlasts `act`).
  * @author David @dvhsh (https://dvh.sh)
  * @created Fri Oct 2, 2026
- * @modified Sun Oct 4, 2026
+ * @modified Mon Oct 5, 2026
  */
 
 import { act, render, screen, waitFor } from "@testing-library/react";
@@ -103,6 +104,20 @@ describe("Markdown", () => {
       '<picture><source srcset="a.svg"><img alt="x" src="b.svg"></picture>',
     );
     expect(container.querySelector("img")).toHaveAttribute("src", "b.svg");
+  });
+
+  it("anchors h4 headings, links footnotes to their notes and makes lone images figures", async () => {
+    const container = await renderMarkdown(
+      '#### Rolls\n\nSeeding[^1].\n\n![Lobby](/a.png "Lobby 3")\n\n[^1]: Higher qualifier score.',
+    );
+    expect(container.querySelector("h4#rolls")).not.toBeNull();
+    expect(screen.getByRole("link", { name: "Link to section: Rolls" })).toHaveAttribute(
+      "href",
+      "#rolls",
+    );
+    const ref = container.querySelector("a[data-footnote-ref]");
+    expect(container.querySelector(ref?.getAttribute("href") ?? "#none")).not.toBeNull();
+    expect(container.querySelector("figure figcaption")?.textContent).toBe("Lobby 3");
   });
 
   it("links an external URL in a new tab with rel noopener noreferrer", async () => {

@@ -42,6 +42,7 @@ const GROUPS = [
   "Shell",
   "Content",
   "Palette",
+  "Articles",
   "Utilities",
 ];
 

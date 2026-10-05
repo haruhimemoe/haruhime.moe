@@ -25,6 +25,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - Depends on `@haruhimemoe/ui` 0.13.0: library stats labels are no longer all caps, the legal index cards have rounder corners, and /ui has a new Layout group with cards, stat lists, link rows, empty states, progress bars and a view switch.
 - Depends on `@haruhimemoe/ui` 0.15.0: /ui has a Sortable section where rows move by mouse, touch or keyboard, with Up and Down buttons and every move read out.
 - Depends on `@haruhimemoe/ui` 0.16.0: `/ui` shows the new map cards (as rows and cards, over a cover or a blurred cover), set cards, bucket groups, covers and the preview button.
+- Depends on `@haruhimemoe/ui` 0.17.0: library READMEs get section links on their smaller (h4) headings, working footnotes and captioned images; legal text is a size smaller; `/ui` shows the new article pieces (table of contents, keyboard keys, figures, steps, video embeds, link cards, schedules and glossaries) in a new Articles group.
 
 ## [0.3.0] - 2026-10-04
 

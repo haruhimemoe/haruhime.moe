@@ -9,7 +9,7 @@
  *       route handler and its tests; the legal pages are read from disk.
  * @author David @dvhsh (https://dvh.sh)
  * @created Sat Oct 3, 2026
- * @modified Sun Oct 4, 2026
+ * @modified Mon Oct 5, 2026
  */
 
 import { palette } from "@haruhimemoe/brand/palette";
@@ -25,6 +25,7 @@ import { SITE } from "@/constants/site";
 import { TOOLS } from "@/constants/tools";
 import { type Changelog, sectionMarkdown } from "@/utils/changelog";
 import type { ChangelogResult } from "@/utils/changelog-feed";
+import { CONTENT_MARKDOWN } from "@/utils/content-markdown";
 
 /**
  * @function brandPart
@@ -124,7 +125,7 @@ export const changelogPart = (source: ChangelogSource, changelog: Changelog): Ll
  * @returns {Promise<string>} the page's Markdown mirror, or "" when it isn't registered
  */
 const readLegal = (section: ContentSection, slug: string): Promise<string> =>
-  readContentMarkdown(CONTENT, section, slug, { siteUrl: SITE.url }).then((md) => md ?? "");
+  readContentMarkdown(CONTENT, section, slug, CONTENT_MARKDOWN).then((md) => md ?? "");
 
 /**
  * @function buildLlmsFull
