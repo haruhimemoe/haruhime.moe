@@ -18,6 +18,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - `/brand` is the shared brand page every haruhime site uses: name, logo and banner files, colors, type, do's and don'ts and the brand contact (haruhime@haruhime.moe), with every repo's README banner and the product family kept.
 - `/llms.txt` lists the legal pages under Legal, linking their Markdown.
 - `@haruhimemoe/ui` 0.11.0, `@haruhimemoe/next-kit` 0.6.1, `@haruhimemoe/brand` 0.7.0.
+- Depends on `@haruhimemoe/ui` 0.14.0 and `@haruhimemoe/next-kit` 0.8.0: `/ui` shows the new `Dialog` and `ConfirmDialog`, one of which asks you to type a name first, and the command palette keeps the page's own scroll setting when it closes.
 - `@haruhimemoe/ui` 0.11.1: decorative alt on brand page previews.
 - `@haruhimemoe/ui` 0.11.2: Copy as Markdown works on Safari and iOS.
 - Depends on `@haruhimemoe/ui` 0.12.0: on touch screens buttons, chips and form fields are 44px tall, motion stops when your system asks for reduced motion, colors get stronger when it asks for more contrast, the code samples on /ui are highlighted, and /ui shows Text, textClasses, useMotionAllowed, hidden field labels, download links and all 17 ModBadge colors.
