@@ -34,6 +34,7 @@ const GROUPS = [
   "Layout",
   "Forms",
   "Actions",
+  "Sortable",
   "Filters",
   "Tables",
   "osu!",

@@ -27,6 +27,7 @@ import { LayoutDemos } from "@/components/showcase/LayoutDemos";
 import { OsuDemos } from "@/components/showcase/OsuDemos";
 import { PaletteDemos } from "@/components/showcase/PaletteDemos";
 import { ShellDemos } from "@/components/showcase/ShellDemos";
+import { SortableDemos } from "@/components/showcase/SortableDemos";
 import { TableDemos } from "@/components/showcase/TableDemos";
 import { TextDemos } from "@/components/showcase/TextDemos";
 import { UtilityDemos } from "@/components/showcase/UtilityDemos";
@@ -43,6 +44,7 @@ const GROUPS: readonly { id: string; title: string; Demos: () => JSX.Element }[]
   { id: "layout", title: "Layout", Demos: LayoutDemos },
   { id: "forms", title: "Forms", Demos: FormDemos },
   { id: "actions", title: "Actions", Demos: ActionDemos },
+  { id: "sortable", title: "Sortable", Demos: SortableDemos },
   { id: "filters", title: "Filters", Demos: FilterDemos },
   { id: "tables", title: "Tables", Demos: TableDemos },
   { id: "osu", title: "osu!", Demos: OsuDemos },
