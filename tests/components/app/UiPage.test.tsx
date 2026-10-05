@@ -360,8 +360,10 @@ describe("/ui", () => {
     expect(screen.getByLabelText("Search pools")).toBeInTheDocument();
   });
 
+  // 0.15's Sortable group adds more CodeBlock demos to the page, so waiting out every
+  // still-suspended highlighter promise during axe's walk can clear vitest's default 5s.
   it("has no axe violations", async () => {
     const { container } = await renderUi();
     await expectNoAxeViolations(container);
-  });
+  }, 15000);
 });
