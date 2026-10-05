@@ -7,16 +7,15 @@
  *       GitHub instead.
  * @author David @dvhsh (https://dvh.sh)
  * @created Fri Oct 2, 2026
- * @modified Fri Oct 2, 2026
+ * @modified Mon Oct 5, 2026
  */
 
 import { notFoundMetadata, pageMetadata } from "@haruhimemoe/next-kit/seo";
-import { CopyButton, PageHeader, TextLink } from "@haruhimemoe/ui";
+import { CodeChip, LinkRow, PageHeader, TextLink } from "@haruhimemoe/ui";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { LibraryLinks } from "@/components/libraries/LibraryLinks";
 import { Markdown } from "@/components/libraries/Markdown";
-import { findLibrary, LIBRARIES, libraryUrls } from "@/constants/libraries";
+import { findLibrary, LIBRARIES, libraryLinkItems, libraryUrls } from "@/constants/libraries";
 import { SEO_SITE } from "@/constants/seo";
 import { fetchReadme } from "@/lib/libraries/readme";
 import { fetchLibraryStats } from "@/lib/libraries/stats";
@@ -71,11 +70,8 @@ export default async function LibraryDocsPage({ params }: PageProps<"/libraries/
       <div className="flex flex-col gap-4">
         <PageHeader title={library.pkg} lead={library.description} meta={meta || undefined} />
         <div className="flex flex-wrap items-center gap-x-6 gap-y-3">
-          <span className="inline-flex items-center gap-2">
-            <code className="rounded bg-b6 px-2 py-1 text-c2 text-sm">{install}</code>
-            <CopyButton text={install} label="Copy" />
-          </span>
-          <LibraryLinks library={library} />
+          <CodeChip code={install} />
+          <LinkRow items={libraryLinkItems(library)} />
         </div>
       </div>
       {readme ? (

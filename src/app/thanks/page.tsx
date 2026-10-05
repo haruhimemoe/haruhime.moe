@@ -4,10 +4,10 @@
  *       osu!-style player card for every osu! player named (a snapshot, never fetched). Static.
  * @author David @dvhsh (https://dvh.sh)
  * @created Wed Sep 23, 2026
- * @modified Sun Oct 4, 2026
+ * @modified Mon Oct 5, 2026
  */
 
-import { Card, PageHeader, PlayerCard, TextLink } from "@haruhimemoe/ui";
+import { Card, CardGrid, PageHeader, PlayerCard, TextLink } from "@haruhimemoe/ui";
 import type { Metadata } from "next";
 import { THANKS } from "@/content/thanks";
 import { pageMetadata } from "@/utils/page-metadata";
@@ -30,26 +30,25 @@ export default function ThanksPage() {
               </p>
               <p className="text-sm">{entry.line}</p>
               {entry.players ? (
-                <ul className="mt-3 grid gap-2.5 sm:grid-cols-2 lg:grid-cols-3">
+                <CardGrid columns={3} gap="sm" className="mt-3">
                   {entry.players.map((player) => (
-                    <li key={player.username}>
-                      <PlayerCard
-                        username={player.username}
-                        userId={player.osu?.id}
-                        countryCode={player.osu?.country}
-                        coverUrl={player.osu?.cover}
-                        team={
-                          player.osu?.team
-                            ? { name: player.osu.team.name, flagUrl: player.osu.team.flag }
-                            : undefined
-                        }
-                        supporter={player.osu?.supporter}
-                        statusText={player.role}
-                        statusNote={player.formerly ? `formerly ${player.formerly}` : undefined}
-                      />
-                    </li>
+                    <PlayerCard
+                      key={player.username}
+                      username={player.username}
+                      userId={player.osu?.id}
+                      countryCode={player.osu?.country}
+                      coverUrl={player.osu?.cover}
+                      team={
+                        player.osu?.team
+                          ? { name: player.osu.team.name, flagUrl: player.osu.team.flag }
+                          : undefined
+                      }
+                      supporter={player.osu?.supporter}
+                      statusText={player.role}
+                      statusNote={player.formerly ? `formerly ${player.formerly}` : undefined}
+                    />
                   ))}
-                </ul>
+                </CardGrid>
               ) : null}
             </Card>
           </li>

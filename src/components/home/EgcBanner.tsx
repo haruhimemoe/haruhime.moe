@@ -11,12 +11,12 @@
  *       Needle stays in frame beside the copy.
  * @author David @dvhsh (https://dvh.sh)
  * @created Wed Sep 23, 2026
- * @modified Sun Oct 4, 2026
+ * @modified Mon Oct 5, 2026
  */
 
 "use client";
 
-import { useMotionAllowed } from "@haruhimemoe/ui";
+import { CardLink, useMotionAllowed } from "@haruhimemoe/ui";
 import { useId } from "react";
 import { EVERGREEN_CUP } from "@/constants/site";
 
@@ -81,15 +81,15 @@ export function EgcBanner() {
           </p>
           <p className="text-[#aee5bd] text-sm sm:text-base">{EVERGREEN_CUP.line}</p>
         </div>
-        {/* The link covers the whole card (after:absolute) so the banner is one click target. */}
-        <a
+        {/* CardLink brings the cover (after:absolute after:inset-0) so the banner is one click target. */}
+        <CardLink
           href={EVERGREEN_CUP.url}
           target="_blank"
           rel="noopener"
-          className="w-fit rounded-full bg-[#49b86a] px-4 py-2 font-bold text-[#051a0d] text-sm transition-colors after:absolute after:inset-0 after:rounded-[10px] hover:bg-[#7cd293] focus-visible:outline-2 focus-visible:outline-[#aee5bd] focus-visible:outline-offset-2"
+          className="w-fit rounded-full bg-[#49b86a] px-4 py-2 font-bold text-[#051a0d] text-sm transition-colors after:rounded-[10px] hover:bg-[#7cd293] focus-visible:outline-2 focus-visible:outline-[#aee5bd] focus-visible:outline-offset-2"
         >
           evergreencup.org
-        </a>
+        </CardLink>
       </div>
     </section>
   );

@@ -6,7 +6,7 @@
  *       name.
  * @author David @dvhsh (https://dvh.sh)
  * @created Fri Oct 2, 2026
- * @modified Fri Oct 2, 2026
+ * @modified Mon Oct 5, 2026
  */
 
 import { render, screen } from "@testing-library/react";
@@ -68,12 +68,17 @@ describe("/libraries/[name]", () => {
     ).toBeInTheDocument();
     expect(screen.getByText("Version 0.2.0, MIT")).toBeInTheDocument();
     expect(screen.getByText("bun add @haruhimemoe/pool")).toBeInTheDocument();
-    expect(screen.getByRole("button", { name: "Copy" })).toBeInTheDocument();
+    expect(
+      screen.getByRole("button", { name: "Copy bun add @haruhimemoe/pool" }),
+    ).toBeInTheDocument();
     expect(screen.getByRole("link", { name: "npm" })).toHaveAttribute(
       "href",
       "https://www.npmjs.com/package/@haruhimemoe/pool",
     );
     expect(screen.queryByRole("link", { name: "Showcase" })).toBeNull();
+    for (const name of ["GitHub", "npm", "Changelog"]) {
+      expect(screen.getByRole("link", { name }).className).not.toMatch(/\bz-10\b/);
+    }
   });
 
   it("renders the README with anchor ids", async () => {

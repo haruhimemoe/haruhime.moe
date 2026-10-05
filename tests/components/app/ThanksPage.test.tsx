@@ -4,10 +4,10 @@
  *       osu! player (profile links for the ones with an account, name only for the rest).
  * @author David @dvhsh (https://dvh.sh)
  * @created Wed Sep 23, 2026
- * @modified Sun Oct 4, 2026
+ * @modified Mon Oct 5, 2026
  */
 
-import { render, screen } from "@testing-library/react";
+import { render, screen, within } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 import ThanksPage, { metadata } from "@/app/thanks/page";
 import { THANKS } from "@/content/thanks";
@@ -54,5 +54,17 @@ describe("/thanks", () => {
     expect(screen.getByText("formerly Sohlayce")).toBeInTheDocument();
     expect(screen.getAllByText("osu!cafe")).toHaveLength(7);
     expect(screen.queryByText(/^(Online|Offline)$/)).toBeNull();
+  });
+
+  it("puts each player card in exactly one list item", () => {
+    render(<ThanksPage />);
+    for (const entry of THANKS) {
+      if (!entry.players) continue;
+      const card = screen.getByText(entry.line).closest("section") as HTMLElement;
+      const list = within(card).getByRole("list");
+      const items = [...list.children];
+      expect(items).toHaveLength(entry.players.length);
+      for (const item of items) expect(item).toHaveClass("flex");
+    }
   });
 });
