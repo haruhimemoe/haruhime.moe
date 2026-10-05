@@ -4,7 +4,7 @@
  *       the install line, stats and links, a dash where a lookup failed, and no axe violations.
  * @author David @dvhsh (https://dvh.sh)
  * @created Fri Oct 2, 2026
- * @modified Sun Oct 4, 2026
+ * @modified Mon Oct 5, 2026
  */
 
 import { render, screen, within } from "@testing-library/react";
@@ -47,11 +47,13 @@ describe("/libraries", () => {
     await renderPage();
     // The first list is the grid; each card holds its own list of links.
     const grid = screen.getAllByRole("list")[0] as HTMLElement;
-    expect(grid.children).toHaveLength(LIBRARIES.length);
+    const items = [...grid.children];
+    expect(items).toHaveLength(LIBRARIES.length);
+    for (const item of items) expect(item).toHaveClass("flex");
     for (const library of LIBRARIES) {
       const link = screen.getByRole("link", { name: library.pkg });
       expect(link).toHaveAttribute("href", `/libraries/${library.name}`);
-      const card = link.closest("section") as HTMLElement;
+      const card = link.closest("li") as HTMLElement;
       expect(within(card).getByText(`bun add ${library.pkg}`)).toBeInTheDocument();
       expect(within(card).getByRole("link", { name: "GitHub" })).toHaveAttribute(
         "href",
@@ -67,9 +69,7 @@ describe("/libraries", () => {
   it("shows each library's README banner, decorative, from public/brand/repos", async () => {
     await renderPage();
     for (const library of LIBRARIES) {
-      const card = screen
-        .getByRole("link", { name: library.pkg })
-        .closest("section") as HTMLElement;
+      const card = screen.getByRole("link", { name: library.pkg }).closest("li") as HTMLElement;
       const img = card.querySelector("img");
       expect(img).toHaveAttribute("src", `/brand/repos/${library.repo}-banner.svg`);
       expect(img).toHaveAttribute("alt", "");
@@ -81,24 +81,19 @@ describe("/libraries", () => {
     const showcases = screen.getAllByRole("link", { name: "Showcase" });
     expect(showcases).toHaveLength(1);
     expect(showcases[0]).toHaveAttribute("href", "/ui");
-    expect(showcases[0]?.closest("section")).toContainElement(
-      screen.getByRole("link", { name: "@haruhimemoe/ui" }),
-    );
+    const uiCard = screen.getByRole("link", { name: "@haruhimemoe/ui" }).closest("li");
+    expect(uiCard).toContainElement(showcases[0] as HTMLElement);
   });
 
   it("shows ui's numbers and a dash for the libraries whose lookups failed", async () => {
     await renderPage();
-    const ui = screen
-      .getByRole("link", { name: "@haruhimemoe/ui" })
-      .closest("section") as HTMLElement;
+    const ui = screen.getByRole("link", { name: "@haruhimemoe/ui" }).closest("li") as HTMLElement;
     expect(
       within(ui)
         .getAllByRole("definition")
         .map((d) => d.textContent),
     ).toEqual(["0.6.0", "1.2k", "7", "v0.6.0, Sep 28, 2026"]);
-    const osu = screen
-      .getByRole("link", { name: "@haruhimemoe/osu" })
-      .closest("section") as HTMLElement;
+    const osu = screen.getByRole("link", { name: "@haruhimemoe/osu" }).closest("li") as HTMLElement;
     expect(
       within(osu)
         .getAllByRole("definition")

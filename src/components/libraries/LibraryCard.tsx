@@ -1,30 +1,28 @@
 /**
  * @file src/components/libraries/LibraryCard.tsx
- * @desc One library on /libraries: its README banner across the top (the same SVG the repo's
- *       README shows, from public/brand/repos), its name linking to its docs page (the link
- *       covers the whole card), the description, the install line, its stats and its links. The
- *       links sit above the card-wide cover so each one is its own click.
+ * @desc One library on /libraries: its README banner across the top as LinkCard's media, its name
+ *       linking to its docs page (the card is one click target), the description, the install
+ *       chip, its stats and its links, lifted above the card-wide cover.
  * @author David @dvhsh (https://dvh.sh)
  * @created Fri Oct 2, 2026
- * @modified Sun Oct 4, 2026
+ * @modified Mon Oct 5, 2026
  */
 
-import { Card, Text } from "@haruhimemoe/ui";
-import { LibraryLinks } from "@/components/libraries/LibraryLinks";
-import { StatsRow } from "@/components/libraries/StatsRow";
-import { type Library, libraryUrls } from "@/constants/libraries";
+import { CardLink, CodeChip, LinkCard, LinkRow, StatList, Text } from "@haruhimemoe/ui";
+import { type Library, libraryLinkItems, libraryUrls } from "@/constants/libraries";
 import type { LibraryStats } from "@/lib/libraries/stats";
+import { libraryStatItems } from "@/utils/libraries-format";
 
 /**
  * @function LibraryCard
  * @param props {{ library: Library; stats: LibraryStats }} the library and its numbers
- * @returns {JSX.Element} a list item holding the library's card
+ * @returns {JSX.Element} the library's card
  */
 export function LibraryCard({ library, stats }: { library: Library; stats: LibraryStats }) {
   return (
-    <li className="flex">
-      <Card className="relative flex w-full flex-col gap-4 overflow-hidden p-0 transition-colors focus-within:bg-b3 hover:bg-b3 [&>*:not(:first-child)]:mx-5 sm:[&>*:not(:first-child)]:mx-6 [&>:last-child]:mb-5 sm:[&>:last-child]:mb-6">
-        {/* biome-ignore lint/performance/noImgElement: static SVG, no optimization needed */}
+    <LinkCard
+      media={
+        // biome-ignore lint/performance/noImgElement: static SVG, no optimization needed
         <img
           src={`/brand/repos/${library.repo}-banner.svg`}
           alt=""
@@ -32,21 +30,19 @@ export function LibraryCard({ library, stats }: { library: Library; stats: Libra
           height={320}
           className="aspect-[4/1] w-full object-cover"
         />
-        <div className="flex flex-col gap-1">
-          <h2 className="font-extrabold text-c1 text-xl leading-tight">
-            <a
-              href={libraryUrls(library).docs}
-              className="after:absolute after:inset-0 after:rounded-[10px]"
-            >
-              {library.pkg}
-            </a>
-          </h2>
-          <Text tone="muted">{library.description}</Text>
-        </div>
-        <code className="w-fit rounded bg-b6 px-2 py-1 text-c2 text-sm">bun add {library.pkg}</code>
-        <StatsRow stats={stats} />
-        <LibraryLinks library={library} className="mt-auto" />
-      </Card>
-    </li>
+      }
+    >
+      <div className="flex flex-col gap-1">
+        <h2 className="font-extrabold text-c1 text-xl leading-tight">
+          <CardLink href={libraryUrls(library).docs} className="font-extrabold">
+            {library.pkg}
+          </CardLink>
+        </h2>
+        <Text tone="muted">{library.description}</Text>
+      </div>
+      <CodeChip code={`bun add ${library.pkg}`} copy={false} />
+      <StatList items={libraryStatItems(stats)} />
+      <LinkRow items={libraryLinkItems(library)} className="mt-auto" />
+    </LinkCard>
   );
 }

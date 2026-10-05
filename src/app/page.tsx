@@ -7,11 +7,11 @@
  *       founder, and the WebSite with each live tool's site as a part.
  * @author David @dvhsh (https://dvh.sh)
  * @created Wed Sep 23, 2026
- * @modified Sun Oct 4, 2026
+ * @modified Mon Oct 5, 2026
  */
 
 import { HARUHIME_ORG, homeMetadata, ld } from "@haruhimemoe/next-kit/seo";
-import { JsonLd, PageHeader } from "@haruhimemoe/ui";
+import { CardGrid, JsonLd, PageHeader } from "@haruhimemoe/ui";
 import type { Metadata } from "next";
 import { EgcBanner } from "@/components/home/EgcBanner";
 import { ToolCard } from "@/components/home/ToolCard";
@@ -45,11 +45,11 @@ export default function HomePage() {
           one name would read the same. The h2 is enough structure here. */}
       <section className="flex flex-col gap-5">
         <h2 className="font-bold text-2xl text-c1">Tools</h2>
-        <ul className="grid gap-4 sm:grid-cols-2 sm:gap-5">
+        <CardGrid>
           {TOOLS.map((tool) => (
             <ToolCard key={tool.name} tool={tool} />
           ))}
-        </ul>
+        </CardGrid>
       </section>
       <JsonLd data={HOME_LD} />
     </div>

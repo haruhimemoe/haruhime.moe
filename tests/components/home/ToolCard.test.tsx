@@ -2,12 +2,14 @@
  * @file tests/components/home/ToolCard.test.tsx
  * @desc ToolCard: a live tool links to its site, labeled "beta" while in beta, with its sentence
  *       and a task link on the tool's site; a coming-soon tool says so and links nowhere, even
- *       with a summary and task set.
+ *       with a summary and task set. On LinkCard, it is one card link with its task link lifted,
+ *       and an unreleased tool's Surface has no hover.
  * @author David @dvhsh (https://dvh.sh)
  * @created Wed Sep 23, 2026
- * @modified Sat Oct 3, 2026
+ * @modified Mon Oct 5, 2026
  */
 
+import { CardGrid } from "@haruhimemoe/ui";
 import { render, screen } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 import { ToolCard } from "@/components/home/ToolCard";
@@ -37,9 +39,9 @@ const soon: Tool = {
 
 const renderCard = (tool: Tool) =>
   render(
-    <ul>
+    <CardGrid>
       <ToolCard tool={tool} />
-    </ul>,
+    </CardGrid>,
   );
 
 describe("ToolCard", () => {
@@ -109,5 +111,24 @@ describe("ToolCard", () => {
   it("gives the icon empty alt text, since the name is right next to it", () => {
     const { container } = renderCard(live);
     expect(container.querySelector("img")).toHaveAttribute("alt", "");
+  });
+
+  it("is one card link with the task link lifted by the card, not by its own z-10", () => {
+    const { container } = renderCard({
+      ...live,
+      summary: "Packs from a pool.",
+      task: { label: "Make a pack", path: "/new" },
+    });
+    expect(container.querySelectorAll("[data-card-link]")).toHaveLength(1);
+    expect(screen.getByRole("link", { name: "packs" })).toHaveAttribute("data-card-link");
+    const task = screen.getByRole("link", { name: /Make a pack/ });
+    expect(task.className).not.toMatch(/\bz-10\b/);
+    expect(container.querySelectorAll("li")).toHaveLength(1);
+  });
+
+  it("has no hover surface for an unreleased tool", () => {
+    const { container } = renderCard(soon);
+    expect(container.querySelector("[data-card-link]")).toBeNull();
+    expect(container.querySelector("li > div")?.className).not.toMatch(/hover:bg-b3/);
   });
 });

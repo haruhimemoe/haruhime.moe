@@ -6,10 +6,10 @@
  *       per visit.
  * @author David @dvhsh (https://dvh.sh)
  * @created Fri Oct 2, 2026
- * @modified Fri Oct 2, 2026
+ * @modified Mon Oct 5, 2026
  */
 
-import { PageHeader, TextLink } from "@haruhimemoe/ui";
+import { CardGrid, PageHeader, TextLink } from "@haruhimemoe/ui";
 import type { Metadata } from "next";
 import { LibraryCard } from "@/components/libraries/LibraryCard";
 import { LIBRARIES } from "@/constants/libraries";
@@ -37,7 +37,7 @@ export default async function LibrariesPage() {
           </>
         }
       />
-      <ul className="grid gap-4 sm:grid-cols-2 sm:gap-5">
+      <CardGrid>
         {LIBRARIES.map((library, i) => (
           <LibraryCard
             key={library.name}
@@ -45,7 +45,7 @@ export default async function LibrariesPage() {
             stats={stats[i] as (typeof stats)[number]}
           />
         ))}
-      </ul>
+      </CardGrid>
     </div>
   );
 }
