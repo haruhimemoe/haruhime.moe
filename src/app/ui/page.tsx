@@ -9,7 +9,7 @@
  * @modified Mon Oct 5, 2026
  */
 
-import { CopyButton, JsonLd, PageHeader, TextLink } from "@haruhimemoe/ui";
+import { CopyButton, JsonLd, LinkRow, PageHeader, TextLink } from "@haruhimemoe/ui";
 // Highlights the CodeBlock samples in the Palette and Utilities groups. Nothing else on /ui's
 // module graph loads Shiki (only mdx-components.tsx and Markdown.tsx import it).
 import "@haruhimemoe/ui/shiki";
@@ -71,17 +71,11 @@ export default function UiPage() {
           meta={`Version ${uiPackage.version}, ${uiPackage.license} license. Install: ${UI_INSTALL}`}
           actions={<CopyButton text={UI_INSTALL} label="Copy install command" />}
         />
-        <nav aria-label="On this page">
-          <ul className="flex flex-wrap gap-x-5 gap-y-1 font-bold text-sm">
-            {GROUPS.map((group) => (
-              <li key={group.id}>
-                <a href={`#${group.id}`} className="text-c3 transition-colors hover:text-c1">
-                  {group.title}
-                </a>
-              </li>
-            ))}
-          </ul>
-        </nav>
+        <LinkRow
+          label="On this page"
+          variant="quiet"
+          items={GROUPS.map((group) => ({ href: `#${group.id}`, label: group.title }))}
+        />
       </div>
 
       {GROUPS.map(({ id, title, Demos }) => (

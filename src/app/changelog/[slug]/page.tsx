@@ -6,20 +6,20 @@
  *       is a 404. When the file can't be fetched the page still renders with a GitHub link.
  * @author David @dvhsh (https://dvh.sh)
  * @created Sun Oct 4, 2026
- * @modified Sun Oct 4, 2026
+ * @modified Mon Oct 5, 2026
  */
 
 import { notFoundMetadata, pageMetadata } from "@haruhimemoe/next-kit/seo";
-import { PageHeader, TextLink } from "@haruhimemoe/ui";
+import { LinkRow, PageHeader, TextLink } from "@haruhimemoe/ui";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { ChangelogFailures } from "@/components/changelog/ChangelogFailures";
 import { ChangelogHistory } from "@/components/changelog/ChangelogHistory";
-import { ChangelogNav } from "@/components/changelog/ChangelogNav";
 import { CHANGELOG_SOURCES, changelogUrls, findChangelogSource } from "@/constants/changelogs";
 import { findLibrary, libraryUrls } from "@/constants/libraries";
 import { SEO_SITE } from "@/constants/seo";
 import { fetchChangelog } from "@/lib/changelogs";
+import { changelogFilterItems } from "@/utils/changelog-filters";
 
 /** Once a day, like the changelog it reads. */
 export const revalidate = 86400;
@@ -87,7 +87,7 @@ export default async function RepoChangelogPage({ params }: PageProps<"/changelo
           ))}
         </ul>
       </div>
-      <ChangelogNav current={urls.page} />
+      <LinkRow label="Changelog filter" variant="quiet" items={changelogFilterItems(urls.page)} />
       {"changelog" in result ? (
         <ChangelogHistory changelog={result.changelog} />
       ) : (

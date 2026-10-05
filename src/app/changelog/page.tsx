@@ -4,15 +4,15 @@
  *       Apps, Packages, each repo). Static, rebuilt once a day from each repo's CHANGELOG.md.
  * @author David @dvhsh (https://dvh.sh)
  * @created Sun Oct 4, 2026
- * @modified Sun Oct 4, 2026
+ * @modified Mon Oct 5, 2026
  */
 
-import { PageHeader } from "@haruhimemoe/ui";
+import { LinkRow, PageHeader } from "@haruhimemoe/ui";
 import type { Metadata } from "next";
 import { ChangelogFeed } from "@/components/changelog/ChangelogFeed";
-import { ChangelogNav } from "@/components/changelog/ChangelogNav";
 import { fetchAllChangelogs } from "@/lib/changelogs";
 import { buildFeed } from "@/utils/changelog-feed";
+import { changelogFilterItems } from "@/utils/changelog-filters";
 import { pageMetadata } from "@/utils/page-metadata";
 
 export const metadata: Metadata = pageMetadata("/changelog");
@@ -28,7 +28,11 @@ export default async function ChangelogPage() {
         title="Changelog"
         lead="What changed in the tools, this site, the packages and the Claude plugin, newest release first."
       />
-      <ChangelogNav current="/changelog" />
+      <LinkRow
+        label="Changelog filter"
+        variant="quiet"
+        items={changelogFilterItems("/changelog")}
+      />
       <ChangelogFeed feed={feed} />
     </div>
   );

@@ -12,7 +12,7 @@
  *       renders the page inside Suspense under `act` (renderUi), the way Markdown.test.tsx does.
  * @author David @dvhsh (https://dvh.sh)
  * @created Wed Sep 23, 2026
- * @modified Sun Oct 4, 2026
+ * @modified Mon Oct 5, 2026
  */
 
 import * as ui from "@haruhimemoe/ui";
@@ -115,6 +115,9 @@ describe("/ui", () => {
         `#${heading.id}`,
       );
       expect(screen.getByRole("region", { name })).toContainElement(heading);
+    }
+    for (const link of within(onThisPage).getAllByRole("link")) {
+      expect(link).toHaveClass("coarse:py-2");
     }
   });
 

@@ -5,10 +5,10 @@
  *       date, sections always open.
  * @author David @dvhsh (https://dvh.sh)
  * @created Sun Oct 4, 2026
- * @modified Sun Oct 4, 2026
+ * @modified Mon Oct 5, 2026
  */
 
-import { Text } from "@haruhimemoe/ui";
+import { SectionHeading, Text } from "@haruhimemoe/ui";
 import { ReleaseDate } from "@/components/changelog/ReleaseDate";
 import { ReleaseNotes } from "@/components/changelog/ReleaseNotes";
 import { type Changelog, releaseAnchor } from "@/utils/changelog";
@@ -27,9 +27,7 @@ export function ChangelogHistory({ changelog }: { changelog: Changelog }) {
     <div className="flex flex-col gap-10">
       {unreleased.length > 0 ? (
         <div className="flex flex-col gap-3">
-          <h2 id="unreleased" className="scroll-mt-20 font-bold text-c1 text-xl">
-            Not released yet
-          </h2>
+          <SectionHeading id="unreleased">Not released yet</SectionHeading>
           <Text tone="muted">On main, waiting for the next release.</Text>
           <ReleaseNotes sections={unreleased} references={references} />
         </div>
@@ -37,12 +35,7 @@ export function ChangelogHistory({ changelog }: { changelog: Changelog }) {
       {releases.map((release) => (
         <div key={release.version} className="flex flex-col gap-3">
           <div className="flex flex-wrap items-baseline gap-x-3">
-            <h2
-              id={releaseAnchor(release.version)}
-              className="scroll-mt-20 font-bold text-c1 text-xl"
-            >
-              {release.version}
-            </h2>
+            <SectionHeading id={releaseAnchor(release.version)}>{release.version}</SectionHeading>
             <ReleaseDate date={release.date} />
           </div>
           <ReleaseNotes sections={release.sections} references={references} />

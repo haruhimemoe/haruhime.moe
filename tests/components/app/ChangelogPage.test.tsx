@@ -1,16 +1,17 @@
 /**
  * @file tests/components/app/ChangelogPage.test.tsx
- * @desc /changelog: its metadata title and one h1, the filter nav with All current, every repo's
- *       releases in the feed, a failed repo's note, a daily rebuild, and axe.
+ * @desc /changelog: its metadata title and one h1, the filter LinkRow with All current and
+ *       visually distinct from the others, every repo's releases in the feed, a failed repo's
+ *       note, a daily rebuild, and axe.
  * @author David @dvhsh (https://dvh.sh)
  * @created Sun Oct 4, 2026
- * @modified Sun Oct 4, 2026
+ * @modified Mon Oct 5, 2026
  */
 
 import { render, screen, within } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 import ChangelogPage, { metadata, revalidate } from "@/app/changelog/page";
-import { CHANGELOG_SOURCES } from "@/constants/changelogs";
+import { CHANGELOG_FILTERS, CHANGELOG_SOURCES } from "@/constants/changelogs";
 import { expectNoAxeViolations } from "../../helpers/axe";
 
 vi.mock("@/lib/changelogs", () => ({
@@ -47,10 +48,29 @@ describe("/changelog", () => {
     expect(screen.getByRole("heading", { level: 1, name: "Changelog" })).toBeInTheDocument();
   });
 
-  it("marks All as the current filter", async () => {
+  it("links every filter and marks only All as current", async () => {
     render(await ChangelogPage());
     const nav = screen.getByRole("navigation", { name: "Changelog filter" });
-    expect(within(nav).getByRole("link", { name: "All" })).toHaveAttribute("aria-current", "page");
+    const links = within(nav).getAllByRole("link");
+    expect(links.map((a) => a.getAttribute("href"))).toEqual(CHANGELOG_FILTERS.map((f) => f.href));
+    const current = links.filter((a) => a.getAttribute("aria-current") === "page");
+    expect(current.map((a) => a.textContent)).toEqual(["All"]);
+  });
+
+  it("makes the current filter look different from the others", async () => {
+    render(await ChangelogPage());
+    const nav = screen.getByRole("navigation", { name: "Changelog filter" });
+    const links = within(nav).getAllByRole("link");
+    const current = links.find((a) => a.getAttribute("aria-current") === "page");
+    const others = links.filter((a) => a.getAttribute("aria-current") !== "page");
+    expect(current).toBeDefined();
+    expect(current?.className).toContain("underline");
+    expect(current?.className).toContain("text-c1");
+    expect(others.length).toBeGreaterThan(0);
+    for (const other of others) {
+      expect(other.className).toContain("font-normal");
+      expect(other.className).toContain("text-c2");
+    }
   });
 
   it("lists a release from every repo that loaded and names the one that didn't", async () => {

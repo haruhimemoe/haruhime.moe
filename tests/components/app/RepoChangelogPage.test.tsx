@@ -6,7 +6,7 @@
  *       and 404s on an unknown slug.
  * @author David @dvhsh (https://dvh.sh)
  * @created Sun Oct 4, 2026
- * @modified Sun Oct 4, 2026
+ * @modified Mon Oct 5, 2026
  */
 
 import { render, screen, within } from "@testing-library/react";
@@ -69,10 +69,9 @@ describe("/changelog/[slug]", () => {
     const nav = screen.getByRole("navigation", { name: "Changelog filter" });
     expect(within(nav).getByRole("link", { name: "ui" })).toHaveAttribute("aria-current", "page");
     expect(screen.getByRole("heading", { level: 2, name: "Not released yet" })).toBeInTheDocument();
-    expect(screen.getByRole("heading", { level: 2, name: "0.9.0" })).toHaveAttribute(
-      "id",
-      "v0-9-0",
-    );
+    const release = screen.getByRole("heading", { level: 2, name: "0.9.0" });
+    expect(release).toHaveAttribute("id", "v0-9-0");
+    expect(release).toHaveClass("scroll-mt-20", "font-bold", "text-c1", "text-xl");
   });
 
   it("has no docs link for an app", async () => {

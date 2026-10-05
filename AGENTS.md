@@ -21,10 +21,10 @@ src/app/          routes: layout.tsx (font, metadata, SiteShell), globals.css, n
                   opengraph-image.png and opengraph-image.alt.txt
 src/components/   layout/ (SiteShell: the @haruhimemoe/ui frame), brand/ (ReadmeBanners,
                   ProductFamily: /brand's slots), home/ (ToolCard, EgcBanner),
-                  libraries/ (LibraryCard, StatsRow, LibraryLinks, Markdown: the README renderer,
+                  libraries/ (LibraryCard, Markdown: the README renderer,
                   react-markdown + @haruhimemoe/ui's mdx/remark/shiki + rehype-raw + rehype-sanitize),
-                  changelog/ (the feed, filter nav and release components /changelog and its
-                  subpages share), showcase/ (Demo and DemoGroup frame each /ui demo; one
+                  changelog/ (the feed and release components /changelog and its
+                  subpages share, filtered through ui's LinkRow), showcase/ (Demo and DemoGroup frame each /ui demo; one
                   <Group>Demos file per group, listed in GROUPS in ui/page.tsx, split further past
                   ~100 lines)
 src/constants/    static data (site.ts: identity, EVERGREEN_CUP and PAGES, every page's label,
@@ -45,7 +45,8 @@ src/lib/          the only code that fetches: libraries/ (fetch-json, npm, githu
                   result, cached by Next for a day
 src/utils/        pure, stateless helpers (date, length, pageMetadata, readme transforms, the
                   stat formatters, changelog.ts (the Keep a Changelog parser), changelog-feed.ts
-                  (the /changelog feed), and the llms.txt, llms-full.txt and security.txt builders)
+                  (the /changelog feed), changelog-filters.ts (the filter LinkRow items), and the
+                  llms.txt, llms-full.txt and security.txt builders)
 public/brand/     generated brand files (see CONTRIBUTING.md); never hand-edit. repos/ holds every
                   haruhimemoe repo's README banner, written by scripts/repo-banners.ts
 scripts/          repo-banners.ts (`bun run repo-banners`): draws public/brand/repos from
