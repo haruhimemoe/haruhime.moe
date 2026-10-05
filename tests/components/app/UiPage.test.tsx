@@ -31,6 +31,7 @@ vi.mock("next/navigation.js", () => ({
 const GROUPS = [
   "Basics",
   "Text",
+  "Layout",
   "Forms",
   "Actions",
   "Filters",

@@ -98,7 +98,7 @@ export const PAGES = {
     seoTitle: "@haruhimemoe/ui: React kit for osu! tools",
     description:
       "Every @haruhimemoe/ui component, the React kit behind haruhime's osu! tools, live in its states: buttons, cards, forms, filters, tables and osu! pieces.",
-    lastUpdated: "2026-10-04",
+    lastUpdated: "2026-10-05",
   },
   "/contact": {
     title: "Contact",

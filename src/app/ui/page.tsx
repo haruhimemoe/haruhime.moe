@@ -6,7 +6,7 @@
  *       shell examples. Static; the demos that take callbacks are small client components.
  * @author David @dvhsh (https://dvh.sh)
  * @created Wed Sep 23, 2026
- * @modified Sun Oct 4, 2026
+ * @modified Mon Oct 5, 2026
  */
 
 import { CopyButton, JsonLd, PageHeader, TextLink } from "@haruhimemoe/ui";
@@ -23,6 +23,7 @@ import { DemoGroup } from "@/components/showcase/DemoGroup";
 import { FilterDemos } from "@/components/showcase/FilterDemos";
 import { FormDemos } from "@/components/showcase/FormDemos";
 import { IconDemos } from "@/components/showcase/IconDemos";
+import { LayoutDemos } from "@/components/showcase/LayoutDemos";
 import { OsuDemos } from "@/components/showcase/OsuDemos";
 import { PaletteDemos } from "@/components/showcase/PaletteDemos";
 import { ShellDemos } from "@/components/showcase/ShellDemos";
@@ -39,6 +40,7 @@ export const metadata: Metadata = pageMetadata("/ui");
 const GROUPS: readonly { id: string; title: string; Demos: () => JSX.Element }[] = [
   { id: "basics", title: "Basics", Demos: BasicsDemos },
   { id: "text", title: "Text", Demos: TextDemos },
+  { id: "layout", title: "Layout", Demos: LayoutDemos },
   { id: "forms", title: "Forms", Demos: FormDemos },
   { id: "actions", title: "Actions", Demos: ActionDemos },
   { id: "filters", title: "Filters", Demos: FilterDemos },
