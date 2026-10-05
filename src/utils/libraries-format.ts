@@ -1,13 +1,16 @@
 /**
  * @file src/utils/libraries-format.ts
  * @desc Text for the library stats: counts shortened past a thousand (1.2k, 34k), a release as
- *       its tag and day, and a dash for anything that failed to load.
+ *       its tag and day, a dash for anything that failed to load, and libraryStatItems, the four
+ *       stats as StatList items.
  * @author David @dvhsh (https://dvh.sh)
  * @created Fri Oct 2, 2026
- * @modified Fri Oct 2, 2026
+ * @modified Mon Oct 5, 2026
  */
 
+import type { StatItem } from "@haruhimemoe/ui";
 import type { GithubRelease } from "@/lib/libraries/github";
+import type { LibraryStats } from "@/lib/libraries/stats";
 
 /** What a stat shows when its lookup failed. */
 export const MISSING = "—";
@@ -47,3 +50,15 @@ export const formatReleaseDate = (iso: string): string =>
  */
 export const formatRelease = (release: GithubRelease | null): string =>
   release ? `${release.tag}, ${formatReleaseDate(release.publishedAt)}` : "no release yet";
+
+/**
+ * @function libraryStatItems
+ * @param stats {LibraryStats} a library's npm and GitHub numbers
+ * @returns {StatItem[]} version, monthly downloads, stars and latest release, a dash when missing
+ */
+export const libraryStatItems = (stats: LibraryStats): StatItem[] => [
+  { label: "Version", value: stats.version ?? MISSING },
+  { label: "Downloads / month", value: formatCount(stats.downloads) },
+  { label: "Stars", value: formatCount(stats.stars) },
+  { label: "Latest release", value: formatRelease(stats.release) },
+];

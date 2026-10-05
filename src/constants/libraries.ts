@@ -4,11 +4,13 @@
  *       /libraries/<name>: npm name, repo, hue, a one-line description and, for ui, the showcase
  *       page. Every repo is github.com/haruhimemoe/<name> and publishes @haruhimemoe/<name>, so
  *       libraryUrls derives the rest. Descriptions match each package.json's first sentence.
+ *       libraryLinkItems builds a library's card links (GitHub, npm, Changelog, Showcase).
  * @author David @dvhsh (https://dvh.sh)
  * @created Fri Oct 2, 2026
- * @modified Sun Oct 4, 2026
+ * @modified Mon Oct 5, 2026
  */
 
+import type { LinkRowItem } from "@haruhimemoe/ui";
 import { SITE } from "@/constants/site";
 
 /** One package. `name` is the short name, the URL segment and the repo name. */
@@ -124,4 +126,19 @@ export const libraryUrls = (library: Library): LibraryUrls => {
     changelogPage: `/changelog/${library.name}`,
     readme: `https://raw.githubusercontent.com/haruhimemoe/${library.repo}/main/README.md`,
   };
+};
+
+/**
+ * @function libraryLinkItems
+ * @param library {Library} the library
+ * @returns {LinkRowItem[]} its GitHub, npm and changelog links, plus the showcase when it has one
+ */
+export const libraryLinkItems = (library: Library): LinkRowItem[] => {
+  const urls = libraryUrls(library);
+  return [
+    { href: urls.github, label: "GitHub" },
+    { href: urls.npm, label: "npm" },
+    { href: urls.changelogPage, label: "Changelog" },
+    ...(library.showcase ? [{ href: library.showcase, label: "Showcase" }] : []),
+  ];
 };

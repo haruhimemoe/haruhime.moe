@@ -2,14 +2,15 @@
  * @file tests/unit/constants/libraries.test.ts
  * @desc Libraries: the eight @haruhimemoe packages in order, unique names that are safe URL
  *       segments, isLibraryName never trusting prototype keys, libraryUrls pointing at the repo,
- *       npm, the changelog, the raw README and the docs page, and ui the only showcase.
+ *       npm, the changelog, the raw README and the docs page, ui the only showcase, and
+ *       libraryLinkItems building each card's links.
  * @author David @dvhsh (https://dvh.sh)
  * @created Fri Oct 2, 2026
- * @modified Sun Oct 4, 2026
+ * @modified Mon Oct 5, 2026
  */
 
 import { describe, expect, it } from "vitest";
-import { isLibraryName, LIBRARIES, libraryUrls } from "@/constants/libraries";
+import { isLibraryName, LIBRARIES, libraryLinkItems, libraryUrls } from "@/constants/libraries";
 
 describe("LIBRARIES", () => {
   it("lists the eight packages in order", () => {
@@ -63,6 +64,29 @@ describe("libraryUrls", () => {
       changelogPage: "/changelog/pool",
       readme: "https://raw.githubusercontent.com/haruhimemoe/pool/main/README.md",
     });
+  });
+});
+
+describe("libraryLinkItems", () => {
+  it("lists GitHub, npm and Changelog for a library without a showcase", () => {
+    const pool = LIBRARIES.find((lib) => lib.name === "pool");
+    if (!pool) throw new Error("pool missing");
+    expect(libraryLinkItems(pool).map((item) => item.label)).toEqual([
+      "GitHub",
+      "npm",
+      "Changelog",
+    ]);
+  });
+
+  it("ends with Showcase for a library that has one", () => {
+    const ui = LIBRARIES.find((lib) => lib.name === "ui");
+    if (!ui) throw new Error("ui missing");
+    expect(libraryLinkItems(ui).map((item) => item.label)).toEqual([
+      "GitHub",
+      "npm",
+      "Changelog",
+      "Showcase",
+    ]);
   });
 });
 
