@@ -91,7 +91,7 @@ export const KIND_SEGMENTS = {
     kind: "package",
     label: "Packages",
     description:
-      "What changed in each @haruhimemoe package (ui, next-kit, osu, hinai, pool and the rest), release by release, newest first.",
+      "What changed in each @haruhimemoe package (ui, next-kit, osu, mirror, pool and the rest), release by release, newest first.",
   },
 } as const satisfies Record<string, { kind: ChangelogKind; label: string; description: string }>;
 

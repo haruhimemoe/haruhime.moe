@@ -56,9 +56,9 @@ export const LIBRARIES: readonly Library[] = [
     "osu! API v2 client and zod shapes for beatmaps, beatmapsets and users, with browser-safe types, links, cover URLs and number formatting.",
   ),
   lib(
-    "hinai",
+    "mirror",
     333,
-    "Client for the hinai osu! beatmap mirror: difficulty metadata as osu shapes, availability checks and .osz downloads from the browser.",
+    "Downloads osu! beatmapsets (.osz) from whichever public mirror has them, hinai first, with failover, cooldowns, zip checks and the hinai client.",
   ),
   lib(
     "pool",
@@ -79,6 +79,21 @@ export const LIBRARIES: readonly Library[] = [
     "vcs",
     333,
     "Revisions, diffs and 3-way merges for JSON documents and text: line diffs, keyed-list aware JSON diffs, diff3 text merges and canonical hashing.",
+  ),
+  lib(
+    "time",
+    333,
+    "Timezones, weekly availability, match slot finding, regions and .ics files for tournament and event tools.",
+  ),
+  lib(
+    "crowdfund",
+    333,
+    "Crowdfunding state as data: goals, tiers, donations and refunds, minor-unit money math, progress, top donors and webhook helpers.",
+  ),
+  lib(
+    "invites",
+    333,
+    "Invites as consent: zod schemas for invites and their terms, a pure state machine, resend cooldowns, blocks, rate limits and inbox grouping.",
   ),
   lib(
     "brand",

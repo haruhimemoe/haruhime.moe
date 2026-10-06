@@ -13,10 +13,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - `/legal`, an index of the legal pages, and each legal page as Markdown at `/legal/<page>.md` (linked from `/llms.txt`, with a Copy as Markdown button on the page).
 - `/discord`, one invite link for every repo and page: it redirects to the Discord server.
 - `/libraries` and `/changelog` list `@haruhimemoe/vcs`, diffs and merges for JSON and text.
+- `/libraries` and `/changelog` list `@haruhimemoe/mirror`, `@haruhimemoe/time`, `@haruhimemoe/crowdfund` and `@haruhimemoe/invites`, with README banners for each.
 - `/libraries/<name>`: a side list of every library with its version, a "Libraries / <name>" trail, and an "On this page" list of the README's headings on wide screens.
 
 ### Changed
 
+- `/libraries` no longer lists `@haruhimemoe/hinai`, which is being deprecated: `@haruhimemoe/mirror` includes the hinai client.
 - `/changelog` and every page under it have a side list (All releases, then Apps, Packages and Claude plugin, each repo with its latest version) in place of the filter row; on phones it folds into a Contents menu above the page.
 - The `/changelog` feed groups releases by date. Each release is a card with the repo, the version and a count of its changes ("3 added, 1 fixed"); click the row to open its notes. Only the newest starts open.
 - `/changelog/<repo>`: every release can be closed, only the latest starts open, the notes keep a readable width, a "Changelog / <repo>" trail sits on top, a package links its library page, and wide screens list the versions on the right.

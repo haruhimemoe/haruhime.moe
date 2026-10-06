@@ -112,6 +112,10 @@ export const REPO_BANNERS: readonly RepoBanner[] = [
   repoBanner("bbcode", { tagline: "@haruhimemoe/bbcode: parse and render osu! BBCode" }),
   repoBanner("next-kit", { tagline: "@haruhimemoe/next-kit: Next.js server kit" }),
   repoBanner("vcs", { tagline: "@haruhimemoe/vcs: diffs and merges for JSON" }),
+  repoBanner("mirror", { tagline: "@haruhimemoe/mirror: .osz downloads with failover" }),
+  repoBanner("time", { tagline: "@haruhimemoe/time: timezones and match slots" }),
+  repoBanner("crowdfund", { tagline: "@haruhimemoe/crowdfund: crowdfunding as data" }),
+  repoBanner("invites", { tagline: "@haruhimemoe/invites: invites as consent" }),
   repoBanner("claude-plugin", { tagline: "haruhime: osu! skills for Claude" }),
 ];
 

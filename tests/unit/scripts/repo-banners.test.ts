@@ -34,6 +34,10 @@ const REPOS = [
   "bbcode",
   "next-kit",
   "vcs",
+  "mirror",
+  "time",
+  "crowdfund",
+  "invites",
   "claude-plugin",
 ];
 
