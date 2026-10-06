@@ -1,13 +1,21 @@
 /**
  * @file src/components/showcase/IconDemos.tsx
  * @desc /ui's Icons group: DiscordIcon, GitHubIcon, HaruhimeWordmark and HaruhimeWordmarkLink, at
- *       their default size and larger, and inside named links. Server-rendered.
+ *       their default size and larger, and inside named links; ChevronUpIcon and ChevronDownIcon
+ *       (ui 0.17.1), the pair SortableMoveButtons draws by default. Server-rendered.
  * @author David @dvhsh (https://dvh.sh)
  * @created Mon Sep 28, 2026
- * @modified Mon Sep 28, 2026
+ * @modified Mon Oct 5, 2026
  */
 
-import { DiscordIcon, GitHubIcon, HaruhimeWordmark, HaruhimeWordmarkLink } from "@haruhimemoe/ui";
+import {
+  ChevronDownIcon,
+  ChevronUpIcon,
+  DiscordIcon,
+  GitHubIcon,
+  HaruhimeWordmark,
+  HaruhimeWordmarkLink,
+} from "@haruhimemoe/ui";
 import { Demo } from "@/components/showcase/Demo";
 import { UI_REPO_URL } from "@/constants/showcase";
 import { SITE } from "@/constants/site";
@@ -68,6 +76,17 @@ export function IconDemos() {
         note="The wordmark linking to haruhime.moe, dimmed until hovered. The tool sites put it in their footer."
       >
         <HaruhimeWordmarkLink />
+      </Demo>
+
+      <Demo
+        name="ChevronUpIcon"
+        note="One half of the pair SortableMoveButtons draws by default, aria-hidden since the button carries the name."
+      >
+        <ChevronUpIcon className="size-5 text-c1" aria-hidden="true" />
+      </Demo>
+
+      <Demo name="ChevronDownIcon" note="The other half of the pair, same size and treatment.">
+        <ChevronDownIcon className="size-5 text-c1" aria-hidden="true" />
       </Demo>
     </>
   );

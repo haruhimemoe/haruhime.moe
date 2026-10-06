@@ -1,9 +1,10 @@
 /**
  * @file src/components/showcase/SortableDemos.tsx
- * @desc /ui's Sortable group (ui 0.15.0): SortableList with Up and Down, a two-list board on
- *       useSortable that refuses one move and says why, notes on SortableHandle,
- *       SortableMoveButtons and SortableLayer, moveItem, and the two indicator class strings
- *       drawn in each state. Sample data. A client component: the lists take callbacks.
+ * @desc /ui's Sortable group (ui 0.15.0, chevron move buttons since 0.17.1): SortableList with
+ *       its move buttons, a two-list board on useSortable that refuses one move and says why,
+ *       notes on SortableHandle, SortableMoveButtons and SortableLayer, moveItem, and the two
+ *       indicator class strings drawn in each state. Sample data. A client component: the lists
+ *       take callbacks.
  * @author David @dvhsh (https://dvh.sh)
  * @created Sun Oct 4, 2026
  * @modified Mon Oct 5, 2026
@@ -64,7 +65,7 @@ export function SortableDemos() {
     <>
       <Demo
         name="SortableList"
-        note="One list on its own hook. Drag a row by its grip with a mouse or a finger, or focus the grip and use Space and the arrow keys. Up and Down do the same in one press. Sample stages."
+        note="One list on its own hook. Drag a row by its grip with a mouse or a finger, or focus the grip and use Space and the arrow keys. The chevron buttons do the same in one press. Sample stages."
       >
         <SortableList
           items={stages}
@@ -125,7 +126,7 @@ export function SortableDemos() {
       />
       <Demo
         name="SortableMoveButtons"
-        note="Up and Down beside each row: the same move, read out, with focus kept on the button you pressed (or the other one at an end)."
+        note="Two chevron buttons beside each row (words with upText/downText): the same move, read out, with focus kept on the button you pressed (or the other one at an end)."
       />
       <Demo
         name="SortableLayer"
