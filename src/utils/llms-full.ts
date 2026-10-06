@@ -92,7 +92,7 @@ const RELEASES_PER_REPO = 3;
  * @param source {ChangelogSource} a repo
  * @param changelog {Changelog} its parsed changelog
  * @returns {LlmsFullPart} its page here as Markdown: the newest three releases, each section as a
- *   list
+ *   list, then the file's link definitions so reference-style links in the items resolve
  */
 export const changelogPart = (source: ChangelogSource, changelog: Changelog): LlmsFullPart => {
   const releases = changelog.releases.slice(0, RELEASES_PER_REPO);
@@ -109,7 +109,8 @@ export const changelogPart = (source: ChangelogSource, changelog: Changelog): Ll
             ]),
           ].join("\n"),
         )
-        .join("\n\n")
+        .join("\n\n") +
+      (changelog.references.length ? `\n\n${changelog.references.join("\n")}` : "")
     : "No releases yet.";
   return {
     title: `${source.label} changelog`,

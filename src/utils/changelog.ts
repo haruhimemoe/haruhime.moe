@@ -144,10 +144,11 @@ export const parseChangelog = (markdown: string): Changelog => {
     }
 
     const release = RELEASE.exec(line);
-    if (UNRELEASED.test(line) || release || OTHER_HEADING.test(line)) {
+    const isUnreleased = UNRELEASED.test(line);
+    if (isUnreleased || release || OTHER_HEADING.test(line)) {
       closeSection();
       const version = release?.[1];
-      if (UNRELEASED.test(line)) {
+      if (isUnreleased) {
         block = unreleased;
       } else if (
         version &&

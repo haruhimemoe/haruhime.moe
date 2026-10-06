@@ -69,7 +69,9 @@ describe("/changelog/[slug]", () => {
   it("links the repo, its releases, the file and the library page, and marks itself current", async () => {
     path.current = "/changelog/ui";
     render(await RepoChangelogPage(props("ui")));
-    expect(screen.getByRole("heading", { level: 1, name: "ui changelog" })).toBeInTheDocument();
+    const [h1, ...extra] = screen.getAllByRole("heading", { level: 1 });
+    expect(h1).toHaveAccessibleName("ui changelog");
+    expect(extra).toHaveLength(0);
     const trail = screen.getByRole("navigation", { name: "Breadcrumb" });
     expect(within(trail).getByRole("link", { name: "Changelog" })).toHaveAttribute(
       "href",

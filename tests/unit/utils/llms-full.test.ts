@@ -143,6 +143,30 @@ describe("buildLlmsFull with changelogs", () => {
     expect(empty).toContain("No releases yet.");
   });
 
+  it("keeps the link definitions so reference-style links in items resolve", async () => {
+    const osu = CHANGELOG_SOURCES.find(
+      (s) => s.slug === "osu",
+    ) as (typeof CHANGELOG_SOURCES)[number];
+    const withRefs = await buildLlmsFull([
+      {
+        source: osu,
+        changelog: {
+          unreleased: [],
+          releases: [
+            {
+              version: "0.2.0",
+              date: "2026-10-01",
+              sections: [{ name: "Added", items: ["[x] docs"] }],
+            },
+          ],
+          references: ["[x]: https://example.com/x"],
+        },
+      },
+    ]);
+    expect(withRefs).toContain("- [x] docs");
+    expect(withRefs).toContain("[x]: https://example.com/x");
+  });
+
   it("drops the parenthesized date for an undated release", async () => {
     const osu = CHANGELOG_SOURCES.find(
       (s) => s.slug === "osu",

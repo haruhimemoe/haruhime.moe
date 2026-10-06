@@ -8,10 +8,11 @@
  *       plugins and components read and write (heading ids, a code block's language class and
  *       fence meta, a callout blockquote's marker, figure/figcaption, an embed div), trusted
  *       (no `user-content-` id prefix) because our own READMEs are the only input, so this is
- *       defense in depth, not the trust boundary.
+ *       defense in depth, not the trust boundary. Only heading ids and `user-content-` ids pass,
+ *       every name is dropped, so raw HTML can't clobber a global.
  * @author David @dvhsh (https://dvh.sh)
  * @created Fri Oct 2, 2026
- * @modified Sun Oct 4, 2026
+ * @modified Tue Oct 6, 2026
  */
 
 import { Prose } from "@haruhimemoe/ui";
@@ -23,8 +24,33 @@ import rehypeRaw from "rehype-raw";
 import rehypeSanitize, { defaultSchema } from "rehype-sanitize";
 import remarkGfm from "remark-gfm";
 
-/** GitHub's schema plus what ui's plugins write. trusted: our own READMEs and changelogs only. */
-const README_SCHEMA = haruhimeSanitizeSchema(defaultSchema, { trusted: true });
+/** Attributes an unprefixed id or name could use to clobber a global (`window.x`, `document.x`). */
+const CLOBBERING = new Set(["id", "name"]);
+
+/**
+ * GitHub's schema plus what ui's plugins write. trusted (no prefix) so heading anchors match the
+ * Toc, but elsewhere `name` is dropped and an `id` must already start with `user-content-` (the
+ * footnote ids remark-gfm writes), so raw HTML in a README can't name a global.
+ */
+const TRUSTED = haruhimeSanitizeSchema(defaultSchema, { trusted: true });
+const README_SCHEMA = {
+  ...TRUSTED,
+  attributes: Object.fromEntries(
+    Object.entries(TRUSTED.attributes ?? {}).map(([tag, list]) => [
+      tag,
+      /^h[1-6]$/.test(tag)
+        ? list
+        : [
+            ...list.filter((entry) => !CLOBBERING.has(Array.isArray(entry) ? entry[0] : entry)),
+            ["id", /^user-content-/],
+          ],
+    ]),
+  ),
+};
+for (const tag of ["h1", "h2", "h3", "h4", "h5", "h6"]) {
+  const list = README_SCHEMA.attributes[tag] ?? [];
+  if (!list.includes("id")) README_SCHEMA.attributes[tag] = [...list, "id"];
+}
 
 /**
  * @function Markdown

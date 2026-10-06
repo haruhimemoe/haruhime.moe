@@ -57,9 +57,9 @@ describe("/changelog/kind/[kind]", () => {
     render(await ChangelogKindPage(props("packages")));
     const cards = screen.getAllByRole("heading", { level: 3 });
     expect(cards).toHaveLength(CHANGELOG_SOURCES.filter((s) => s.kind === "package").length);
-    expect(
-      screen.getByRole("heading", { level: 1, name: "Changelog: packages" }),
-    ).toBeInTheDocument();
+    const [h1, ...extra] = screen.getAllByRole("heading", { level: 1 });
+    expect(h1).toHaveAccessibleName("Changelog: packages");
+    expect(extra).toHaveLength(0);
     const [nav] = screen.getAllByRole("navigation", { name: "Changelogs" });
     expect(within(nav as HTMLElement).getByRole("link", { name: "All packages" })).toHaveAttribute(
       "aria-current",
