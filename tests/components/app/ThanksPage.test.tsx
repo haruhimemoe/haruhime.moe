@@ -50,7 +50,8 @@ describe("/thanks", () => {
     expect(screen.getByText("formerly RMarc")).toBeInTheDocument();
     expect(screen.getByText("formerly Sohlayce")).toBeInTheDocument();
     expect(screen.getByText("formerly token")).toBeInTheDocument();
-    expect(screen.getAllByText("osu!cafe")).toHaveLength(7);
+    expect(screen.getAllByText("osu!cafe")).toHaveLength(5);
+    expect(screen.getByText("my math tutor")).toBeInTheDocument();
     expect(screen.queryByText(/^(Online|Offline)$/)).toBeNull();
   });
 

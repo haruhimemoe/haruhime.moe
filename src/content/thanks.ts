@@ -126,7 +126,7 @@ export const THANKS: readonly ThanksEntry[] = [
     players: [
       {
         username: "enslow",
-        role: CAFE,
+        role: "my math tutor",
         osu: {
           id: 10651409,
           country: "US",
@@ -167,7 +167,7 @@ export const THANKS: readonly ThanksEntry[] = [
       },
       {
         username: "Drou",
-        role: CAFE,
+        role: "c'est un moment de pog",
         osu: {
           id: 415932,
           country: "CA",
