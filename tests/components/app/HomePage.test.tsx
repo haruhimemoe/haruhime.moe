@@ -1,12 +1,13 @@
 /**
  * @file tests/components/app/HomePage.test.tsx
  * @desc /: keyword title, canonical and og:image, one h1 naming players, mappers and hosts with
- *       no heading above it, the Evergreen Cup banner first, the four tools (pools labeled beta,
+ *       no heading above it, haruhime's player card linked to their osu! profile, the Evergreen
+ *       Cup banner first, the four tools (pools labeled beta,
  *       bb live, sheets coming soon) with task links, and the Organization (stable @id), Person
  *       and WebSite graph under the schema.org context.
  * @author David @dvhsh (https://dvh.sh)
  * @created Wed Sep 23, 2026
- * @modified Mon Oct 5, 2026
+ * @modified Tue Oct 6, 2026
  */
 
 import { render, screen, within } from "@testing-library/react";
@@ -32,6 +33,15 @@ describe("/", () => {
     expect(screen.getByText(/hellosu, haruhime here/)).toHaveTextContent(
       /bb is a BBCode editor for userpages and forum posts\.$/,
     );
+  });
+
+  it("shows haruhime's own player card, linked to their osu! profile", () => {
+    render(<HomePage />);
+    expect(screen.getByRole("link", { name: "Haruhime" })).toHaveAttribute(
+      "href",
+      "https://osu.ppy.sh/users/12231334",
+    );
+    expect(screen.getByText("makes these tools")).toBeInTheDocument();
   });
 
   it("shows packs, pools and bb live, pools in beta, and sheets coming soon", () => {

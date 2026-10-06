@@ -1,11 +1,12 @@
 /**
  * @file src/content/thanks.ts
  * @desc The /thanks list: people and projects the haruhime.moe tools lean on, and a player card
- *       snapshot for every osu! player named. The snapshot was read once from the osu! API on
- *       Sun Oct 4, 2026 and is kept by hand; the site never calls osu!.
+ *       snapshot for every osu! player named. The snapshots were read from osu! by hand (Sun Oct 4,
+ *       2026; Boolmaster Flex, _Kooly, SverdWyrd, Rikii and tkn on Tue Oct 6, 2026) and are kept
+ *       by hand; the site never calls osu!.
  * @author David @dvhsh (https://dvh.sh)
  * @created Wed Sep 23, 2026
- * @modified Sun Oct 4, 2026
+ * @modified Tue Oct 6, 2026
  */
 
 /** A player's osu! account as of the snapshot: what their card draws. */
@@ -97,6 +98,32 @@ export const THANKS: readonly ThanksEntry[] = [
           supporter: true,
         },
       },
+      {
+        username: "Boolmaster Flex",
+        role: EGC,
+        osu: {
+          id: 5394681,
+          country: "US",
+          cover:
+            "https://assets.ppy.sh/user-profile-covers/5394681/ed462d3a9062ed5653078e6f86461586631e488c5077a8bfe3e8412183b6ee80.png",
+          team: {
+            name: "osu! Pass Players",
+            flag: "https://assets.ppy.sh/teams/flag/2545/773542f8d4c0fb79aebc04d947ef38e826bbb368b7be4516e594e3ed0300af3c.png",
+          },
+          supporter: true,
+        },
+      },
+      {
+        username: "_Kooly",
+        formerly: "YukioUS",
+        role: EGC,
+        osu: {
+          id: 6366148,
+          country: "US",
+          cover:
+            "https://assets.ppy.sh/user-cover-presets/3/32ddb3eb261e38a82067f9ef4ea96c12f6abf8bd228e6413330f9d351420301b.jpeg",
+        },
+      },
     ],
   },
   {
@@ -168,10 +195,26 @@ export const THANKS: readonly ThanksEntry[] = [
             "https://assets.ppy.sh/user-profile-covers/11002548/4a64daf4000c6d48b7488420033055ba773877e84deb15a946b00446f4e6916e.jpeg",
         },
       },
-      // Wyrd and Rikki: accounts with these exact names exist, but nothing confirms they're the
-      // osu!cafe people yet, so their cards show the name only.
-      { username: "Wyrd", role: CAFE },
-      { username: "Rikki", role: CAFE },
+      {
+        username: "SverdWyrd",
+        role: CAFE,
+        osu: {
+          id: 10996443,
+          country: "FR",
+          cover:
+            "https://assets.ppy.sh/user-profile-covers/10996443/775dfe0dd17814bac2cddbb7e474b5b4b3cbd20d79a4486889387521ea281b34.jpeg",
+        },
+      },
+      {
+        username: "Rikii",
+        role: CAFE,
+        osu: {
+          id: 3085123,
+          country: "NL",
+          cover:
+            "https://assets.ppy.sh/user-profile-covers/3085123/ced1830ecaf640af51f00ad324295916a2e8ca68ddb0768bb35d7527b2aa5996.jpeg",
+        },
+      },
     ],
   },
   {
@@ -217,8 +260,23 @@ export const THANKS: readonly ThanksEntry[] = [
     name: "token",
     url: "https://github.com/token03/bobert",
     line: "BoBERT, and the okay to use its map embeddings for similar-map suggestions in pools.",
-    // The osu! account named "Token" doesn't look like token03, so the card shows the name only.
-    players: [{ username: "token", role: "BoBERT" }],
+    players: [
+      {
+        username: "tkn",
+        formerly: "token",
+        role: "BoBERT",
+        osu: {
+          id: 4881051,
+          country: "CA",
+          cover:
+            "https://assets.ppy.sh/user-profile-covers/4881051/bcb1e94f081f6d72de9d9b3d7ea99de35d6830e48be07172e28213d1d6e9ed79.png",
+          team: {
+            name: "JungroanFanboys",
+            flag: "https://assets.ppy.sh/teams/flag/830/e6dc72bd27a83bf53651b797d650719bd338a2b48306c18b4dfa893711f2cc3c.jpeg",
+          },
+        },
+      },
+    ],
   },
   {
     name: "the hinai beatmap mirror",

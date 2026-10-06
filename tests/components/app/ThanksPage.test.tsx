@@ -1,10 +1,10 @@
 /**
  * @file tests/components/app/ThanksPage.test.tsx
  * @desc /thanks: title, one h1, every entry from the thanks list, and a player card for every
- *       osu! player (profile links for the ones with an account, name only for the rest).
+ *       osu! player, each linked to their osu! profile.
  * @author David @dvhsh (https://dvh.sh)
  * @created Wed Sep 23, 2026
- * @modified Mon Oct 5, 2026
+ * @modified Tue Oct 6, 2026
  */
 
 import { render, screen, within } from "@testing-library/react";
@@ -38,20 +38,18 @@ describe("/thanks", () => {
   it("draws a player card for every osu! player, linked to the profile when known", () => {
     const { container } = render(<ThanksPage />);
     const profiles = [...container.querySelectorAll('a[href^="https://osu.ppy.sh/users/"]')];
-    expect(profiles).toHaveLength(11);
+    expect(profiles).toHaveLength(16);
     expect(screen.getByRole("link", { name: "peppy" })).toHaveAttribute(
       "href",
       "https://osu.ppy.sh/users/2",
     );
-    for (const name of ["Wyrd", "Rikki", "token"]) {
-      expect(screen.getAllByText(name).length).toBeGreaterThan(0);
-      const cardLinks = screen
-        .queryAllByRole("link", { name })
-        .filter((link) => link.getAttribute("href")?.startsWith("https://osu.ppy.sh/users/"));
-      expect(cardLinks).toHaveLength(0);
-    }
+    expect(screen.getByRole("link", { name: "tkn" })).toHaveAttribute(
+      "href",
+      "https://osu.ppy.sh/users/4881051",
+    );
     expect(screen.getByText("formerly RMarc")).toBeInTheDocument();
     expect(screen.getByText("formerly Sohlayce")).toBeInTheDocument();
+    expect(screen.getByText("formerly token")).toBeInTheDocument();
     expect(screen.getAllByText("osu!cafe")).toHaveLength(7);
     expect(screen.queryByText(/^(Online|Offline)$/)).toBeNull();
   });

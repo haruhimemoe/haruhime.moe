@@ -4,7 +4,7 @@
  *       snapshots (osu! ids, countries, osu!-hosted images, a role each).
  * @author David @dvhsh (https://dvh.sh)
  * @created Wed Sep 23, 2026
- * @modified Sun Oct 4, 2026
+ * @modified Tue Oct 6, 2026
  */
 
 import { describe, expect, it } from "vitest";
@@ -37,9 +37,9 @@ describe("THANKS", () => {
 
   const players = THANKS.flatMap((entry) => entry.players ?? []);
 
-  it("has a card for every osu! player, 11 with an account and 3 name-only", () => {
-    expect(players).toHaveLength(14);
-    expect(players.filter((player) => player.osu)).toHaveLength(11);
+  it("has a card for every osu! player, all 16 with an account", () => {
+    expect(players).toHaveLength(16);
+    expect(players.filter((player) => player.osu)).toHaveLength(16);
   });
 
   it("has unique usernames and osu! ids", () => {
