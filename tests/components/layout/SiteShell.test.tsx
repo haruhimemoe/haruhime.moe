@@ -4,16 +4,22 @@
  *       the four tools sit in the Tools nav with packs and pools linked; the footer's Tools /
  *       haruhime.moe / Legal columns, unreleased tools as plain text, the Discord and GitHub icon
  *       links (Discord as an icon only, not in a column), the trademark notice, and no
- *       parent-site wordmark.
+ *       parent-site wordmark. AppPalette's CommandPalette needs next/navigation, mocked here as
+ *       in ContentDemos.test.tsx.
  * @author David @dvhsh (https://dvh.sh)
  * @created Wed Sep 23, 2026
- * @modified Sun Oct 4, 2026
+ * @modified Mon Oct 5, 2026
  */
 
 import { render, screen, within } from "@testing-library/react";
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 import { SiteShell } from "@/components/layout/SiteShell";
 import { SITE } from "@/constants/site";
+
+vi.mock("next/navigation.js", () => ({
+  useRouter: () => ({ push: vi.fn() }),
+  usePathname: () => "/",
+}));
 
 const renderShell = () =>
   render(

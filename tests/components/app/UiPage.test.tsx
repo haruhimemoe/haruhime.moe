@@ -8,8 +8,11 @@
  *       tested beside their own files under tests/components/showcase/. The Palette group's
  *       CommandPalette needs next/navigation's useRouter/usePathname, which aren't mounted
  *       outside a real Next tree, so this file mocks next/navigation.js the way ui's own
- *       CommandPalette tests do. /ui shows CodeBlock, an async Server Component, so every test
- *       renders the page inside Suspense under `act` (renderUi), the way Markdown.test.tsx does.
+ *       CommandPalette tests do. CommandPaletteDemos no longer mounts its own CommandPalette (it
+ *       reuses the one AppPalette mounts site-wide in SiteShell, to keep the Ctrl K/Cmd K hotkey
+ *       page-global), so renderUi mounts AppPalette alongside UiPage the way SiteShell does in
+ *       production. /ui shows CodeBlock, an async Server Component, so every test renders the
+ *       page inside Suspense under `act` (renderUi), the way Markdown.test.tsx does.
  * @author David @dvhsh (https://dvh.sh)
  * @created Wed Sep 23, 2026
  * @modified Mon Oct 5, 2026
@@ -21,6 +24,7 @@ import { act, fireEvent, render, screen, within } from "@testing-library/react";
 import { Suspense } from "react";
 import { describe, expect, it, vi } from "vitest";
 import UiPage, { metadata } from "@/app/ui/page";
+import { AppPalette } from "@/components/layout/AppPalette";
 import { expectNoAxeViolations } from "../../helpers/axe";
 
 vi.mock("next/navigation.js", () => ({
@@ -56,6 +60,7 @@ const renderUi = async () => {
   await act(async () => {
     result = render(
       <Suspense fallback={null}>
+        <AppPalette />
         <UiPage />
       </Suspense>,
     );
