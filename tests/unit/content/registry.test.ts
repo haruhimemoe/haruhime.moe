@@ -5,7 +5,7 @@
  *       pages only, each with a search title that fits.
  * @author David @dvhsh (https://dvh.sh)
  * @created Sun Oct 4, 2026
- * @modified Sun Oct 4, 2026
+ * @modified Mon Oct 5, 2026
  */
 
 import { contentFileDrift } from "@haruhimemoe/next-kit/docs/files";
@@ -23,7 +23,13 @@ it("registry, loaders and files agree", () => {
 
 it("has legal only: no docs (no API) and no guides", () => {
   expect(CONTENT.sections).toEqual(["legal"]);
-  expect(CONTENT.entries.legal.map((e) => e.slug)).toEqual(["disclaimer", "terms", "privacy"]);
+  expect(CONTENT.entries.legal.map((e) => e.slug)).toEqual([
+    "terms",
+    "privacy",
+    "your-privacy-rights",
+    "copyright",
+    "disclaimers",
+  ]);
 });
 
 it("gives every legal page a search title under 60 characters with the suffix", () => {

@@ -3,7 +3,7 @@
  * @desc TextDemos: TextLink inside and off the site, and linkClasses on a download link.
  * @author David @dvhsh (https://dvh.sh)
  * @created Mon Sep 28, 2026
- * @modified Sun Oct 4, 2026
+ * @modified Mon Oct 5, 2026
  */
 
 import { render, screen } from "@testing-library/react";
@@ -13,9 +13,9 @@ import { TextDemos } from "@/components/showcase/TextDemos";
 describe("TextDemos", () => {
   it("links with TextLink inside and off the site", () => {
     render(<TextDemos />);
-    expect(screen.getAllByRole("link", { name: "disclaimer" })[0]).toHaveAttribute(
+    expect(screen.getAllByRole("link", { name: "disclaimers" })[0]).toHaveAttribute(
       "href",
-      "/legal/disclaimer",
+      "/legal/disclaimers",
     );
     expect(screen.getByRole("link", { name: "source on GitHub" })).toHaveAttribute(
       "href",

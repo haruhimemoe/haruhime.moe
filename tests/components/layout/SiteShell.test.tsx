@@ -138,9 +138,11 @@ describe("SiteShell footer", () => {
     const legal = within(footer).getByRole("region", { name: "Legal" });
     const legalLinks = within(legal).getAllByRole("link");
     expect(legalLinks.map((link) => [link.textContent, link.getAttribute("href")])).toEqual([
-      ["Disclaimer", "/legal/disclaimer"],
       ["Terms", "/legal/terms"],
       ["Privacy", "/legal/privacy"],
+      ["Your Privacy Rights", "/legal/your-privacy-rights"],
+      ["Copyright", "/legal/copyright"],
+      ["Disclaimers", "/legal/disclaimers"],
     ]);
   });
 

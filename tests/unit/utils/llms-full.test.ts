@@ -8,7 +8,7 @@
  *       skipped for a repo that failed, no documents at all with no argument.
  * @author David @dvhsh (https://dvh.sh)
  * @created Sat Oct 3, 2026
- * @modified Sun Oct 4, 2026
+ * @modified Mon Oct 5, 2026
  */
 
 import { beforeAll, describe, expect, it } from "vitest";
@@ -30,9 +30,11 @@ describe("buildLlmsFull", () => {
       `${SITE.name}: brand, libraries, changelogs and legal`,
       "Brand",
       ...LIBRARIES.map((library) => library.pkg),
-      "Disclaimer",
       "Terms",
       "Privacy",
+      "Your Privacy Rights",
+      "Copyright",
+      "Disclaimers",
     ]);
     expect(text).toContain(`> ${SITE.description}`);
   });
@@ -49,9 +51,11 @@ describe("buildLlmsFull", () => {
     for (const library of LIBRARIES) {
       expect(text).toContain(`Source: ${SITE.url}/libraries/${library.name}`);
     }
-    expect(text).toContain(`Source: ${SITE.url}/legal/disclaimer`);
     expect(text).toContain(`Source: ${SITE.url}/legal/terms`);
     expect(text).toContain(`Source: ${SITE.url}/legal/privacy`);
+    expect(text).toContain(`Source: ${SITE.url}/legal/your-privacy-rights`);
+    expect(text).toContain(`Source: ${SITE.url}/legal/copyright`);
+    expect(text).toContain(`Source: ${SITE.url}/legal/disclaimers`);
   });
 
   it("carries the brand page's real facts: the name rule, the colors and the osu! notice", () => {
@@ -74,6 +78,8 @@ describe("buildLlmsFull", () => {
     expect(text).toContain("## No warranty");
     expect(text).toContain("## What this site collects");
     expect(text).toContain("## Library stats");
+    expect(text).toContain("## Your rights under the GDPR");
+    expect(text).toContain("## Copyright and DMCA");
   });
 
   it("carries the terms text exactly once, from content/legal/terms.mdx", () => {

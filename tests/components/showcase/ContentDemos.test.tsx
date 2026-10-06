@@ -5,7 +5,7 @@
  *       .md mirror. ContentNav needs next/navigation, mocked here as in UiPage.test.tsx.
  * @author David @dvhsh (https://dvh.sh)
  * @created Sun Oct 4, 2026
- * @modified Sun Oct 4, 2026
+ * @modified Mon Oct 5, 2026
  */
 
 import { fireEvent, render, screen } from "@testing-library/react";
@@ -20,7 +20,7 @@ vi.mock("next/navigation.js", () => ({
 describe("ContentDemos", () => {
   it("filters the legal pages as you type", () => {
     render(<ContentDemos />);
-    expect(screen.getByText("3 pages.")).toBeInTheDocument();
+    expect(screen.getByText("5 pages.")).toBeInTheDocument();
     fireEvent.change(screen.getByLabelText("Search the legal pages"), {
       target: { value: "cookies" },
     });
@@ -30,7 +30,7 @@ describe("ContentDemos", () => {
   it("works searchContent's sample out from the registry", () => {
     render(<ContentDemos />);
     expect(
-      screen.getByText(/searchContent\(items, "ppy"\) gives Disclaimer\./),
+      screen.getByText(/searchContent\(items, "ppy"\) gives Disclaimers\./),
     ).toBeInTheDocument();
   });
 

@@ -1,7 +1,7 @@
 /**
  * @file src/app/page.tsx
  * @desc Homepage: the Evergreen Cup banner up top, the h1 and a short hello saying what the site
- *       is (the ppy line lives in the footer and /legal/disclaimer), and the tools (packs live, pools
+ *       is (the ppy line lives in the footer and /legal/disclaimers), and the tools (packs live, pools
  *       live in beta, bb live, sheets coming soon), each with a link to its main task. Static. Also the site's JSON-LD: the haruhime.moe Organization
  *       (next-kit's HARUHIME_ORG, @id https://www.haruhime.moe/#organization), haruhime as its
  *       founder, and the WebSite with each live tool's site as a part.

@@ -6,7 +6,7 @@
  *       tool going live fails here until its links are added to the MDX.
  * @author David @dvhsh (https://dvh.sh)
  * @created Sun Oct 4, 2026
- * @modified Sun Oct 4, 2026
+ * @modified Mon Oct 5, 2026
  */
 
 import { readContentMarkdown } from "@haruhimemoe/next-kit/docs/files";
@@ -23,9 +23,9 @@ const headings = (md: string): string[] =>
 
 const MAIL = `[contact@haruhime.moe](mailto:contact@haruhime.moe)`;
 
-describe("disclaimer", () => {
+describe("disclaimers", () => {
   it("keeps its sections and clauses", async () => {
-    const md = await read("disclaimer");
+    const md = await read("disclaimers");
     expect(headings(md)).toEqual([
       "Not affiliated",
       "The osu! API and the hinai mirror",
@@ -71,6 +71,33 @@ describe("privacy", () => {
     expect(md).toContain("has no accounts, sets no cookies, runs no analytics");
     expect(md).toContain("[Vercel's privacy policy](https://vercel.com/legal/privacy-policy)");
     expect(md).toContain("your browser never contacts npm or GitHub");
+    expect(md).toContain(MAIL);
+  });
+});
+
+describe("your-privacy-rights", () => {
+  it("keeps its sections and clauses", async () => {
+    const md = await read("your-privacy-rights");
+    expect(headings(md)).toEqual([
+      "Your rights",
+      "Your rights under the GDPR",
+      "Your rights under the CCPA",
+      "Contact",
+    ]);
+    expect(md).toContain("itself keeps nothing of yours");
+    expect(md).toContain("We don't sell or share personal information.");
+    expect(md).toContain("We honor Global Privacy Control signals.");
+    expect(md).toContain(MAIL);
+  });
+});
+
+describe("copyright", () => {
+  it("keeps its sections and clauses", async () => {
+    const md = await read("copyright");
+    expect(headings(md)).toEqual(["What we host", "Copyright and DMCA"]);
+    expect(md).toContain("hosts no beatmaps, maps or other user files itself");
+    expect(md).toContain("A takedown notice should include");
+    expect(md).toContain("A counter-notice should include");
     expect(md).toContain(MAIL);
   });
 });

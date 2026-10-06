@@ -5,7 +5,7 @@
  *       mirrors are tested in tests/unit/app/content-routes.test.ts.
  * @author David @dvhsh (https://dvh.sh)
  * @created Sun Oct 4, 2026
- * @modified Sun Oct 4, 2026
+ * @modified Mon Oct 5, 2026
  */
 
 import { render, screen } from "@testing-library/react";
@@ -17,7 +17,7 @@ import { expectNoAxeViolations } from "../../helpers/axe";
 describe("/legal", () => {
   it("has its title and one h1", () => {
     expect(metadata.title).toEqual({
-      absolute: "Legal: disclaimer, terms and privacy · haruhime.moe",
+      absolute: "Legal: terms, privacy and disclaimers · haruhime.moe",
     });
     render(<LegalIndexPage />);
     expect(screen.getAllByRole("heading", { level: 1 })).toHaveLength(1);
@@ -27,7 +27,7 @@ describe("/legal", () => {
   it("links every legal page with its description", () => {
     render(<LegalIndexPage />);
     for (const entry of CONTENT.entries.legal) {
-      expect(screen.getByRole("link", { name: new RegExp(entry.title) })).toHaveAttribute(
+      expect(screen.getByRole("link", { name: new RegExp(`^${entry.title}`) })).toHaveAttribute(
         "href",
         `/legal/${entry.slug}`,
       );
