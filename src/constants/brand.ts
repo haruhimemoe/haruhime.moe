@@ -7,7 +7,7 @@
  *       come from @haruhimemoe/brand's brandPageData.
  * @author David @dvhsh (https://dvh.sh)
  * @created Wed Sep 23, 2026
- * @modified Sun Oct 4, 2026
+ * @modified Tue Oct 6, 2026
  */
 
 import { palette, TOKENS, type Token } from "@haruhimemoe/brand/palette";
@@ -111,6 +111,7 @@ export const REPO_BANNERS: readonly RepoBanner[] = [
   repoBanner("compliance", { tagline: "@haruhimemoe/compliance: osu! content rule checks" }),
   repoBanner("bbcode", { tagline: "@haruhimemoe/bbcode: parse and render osu! BBCode" }),
   repoBanner("next-kit", { tagline: "@haruhimemoe/next-kit: Next.js server kit" }),
+  repoBanner("vcs", { tagline: "@haruhimemoe/vcs: diffs and merges for JSON" }),
   repoBanner("claude-plugin", { tagline: "haruhime: osu! skills for Claude" }),
 ];
 

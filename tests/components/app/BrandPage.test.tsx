@@ -7,7 +7,7 @@
  *       no axe violations.
  * @author David @dvhsh (https://dvh.sh)
  * @created Wed Sep 23, 2026
- * @modified Sun Oct 4, 2026
+ * @modified Tue Oct 6, 2026
  */
 
 import { palette } from "@haruhimemoe/brand/palette";
@@ -64,7 +64,7 @@ describe("/brand", () => {
     render(<BrandPage />);
     const section = screen.getByRole("region", { name: "README banners" });
     const items = within(section).getAllByRole("listitem");
-    expect(items).toHaveLength(14);
+    expect(items).toHaveLength(15);
     REPO_BANNERS.forEach((banner, index) => {
       const item = within(items[index] as HTMLElement);
       expect(item.getByRole("link", { name: `haruhimemoe/${banner.repo}` })).toHaveAttribute(

@@ -107,11 +107,11 @@ describe("/", () => {
           "@type": "Organization",
           name: "haruhime.moe",
           url: "https://www.haruhime.moe",
-          email: "contact@haruhime.moe",
+          email: "haruhime@haruhime.moe",
           logo: "https://www.haruhime.moe/apple-icon.png",
           "@id": "https://www.haruhime.moe/#organization",
           founder: { "@id": "https://www.haruhime.moe/#person" },
-          sameAs: expect.arrayContaining(["https://discord.gg/bKy9kjMV4y"]),
+          sameAs: expect.arrayContaining(["https://haruhime.moe/discord"]),
         }),
         expect.objectContaining({
           "@type": "WebSite",

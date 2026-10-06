@@ -283,7 +283,7 @@ describe("/ui", () => {
     }
     expect(within(discord).getByRole("link", { name: "haruhime.moe on Discord" })).toHaveAttribute(
       "href",
-      "https://discord.gg/bKy9kjMV4y",
+      "https://haruhime.moe/discord",
     );
   });
 

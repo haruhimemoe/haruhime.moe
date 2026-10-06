@@ -23,7 +23,7 @@ const read = async (slug: string): Promise<string> =>
 const headings = (md: string): string[] =>
   [...md.matchAll(/^## (.+)$/gm)].map((m) => m[1] as string);
 
-const MAIL = `[contact@haruhime.moe](mailto:contact@haruhime.moe)`;
+const MAIL = `[haruhime@haruhime.moe](mailto:haruhime@haruhime.moe)`;
 
 describe("disclaimers", () => {
   it("keeps its sections and clauses", async () => {

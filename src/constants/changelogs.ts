@@ -1,13 +1,13 @@
 /**
  * @file src/constants/changelogs.ts
  * @desc Every repo whose CHANGELOG.md /changelog shows: this site and the live tools (apps), the
- *       eight packages, and the Claude plugin. Built from TOOLS and LIBRARIES, so a tool shows up
+ *       nine packages, and the Claude plugin. Built from TOOLS and LIBRARIES, so a tool shows up
  *       the day it gets a url and a new package the day it joins LIBRARIES. changelogUrls derives
  *       each repo's raw file, GitHub pages and page here. KIND_SEGMENTS names the
- *       /changelog/kind/<segment> filters; CHANGELOG_FILTERS is the filter nav, in order.
+ *       /changelog/kind/<segment> filters; KIND_HEADINGS names each kind's group in the nav.
  * @author David @dvhsh (https://dvh.sh)
  * @created Sun Oct 4, 2026
- * @modified Sun Oct 4, 2026
+ * @modified Tue Oct 6, 2026
  */
 
 import { LIBRARIES } from "@/constants/libraries";
@@ -106,12 +106,9 @@ export type KindSegment = keyof typeof KIND_SEGMENTS;
 export const isKindSegment = (value: string): value is KindSegment =>
   Object.hasOwn(KIND_SEGMENTS, value);
 
-/** The filter nav: All, each kind, then every repo's page. */
-export const CHANGELOG_FILTERS: readonly { readonly href: string; readonly label: string }[] = [
-  { href: "/changelog", label: "All" },
-  ...(Object.keys(KIND_SEGMENTS) as KindSegment[]).map((segment) => ({
-    href: `/changelog/kind/${segment}`,
-    label: KIND_SEGMENTS[segment].label,
-  })),
-  ...CHANGELOG_SOURCES.map((entry) => ({ href: changelogUrls(entry).page, label: entry.label })),
-];
+/** The changelog nav's group headings, in nav order: apps, packages, then the plugin. */
+export const KIND_HEADINGS = {
+  app: "Apps",
+  package: "Packages",
+  plugin: "Claude plugin",
+} as const satisfies Record<ChangelogKind, string>;

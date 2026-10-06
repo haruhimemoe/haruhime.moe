@@ -1,6 +1,6 @@
 /**
  * @file tests/unit/scripts/repo-banners.test.ts
- * @desc scripts/repo-banners.ts: its list is exactly the 14 haruhimemoe repos, each writes
+ * @desc scripts/repo-banners.ts: its list is exactly the 15 haruhimemoe repos, each writes
  *       public/brand/repos/<repo>-banner.svg and <repo>-banner-on-light.svg, tools draw their own
  *       product and packages the parent's hue with an "@haruhimemoe/<name>: " tagline
  *       (claude-plugin's opens "haruhime: "), each entry's tagline is the one its banner draws,
@@ -8,7 +8,7 @@
  *       and .github's banners (served through next.config's rewrite) are haruhime.moe's.
  * @author David @dvhsh (https://dvh.sh)
  * @created Fri Sep 25, 2026
- * @modified Mon Sep 28, 2026
+ * @modified Tue Oct 6, 2026
  */
 
 import { readFileSync } from "node:fs";
@@ -33,6 +33,7 @@ const REPOS = [
   "compliance",
   "bbcode",
   "next-kit",
+  "vcs",
   "claude-plugin",
 ];
 
@@ -48,7 +49,7 @@ const inkWidth = (text: string, weight: 400 | 800, size: number): number => {
 };
 
 describe("REPO_BANNERS", () => {
-  it("covers exactly the 14 haruhimemoe repos, in order", () => {
+  it("covers exactly the 15 haruhimemoe repos, in order", () => {
     expect(REPO_BANNERS.map((banner) => banner.repo)).toEqual(REPOS);
   });
 

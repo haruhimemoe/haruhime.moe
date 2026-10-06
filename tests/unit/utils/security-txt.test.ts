@@ -4,7 +4,7 @@
  *       one trailing newline.
  * @author David @dvhsh (https://dvh.sh)
  * @created Wed Sep 23, 2026
- * @modified Mon Sep 28, 2026
+ * @modified Tue Oct 6, 2026
  */
 
 import { describe, expect, it } from "vitest";
@@ -17,7 +17,7 @@ describe("buildSecurityTxt", () => {
 
   it("has the RFC 9116 fields in order", () => {
     expect(lines).toEqual([
-      "Contact: mailto:contact@haruhime.moe",
+      "Contact: mailto:haruhime@haruhime.moe",
       "Expires: 2027-09-23T00:00:00.000Z",
       "Preferred-Languages: en",
       "Canonical: https://www.haruhime.moe/.well-known/security.txt",
@@ -31,7 +31,7 @@ describe("buildSecurityTxt", () => {
   });
 
   it("only uses absolute links", () => {
-    expect(text).toContain("mailto:contact@haruhime.moe");
+    expect(text).toContain("mailto:haruhime@haruhime.moe");
     expect(text).toContain("https://www.haruhime.moe/.well-known/security.txt");
     expect(text).toContain("https://github.com/haruhimemoe/haruhime.moe/blob/main/SECURITY.md");
   });

@@ -1,13 +1,13 @@
 # haruhime.moe
 
-> Source for https://www.haruhime.moe, the home page for haruhime's osu! tools for players, mappers and tournament hosts (packs and bb, an osu! BBCode editor, are live; pools, a mappool builder, is live in beta; sheets is coming soon). The site also has a thanks list, the brand kit, the libraries the tools are built from (the eight @haruhimemoe packages with live npm and GitHub numbers, and each README as a docs page), a showcase of every @haruhimemoe/ui component, contact details, a disclaimer, terms and a privacy policy. It is a static Next.js 16 site built from @haruhimemoe/ui, run with Bun. MIT license. The live site serves its own llms.txt at https://www.haruhime.moe/llms.txt; that one is the canonical guide to the pages and tools. This file covers the repository.
+> Source for https://www.haruhime.moe, the home page for haruhime's osu! tools for players, mappers and tournament hosts (packs and bb, an osu! BBCode editor, are live; pools, a mappool builder, is live in beta; sheets is coming soon). The site also has a thanks list, the brand kit, the libraries the tools are built from (the nine @haruhimemoe packages with live npm and GitHub numbers, and each README as a docs page), a showcase of every @haruhimemoe/ui component, contact details, a disclaimer, terms and a privacy policy. It is a static Next.js 16 site built from @haruhimemoe/ui, run with Bun. MIT license. The live site serves its own llms.txt at https://www.haruhime.moe/llms.txt; that one is the canonical guide to the pages and tools. This file covers the repository.
 
 ## Site
 
 - [llms.txt on the live site](https://www.haruhime.moe/llms.txt): the canonical guide to the site's pages and tools, built from the same data as the pages
 - [llms-full.txt on the live site](https://www.haruhime.moe/llms-full.txt): the brand page, every library's docs page, each repo's newest changelog entries and every legal page, each in full
 - [haruhime.moe](https://www.haruhime.moe/): the live site
-- [Libraries](https://www.haruhime.moe/libraries): the eight @haruhimemoe packages with version, downloads, stars and latest release, each linking its docs page
+- [Libraries](https://www.haruhime.moe/libraries): the nine @haruhimemoe packages with version, downloads, stars and latest release, each linking its docs page
 - [Changelog](https://www.haruhime.moe/changelog): every haruhimemoe repo's releases, newest first, filterable to apps, packages or one repo, each with its own page at `/changelog/<repo>`
 - [UI showcase](https://www.haruhime.moe/ui): every @haruhimemoe/ui component rendered in its states
 
@@ -25,7 +25,7 @@
 - [src/constants/site.ts](https://github.com/haruhimemoe/haruhime.moe/blob/main/src/constants/site.ts): site identity and PAGES, every page's label, search title, description and last-updated day (read by page metadata, the sitemap, /llms.txt and the footer)
 - [src/constants/seo.ts](https://github.com/haruhimemoe/haruhime.moe/blob/main/src/constants/seo.ts): SEO_SITE, the site as @haruhimemoe/next-kit/seo sees it (metadata, robots, sitemap, JSON-LD)
 - [src/utils/llms-txt.ts](https://github.com/haruhimemoe/haruhime.moe/blob/main/src/utils/llms-txt.ts): builds the live /llms.txt with next-kit's contentLlmsTxt
-- [src/constants/libraries.ts](https://github.com/haruhimemoe/haruhime.moe/blob/main/src/constants/libraries.ts): the eight packages /libraries lists, each one's description and links
+- [src/constants/libraries.ts](https://github.com/haruhimemoe/haruhime.moe/blob/main/src/constants/libraries.ts): the nine packages /libraries lists, each one's description and links
 - [src/lib/libraries/](https://github.com/haruhimemoe/haruhime.moe/tree/main/src/lib/libraries): the npm and GitHub lookups and the README fetch behind /libraries, cached for a day, null on failure
 - [src/utils/readme.ts](https://github.com/haruhimemoe/haruhime.moe/blob/main/src/utils/readme.ts): cleans a README for the docs page (banner and title dropped, relative links to GitHub)
 - [src/constants/content.ts](https://github.com/haruhimemoe/haruhime.moe/blob/main/src/constants/content.ts): the content registry, every legal page in content/legal/ with its title, description and date

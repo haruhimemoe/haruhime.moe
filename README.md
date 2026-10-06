@@ -13,7 +13,7 @@ Live at https://www.haruhime.moe.
 | [`/`](https://www.haruhime.moe/) | The tools, an Evergreen Cup banner and a short hello |
 | [`/thanks`](https://www.haruhime.moe/thanks) | The people and projects the tools lean on |
 | [`/brand`](https://www.haruhime.moe/brand) | The name, logos and banner files, colors, type, do's and don'ts, every haruhimemoe repo's README banner and the tool icons |
-| [`/libraries`](https://www.haruhime.moe/libraries) | The eight @haruhimemoe packages: description, install line, npm version and downloads, GitHub stars and latest release, links |
+| [`/libraries`](https://www.haruhime.moe/libraries) | The nine @haruhimemoe packages: description, install line, npm version and downloads, GitHub stars and latest release, links |
 | [`/libraries/<name>`](https://www.haruhime.moe/libraries/ui) | A package's README, rendered from its repo's main branch, under its version, license, install line and links |
 | [`/changelog`](https://www.haruhime.moe/changelog) | Every haruhimemoe repo's releases in one feed, newest first, filterable to apps, packages or one repo |
 | [`/changelog/<repo>`](https://www.haruhime.moe/changelog/haruhime.moe) | One repo's whole changelog, with what's on main but not released yet on top |
@@ -69,7 +69,7 @@ The logos, icons, link preview, palette and repo banners in `public/brand/` and 
 
 ## Contributing
 
-Found a problem with the site? Open an [issue](https://github.com/haruhimemoe/haruhime.moe/issues), or see [CONTRIBUTING.md](./CONTRIBUTING.md) to send a fix. Report security problems privately through GitHub's [private vulnerability reporting](https://github.com/haruhimemoe/haruhime.moe/security/advisories/new) or to contact@haruhime.moe ([SECURITY.md](./SECURITY.md)). Changes are listed in [CHANGELOG.md](./CHANGELOG.md).
+Found a problem with the site? Open an [issue](https://github.com/haruhimemoe/haruhime.moe/issues), or see [CONTRIBUTING.md](./CONTRIBUTING.md) to send a fix. Report security problems privately through GitHub's [private vulnerability reporting](https://github.com/haruhimemoe/haruhime.moe/security/advisories/new) or to haruhime@haruhime.moe ([SECURITY.md](./SECURITY.md)). Changes are listed in [CHANGELOG.md](./CHANGELOG.md).
 
 ## License
 

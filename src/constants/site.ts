@@ -6,7 +6,7 @@
  *       sitemap, /llms.txt and the footer read.
  * @author David @dvhsh (https://dvh.sh)
  * @created Wed Sep 23, 2026
- * @modified Sun Oct 4, 2026
+ * @modified Tue Oct 6, 2026
  */
 
 /** Who and where the site is. Shared by metadata, JSON-LD, the footer and the contact page. */
@@ -16,9 +16,9 @@ export const SITE = {
   url: "https://www.haruhime.moe",
   description:
     "haruhime's free osu! tools for players, mappers and tournament hosts: packs downloads a mappool as one zip or torrent, pools builds mappools, bb edits BBCode.",
-  contactEmail: "contact@haruhime.moe",
+  contactEmail: "haruhime@haruhime.moe",
   githubOrg: "https://github.com/haruhimemoe",
-  discordUrl: "https://discord.gg/bKy9kjMV4y",
+  discordUrl: "https://haruhime.moe/discord",
   trademarkNotice:
     "Not affiliated with or endorsed by ppy Pty Ltd. osu! is a trademark of ppy Pty Ltd.",
 } as const;
@@ -73,8 +73,8 @@ export const PAGES = {
     title: "Libraries",
     seoTitle: "Libraries: the @haruhimemoe packages",
     description:
-      "The eight @haruhimemoe npm packages the osu! tools are built from, each with its version, downloads, stars and a docs page: ui, next-kit, osu, pool and more.",
-    lastUpdated: "2026-10-02",
+      "The nine @haruhimemoe npm packages the osu! tools are built from, each with its version, downloads, stars and a docs page: ui, next-kit, osu, pool and more.",
+    lastUpdated: "2026-10-06",
     footer: "haruhime.moe",
   },
   "/changelog": {
@@ -82,7 +82,7 @@ export const PAGES = {
     seoTitle: "Changelog: haruhime's osu! tools and packages",
     description:
       "What changed in each of haruhime's osu! tools and @haruhimemoe packages, release by release: packs, pools, bb, this site, the libraries and the Claude plugin.",
-    lastUpdated: "2026-10-04",
+    lastUpdated: "2026-10-06",
     footer: "haruhime.moe",
   },
   "/brand": {
@@ -105,7 +105,7 @@ export const PAGES = {
     seoTitle: "Contact haruhime: email, Discord, GitHub",
     description:
       "How to reach haruhime about the osu! tools: email for anything, Discord for questions and feedback, GitHub for issues, and where security reports go.",
-    lastUpdated: "2026-09-28",
+    lastUpdated: "2026-10-06",
     footer: "haruhime.moe",
   },
 } as const satisfies Record<`/${string}`, PageInfo>;

@@ -1,12 +1,12 @@
 /**
  * @file src/app/libraries/page.tsx
- * @desc /libraries: the eight @haruhimemoe packages, one card each with its description, install
+ * @desc /libraries: the nine @haruhimemoe packages, one card each with its description, install
  *       line, live stats (npm version and downloads, GitHub stars and latest release) and links.
  *       Static, rebuilt once a day so the numbers stay fresh without a request to npm or GitHub
  *       per visit.
  * @author David @dvhsh (https://dvh.sh)
  * @created Fri Oct 2, 2026
- * @modified Mon Oct 5, 2026
+ * @modified Tue Oct 6, 2026
  */
 
 import { CardGrid, PageHeader, TextLink } from "@haruhimemoe/ui";

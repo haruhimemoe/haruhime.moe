@@ -11,9 +11,17 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - /thanks: an osu!-style player card for every osu! player thanked (avatar, cover, flags, linked to their osu! profile when we know which account is theirs). The cards come from a snapshot taken once, so the page still never calls osu!.
 - /ui: a PlayerCard demo in the osu! group, and a Content group for ui's docs, legal and brand page components.
 - `/legal`, an index of the legal pages, and each legal page as Markdown at `/legal/<page>.md` (linked from `/llms.txt`, with a Copy as Markdown button on the page).
+- `/discord`, one invite link for every repo and page: it redirects to the Discord server.
+- `/libraries` and `/changelog` list `@haruhimemoe/vcs`, diffs and merges for JSON and text.
+- `/libraries/<name>`: a side list of every library with its version, a "Libraries / <name>" trail, and an "On this page" list of the README's headings on wide screens.
 
 ### Changed
 
+- `/changelog` and every page under it have a side list (All releases, then Apps, Packages and Claude plugin, each repo with its latest version) in place of the filter row; on phones it folds into a Contents menu above the page.
+- The `/changelog` feed groups releases by date. Each release is a card with the repo, the version and a count of its changes ("3 added, 1 fixed"); click the row to open its notes. Only the newest starts open.
+- `/changelog/<repo>`: every release can be closed, only the latest starts open, the notes keep a readable width, a "Changelog / <repo>" trail sits on top, a package links its library page, and wide screens list the versions on the right.
+- The contact email is haruhime@haruhime.moe everywhere, and the Discord link is haruhime.moe/discord.
+- Depends on `@haruhimemoe/ui` 0.19.0, `@haruhimemoe/next-kit` 0.11.1 and `@haruhimemoe/brand` 0.8.0: the packs banner is orange.
 - The disclaimer, terms and privacy policy moved to `/legal/disclaimer`, `/legal/terms` and `/legal/privacy`, the same addresses the tools use. The old addresses are gone.
 - `/brand` is the shared brand page every haruhime site uses: name, logo and banner files, colors, type, do's and don'ts and the brand contact (haruhime@haruhime.moe), with every repo's README banner and the product family kept.
 - `/llms.txt` lists the legal pages under Legal, linking their Markdown.

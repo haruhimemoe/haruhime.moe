@@ -1,11 +1,11 @@
 /**
  * @file tests/components/changelog/ReleaseNotes.test.tsx
- * @desc ReleaseNotes: one h3 per section with no id (every release has an "Added"), its items as
+ * @desc ReleaseNotes: one h3 (or h4 when asked) per section with no id (every release has an "Added"), its items as
  *       a rendered list with links resolved from the file's definitions, and a line when a
  *       release has no notes. ReleaseDate: a <time> with the ISO date, or "No date".
  * @author David @dvhsh (https://dvh.sh)
  * @created Sun Oct 4, 2026
- * @modified Sun Oct 4, 2026
+ * @modified Tue Oct 6, 2026
  */
 
 import { render, screen, within } from "@testing-library/react";
@@ -31,6 +31,12 @@ describe("ReleaseNotes", () => {
     expect(within(lists[0] as HTMLElement).getAllByRole("listitem")).toHaveLength(2);
     expect(screen.getByText("CodeBlock").tagName).toBe("CODE");
     expect(screen.getByRole("link", { name: /docs/ })).toHaveAttribute("href", "https://x.y/docs");
+  });
+
+  it("drops the section headings to h4 under a release that is itself an h3", () => {
+    render(<ReleaseNotes sections={[{ name: "Added", items: ["a"] }]} references={[]} level={4} />);
+    expect(screen.getByRole("heading", { level: 4, name: "Added" })).toBeInTheDocument();
+    expect(screen.queryByRole("heading", { level: 3 })).toBeNull();
   });
 
   it("says so when a release has no notes", () => {

@@ -7,7 +7,7 @@
  *       libraryLinkItems builds a library's card links (GitHub, npm, Changelog, Showcase).
  * @author David @dvhsh (https://dvh.sh)
  * @created Fri Oct 2, 2026
- * @modified Mon Oct 5, 2026
+ * @modified Tue Oct 6, 2026
  */
 
 import type { LinkRowItem } from "@haruhimemoe/ui";
@@ -74,6 +74,11 @@ export const LIBRARIES: readonly Library[] = [
     "bbcode",
     333,
     "Parses, renders, lints and counts osu! BBCode the way osu! does: safe HTML, template fields, flags, imagemaps and osu!'s own widths.",
+  ),
+  lib(
+    "vcs",
+    333,
+    "Revisions, diffs and 3-way merges for JSON documents and text: line diffs, keyed-list aware JSON diffs, diff3 text merges and canonical hashing.",
   ),
   lib(
     "brand",

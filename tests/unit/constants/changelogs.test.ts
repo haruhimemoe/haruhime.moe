@@ -2,19 +2,20 @@
  * @file tests/unit/constants/changelogs.test.ts
  * @desc CHANGELOG_SOURCES lists this site, every live tool, every library and the plugin once
  *       each, with unique slugs; changelogUrls points at the raw file, GitHub and the page here;
- *       the kind segments and filters match; unknown slugs and segments (prototype keys too) miss.
+ *       the kind segments and nav headings match; unknown slugs and segments (prototype keys too)
+ *       miss.
  * @author David @dvhsh (https://dvh.sh)
  * @created Sun Oct 4, 2026
- * @modified Sun Oct 4, 2026
+ * @modified Tue Oct 6, 2026
  */
 
 import { describe, expect, it } from "vitest";
 import {
-  CHANGELOG_FILTERS,
   CHANGELOG_SOURCES,
   changelogUrls,
   findChangelogSource,
   isKindSegment,
+  KIND_HEADINGS,
   KIND_SEGMENTS,
 } from "@/constants/changelogs";
 import { LIBRARIES } from "@/constants/libraries";
@@ -63,7 +64,7 @@ describe("changelogUrls", () => {
   });
 });
 
-describe("KIND_SEGMENTS and CHANGELOG_FILTERS", () => {
+describe("KIND_SEGMENTS and KIND_HEADINGS", () => {
   it("maps apps and packages to their kinds, and nothing else is a segment", () => {
     expect(KIND_SEGMENTS.apps.kind).toBe("app");
     expect(KIND_SEGMENTS.packages.kind).toBe("package");
@@ -73,14 +74,11 @@ describe("KIND_SEGMENTS and CHANGELOG_FILTERS", () => {
     }
   });
 
-  it("offers All, Apps, Packages, then every repo page", () => {
-    expect(CHANGELOG_FILTERS.slice(0, 3)).toEqual([
-      { href: "/changelog", label: "All" },
-      { href: "/changelog/kind/apps", label: "Apps" },
-      { href: "/changelog/kind/packages", label: "Packages" },
+  it("heads the nav groups Apps, Packages, then Claude plugin", () => {
+    expect(Object.entries(KIND_HEADINGS)).toEqual([
+      ["app", "Apps"],
+      ["package", "Packages"],
+      ["plugin", "Claude plugin"],
     ]);
-    expect(CHANGELOG_FILTERS.slice(3)).toEqual(
-      CHANGELOG_SOURCES.map((s) => ({ href: `/changelog/${s.slug}`, label: s.label })),
-    );
   });
 });

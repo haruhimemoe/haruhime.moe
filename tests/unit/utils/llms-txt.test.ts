@@ -7,7 +7,7 @@
  *       Elsewhere, every legal page's .md mirror under Legal, one trailing newline. toolLink and comingSoonNote on their own.
  * @author David @dvhsh (https://dvh.sh)
  * @created Wed Sep 23, 2026
- * @modified Sun Oct 4, 2026
+ * @modified Tue Oct 6, 2026
  */
 
 import { describe, expect, it } from "vitest";
@@ -94,7 +94,7 @@ describe("buildLlmsTxt", () => {
     expect(text).toContain("https://github.com/haruhimemoe/claude-plugin");
     expect(text).toContain("https://www.npmjs.com/org/haruhimemoe");
     const elsewhere = text.slice(text.indexOf("\nElsewhere:\n"));
-    expect(elsewhere).toMatch(/^- \[Discord\]\(https:\/\/discord\.gg\/bKy9kjMV4y\): .+$/m);
+    expect(elsewhere).toMatch(/^- \[Discord\]\(https:\/\/haruhime\.moe\/discord\): .+$/m);
   });
 
   it("uses only absolute links", () => {

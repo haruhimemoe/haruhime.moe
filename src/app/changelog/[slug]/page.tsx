@@ -1,25 +1,30 @@
 /**
  * @file src/app/changelog/[slug]/page.tsx
  * @desc /changelog/<slug>: one repo's whole changelog, "Not released yet" first, then every
- *       release with its own anchor (v0-9-0). Links the repo, its releases and the file on GitHub,
- *       and a package's docs page. Prerendered for every repo, rebuilt once a day; any other slug
- *       is a 404. When the file can't be fetched the page still renders with a GitHub link.
+ *       release as a closable card with its own anchor (v0-9-0), only the latest open. The
+ *       changelog nav on the left, a Toc of the versions on the right (wide screens), a
+ *       "Changelog / <repo>" trail on top. Links the repo, its releases and the file on GitHub,
+ *       and a package's library page. Prerendered for every repo, rebuilt once a day; any other
+ *       slug is a 404. When the file can't be fetched the page still renders with a GitHub link.
  * @author David @dvhsh (https://dvh.sh)
  * @created Sun Oct 4, 2026
- * @modified Mon Oct 5, 2026
+ * @modified Tue Oct 6, 2026
  */
 
 import { notFoundMetadata, pageMetadata } from "@haruhimemoe/next-kit/seo";
-import { LinkRow, PageHeader, TextLink } from "@haruhimemoe/ui";
+import { PageHeader, TextLink, Toc, type TocItem } from "@haruhimemoe/ui";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { ChangelogFailures } from "@/components/changelog/ChangelogFailures";
 import { ChangelogHistory } from "@/components/changelog/ChangelogHistory";
+import { ChangelogLayout } from "@/components/changelog/ChangelogLayout";
+import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
 import { CHANGELOG_SOURCES, changelogUrls, findChangelogSource } from "@/constants/changelogs";
 import { findLibrary, libraryUrls } from "@/constants/libraries";
 import { SEO_SITE } from "@/constants/seo";
-import { fetchChangelog } from "@/lib/changelogs";
-import { changelogFilterItems } from "@/utils/changelog-filters";
+import { fetchAllChangelogs } from "@/lib/changelogs";
+import { releaseAnchor } from "@/utils/changelog";
+import { latestVersions } from "@/utils/changelog-feed";
 
 /** Once a day, like the changelog it reads. */
 export const revalidate = 86400;
@@ -61,38 +66,67 @@ export default async function RepoChangelogPage({ params }: PageProps<"/changelo
   const { slug } = await params;
   const source = findChangelogSource(slug);
   if (!source) notFound();
-  const result = await fetchChangelog(source);
+  const results = await fetchAllChangelogs();
+  const result = results.find((entry) => entry.source.slug === source.slug) ?? {
+    source,
+    error: true as const,
+  };
   const urls = changelogUrls(source);
   const library = source.kind === "package" ? findLibrary(source.slug) : undefined;
   const links: readonly [string, string][] = [
+    ...(library ? ([["Library page", libraryUrls(library).docs]] as [string, string][]) : []),
     ["GitHub", urls.github],
     ["Releases", urls.releases],
     ["CHANGELOG.md", urls.file],
-    ...(library ? ([["Docs", libraryUrls(library).docs]] as [string, string][]) : []),
   ];
+  const toc: TocItem[] =
+    "changelog" in result
+      ? [
+          ...(result.changelog.unreleased.length > 0
+            ? [{ id: "unreleased", text: "Not released yet", depth: 2 as const }]
+            : []),
+          ...result.changelog.releases.map((release) => ({
+            id: releaseAnchor(release.version),
+            text: release.version,
+            depth: 2 as const,
+          })),
+        ]
+      : [];
   return (
-    <article className="flex flex-col gap-8">
-      <div className="flex flex-col gap-4">
-        <PageHeader
-          title={`${source.label} changelog`}
-          lead={`Every ${source.label} release, newest first.`}
-        />
-        <ul className="flex flex-wrap gap-x-4 gap-y-1 text-sm">
-          {links.map(([label, href]) => (
-            <li key={label}>
-              <TextLink href={href} className="font-bold">
-                {label}
-              </TextLink>
-            </li>
-          ))}
-        </ul>
-      </div>
-      <LinkRow label="Changelog filter" variant="quiet" items={changelogFilterItems(urls.page)} />
-      {"changelog" in result ? (
-        <ChangelogHistory changelog={result.changelog} />
-      ) : (
-        <ChangelogFailures sources={[source]} />
-      )}
-    </article>
+    <ChangelogLayout versions={latestVersions(results)}>
+      <article className="flex flex-col gap-8">
+        <div className="flex flex-col gap-3">
+          <Breadcrumbs
+            parents={[{ href: "/changelog", label: "Changelog" }]}
+            current={source.label}
+          />
+          <PageHeader
+            title={`${source.label} changelog`}
+            lead={`Every ${source.label} release, newest first.`}
+          />
+          <ul className="flex flex-wrap gap-x-4 gap-y-1 text-sm">
+            {links.map(([label, href]) => (
+              <li key={label}>
+                <TextLink href={href} className="font-bold">
+                  {label}
+                </TextLink>
+              </li>
+            ))}
+          </ul>
+        </div>
+        <div className="grid gap-6 xl:grid-cols-[minmax(0,1fr)_10rem] xl:gap-8">
+          <div className="xl:order-2">
+            <Toc items={toc} label="Versions" />
+          </div>
+          <div className="min-w-0">
+            {"changelog" in result ? (
+              <ChangelogHistory changelog={result.changelog} />
+            ) : (
+              <ChangelogFailures sources={[source]} />
+            )}
+          </div>
+        </div>
+      </article>
+    </ChangelogLayout>
   );
 }

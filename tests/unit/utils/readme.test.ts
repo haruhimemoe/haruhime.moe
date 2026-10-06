@@ -5,11 +5,17 @@
  *       links, anchors and mailto stay; prepareReadme runs both.
  * @author David @dvhsh (https://dvh.sh)
  * @created Fri Oct 2, 2026
- * @modified Fri Oct 2, 2026
+ * @modified Tue Oct 6, 2026
  */
 
 import { describe, expect, it } from "vitest";
-import { prepareReadme, rewriteRelativeUrls, stripBanner, stripTitle } from "@/utils/readme";
+import {
+  prepareReadme,
+  readmeToc,
+  rewriteRelativeUrls,
+  stripBanner,
+  stripTitle,
+} from "@/utils/readme";
 
 const BANNER = `<p align="center"><a href="https://github.com/haruhimemoe/ui"><picture><source media="(prefers-color-scheme: light)" srcset="https://www.haruhime.moe/brand/repos/ui-banner-on-light.svg"><img alt="ui" src="https://www.haruhime.moe/brand/repos/ui-banner.svg"></picture></a></p>
 
@@ -60,7 +66,7 @@ describe("rewriteRelativeUrls", () => {
 
   it("keeps absolute links, anchors and mailto", () => {
     const md =
-      "[a](https://x.y/z) [b](#install) [c](mailto:contact@haruhime.moe) ![d](http://x.y/i.png)";
+      "[a](https://x.y/z) [b](#install) [c](mailto:haruhime@haruhime.moe) ![d](http://x.y/i.png)";
     expect(rewriteRelativeUrls(md, "ui")).toBe(md);
   });
 
@@ -76,5 +82,47 @@ describe("prepareReadme", () => {
     expect(prepareReadme(`${BANNER}\n\n[log](CHANGELOG.md)`, "ui")).toBe(
       "Body.\n\n[log](https://github.com/haruhimemoe/ui/blob/main/CHANGELOG.md)",
     );
+  });
+});
+
+describe("readmeToc", () => {
+  it("lists h2 to h4 with the ids ui's remark plugin gives them, skipping code fences", () => {
+    const md = [
+      "Intro.",
+      "## Install",
+      "### `Button` and `buttonClasses` (client)",
+      "```sh",
+      "## not a heading",
+      "```",
+      "#### **Bold** _em_ and snake_case [link](https://x.y) ![img](a.png) <kbd>K</kbd>",
+      "~~~",
+      "## also not",
+      "~~~",
+      "## Install ##",
+      "##### too deep",
+      "##nospace",
+      "## \\*literal\\*",
+    ].join("\n");
+    expect(readmeToc(md)).toEqual([
+      { id: "install", text: "Install", depth: 2 },
+      {
+        id: "button-and-buttonclasses-client",
+        text: "Button and buttonClasses (client)",
+        depth: 3,
+      },
+      // remark's text content keeps raw HTML and drops images, so the id does too.
+      {
+        id: "bold-em-and-snake_case-link--kbdkkbd",
+        text: "Bold em and snake_case link K",
+        depth: 4,
+      },
+      { id: "install-1", text: "Install", depth: 2 },
+      { id: "literal", text: "*literal*", depth: 2 },
+    ]);
+  });
+
+  it("skips a heading that slugs to nothing, and a README without headings is empty", () => {
+    expect(readmeToc("## !!!\n\ntext")).toEqual([]);
+    expect(readmeToc("just text")).toEqual([]);
   });
 });

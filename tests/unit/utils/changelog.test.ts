@@ -4,16 +4,16 @@
  *       hand-written file drifts: unbracketed Unreleased, no date, an impossible date, a
  *       pre-release, unknown ### sections, a repeated section or version, wrapped and multi-line
  *       items with nested lists and code, link definitions, CRLF, empty and junk input. Also
- *       releaseAnchor and sectionMarkdown.
+ *       releaseAnchor, sectionMarkdown and releaseSummary.
  * @author David @dvhsh (https://dvh.sh)
  * @created Sun Oct 4, 2026
- * @modified Sun Oct 4, 2026
+ * @modified Tue Oct 6, 2026
  */
 
 import { readFileSync } from "node:fs";
 import path from "node:path";
 import { describe, expect, it } from "vitest";
-import { parseChangelog, releaseAnchor, sectionMarkdown } from "@/utils/changelog";
+import { parseChangelog, releaseAnchor, releaseSummary, sectionMarkdown } from "@/utils/changelog";
 
 const fixture = (name: string): string =>
   readFileSync(path.join(process.cwd(), "tests/fixtures/changelog", name), "utf8");
@@ -209,5 +209,22 @@ describe("sectionMarkdown", () => {
     expect(sectionMarkdown({ name: "Added", items: ["see [x]"] }, ["[x]: https://x.y"])).toBe(
       "- see [x]\n\n[x]: https://x.y",
     );
+  });
+});
+
+describe("releaseSummary", () => {
+  it("counts each section's items in file order", () => {
+    expect(
+      releaseSummary([
+        { name: "Added", items: ["a", "b", "c"] },
+        { name: "Changed", items: ["d"] },
+        { name: "Fixed", items: ["e", "f"] },
+      ]),
+    ).toBe("3 added, 1 changed, 2 fixed");
+  });
+
+  it("skips empty sections and says No notes when nothing is left", () => {
+    expect(releaseSummary([{ name: "Removed", items: [] }])).toBe("No notes");
+    expect(releaseSummary([])).toBe("No notes");
   });
 });

@@ -1,10 +1,11 @@
 /**
  * @file tests/components/app/ChangelogKindPage.test.tsx
- * @desc /changelog/kind/[kind]: prerenders apps and packages only, fetches only that kind's
- *       repos, marks its filter current, titles itself, and 404s on anything else.
+ * @desc /changelog/kind/[kind]: prerenders apps and packages only, shows only that kind's
+ *       releases, marks its feed current in the changelog nav, a "Changelog / <kind>" trail,
+ *       titles itself, and 404s on anything else.
  * @author David @dvhsh (https://dvh.sh)
  * @created Sun Oct 4, 2026
- * @modified Sun Oct 4, 2026
+ * @modified Tue Oct 6, 2026
  */
 
 import { render, screen, within } from "@testing-library/react";
@@ -25,14 +26,16 @@ const { fetchAllChangelogs, notFound } = vi.hoisted(() => ({
   }),
 }));
 vi.mock("@/lib/changelogs", () => ({ fetchAllChangelogs }));
-vi.mock("next/navigation", () => ({ notFound }));
+// "next/navigation" and ContentNav's "next/navigation.js" are one module, so one mock serves both.
+vi.mock("next/navigation", () => ({ notFound, usePathname: () => "/changelog/kind/packages" }));
+vi.mock("next/navigation.js", () => ({ notFound, usePathname: () => "/changelog/kind/packages" }));
 
 const props = (kind: string) => ({ params: Promise.resolve({ kind }) }) as never;
 
 beforeEach(() => {
   fetchAllChangelogs.mockReset();
-  fetchAllChangelogs.mockImplementation(async (sources: typeof CHANGELOG_SOURCES) =>
-    sources.map((source) => ({
+  fetchAllChangelogs.mockImplementation(async () =>
+    CHANGELOG_SOURCES.map((source) => ({
       source,
       changelog: {
         unreleased: [],
@@ -50,19 +53,20 @@ describe("/changelog/kind/[kind]", () => {
     expect(dynamicParams).toBe(false);
   });
 
-  it("fetches only the packages and marks Packages current", async () => {
+  it("shows only the packages and marks All packages current", async () => {
     render(await ChangelogKindPage(props("packages")));
-    const asked = fetchAllChangelogs.mock.calls[0]?.[0] as typeof CHANGELOG_SOURCES;
-    expect(asked.every((s) => s.kind === "package")).toBe(true);
-    expect(asked).toHaveLength(CHANGELOG_SOURCES.filter((s) => s.kind === "package").length);
+    const cards = screen.getAllByRole("heading", { level: 3 });
+    expect(cards).toHaveLength(CHANGELOG_SOURCES.filter((s) => s.kind === "package").length);
     expect(
       screen.getByRole("heading", { level: 1, name: "Changelog: packages" }),
     ).toBeInTheDocument();
-    const nav = screen.getByRole("navigation", { name: "Changelog filter" });
-    expect(within(nav).getByRole("link", { name: "Packages" })).toHaveAttribute(
+    const [nav] = screen.getAllByRole("navigation", { name: "Changelogs" });
+    expect(within(nav as HTMLElement).getByRole("link", { name: "All packages" })).toHaveAttribute(
       "aria-current",
       "page",
     );
+    const trail = screen.getByRole("navigation", { name: "Breadcrumb" });
+    expect(within(trail).getByText("Packages")).toHaveAttribute("aria-current", "page");
   });
 
   it("has a title and canonical per kind", async () => {

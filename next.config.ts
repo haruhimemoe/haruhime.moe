@@ -5,10 +5,11 @@
  *       security headers on every static page, no X-Powered-By, one rewrite so the .github repo's
  *       README banners load, the legal MDX traced into /llms-full.txt (it revalidates daily), and
  *       next-kit's rewrite that serves each legal page's Markdown mirror
- *       at /legal/<slug>.md. Every page is static; there are no API routes.
+ *       at /legal/<slug>.md, and the /discord redirect every repo's invite link points at. Every
+ *       page is static; there are no API routes.
  * @author David @dvhsh (https://dvh.sh)
  * @created Wed Sep 23, 2026
- * @modified Sun Oct 4, 2026
+ * @modified Tue Oct 6, 2026
  */
 
 import { contentRewrites } from "@haruhimemoe/next-kit/docs";
@@ -43,6 +44,11 @@ const nextConfig: NextConfig = {
         ],
       },
     ];
+  },
+  // One invite link for every repo, README and page: haruhime.moe/discord. Changing the server
+  // means changing this line, not every copy of the link.
+  async redirects() {
+    return [{ source: "/discord", destination: "https://discord.gg/bKy9kjMV4y", permanent: true }];
   },
   // Next's file server won't serve a public file whose name starts with a dot (it answers 404 or
   // 500), so /brand/repos/.github-banner.svg and its light twin never load from public/. The

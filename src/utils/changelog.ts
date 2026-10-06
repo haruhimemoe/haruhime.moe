@@ -8,10 +8,11 @@
  *       of backticks/tildes closes it on the same line (CommonMark: a backtick fence's info
  *       string can't contain backticks), and a `## ` heading always closes an open fence/item
  *       first, so an unclosed fence can swallow at most the rest of its own release. Also a
- *       release's anchor id and the Markdown one section renders from. Pure.
+ *       release's anchor id, the Markdown one section renders from, and a release's one-line
+ *       count of changes ("3 added, 1 fixed"). Pure.
  * @author David @dvhsh (https://dvh.sh)
  * @created Sun Oct 4, 2026
- * @modified Sun Oct 4, 2026
+ * @modified Tue Oct 6, 2026
  */
 
 import { formatIsoDate } from "@/utils/date";
@@ -219,4 +220,17 @@ export const sectionMarkdown = (
 ): string => {
   const list = section.items.map((entry) => `- ${entry}`).join("\n");
   return references.length ? `${list}\n\n${references.join("\n")}` : list;
+};
+
+/**
+ * @function releaseSummary
+ * @param sections {readonly ChangeSection[]} a release's sections
+ * @returns {string} each section's item count with its lowercased name, in the file's order
+ *   ("3 added, 1 changed, 2 fixed"), or "No notes" when there are none
+ */
+export const releaseSummary = (sections: readonly ChangeSection[]): string => {
+  const counts = sections
+    .filter((section) => section.items.length > 0)
+    .map((section) => `${section.items.length} ${section.name.toLowerCase()}`);
+  return counts.length > 0 ? counts.join(", ") : "No notes";
 };

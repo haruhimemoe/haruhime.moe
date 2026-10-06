@@ -1,23 +1,25 @@
 /**
  * @file src/app/changelog/kind/[kind]/page.tsx
  * @desc /changelog/kind/apps and /changelog/kind/packages: the feed for one kind of repo. A route
- *       rather than a query string so the page stays static. Prerendered for the two kinds,
- *       rebuilt once a day; anything else is a 404.
+ *       rather than a query string so the page stays static, beside the changelog nav (which
+ *       needs every repo's latest version, so every changelog is read). Prerendered for the two
+ *       kinds, rebuilt once a day; anything else is a 404.
  * @author David @dvhsh (https://dvh.sh)
  * @created Sun Oct 4, 2026
- * @modified Mon Oct 5, 2026
+ * @modified Tue Oct 6, 2026
  */
 
 import { notFoundMetadata, pageMetadata } from "@haruhimemoe/next-kit/seo";
-import { LinkRow, PageHeader } from "@haruhimemoe/ui";
+import { PageHeader } from "@haruhimemoe/ui";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { ChangelogFeed } from "@/components/changelog/ChangelogFeed";
-import { CHANGELOG_SOURCES, isKindSegment, KIND_SEGMENTS } from "@/constants/changelogs";
+import { ChangelogLayout } from "@/components/changelog/ChangelogLayout";
+import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
+import { isKindSegment, KIND_SEGMENTS } from "@/constants/changelogs";
 import { SEO_SITE } from "@/constants/seo";
 import { fetchAllChangelogs } from "@/lib/changelogs";
-import { buildFeed } from "@/utils/changelog-feed";
-import { changelogFilterItems } from "@/utils/changelog-filters";
+import { buildFeed, latestVersions } from "@/utils/changelog-feed";
 
 /** Once a day, like the changelogs it reads. */
 export const revalidate = 86400;
@@ -59,17 +61,22 @@ export default async function ChangelogKindPage({ params }: PageProps<"/changelo
   const { kind } = await params;
   if (!isKindSegment(kind)) notFound();
   const segment = KIND_SEGMENTS[kind];
-  const sources = CHANGELOG_SOURCES.filter((source) => source.kind === segment.kind);
-  const feed = buildFeed(await fetchAllChangelogs(sources), segment.kind);
+  const results = await fetchAllChangelogs();
   return (
-    <div className="flex flex-col gap-8">
-      <PageHeader title={`Changelog: ${segment.label.toLowerCase()}`} lead={segment.description} />
-      <LinkRow
-        label="Changelog filter"
-        variant="quiet"
-        items={changelogFilterItems(`/changelog/kind/${kind}`)}
-      />
-      <ChangelogFeed feed={feed} />
-    </div>
+    <ChangelogLayout versions={latestVersions(results)}>
+      <div className="flex flex-col gap-8">
+        <div className="flex flex-col gap-3">
+          <Breadcrumbs
+            parents={[{ href: "/changelog", label: "Changelog" }]}
+            current={segment.label}
+          />
+          <PageHeader
+            title={`Changelog: ${segment.label.toLowerCase()}`}
+            lead={segment.description}
+          />
+        </div>
+        <ChangelogFeed feed={buildFeed(results, segment.kind)} />
+      </div>
+    </ChangelogLayout>
   );
 }

@@ -2,16 +2,25 @@
  * @file tests/unit/utils/changelog-feed.test.ts
  * @desc buildFeed: newest date first, then repo label, then file order for same-day releases;
  *       undated releases last; Unreleased never in the feed; a kind filter; the 30-release cap
- *       and its "more" flag; failed sources listed (only those in the filter).
+ *       and its "more" flag; failed sources listed (only those in the filter); only the newest
+ *       open. groupByDate: consecutive same-day entries together. latestVersions: each loaded
+ *       repo's first release.
  * @author David @dvhsh (https://dvh.sh)
  * @created Sun Oct 4, 2026
- * @modified Sun Oct 4, 2026
+ * @modified Tue Oct 6, 2026
  */
 
 import { describe, expect, it } from "vitest";
 import type { ChangelogSource } from "@/constants/changelogs";
 import type { Changelog, Release } from "@/utils/changelog";
-import { buildFeed, type ChangelogResult, FEED_LIMIT, FEED_OPEN } from "@/utils/changelog-feed";
+import {
+  buildFeed,
+  type ChangelogResult,
+  FEED_LIMIT,
+  FEED_OPEN,
+  groupByDate,
+  latestVersions,
+} from "@/utils/changelog-feed";
 
 const src = (slug: string, kind: ChangelogSource["kind"] = "package"): ChangelogSource => ({
   slug,
@@ -83,10 +92,41 @@ describe("buildFeed", () => {
     expect(feed.more).toBe(true);
     expect(buildFeed([ok(src("ui"), many.slice(0, FEED_LIMIT))]).more).toBe(false);
     expect(FEED_LIMIT).toBe(30);
-    expect(FEED_OPEN).toBe(5);
+    expect(FEED_OPEN).toBe(1);
   });
 
   it("is empty with no results", () => {
     expect(buildFeed([])).toEqual({ entries: [], more: false, failed: [] });
+  });
+});
+
+describe("groupByDate", () => {
+  it("groups consecutive entries by date, undated last, in feed order", () => {
+    const { entries } = buildFeed([
+      ok(src("ui"), [rel("0.3.0", "2026-10-03"), rel("0.2.0", "2026-10-01"), rel("0.1.0", null)]),
+      ok(src("osu"), [rel("1.0.0", "2026-10-03")]),
+    ]);
+    expect(
+      groupByDate(entries).map((day) => [
+        day.date,
+        day.entries.map((e) => `${e.source.slug} ${e.release.version}`),
+      ]),
+    ).toEqual([
+      ["2026-10-03", ["osu 1.0.0", "ui 0.3.0"]],
+      ["2026-10-01", ["ui 0.2.0"]],
+      [null, ["ui 0.1.0"]],
+    ]);
+    expect(groupByDate([])).toEqual([]);
+  });
+});
+
+describe("latestVersions", () => {
+  it("maps each loaded repo to its first release, skipping failures and empty files", () => {
+    const versions = latestVersions([
+      ok(src("ui"), [rel("0.19.0", "2026-10-06"), rel("0.18.0", "2026-10-05")]),
+      ok(src("osu"), []),
+      { source: src("pool"), error: true },
+    ]);
+    expect([...versions]).toEqual([["ui", "0.19.0"]]);
   });
 });

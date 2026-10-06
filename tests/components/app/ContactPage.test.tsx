@@ -4,7 +4,7 @@
  *       security reports.
  * @author David @dvhsh (https://dvh.sh)
  * @created Wed Sep 23, 2026
- * @modified Mon Sep 28, 2026
+ * @modified Tue Oct 6, 2026
  */
 
 import { render, screen, within } from "@testing-library/react";
@@ -24,18 +24,18 @@ describe("/contact", () => {
   it("shows the email as text and as a mailto link", () => {
     render(<ContactPage />);
     const email = screen.getByRole("region", { name: "Email" });
-    expect(within(email).getByText("contact@haruhime.moe")).toBeInTheDocument();
+    expect(within(email).getByText("haruhime@haruhime.moe")).toBeInTheDocument();
     expect(within(email).getByRole("link", { name: "Send an email" })).toHaveAttribute(
       "href",
-      "mailto:contact@haruhime.moe",
+      "mailto:haruhime@haruhime.moe",
     );
   });
 
   it("links the Discord server in the same tab", () => {
     render(<ContactPage />);
     const discord = screen.getByRole("region", { name: "Discord" });
-    const link = within(discord).getByRole("link", { name: "discord.gg/bKy9kjMV4y" });
-    expect(link).toHaveAttribute("href", "https://discord.gg/bKy9kjMV4y");
+    const link = within(discord).getByRole("link", { name: "haruhime.moe/discord" });
+    expect(link).toHaveAttribute("href", "https://haruhime.moe/discord");
     expect(link).not.toHaveAttribute("target");
   });
 
@@ -47,6 +47,6 @@ describe("/contact", () => {
     );
     const security = screen.getByRole("region", { name: "Security" });
     expect(security).toHaveTextContent("report it privately on GitHub");
-    expect(security).toHaveTextContent("contact@haruhime.moe");
+    expect(security).toHaveTextContent("haruhime@haruhime.moe");
   });
 });
