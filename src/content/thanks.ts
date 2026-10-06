@@ -29,8 +29,9 @@ export type ThanksPlayer = {
   username: string;
   /** Their osu! account. Left out when no account is confirmed: the card shows the name only. */
   osu?: ThanksOsuAccount;
-  /** The card's bottom line: what they're thanked for, a few words. */
-  role: string;
+  /** The card's bottom line: what they're thanked for, a few words. Left out when the entry's
+   *  heading already says it (the Evergreen Cup staff). */
+  role?: string;
   /** The name the entry's text uses, when they've renamed since. */
   formerly?: string;
 };
@@ -47,7 +48,6 @@ export type ThanksEntry = {
   players?: readonly ThanksPlayer[];
 };
 
-const EGC = "Evergreen Cup staff";
 const CAFE = "osu!cafe";
 
 /** Every person or project /thanks lists, one entry each, in this order. */
@@ -58,7 +58,6 @@ export const THANKS: readonly ThanksEntry[] = [
     players: [
       {
         username: "-Tynamo",
-        role: EGC,
         osu: {
           id: 3638962,
           country: "US",
@@ -73,7 +72,6 @@ export const THANKS: readonly ThanksEntry[] = [
       },
       {
         username: "Varler",
-        role: EGC,
         osu: {
           id: 2504750,
           country: "US",
@@ -85,7 +83,6 @@ export const THANKS: readonly ThanksEntry[] = [
       {
         username: "MikaXD",
         formerly: "RMarc",
-        role: EGC,
         osu: {
           id: 2852816,
           country: "US",
@@ -100,7 +97,6 @@ export const THANKS: readonly ThanksEntry[] = [
       },
       {
         username: "Boolmaster Flex",
-        role: EGC,
         osu: {
           id: 5394681,
           country: "US",
@@ -115,8 +111,6 @@ export const THANKS: readonly ThanksEntry[] = [
       },
       {
         username: "_Kooly",
-        formerly: "YukioUS",
-        role: EGC,
         osu: {
           id: 6366148,
           country: "US",
@@ -127,7 +121,7 @@ export const THANKS: readonly ThanksEntry[] = [
     ],
   },
   {
-    name: "Enslow, Sohlayce, Zyoulou, Drou, Tienei, Wyrd, Rikki",
+    name: "Enslow, Sohlayce, Zyoulou, Drou, Tienei, SverdWyrd, Rikii",
     line: "and so many others from osu!cafe server! without you guys, who knows where my dev journey would be today in relation to osu!",
     players: [
       {

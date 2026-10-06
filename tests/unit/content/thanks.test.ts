@@ -1,7 +1,7 @@
 /**
  * @file tests/unit/content/thanks.test.ts
  * @desc Thanks data shape: names, optional https links, one line each, and the player card
- *       snapshots (osu! ids, countries, osu!-hosted images, a role each).
+ *       snapshots (osu! ids, countries, osu!-hosted images, an optional role).
  * @author David @dvhsh (https://dvh.sh)
  * @created Wed Sep 23, 2026
  * @modified Tue Oct 6, 2026
@@ -50,11 +50,11 @@ describe("THANKS", () => {
   });
 
   it.each(players.map((player) => [player.username, player] as const))(
-    "%s has a role, and a sane osu! snapshot if any",
+    "%s has a non-empty role if any, and a sane osu! snapshot if any",
     (_name, player) => {
       expect(player.username.trim()).toBe(player.username);
       expect(player.username.length).toBeGreaterThan(0);
-      expect(player.role.trim().length).toBeGreaterThan(0);
+      expect(player.role?.trim().length ?? 1).toBeGreaterThan(0);
       expect(player.formerly?.trim().length ?? 1).toBeGreaterThan(0);
       expect(
         Object.keys(player).every((key) => ["username", "osu", "role", "formerly"].includes(key)),

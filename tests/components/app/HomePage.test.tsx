@@ -41,7 +41,7 @@ describe("/", () => {
       "href",
       "https://osu.ppy.sh/users/12231334",
     );
-    expect(screen.getByText("makes these tools")).toBeInTheDocument();
+    expect(screen.getByText("hellosu idk what to put here")).toBeInTheDocument();
   });
 
   it("shows packs, pools and bb live, pools in beta, and sheets coming soon", () => {

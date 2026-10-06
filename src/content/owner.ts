@@ -12,7 +12,7 @@ import type { ThanksPlayer } from "@/content/thanks";
 /** haruhime's osu! account as of the snapshot, with the card's bottom line. */
 export const OWNER: ThanksPlayer = {
   username: "Haruhime",
-  role: "makes these tools",
+  role: "hellosu idk what to put here",
   osu: {
     id: 12231334,
     country: "US",
