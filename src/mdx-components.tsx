@@ -5,14 +5,11 @@
  *       code blocks), the same as packs. Registers Shiki highlighting as a side effect, for any
  *       fenced code block a content page adds. Also registers the seven next-kit legal blocks,
  *       each bound to this site's LEGAL_SITE config, so a legal MDX page writes `<YourRights />`
- *       with no props. None of our five legal pages use them yet: next-kit's mdxToMarkdown
- *       strips unrecognized capitalized JSX from the .md mirror (only <Callout> and ui's
- *       mdxMarkdownTransforms survive), so the pages write the same clauses as plain prose
- *       instead and keep the .md mirror and /llms-full.txt complete. Kept registered for when
- *       next-kit ships a markdown transform for them.
+ *       with no props. The .md mirrors and /llms-full.txt print the same clauses through
+ *       CONTENT_MARKDOWN_LEGAL's legalMarkdownTransform.
  * @author David @dvhsh (https://dvh.sh)
  * @created Sun Oct 4, 2026
- * @modified Mon Oct 5, 2026
+ * @modified Tue Oct 6, 2026
  */
 
 import {

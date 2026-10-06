@@ -8,7 +8,7 @@
  *       skipped for a repo that failed, no documents at all with no argument.
  * @author David @dvhsh (https://dvh.sh)
  * @created Sat Oct 3, 2026
- * @modified Mon Oct 5, 2026
+ * @modified Tue Oct 6, 2026
  */
 
 import { beforeAll, describe, expect, it } from "vitest";
@@ -75,9 +75,9 @@ describe("buildLlmsFull", () => {
     expect(text).toContain("## Not affiliated");
     expect(text).toContain("## Beatmaps belong to their creators");
     expect(text).toContain("## The libraries");
-    expect(text).toContain("## No warranty");
-    expect(text).toContain("## What this site collects");
-    expect(text).toContain("## Library stats");
+    expect(text).toContain("## Disclaimer of warranties");
+    expect(text).toContain("## What we store");
+    expect(text).toContain("## Service providers");
     expect(text).toContain("## Your rights under the GDPR");
     expect(text).toContain("## Copyright and DMCA");
   });

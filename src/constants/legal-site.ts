@@ -7,7 +7,7 @@
  *       upload, so `hosting` is omitted.
  * @author David @dvhsh (https://dvh.sh)
  * @created Mon Oct 5, 2026
- * @modified Mon Oct 5, 2026
+ * @modified Tue Oct 6, 2026
  */
 
 import type { LegalSite } from "@haruhimemoe/next-kit/legal";
@@ -16,9 +16,9 @@ import { SITE } from "@/constants/site";
 /** This site's facts for the five legal pages (/legal/terms, privacy, your-privacy-rights, copyright, disclaimers). */
 export const LEGAL_SITE: LegalSite = {
   siteName: SITE.name,
-  operator: "David (https://dvh.sh)",
+  operator: "haruhime",
   contactEmail: SITE.contactEmail,
-  effectiveDate: "2026-10-05",
+  effectiveDate: "2026-10-06",
   stores: [
     {
       what: "Nothing tied to you",
@@ -26,7 +26,7 @@ export const LEGAL_SITE: LegalSite = {
     },
     {
       what: "Cached library stats",
-      why: "npm and GitHub download counts, stars and releases, fetched by our server about once a day and cached; your browser never contacts them.",
+      why: "versions, download counts, stars, releases and READMEs for the Libraries pages, fetched from npm and GitHub by our server about once a day; your browser never contacts npm or GitHub for them, so neither sees your visit.",
     },
   ],
   processors: [

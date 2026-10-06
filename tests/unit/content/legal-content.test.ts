@@ -1,22 +1,24 @@
 /**
  * @file tests/unit/content/legal-content.test.ts
- * @desc The legal pages' required clauses, read from their .md mirrors: each page's headed
- *       sections in order, the clauses that protect us, the contact address, and a link to every
- *       live tool's own terms and privacy policy (none for a tool that hasn't launched), so a
- *       tool going live fails here until its links are added to the MDX.
+ * @desc The legal pages' required clauses, read from their .md mirrors (legal blocks included,
+ *       through CONTENT_MARKDOWN_LEGAL): each page's headed sections in order, the clauses that
+ *       protect us, the contact address, and a link to every live tool's own terms and privacy
+ *       policy (none for a tool that hasn't launched), so a tool going live fails here until its
+ *       links are added to the MDX.
  * @author David @dvhsh (https://dvh.sh)
  * @created Sun Oct 4, 2026
- * @modified Mon Oct 5, 2026
+ * @modified Tue Oct 6, 2026
  */
 
 import { readContentMarkdown } from "@haruhimemoe/next-kit/docs/files";
 import { describe, expect, it } from "vitest";
 import { CONTENT } from "@/constants/content";
-import { SITE } from "@/constants/site";
+import { LEGAL_SITE } from "@/constants/legal-site";
 import { TOOLS } from "@/constants/tools";
+import { CONTENT_MARKDOWN_LEGAL } from "@/utils/content-markdown";
 
 const read = async (slug: string): Promise<string> =>
-  (await readContentMarkdown(CONTENT, "legal", slug, { siteUrl: SITE.url })) ?? "";
+  (await readContentMarkdown(CONTENT, "legal", slug, CONTENT_MARKDOWN_LEGAL)) ?? "";
 
 const headings = (md: string): string[] =>
   [...md.matchAll(/^## (.+)$/gm)].map((m) => m[1] as string);
@@ -30,13 +32,15 @@ describe("disclaimers", () => {
       "Not affiliated",
       "The osu! API and the hinai mirror",
       "Beatmaps belong to their creators",
-      "Provided as is",
+      "Disclaimer of warranties",
+      "Limitation of liability",
       "Made with AI help",
+      "Contact",
     ]);
     expect(md).toContain("not affiliated with or endorsed by ppy Pty Ltd");
     expect(md).toContain("they don't host them or claim them");
-    expect(md).toContain("provided as is, without warranty of any kind");
-    expect(md).toContain("Questions go to contact@haruhime.moe.");
+    expect(md).toContain(`${LEGAL_SITE.siteName} is provided "as is"`);
+    expect(md).toContain(MAIL);
   });
 });
 
@@ -47,12 +51,14 @@ describe("terms", () => {
       "What this site is",
       "The libraries",
       "Each tool has its own terms",
-      "No warranty",
+      "Not affiliated",
+      "Disclaimer of warranties",
+      "Limitation of liability",
       "Changes",
       "Contact",
     ]);
     expect(md).toContain("released under the MIT license");
-    expect(md).toContain("provided as is, without warranty of any kind");
+    expect(md).toContain(`${LEGAL_SITE.siteName} is provided "as is"`);
     expect(md).toContain("isn't affiliated with or endorsed by ppy Pty Ltd");
     expect(md).toContain(MAIL);
   });
@@ -62,14 +68,14 @@ describe("privacy", () => {
   it("keeps its sections and clauses", async () => {
     const md = await read("privacy");
     expect(headings(md)).toEqual([
-      "What this site collects",
-      "Our host",
-      "Library stats",
+      "What we store",
+      "Service providers",
       "Each tool has its own policy",
+      "Changes",
       "Contact",
     ]);
     expect(md).toContain("has no accounts, sets no cookies, runs no analytics");
-    expect(md).toContain("[Vercel's privacy policy](https://vercel.com/legal/privacy-policy)");
+    expect(md).toContain("**[Vercel](https://vercel.com/legal/privacy-policy)**");
     expect(md).toContain("your browser never contacts npm or GitHub");
     expect(md).toContain(MAIL);
   });
@@ -82,7 +88,7 @@ describe("your-privacy-rights", () => {
       "Your rights",
       "Your rights under the GDPR",
       "Your rights under the CCPA",
-      "Contact",
+      "Changes",
     ]);
     expect(md).toContain("itself keeps nothing of yours");
     expect(md).toContain("We don't sell or share personal information.");
@@ -94,7 +100,7 @@ describe("your-privacy-rights", () => {
 describe("copyright", () => {
   it("keeps its sections and clauses", async () => {
     const md = await read("copyright");
-    expect(headings(md)).toEqual(["What we host", "Copyright and DMCA"]);
+    expect(headings(md)).toEqual(["What we host", "Copyright and DMCA", "Contact"]);
     expect(md).toContain("hosts no beatmaps, maps or other user files itself");
     expect(md).toContain("A takedown notice should include");
     expect(md).toContain("A counter-notice should include");
