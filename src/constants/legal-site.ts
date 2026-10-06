@@ -26,7 +26,7 @@ export const LEGAL_SITE: LegalSite = {
     },
     {
       what: "Cached library stats",
-      why: "versions, download counts, stars, releases and READMEs for the Libraries pages, fetched from npm and GitHub by our server about once a day; your browser never contacts npm or GitHub for them, so neither sees your visit.",
+      why: "Versions, download counts, stars, releases and READMEs for the Libraries pages, fetched from npm and GitHub by our server about once a day; your browser never contacts npm or GitHub for them, so neither sees your visit.",
     },
   ],
   processors: [
