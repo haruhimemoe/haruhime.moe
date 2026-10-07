@@ -4,7 +4,7 @@
  *       safeNextPath (same site only); a full URL from packs, pools or bb goes through
  *       safeAbsoluteNext against HUB_HOSTS (https, no userinfo, the exact hostname). The hub is
  *       the authoritative check: a satellite's own hubSignInUrl is only a convenience. A URL back
- *       to this site's /signin, or anything else, lands on the fallback. signInErrorText: what
+ *       to this site's /signin or /api/signin/osu, or anything else, lands on the fallback. signInErrorText: what
  *       the page says for each error code better-auth sends back (every failure lands on
  *       /signin?...&error=<code>); when a URL carries error twice, the last wins. Pure.
  * @author David @dvhsh (https://dvh.sh)
@@ -13,6 +13,9 @@
  */
 
 import { DEFAULT_SIGN_IN_PATH, safeAbsoluteNext, safeNextPath } from "@haruhimemoe/next-kit/server";
+
+/** The route that sends a visitor straight to osu! (src/app/api/signin/osu/route.ts). */
+export const DIRECT_SIGN_IN_PATH = "/api/signin/osu";
 
 /** resolveNext's options. */
 export type ResolveNextOptions = {
@@ -34,15 +37,20 @@ export const resolveNext = (
 ): string => {
   const value = Array.isArray(raw) ? raw[0] : raw;
   if (!value) return fallback;
-  if (value.startsWith("/")) return safeNextPath(value, { fallback });
-  const url = safeAbsoluteNext(value, { hosts, fallback: "" });
-  if (!url) return fallback;
-  // Back to a /signin would hand off to itself forever.
-  const { pathname } = new URL(url);
-  if (pathname === DEFAULT_SIGN_IN_PATH || pathname.startsWith(`${DEFAULT_SIGN_IN_PATH}/`)) {
-    return fallback;
-  }
-  return url;
+  const safe = value.startsWith("/")
+    ? safeNextPath(value, { fallback })
+    : safeAbsoluteNext(value, { hosts, fallback: "" });
+  if (!safe) return fallback;
+  // Back to a sign-in route would hand off to itself forever.
+  return isSignInPath(new URL(safe, "https://haruhime.moe").pathname) ? fallback : safe;
+};
+
+/** The routes that start a sign-in: /signin and /api/signin/osu (any case, any subpath). */
+const SIGN_IN_PATHS = [DEFAULT_SIGN_IN_PATH, DIRECT_SIGN_IN_PATH];
+
+const isSignInPath = (pathname: string): boolean => {
+  const path = pathname.toLowerCase().replace(/\/+$/, "");
+  return SIGN_IN_PATHS.some((p) => path === p || path.startsWith(`${p}/`));
 };
 
 /** Error codes and what they mean. */

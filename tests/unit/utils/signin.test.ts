@@ -54,6 +54,10 @@ describe("resolveNext", () => {
     "javascript:alert(1)",
     "https://pools.haruhime.moe/signin",
     "https://www.haruhime.moe/signin/x",
+    "https://haruhime.moe/api/signin/osu?next=x",
+    "https://haruhime.moe/API/SignIn/osu/",
+    "/api/signin/osu",
+    "/api/signin/osu?next=/account",
     "pools.haruhime.moe",
   ])("refuses %s", (raw) => {
     expect(resolveNext(raw, opts)).toBe("/account");
