@@ -37,9 +37,11 @@ const nextConfig: NextConfig = {
           { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
           { key: "X-Frame-Options", value: "DENY" },
           // No nonces or hashes, so Next's inline scripts still run and every page stays static.
+          // form-action allows Discord because /account's Connect form redirects there.
           {
             key: "Content-Security-Policy",
-            value: "frame-ancestors 'none'; base-uri 'none'; object-src 'none'; form-action 'none'",
+            value:
+              "frame-ancestors 'none'; base-uri 'none'; object-src 'none'; form-action 'self' https://discord.com",
           },
         ],
       },
