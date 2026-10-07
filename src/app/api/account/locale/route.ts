@@ -15,7 +15,7 @@ import { z } from "zod";
 import { HUB_LOCALES } from "@/constants/accounts";
 import { refuseCrossSite } from "@/lib/api";
 import { getUserFromHeaders } from "@/lib/auth";
-import { getIdentityDb } from "@/lib/db";
+import { connectDb, getIdentityDb } from "@/lib/db";
 
 const bodySchema = z.strictObject({
   locale: z.string().refine((value) => hasLocale(HUB_LOCALES, value)),
@@ -28,6 +28,7 @@ export async function PATCH(request: Request) {
   if (crossSite) return noStore(crossSite);
   const body = await parseJsonBody(request, bodySchema);
   if (!body.ok) return noStore(body.response);
+  await connectDb();
   await getIdentityDb()
     .collection("user")
     .updateOne({ _id: new ObjectId(user.id) }, { $set: { locale: body.data.locale } });
