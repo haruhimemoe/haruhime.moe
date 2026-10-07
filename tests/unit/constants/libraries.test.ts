@@ -1,6 +1,6 @@
 /**
  * @file tests/unit/constants/libraries.test.ts
- * @desc Libraries: the thirteen @haruhimemoe packages in order, unique names that are safe URL
+ * @desc Libraries: the fourteen @haruhimemoe packages in order, unique names that are safe URL
  *       segments, isLibraryName never trusting prototype keys, libraryUrls pointing at the repo,
  *       npm, the changelog, the raw README and the docs page, ui the only showcase, and
  *       libraryLinkItems building each card's links.
@@ -13,7 +13,7 @@ import { describe, expect, it } from "vitest";
 import { isLibraryName, LIBRARIES, libraryLinkItems, libraryUrls } from "@/constants/libraries";
 
 describe("LIBRARIES", () => {
-  it("lists the thirteen packages in order", () => {
+  it("lists the fourteen packages in order", () => {
     expect(LIBRARIES.map((lib) => lib.name)).toEqual([
       "ui",
       "next-kit",
@@ -27,6 +27,7 @@ describe("LIBRARIES", () => {
       "crowdfund",
       "invites",
       "tourney",
+      "harumin-config",
       "brand",
     ]);
   });

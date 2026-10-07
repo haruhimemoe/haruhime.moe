@@ -7,7 +7,7 @@
  *       libraryLinkItems builds a library's card links (GitHub, npm, Changelog, Showcase).
  * @author David @dvhsh (https://dvh.sh)
  * @created Fri Oct 2, 2026
- * @modified Tue Oct 6, 2026
+ * @modified Wed Oct 7, 2026
  */
 
 import type { LinkRowItem } from "@haruhimemoe/ui";
@@ -99,6 +99,11 @@ export const LIBRARIES: readonly Library[] = [
     "tourney",
     333,
     "osu! tournaments as data: brackets and placements, groups and swiss, pick/ban phases, mp links read into matches, drafts, registration and scheduling.",
+  ),
+  lib(
+    "harumin-config",
+    333,
+    "The settings contract between the harumin osu! Discord bot and harumin.haruhime.moe: guild settings, /track entries and the bot's service routes.",
   ),
   lib(
     "brand",

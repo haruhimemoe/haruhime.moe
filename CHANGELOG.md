@@ -16,6 +16,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - `/legal`, an index of the legal pages, and each legal page as Markdown at `/legal/<page>.md` (linked from `/llms.txt`, with a Copy as Markdown button on the page).
 - `/discord`, one invite link for every repo and page: it redirects to the Discord server.
 - `/libraries` and `/changelog` list `@haruhimemoe/vcs`, diffs and merges for JSON and text.
+- `/libraries` and `/changelog` list `@haruhimemoe/harumin-config`, with a README banner.
 - `/libraries` and `/changelog` list `@haruhimemoe/tourney`, with a README banner.
 - `/libraries` and `/changelog` list `@haruhimemoe/mirror`, `@haruhimemoe/time`, `@haruhimemoe/crowdfund` and `@haruhimemoe/invites`, with README banners for each.
 - `/libraries/<name>`: a side list of every library with its version, a "Libraries / <name>" trail, and an "On this page" list of the README's headings on wide screens.
