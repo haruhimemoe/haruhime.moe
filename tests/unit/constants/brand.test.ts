@@ -43,13 +43,14 @@ describe("BRAND_COLORS", () => {
     "%s matches the theme",
     (token, color) => {
       // c2 to c4, h1 and h2 take their lightness from an override variable with a default,
-      // plus the more-contrast lift (0% unless the visitor asks for more contrast):
+      // plus the more-contrast lift (0% unless the visitor asks for more contrast); since ui 0.20
+      // b1 to b6 and c1 read a plain override variable with a default, without the lift:
       // hsl(var(--hue) 100% calc(var(--h1-l, 76%) + var(--contrast-lift))).
       const match = new RegExp(
-        `--color-${token}: hsl\\(var\\(--hue\\) (\\d+)% (?:calc\\(var\\(--${token}-l, (\\d+)%\\) [+-] var\\(--contrast-lift\\)(?: / 2)?\\)|(\\d+)%)\\)`,
+        `--color-${token}: hsl\\(var\\(--hue\\) (\\d+)% (?:calc\\(var\\(--${token}-l, (\\d+)%\\) [+-] var\\(--contrast-lift\\)(?: / 2)?\\)|var\\(--${token}-l, (\\d+)%\\)|(\\d+)%)\\)`,
       ).exec(theme);
       expect(match).not.toBeNull();
-      const [s, l] = [Number(match?.[1]), Number(match?.[2] ?? match?.[3])];
+      const [s, l] = [Number(match?.[1]), Number(match?.[2] ?? match?.[3] ?? match?.[4])];
       const [brandHue, brandS, brandL] = color.hsl;
       expect([brandHue, brandS]).toEqual([hue, s]);
       // The brand pink is the logo color, baked into every icon, wordmark and banner. The ui

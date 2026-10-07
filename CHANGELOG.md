@@ -8,6 +8,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ### Added
 
+- harumin, the osu! Discord bot, is live: a featured panel on the homepage in its black-and-white look, a tool card, the header and footer, /account's connected apps, the terms and privacy links, and README banners for its two repos.
 - The haruhime account: `/signin` is the one osu! sign-in for packs, pools and bb, and `/account` shows your osu! profile, the apps your account opens, every device you're signed in on (sign one out, or everywhere else), sign out and account deletion. The header has an account menu.
 - `/api/signin/osu?next=` sends you straight to osu! to sign in, so signing in from packs, pools or bb no longer stops on a haruhime.moe page first. `next` is checked the same way `/signin` checks it.
 

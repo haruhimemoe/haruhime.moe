@@ -56,7 +56,7 @@ describe("SiteShell header", () => {
     expect(home.querySelector("img")).toBeNull();
   });
 
-  it("centers the four tools, with packs, pools and bb as links", () => {
+  it("centers the five tools, with packs, pools, bb and harumin as links", () => {
     renderShell();
     const tools = within(screen.getByRole("banner")).getByRole("navigation", { name: "Tools" });
     expect(within(tools).getByRole("link", { name: "packs" })).toHaveAttribute(
@@ -71,8 +71,12 @@ describe("SiteShell header", () => {
       "href",
       "https://bb.haruhime.moe",
     );
-    expect(within(tools).getAllByRole("link")).toHaveLength(3);
-    expect(within(tools).getAllByRole("listitem")).toHaveLength(4);
+    expect(within(tools).getByRole("link", { name: "harumin" })).toHaveAttribute(
+      "href",
+      "https://harumin.haruhime.moe",
+    );
+    expect(within(tools).getAllByRole("link")).toHaveLength(4);
+    expect(within(tools).getAllByRole("listitem")).toHaveLength(5);
     // Plain text, not a disabled control: nothing to focus, so no aria-disabled either.
     const sheets = within(tools).getByText("sheets").closest("li");
     expect(sheets).toHaveTextContent("sheets soon");
@@ -100,7 +104,7 @@ describe("SiteShell footer", () => {
     expect(within(footer).queryByRole("link", { name: "UI" })).toBeNull();
   });
 
-  it("links packs, pools and bb and shows sheets as plain text marked soon", () => {
+  it("links packs, pools, bb and harumin and shows sheets as plain text marked soon", () => {
     renderShell();
     const tools = within(screen.getByRole("contentinfo")).getByRole("region", { name: "Tools" });
     expect(within(tools).getByRole("link", { name: "packs" })).toHaveAttribute(
@@ -115,7 +119,7 @@ describe("SiteShell footer", () => {
       "href",
       "https://bb.haruhime.moe",
     );
-    expect(within(tools).getAllByRole("link")).toHaveLength(3);
+    expect(within(tools).getAllByRole("link")).toHaveLength(4);
     expect(within(tools).getByText("sheets").closest("li")).toHaveTextContent("sheets soon");
   });
 

@@ -7,7 +7,7 @@
  *       card also carries one concrete sentence and a link to its main task.
  * @author David @dvhsh (https://dvh.sh)
  * @created Wed Sep 23, 2026
- * @modified Mon Sep 28, 2026
+ * @modified Wed Oct 7, 2026
  */
 
 /** One tool. `url` is set only once the tool is live. */
@@ -70,6 +70,19 @@ export const TOOLS: readonly Tool[] = [
     llmsTxt: true,
     summary: "Write a userpage or forum post in osu! BBCode and see it as you type.",
     task: { label: "Make a collab banner", path: "/collab" },
+  },
+  {
+    name: "harumin",
+    hue: 350,
+    tagline: "the osu! Discord bot",
+    icon: "brand/harumin-icon.svg",
+    url: "https://harumin.haruhime.moe",
+    about:
+      "An osu! Discord bot: profiles, recent and top plays with pp worked out on the spot, map cards for beatmap links that the channel remembers for later commands, match costs, top play tracking, and cards for packs and pools links. Server managers set it up on its dashboard.",
+    llmsTxt: true,
+    summary:
+      "osu! profiles, scores and pp in your Discord server, with map cards that remember the map.",
+    task: { label: "See the commands", path: "/commands" },
   },
   {
     name: "sheets",

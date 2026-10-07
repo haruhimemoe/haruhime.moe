@@ -8,13 +8,14 @@
  *       founder, and the WebSite with each live tool's site as a part.
  * @author David @dvhsh (https://dvh.sh)
  * @created Wed Sep 23, 2026
- * @modified Tue Oct 6, 2026
+ * @modified Wed Oct 7, 2026
  */
 
 import { HARUHIME_ORG, homeMetadata, ld } from "@haruhimemoe/next-kit/seo";
 import { CardGrid, JsonLd, PageHeader, PlayerCard } from "@haruhimemoe/ui";
 import type { Metadata } from "next";
 import { EgcBanner } from "@/components/home/EgcBanner";
+import { HaruminFeature } from "@/components/home/HaruminFeature";
 import { ToolCard } from "@/components/home/ToolCard";
 import { SEO_SITE } from "@/constants/seo";
 import { SITE } from "@/constants/site";
@@ -41,7 +42,7 @@ export default function HomePage() {
       <EgcBanner />
       <PageHeader
         title="osu! tools for players, mappers and tournament hosts"
-        lead="hellosu, haruhime here. these are free tools i make for osu!: packs turns a mappool into one download, pools is for building and looking up tournament pools, and bb is a BBCode editor for userpages and forum posts."
+        lead="hellosu, haruhime here. these are free tools i make for osu!: packs turns a mappool into one download, pools is for building and looking up tournament pools, bb is a BBCode editor for userpages and forum posts, and harumin is an osu! bot for your Discord server."
       />
       <div className="max-w-sm">
         <PlayerCard
@@ -58,6 +59,7 @@ export default function HomePage() {
           statusText={OWNER.role}
         />
       </div>
+      <HaruminFeature />
       {/* Not a labelled region: the footer already has a "Tools" region, and two landmarks with
           one name would read the same. The h2 is enough structure here. */}
       <section className="flex flex-col gap-5">

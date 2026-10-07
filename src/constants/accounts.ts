@@ -40,6 +40,11 @@ export const CONNECTED_APPS: readonly ConnectedApp[] = [
   { name: "packs", url: "https://packs.haruhime.moe", line: "Your packs and downloads." },
   { name: "pools", url: "https://pools.haruhime.moe", line: "The pools you make and edit." },
   { name: "bb", url: "https://bb.haruhime.moe", line: "Your saved BBCode and templates." },
+  {
+    name: "harumin",
+    url: "https://harumin.haruhime.moe",
+    line: "The bot's dashboard, and your osu! name in Discord.",
+  },
 ];
 
 /**

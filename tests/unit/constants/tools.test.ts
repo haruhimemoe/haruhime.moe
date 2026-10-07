@@ -14,16 +14,18 @@ import { describe, expect, it } from "vitest";
 import { TOOLS } from "@/constants/tools";
 
 describe("TOOLS", () => {
-  it("lists packs, pools, bb and sheets in that order", () => {
-    expect(TOOLS.map((tool) => tool.name)).toEqual(["packs", "pools", "bb", "sheets"]);
+  it("lists packs, pools, bb, harumin and sheets in that order", () => {
+    expect(TOOLS.map((tool) => tool.name)).toEqual(["packs", "pools", "bb", "harumin", "sheets"]);
   });
 
-  it("links packs, pools and bb; sheets waits for its launch", () => {
+  it("links packs, pools, bb and harumin; sheets waits for its launch", () => {
     expect(TOOLS.filter((tool) => tool.url).map((tool) => tool.name)).toEqual([
       "packs",
       "pools",
       "bb",
+      "harumin",
     ]);
+    expect(TOOLS[3]?.url).toBe("https://harumin.haruhime.moe");
     expect(TOOLS[2]?.url).toBe("https://bb.haruhime.moe");
     expect(TOOLS[0]?.url).toBe("https://packs.haruhime.moe");
     expect(TOOLS[1]?.url).toBe("https://pools.haruhime.moe");
@@ -54,7 +56,7 @@ describe("TOOLS", () => {
   );
 
   it("uses the brand kit's hues (pools h1 is #66ccff)", () => {
-    expect(TOOLS.map((tool) => tool.hue)).toEqual([333, 200, 265, 150]);
+    expect(TOOLS.map((tool) => tool.hue)).toEqual([333, 200, 265, 350, 150]);
     expect(hslToHex(200, 100, 70)).toBe("#66ccff");
   });
 });

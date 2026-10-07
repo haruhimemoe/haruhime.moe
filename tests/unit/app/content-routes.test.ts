@@ -63,7 +63,7 @@ describe("/legal", () => {
     await expect(page.generateMetadata(params("terms"))).resolves.toMatchObject({
       title: { absolute: "Terms of use for haruhime.moe · haruhime.moe" },
       alternates: { canonical: "https://www.haruhime.moe/legal/terms" },
-      openGraph: { type: "article", modifiedTime: expect.stringContaining("2026-10-06") },
+      openGraph: { type: "article", modifiedTime: expect.stringContaining("2026-10-07") },
     });
   });
 });
