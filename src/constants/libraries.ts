@@ -96,6 +96,11 @@ export const LIBRARIES: readonly Library[] = [
     "Invites as consent: zod schemas for invites and their terms, a pure state machine, resend cooldowns, blocks, rate limits and inbox grouping.",
   ),
   lib(
+    "tourney",
+    333,
+    "osu! tournaments as data: brackets and placements, groups and swiss, pick/ban phases, mp links read into matches, drafts, registration and scheduling.",
+  ),
+  lib(
     "brand",
     333,
     "Brand kit generator for the tools: palettes from one hue, Nunito wordmarks, monogram icons, README banners and Open Graph cards.",

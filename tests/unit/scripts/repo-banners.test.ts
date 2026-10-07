@@ -38,6 +38,7 @@ const REPOS = [
   "time",
   "crowdfund",
   "invites",
+  "tourney",
   "claude-plugin",
 ];
 

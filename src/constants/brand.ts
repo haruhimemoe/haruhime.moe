@@ -116,6 +116,7 @@ export const REPO_BANNERS: readonly RepoBanner[] = [
   repoBanner("time", { tagline: "@haruhimemoe/time: timezones and match slots" }),
   repoBanner("crowdfund", { tagline: "@haruhimemoe/crowdfund: crowdfunding as data" }),
   repoBanner("invites", { tagline: "@haruhimemoe/invites: invites as consent" }),
+  repoBanner("tourney", { tagline: "@haruhimemoe/tourney: osu! tournaments as data" }),
   repoBanner("claude-plugin", { tagline: "haruhime: osu! skills for Claude" }),
 ];
 
