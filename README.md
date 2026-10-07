@@ -22,9 +22,9 @@ Live at https://www.haruhime.moe.
 | [`/legal`](https://www.haruhime.moe/legal) | The legal pages, each also served as Markdown at `/legal/<page>.md` |
 | [`/legal/disclaimer`](https://www.haruhime.moe/legal/disclaimer) | No ppy affiliation, the osu! API and mirror terms, who owns beatmaps, the as-is notice, the AI-help note |
 | [`/legal/terms`](https://www.haruhime.moe/legal/terms) | Terms for this site only: what it is, the MIT libraries, no warranty; each tool's own terms are linked |
-| [`/legal/privacy`](https://www.haruhime.moe/legal/privacy) | What this site collects (nothing of its own), Vercel's logs, the server-side stats fetches; each tool's own policy is linked |
+| [`/legal/privacy`](https://www.haruhime.moe/legal/privacy) | What this site keeps (the haruhime account once you sign in), Vercel's logs, the server-side stats fetches; each tool's own policy is linked |
 
-The site also serves [`/llms.txt`](https://www.haruhime.moe/llms.txt) (a guide to the site for LLMs), [`/llms-full.txt`](https://www.haruhime.moe/llms-full.txt) (the brand page, every library's docs page, each repo's newest changelog entries and every legal page, in full), [`/.well-known/security.txt`](https://www.haruhime.moe/.well-known/security.txt), `/sitemap.xml` and `/robots.txt`. Every route is static, prerendered at build time. There is no database and nothing to configure. The library and changelog routes fetch their numbers, READMEs and CHANGELOG.md files from npm and GitHub at build and again in the background at most once a day; nothing is fetched per visit.
+The site also serves [`/llms.txt`](https://www.haruhime.moe/llms.txt) (a guide to the site for LLMs), [`/llms-full.txt`](https://www.haruhime.moe/llms-full.txt) (the brand page, every library's docs page, each repo's newest changelog entries and every legal page, in full), [`/.well-known/security.txt`](https://www.haruhime.moe/.well-known/security.txt), `/sitemap.xml` and `/robots.txt`. It is also the haruhime account hub: [`/signin`](https://www.haruhime.moe/signin) runs the one osu! sign-in packs, pools and bb share, and [`/account`](https://www.haruhime.moe/account) shows your profile, your signed-in devices and account deletion. Those two pages and `/api/*` read the session (MongoDB); every other route is static, prerendered at build time. The library and changelog routes fetch their numbers, READMEs and CHANGELOG.md files from npm and GitHub at build and again in the background at most once a day; nothing is fetched per visit.
 
 ## Run it locally
 
@@ -37,7 +37,7 @@ bun install
 bun dev
 ```
 
-Then open http://localhost:3000. No environment variables are needed.
+Then open http://localhost:3000. Every page but `/signin` and `/account` works with no environment variables. To try sign-in, copy `.env.example` to `.env.local` and fill in the first five variables (a MongoDB URI, a 32-character secret, an osu! OAuth app with the callback `http://localhost:3000/api/auth/callback/osu`).
 
 For a production build, run `bun run build`, then `bun run start` to serve it.
 
@@ -58,6 +58,7 @@ For a production build, run `bun run build`, then `bun run start` to serve it.
 | The `/brand` name, writing, do's and don'ts, files and contact | `brandPageData("haruhime")` in [@haruhimemoe/brand](https://github.com/haruhimemoe/brand), rendered by @haruhimemoe/ui's `BrandPage` in `src/app/brand/page.tsx`; this site's extra sections are `src/components/brand/` |
 | The disclaimer, terms and privacy policy | `content/legal/<page>.mdx`, and its title, description and date in `CONTENT` (`src/constants/content.ts`) |
 | Which libraries `/libraries` lists, each one's description and showcase link | `LIBRARIES` in `src/constants/libraries.ts` |
+| Which hosts sign-in may send people back to, the apps `/account` lists, the account menu's links | `src/constants/accounts.ts` |
 | Which repos `/changelog` reads, built from the live tools and the libraries | `CHANGELOG_SOURCES` in `src/constants/changelogs.ts` |
 | How a README is cleaned up before rendering (banner, title, relative links) | `src/utils/readme.ts` |
 | Where the library numbers come from | `src/lib/libraries/` (npm registry and downloads API, GitHub repos and releases) |

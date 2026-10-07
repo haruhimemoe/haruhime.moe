@@ -8,7 +8,7 @@
  *       commit as its text.
  * @author David @dvhsh (https://dvh.sh)
  * @created Sun Oct 4, 2026
- * @modified Mon Oct 5, 2026
+ * @modified Tue Oct 6, 2026
  */
 
 import { defineContent } from "@haruhimemoe/next-kit/docs";
@@ -21,20 +21,20 @@ export const CONTENT = defineContent({
     terms: {
       title: "Terms",
       description:
-        "The terms for using haruhime.moe itself: what the site is, the MIT-licensed libraries, that each tool has its own terms, no warranty, and how to reach haruhime.",
-      lastUpdated: "2026-10-02",
+        "The terms for haruhime.moe itself: the site and the haruhime account, the MIT-licensed libraries, each tool's own terms, no warranty, and how to reach haruhime.",
+      lastUpdated: "2026-10-06",
     },
     privacy: {
       title: "Privacy",
       description:
-        "What this site collects: nothing of its own. No accounts, cookies or analytics, only Vercel's request logs. Stats come from npm and GitHub server to server.",
-      lastUpdated: "2026-10-02",
+        "What haruhime.moe keeps: your haruhime account (your osu! profile and sign-in sessions) once you sign in, and Vercel's request logs. No analytics, nothing sold.",
+      lastUpdated: "2026-10-06",
     },
     "your-privacy-rights": {
       title: "Your Privacy Rights",
       description:
-        "Your rights under the GDPR and the CCPA: access, correct, delete and export your data, object to its use, and opt out, though haruhime.moe keeps nothing itself.",
-      lastUpdated: "2026-10-05",
+        "Your rights under the GDPR and the CCPA: access, correct, delete and export your data, object to its use, and opt out, for your haruhime account and each tool.",
+      lastUpdated: "2026-10-06",
     },
     copyright: {
       title: "Copyright",

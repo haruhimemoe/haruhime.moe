@@ -12,7 +12,7 @@ Requires Bun 1.4+ and Node 24+.
 bun install && bun dev
 ```
 
-Then open http://localhost:3000. No environment variables are needed.
+Then open http://localhost:3000. Every page but `/signin` and `/account` works with no environment variables; for those, copy `.env.example` to `.env.local` and fill in the first five variables.
 
 ## Checks
 
@@ -28,7 +28,7 @@ bun run check && bun run typecheck && bun run test && bun run build
 | `bun run typecheck` | Route type generation + `tsc` |
 | `bun run test` | Vitest (unit and components projects) |
 | `bun run test:coverage` | Tests with v8 coverage; fails under 90% on `src/utils/` |
-| `bun run build` | Production build; every route must show as static (○) |
+| `bun run build` | Production build; every route but `/signin`, `/account` and `/api/*` must show as static (○) |
 
 CI runs the same checks, with `test:coverage` in place of `test`.
 
