@@ -26,6 +26,7 @@ export const HUB_HOSTS: readonly string[] = [
   "packs.haruhime.moe",
   "pools.haruhime.moe",
   "bb.haruhime.moe",
+  "harumin.haruhime.moe",
 ];
 
 /** HUB_HOSTS as https origins, for better-auth's trustedOrigins. */
