@@ -8,6 +8,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ### Added
 
+- The haruhime account: `/signin` is the one osu! sign-in for packs, pools and bb, and `/account` shows your osu! profile, the apps your account opens, every device you're signed in on (sign one out, or everywhere else), sign out and account deletion. The header has an account menu.
+
 - /thanks: an osu!-style player card for every osu! player thanked (avatar, cover, flags, linked to their osu! profile when we know which account is theirs). The cards come from a snapshot taken once, so the page still never calls osu!.
 - /ui: a PlayerCard demo in the osu! group, and a Content group for ui's docs, legal and brand page components.
 - `/legal`, an index of the legal pages, and each legal page as Markdown at `/legal/<page>.md` (linked from `/llms.txt`, with a Copy as Markdown button on the page).
@@ -17,6 +19,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - `/libraries/<name>`: a side list of every library with its version, a "Libraries / <name>" trail, and an "On this page" list of the README's headings on wide screens.
 
 ### Changed
+
+- The privacy policy, terms and privacy rights pages describe the haruhime account: what it keeps (your osu! profile and sign-in sessions), its cookies (none until you sign in) and where to delete it.
 
 - `/libraries` no longer lists `@haruhimemoe/hinai`, which is being deprecated: `@haruhimemoe/mirror` includes the hinai client.
 - `/changelog` and every page under it have a side list (All releases, then Apps, Packages and Claude plugin, each repo with its latest version) in place of the filter row; on phones it folds into a Contents menu above the page.

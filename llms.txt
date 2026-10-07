@@ -1,6 +1,6 @@
 # haruhime.moe
 
-> Source for https://www.haruhime.moe, the home page for haruhime's osu! tools for players, mappers and tournament hosts (packs and bb, an osu! BBCode editor, are live; pools, a mappool builder, is live in beta; sheets is coming soon). The site also has a thanks list, the brand kit, the libraries the tools are built from (the nine @haruhimemoe packages with live npm and GitHub numbers, and each README as a docs page), a showcase of every @haruhimemoe/ui component, contact details, a disclaimer, terms and a privacy policy. It is a static Next.js 16 site built from @haruhimemoe/ui, run with Bun. MIT license. The live site serves its own llms.txt at https://www.haruhime.moe/llms.txt; that one is the canonical guide to the pages and tools. This file covers the repository.
+> Source for https://www.haruhime.moe, the home page for haruhime's osu! tools for players, mappers and tournament hosts (packs and bb, an osu! BBCode editor, are live; pools, a mappool builder, is live in beta; sheets is coming soon). The site also has a thanks list, the brand kit, the libraries the tools are built from (the nine @haruhimemoe packages with live npm and GitHub numbers, and each README as a docs page), a showcase of every @haruhimemoe/ui component, contact details, a disclaimer, terms and a privacy policy. It is also the haruhime account hub (/signin, /account: the one osu! sign-in for every tool, sessions in a MongoDB "identity" database); every other page is static. Next.js 16, @haruhimemoe/ui and @haruhimemoe/next-kit, run with Bun. MIT license. The live site serves its own llms.txt at https://www.haruhime.moe/llms.txt; that one is the canonical guide to the pages and tools. This file covers the repository.
 
 ## Site
 
@@ -16,7 +16,7 @@
 - [Pages](https://github.com/haruhimemoe/haruhime.moe#pages): every route and what it shows
 - [Run it locally](https://github.com/haruhimemoe/haruhime.moe#run-it-locally): requirements, install, dev server and production build
 - [Where the content lives](https://github.com/haruhimemoe/haruhime.moe#where-the-content-lives): which file holds the thanks list, the tools, the links, each page's copy and the repo banners
-- [AGENTS.md](https://github.com/haruhimemoe/haruhime.moe/blob/main/AGENTS.md): conventions, invariants (every route static) and file layout for AI coding agents
+- [AGENTS.md](https://github.com/haruhimemoe/haruhime.moe/blob/main/AGENTS.md): conventions, invariants (every public route static) and file layout for AI coding agents
 
 ## Source
 

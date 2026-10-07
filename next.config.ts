@@ -6,7 +6,7 @@
  *       README banners load, the legal MDX traced into /llms-full.txt (it revalidates daily), and
  *       next-kit's rewrite that serves each legal page's Markdown mirror
  *       at /legal/<slug>.md, and the /discord redirect every repo's invite link points at. Every
- *       page is static; there are no API routes.
+ *       page is static but /signin, /account and the /api/* routes of the account hub.
  * @author David @dvhsh (https://dvh.sh)
  * @created Wed Sep 23, 2026
  * @modified Tue Oct 6, 2026
