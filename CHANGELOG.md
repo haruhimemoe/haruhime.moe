@@ -9,6 +9,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 ### Added
 
 - The haruhime account: `/signin` is the one osu! sign-in for packs, pools and bb, and `/account` shows your osu! profile, the apps your account opens, every device you're signed in on (sign one out, or everywhere else), sign out and account deletion. The header has an account menu.
+- `/api/signin/osu?next=` sends you straight to osu! to sign in, so signing in from packs, pools or bb no longer stops on a haruhime.moe page first. `next` is checked the same way `/signin` checks it.
 
 - /thanks: an osu!-style player card for every osu! player thanked (avatar, cover, flags, linked to their osu! profile when we know which account is theirs). The cards come from a snapshot taken once, so the page still never calls osu!.
 - /ui: a PlayerCard demo in the osu! group, and a Content group for ui's docs, legal and brand page components.
