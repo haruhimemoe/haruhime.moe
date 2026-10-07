@@ -37,5 +37,8 @@ export const getIdentityDb = mongo.getIdentityDb;
 /** Connects once and builds identity's indexes. */
 export const connectDb = mongo.connectDb;
 
+/** The identity database once connectDb has resolved (the rate limiter's counters live on it). */
+export const connectedDb = mongo.connectedDb;
+
 /** Closes the client and forgets it (tests). */
 export const closeDb = mongo.closeDb;

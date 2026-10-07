@@ -1,8 +1,8 @@
 /**
  * @file tests/unit/app/api/account-routes.test.ts
  * @desc The account routes: 401 for a visitor, 403 cross-site (a sibling subdomain included),
- *       DELETE /api/account checks the typed username and clears the marker, the session routes
- *       revoke by id (never this session) or every other one.
+ *       DELETE /api/account checks the typed username, rate-limits by osu! id, and clears the
+ *       marker, the session routes revoke by id (never this session) or every other one.
  * @author David @dvhsh (https://dvh.sh)
  * @created Tue Oct 6, 2026
  * @modified Tue Oct 6, 2026
@@ -14,11 +14,15 @@ const getUserFromHeaders = vi.fn();
 const deleteIdentity = vi.fn();
 const revokeSession = vi.fn();
 const revokeOtherSessions = vi.fn();
+const limitUser = vi.fn();
 vi.mock("@/lib/auth", () => ({ getUserFromHeaders: (h: Headers) => getUserFromHeaders(h) }));
 vi.mock("@/lib/sessions", () => ({
   deleteIdentity: (id: string) => deleteIdentity(id),
   revokeSession: (u: string, s: string) => revokeSession(u, s),
   revokeOtherSessions: (u: string, s: string) => revokeOtherSessions(u, s),
+}));
+vi.mock("@/lib/rate-limit", () => ({
+  limitUser: (rule: unknown, user: unknown) => limitUser(rule, user),
 }));
 
 const account = await import("@/app/api/account/route");
@@ -43,6 +47,8 @@ beforeEach(() => {
   deleteIdentity.mockReset();
   revokeSession.mockResolvedValue(true);
   revokeOtherSessions.mockResolvedValue(2);
+  limitUser.mockReset();
+  limitUser.mockResolvedValue(null);
 });
 
 describe("DELETE /api/account", () => {
@@ -72,10 +78,21 @@ describe("DELETE /api/account", () => {
     );
     expect(response.status).toBe(204);
     expect(deleteIdentity).toHaveBeenCalledWith("u1");
+    expect(limitUser).toHaveBeenCalledWith(
+      expect.objectContaining({ scope: "account-delete" }),
+      USER,
+    );
     expect(response.headers.get("set-cookie")).toBe(
       "haruhime-signed-in=; Path=/; Max-Age=0; SameSite=Lax; Domain=.haruhime.moe",
     );
     expect(response.headers.get("cache-control")).toContain("no-store");
+  });
+
+  it("is rate-limited before the account is touched", async () => {
+    limitUser.mockResolvedValue(new Response(null, { status: 429 }));
+    const response = await account.DELETE(req("/api/account", { body: '{"username":"haruhime"}' }));
+    expect(response.status).toBe(429);
+    expect(deleteIdentity).not.toHaveBeenCalled();
   });
 });
 
