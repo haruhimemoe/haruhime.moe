@@ -10,6 +10,7 @@
  * @modified Tue Oct 6, 2026
  */
 
+import type { AccountApp } from "@haruhimemoe/next-kit/account";
 import { SHARED_MARKER_COOKIE } from "@haruhimemoe/next-kit/auth-react";
 
 /** The readable "signed in" marker, shared by the hub and every satellite. */
@@ -39,6 +40,29 @@ export const CONNECTED_APPS: readonly ConnectedApp[] = [
   { name: "pools", url: "https://pools.haruhime.moe", line: "The pools you make and edit." },
   { name: "bb", url: "https://bb.haruhime.moe", line: "Your saved BBCode and templates." },
 ];
+
+/**
+ * The apps account export, delete and the inbox fan out to, each with the env var holding its
+ * secret (that app's ACCOUNT_FANOUT_SECRET).
+ */
+export const ACCOUNT_APPS: readonly AccountApp[] = [
+  { id: "bb", name: "bb", baseUrl: "https://bb.haruhime.moe", secretEnv: "ACCOUNT_SECRET_BB" },
+  {
+    id: "packs",
+    name: "packs",
+    baseUrl: "https://packs.haruhime.moe",
+    secretEnv: "ACCOUNT_SECRET_PACKS",
+  },
+  {
+    id: "pools",
+    name: "pools",
+    baseUrl: "https://pools.haruhime.moe",
+    secretEnv: "ACCOUNT_SECRET_POOLS",
+  },
+];
+
+/** The locales the hub serves: English only for now. */
+export const HUB_LOCALES = { locales: ["en"], defaultLocale: "en" } as const;
 
 /** The header's account menu links; Sign out comes after them. */
 export const ACCOUNT_MENU_ITEMS: readonly { href: string; label: string }[] = [

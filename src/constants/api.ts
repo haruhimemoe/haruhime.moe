@@ -17,4 +17,10 @@ export const RATE_LIMITS = {
   accountDelete: { scope: "account-delete", limit: 3, windowSeconds: 3600 },
   /** GET /api/signin/osu, per IP: each hit writes a state cookie and an OAuth state. */
   signIn: { scope: "signin", limit: 30, windowSeconds: 600 },
+  /** Discord link start and callback, per IP. */
+  discordLink: { scope: "discord-link", limit: 10, windowSeconds: 600 },
+  /** GET /api/account/export, per osu! account: each one calls every app. */
+  accountExport: { scope: "account-export", limit: 5, windowSeconds: 3600 },
+  /** Wrong or missing bearer on /api/internal/inbox, per IP. */
+  inboxFailures: { scope: "inbox-failures", limit: 20, windowSeconds: 600 },
 } as const satisfies Record<string, RateLimitRule>;

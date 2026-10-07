@@ -1,8 +1,8 @@
 /**
  * @file src/app/account/page.tsx
  * @desc /account: the haruhime account center. The signed-in user's osu! name, avatar and id
- *       (linking their osu! profile), sign out, the apps one account opens (packs, pools, bb) with
- *       Discord linking still to come, where they're signed in (SessionsList: sign one device out,
+ *       (linking their osu! profile), sign out, the apps one account opens (packs, pools, bb), Discord linking
+ *       (shown only when configured), "Download my data", where they're signed in (SessionsList: sign one device out,
  *       or everywhere else), and "Delete my account" with the typed-username confirmation. Sign-in
  *       otherwise; never indexed. Restores the header's signed-in marker for a session that has
  *       none.
@@ -14,14 +14,16 @@
 import { osuAvatarSrc } from "@haruhimemoe/next-kit/auth-react";
 import { pageMetadata } from "@haruhimemoe/next-kit/seo";
 import { userUrl } from "@haruhimemoe/osu/shapes";
-import { Card, PageHeader, Text, TextLink, textClasses } from "@haruhimemoe/ui";
+import { Button, Card, PageHeader, Text, TextLink, textClasses } from "@haruhimemoe/ui";
 import type { Metadata } from "next";
 import Image from "next/image";
+import { DiscordUnlink } from "@/components/account/DiscordUnlink";
 import { SessionsList } from "@/components/account/SessionsList";
 import { CONNECTED_APPS } from "@/constants/accounts";
 import { SEO_SITE } from "@/constants/seo";
 import { DeleteAccountForm, RestoreSignedIn, SignOutButton } from "@/lib/account";
 import { requireUser } from "@/lib/auth-session";
+import { discordEnabled, linkedDiscord } from "@/lib/discord";
 import { listSessionRows } from "@/lib/sessions";
 
 export const metadata: Metadata = pageMetadata(SEO_SITE, {
@@ -34,6 +36,7 @@ export default async function AccountPage() {
   const user = await requireUser("/account");
   const avatar = osuAvatarSrc(user.avatarUrl);
   const sessions = await listSessionRows(user.id, user.sessionId);
+  const discord = discordEnabled() ? { name: await linkedDiscord(user.id) } : null;
   return (
     <div className="flex flex-col gap-6">
       <RestoreSignedIn />
@@ -70,20 +73,37 @@ export default async function AccountPage() {
               <span className={textClasses({ tone: "muted" })}>{app.line}</span>
             </li>
           ))}
-          <li>
-            <span className="font-bold text-c1">Discord</span>{" "}
-            <span className={textClasses({ tone: "muted" })}>
-              Linking your Discord account is coming soon.
-            </span>
-          </li>
+          {discord ? (
+            <li className="flex flex-wrap items-center gap-2">
+              <span className="font-bold text-c1">Discord</span>
+              <span className={textClasses({ tone: "muted" })}>
+                {discord.name ? `Linked as ${discord.name}.` : "Not linked."}
+              </span>
+              {discord.name ? (
+                <DiscordUnlink />
+              ) : (
+                <form method="post" action="/api/account/discord/start">
+                  <Button type="submit" variant="ghost">
+                    Connect
+                  </Button>
+                </form>
+              )}
+            </li>
+          ) : null}
         </ul>
       </Card>
       <SessionsList initial={sessions} />
+      <Card title="Your data">
+        <Text tone="muted">Everything haruhime and its apps keep about you, as one JSON file.</Text>
+        <TextLink href="/api/account/export" variant="plain" className="mt-3 font-bold" download>
+          Download my data
+        </TextLink>
+      </Card>
       <Card title="Delete my account">
         <DeleteAccountForm
           username={user.username}
           appName="haruhime.moe"
-          deletes="This deletes your haruhime account and signs you out of packs, pools and bb on every device. What you made inside each app isn't deleted from here yet; ask on Discord or by email until it is. It can't be undone."
+          deletes="This deletes your haruhime account and signs you out of packs, pools and bb on every device. It also deletes what you made inside each app. It can't be undone."
         />
       </Card>
     </div>

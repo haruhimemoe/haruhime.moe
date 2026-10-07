@@ -21,6 +21,14 @@ vi.mock("@/lib/sessions", () => ({
   revokeSession: (u: string, s: string) => revokeSession(u, s),
   revokeOtherSessions: (u: string, s: string) => revokeOtherSessions(u, s),
 }));
+const fanOutReport = vi.fn();
+vi.mock("@/lib/account-data", () => ({
+  deleteAccount: async (user: { id: string }) => {
+    const report = fanOutReport();
+    if (report.ok) deleteIdentity(user.id);
+    return report;
+  },
+}));
 vi.mock("@/lib/rate-limit", () => ({
   limitUser: (rule: unknown, user: unknown) => limitUser(rule, user),
 }));
@@ -45,6 +53,7 @@ beforeEach(() => {
   vi.unstubAllEnvs();
   getUserFromHeaders.mockResolvedValue(USER);
   deleteIdentity.mockReset();
+  fanOutReport.mockReturnValue({ ok: true, results: [] });
   revokeSession.mockResolvedValue(true);
   revokeOtherSessions.mockResolvedValue(2);
   limitUser.mockReset();
@@ -52,6 +61,19 @@ beforeEach(() => {
 });
 
 describe("DELETE /api/account", () => {
+  it("is 502 and keeps the identity when an app fails", async () => {
+    fanOutReport.mockReturnValue({
+      ok: false,
+      results: [{ id: "packs", ok: false, status: 0, error: "not_configured" }],
+    });
+    const res = await account.DELETE(
+      req("/api/account", { body: JSON.stringify({ username: "haruhime" }) }),
+    );
+    expect(res.status).toBe(502);
+    expect((await res.json()).error.message).toContain("packs");
+    expect(deleteIdentity).not.toHaveBeenCalled();
+  });
+
   it("is 401 signed out", async () => {
     getUserFromHeaders.mockResolvedValue(null);
     expect((await account.DELETE(req("/api/account"))).status).toBe(401);

@@ -37,8 +37,20 @@ export const SERVER_ENV_KEYS = serverEnv.keys;
 
 /** The parent domain the session cookie is scoped to (".haruhime.moe" in production). */
 export const HUB_COOKIE_DOMAIN_KEY = "HUB_COOKIE_DOMAIN";
+/** The Discord link's OAuth app (both unset: the feature is off and its routes answer 404). */
+export const DISCORD_ENV_KEYS = ["DISCORD_CLIENT_ID", "DISCORD_CLIENT_SECRET"] as const;
+/** Each satellite's account fan-out and inbox secret (unset: delete refuses, export skips it). */
+export const ACCOUNT_SECRET_KEYS = [
+  "ACCOUNT_SECRET_BB",
+  "ACCOUNT_SECRET_PACKS",
+  "ACCOUNT_SECRET_POOLS",
+] as const;
 /** The variables read on every call, for .env.example's test. */
-export const OPTIONAL_ENV_KEYS = [HUB_COOKIE_DOMAIN_KEY] as const;
+export const OPTIONAL_ENV_KEYS = [
+  HUB_COOKIE_DOMAIN_KEY,
+  ...DISCORD_ENV_KEYS,
+  ...ACCOUNT_SECRET_KEYS,
+] as const;
 
 /** A leading dot, then a hostname: ".haruhime.moe", ".localhost". */
 const COOKIE_DOMAIN = /^\.[a-z0-9-]+(?:\.[a-z0-9-]+)*$/;
