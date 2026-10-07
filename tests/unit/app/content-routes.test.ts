@@ -7,7 +7,7 @@
  *       route.
  * @author David @dvhsh (https://dvh.sh)
  * @created Sun Oct 4, 2026
- * @modified Sun Oct 4, 2026
+ * @modified Tue Oct 6, 2026
  */
 
 import { contentRewrites } from "@haruhimemoe/next-kit/docs";
@@ -63,7 +63,7 @@ describe("/legal", () => {
     await expect(page.generateMetadata(params("terms"))).resolves.toMatchObject({
       title: { absolute: "Terms of use for haruhime.moe · haruhime.moe" },
       alternates: { canonical: "https://www.haruhime.moe/legal/terms" },
-      openGraph: { type: "article", modifiedTime: expect.stringContaining("2026-10-02") },
+      openGraph: { type: "article", modifiedTime: expect.stringContaining("2026-10-06") },
     });
   });
 });

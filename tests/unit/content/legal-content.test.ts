@@ -74,7 +74,9 @@ describe("privacy", () => {
       "Changes",
       "Contact",
     ]);
-    expect(md).toContain("has no accounts, sets no cookies, runs no analytics");
+    expect(md).toContain("holds your haruhime account");
+    expect(md).toContain("a visitor who never signs in gets no cookies");
+    expect(md).toContain("haruhime-signed-in");
     expect(md).toContain("**[Vercel](https://vercel.com/legal/privacy-policy)**");
     expect(md).toContain("your browser never contacts npm or GitHub");
     expect(md).toContain(MAIL);
@@ -90,7 +92,7 @@ describe("your-privacy-rights", () => {
       "Your rights under the CCPA",
       "Changes",
     ]);
-    expect(md).toContain("itself keeps nothing of yours");
+    expect(md).toContain("keeps your haruhime account if you sign in");
     expect(md).toContain("We don't sell or share personal information.");
     expect(md).toContain("We honor Global Privacy Control signals.");
     expect(md).toContain(MAIL);

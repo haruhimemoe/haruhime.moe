@@ -4,7 +4,7 @@
  *       names every AI bot in its own allow group, and points at the sitemap.
  * @author David @dvhsh (https://dvh.sh)
  * @created Wed Sep 23, 2026
- * @modified Sun Oct 4, 2026
+ * @modified Tue Oct 6, 2026
  */
 
 import { readdirSync } from "node:fs";
@@ -83,8 +83,9 @@ describe("sitemap", () => {
   });
 
   it("matches every page.tsx under src/app, so a new page can't miss the sitemap", () => {
-    // /legal's index comes from the content registry, its pages from [slug].
-    expect([...PAGE_PATHS, "/legal"].sort()).toEqual(routePathsOnDisk());
+    // /legal's index comes from the content registry, its pages from [slug]. /signin and
+    // /account are never indexed, so they stay out of PAGES and the sitemap.
+    expect([...PAGE_PATHS, "/legal", "/account", "/signin"].sort()).toEqual(routePathsOnDisk());
   });
 });
 
