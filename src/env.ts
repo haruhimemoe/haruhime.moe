@@ -44,6 +44,7 @@ export const ACCOUNT_SECRET_KEYS = [
   "ACCOUNT_SECRET_BB",
   "ACCOUNT_SECRET_PACKS",
   "ACCOUNT_SECRET_POOLS",
+  "ACCOUNT_SECRET_TOURNEY",
 ] as const;
 /** The variables read on every call, for .env.example's test. */
 export const OPTIONAL_ENV_KEYS = [

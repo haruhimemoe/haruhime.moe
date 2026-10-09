@@ -8,8 +8,15 @@
  */
 
 import { describe, expect, it } from "vitest";
-import { CONNECTED_APPS, HUB_HOSTS, SIGNED_IN_COOKIE, TRUSTED_ORIGINS } from "@/constants/accounts";
+import {
+  ACCOUNT_APPS,
+  CONNECTED_APPS,
+  HUB_HOSTS,
+  SIGNED_IN_COOKIE,
+  TRUSTED_ORIGINS,
+} from "@/constants/accounts";
 import { TOOLS } from "@/constants/tools";
+import { ACCOUNT_SECRET_KEYS } from "@/env";
 
 describe("accounts", () => {
   it("shares one marker cookie with every app", () => {
@@ -25,5 +32,16 @@ describe("accounts", () => {
     const live = TOOLS.filter((tool) => tool.url).map((tool) => [tool.name, tool.url]);
     expect(CONNECTED_APPS.map((app) => [app.name, app.url])).toEqual(live);
     for (const app of CONNECTED_APPS) expect(HUB_HOSTS).toContain(new URL(app.url).hostname);
+  });
+
+  it("fans account export and delete out to tourney, whose host sign-in returns to", () => {
+    expect(ACCOUNT_APPS.find((app) => app.id === "tourney")).toEqual({
+      id: "tourney",
+      name: "tourney",
+      baseUrl: "https://tourney.haruhime.moe",
+      secretEnv: "ACCOUNT_SECRET_TOURNEY",
+    });
+    expect(HUB_HOSTS).toContain("tourney.haruhime.moe");
+    for (const app of ACCOUNT_APPS) expect(ACCOUNT_SECRET_KEYS).toContain(app.secretEnv);
   });
 });

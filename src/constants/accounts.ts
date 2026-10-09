@@ -27,6 +27,7 @@ export const HUB_HOSTS: readonly string[] = [
   "pools.haruhime.moe",
   "bb.haruhime.moe",
   "harumin.haruhime.moe",
+  "tourney.haruhime.moe",
 ];
 
 /** HUB_HOSTS as https origins, for better-auth's trustedOrigins. */
@@ -64,6 +65,12 @@ export const ACCOUNT_APPS: readonly AccountApp[] = [
     name: "pools",
     baseUrl: "https://pools.haruhime.moe",
     secretEnv: "ACCOUNT_SECRET_POOLS",
+  },
+  {
+    id: "tourney",
+    name: "tourney",
+    baseUrl: "https://tourney.haruhime.moe",
+    secretEnv: "ACCOUNT_SECRET_TOURNEY",
   },
 ];
 
