@@ -27,6 +27,7 @@ const REPOS = [
   "bb.haruhime.moe",
   "harumin.haruhime.moe",
   "harumin",
+  "tourney.haruhime.moe",
   "ui",
   "osu",
   "hinai",

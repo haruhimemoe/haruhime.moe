@@ -42,7 +42,7 @@ export default function HomePage() {
       <EgcBanner />
       <PageHeader
         title="osu! tools for players, mappers and tournament hosts"
-        lead="hellosu, haruhime here. these are free tools i make for osu!: packs turns a mappool into one download, pools is for building and looking up tournament pools, bb is a BBCode editor for userpages and forum posts, and harumin is an osu! bot for your Discord server."
+        lead="hellosu, haruhime here. these are free tools i make for osu!: packs turns a mappool into one download, pools is for building and looking up tournament pools, bb is a BBCode editor for userpages and forum posts, harumin is an osu! bot for your Discord server, and tourney runs a tournament from registration to results."
       />
       <div className="max-w-sm">
         <PlayerCard

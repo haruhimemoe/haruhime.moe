@@ -148,6 +148,7 @@ describe("/ui", () => {
       "https://pools.haruhime.moe",
       "https://bb.haruhime.moe",
       "https://harumin.haruhime.moe",
+      "https://tourney.haruhime.moe",
     ]);
     const column = within(demo("haruhimeToolsColumn"));
     expect(column.getByText("haruhime tools")).toBeInTheDocument();

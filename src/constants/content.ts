@@ -22,13 +22,13 @@ export const CONTENT = defineContent({
       title: "Terms",
       description:
         "The terms for haruhime.moe itself: the site and the haruhime account, the MIT-licensed libraries, each tool's own terms, no warranty, and how to reach haruhime.",
-      lastUpdated: "2026-10-07",
+      lastUpdated: "2026-10-09",
     },
     privacy: {
       title: "Privacy",
       description:
         "What haruhime.moe keeps: your haruhime account (your osu! profile and sign-in sessions) once you sign in, and Vercel's request logs. No analytics, nothing sold.",
-      lastUpdated: "2026-10-07",
+      lastUpdated: "2026-10-09",
     },
     "your-privacy-rights": {
       title: "Your Privacy Rights",

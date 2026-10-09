@@ -7,7 +7,7 @@
  *       /changelog/kind/<segment> filters; KIND_HEADINGS names each kind's group in the nav.
  * @author David @dvhsh (https://dvh.sh)
  * @created Sun Oct 4, 2026
- * @modified Tue Oct 6, 2026
+ * @modified Fri Oct 9, 2026
  */
 
 import { LIBRARIES } from "@/constants/libraries";
@@ -35,11 +35,15 @@ const source = (
   kind: ChangelogKind,
 ): ChangelogSource => ({ slug, label, repo, kind });
 
+// A tool named like a library (tourney) takes its domain as the slug, so both keep a page.
+const toolSlug = (name: string): string =>
+  LIBRARIES.some((library) => library.name === name) ? `${name}.haruhime.moe` : name;
+
 /** Every repo, in filter-nav order: this site and the live tools, the packages, the plugin. */
 export const CHANGELOG_SOURCES: readonly ChangelogSource[] = [
   source(SITE.name, SITE.name, SITE.name, "app"),
   ...TOOLS.filter((tool) => tool.url).map((tool) =>
-    source(tool.name, tool.name, `${tool.name}.haruhime.moe`, "app"),
+    source(toolSlug(tool.name), tool.name, `${tool.name}.haruhime.moe`, "app"),
   ),
   ...LIBRARIES.map((library) => source(library.name, library.name, library.repo, "package")),
   source("claude-plugin", "Claude plugin", "claude-plugin", "plugin"),

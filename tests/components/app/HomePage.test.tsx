@@ -31,7 +31,7 @@ describe("/", () => {
     );
     expect(screen.getAllByRole("heading")[0]).toBe(screen.getByRole("heading", { level: 1 }));
     expect(screen.getByText(/hellosu, haruhime here/)).toHaveTextContent(
-      /harumin is an osu! bot for your Discord server\.$/,
+      /tourney runs a tournament from registration to results\.$/,
     );
   });
 
@@ -44,13 +44,13 @@ describe("/", () => {
     expect(screen.getByText("hellosu idk what to put here")).toBeInTheDocument();
   });
 
-  it("shows packs, pools, bb and harumin live, pools in beta, and sheets coming soon", () => {
+  it("shows packs, pools, bb, harumin and tourney live, pools and tourney in beta, and sheets coming soon", () => {
     render(<HomePage />);
     // The section is headed, not a landmark: the footer's "Tools" region owns that name.
     expect(screen.queryByRole("region", { name: "Tools" })).toBeNull();
     const tools = screen.getByRole("heading", { name: "Tools" }).closest("section") as HTMLElement;
     const items = within(tools).getAllByRole("listitem");
-    expect(items).toHaveLength(5);
+    expect(items).toHaveLength(6);
     for (const item of items) expect(item).toHaveClass("flex");
     expect(within(tools).getByRole("link", { name: "packs" })).toHaveAttribute(
       "href",
@@ -64,7 +64,7 @@ describe("/", () => {
       "href",
       "https://bb.haruhime.moe",
     );
-    expect(within(tools).getAllByRole("link")).toHaveLength(8);
+    expect(within(tools).getAllByRole("link")).toHaveLength(10);
     expect(within(tools).getByRole("link", { name: "Make a pack" })).toHaveAttribute(
       "href",
       "https://packs.haruhime.moe/new",
@@ -81,7 +81,13 @@ describe("/", () => {
     const pools = within(tools).getByRole("link", { name: "pools" }).closest("li");
     // The beta pill sits right beside the name, before the tagline.
     expect(pools).toHaveTextContent(/^poolsbeta/);
-    expect(within(tools).getAllByText("beta")).toHaveLength(1);
+    const tourney = within(tools).getByRole("link", { name: "tourney" }).closest("li");
+    expect(tourney).toHaveTextContent(/^tourneybeta/);
+    expect(within(tools).getByRole("link", { name: "Browse tournaments" })).toHaveAttribute(
+      "href",
+      "https://tourney.haruhime.moe/browse",
+    );
+    expect(within(tools).getAllByText("beta")).toHaveLength(2);
   });
 
   it("puts the Evergreen Cup banner first, above the intro", () => {
@@ -122,6 +128,7 @@ describe("/", () => {
             { "@id": "https://pools.haruhime.moe/#website" },
             { "@id": "https://bb.haruhime.moe/#website" },
             { "@id": "https://harumin.haruhime.moe/#website" },
+            { "@id": "https://tourney.haruhime.moe/#website" },
           ],
         }),
       ]),

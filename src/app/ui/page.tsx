@@ -19,6 +19,7 @@ import type { JSX } from "react";
 import { ActionDemos } from "@/components/showcase/ActionDemos";
 import { ArticleDemos } from "@/components/showcase/ArticleDemos";
 import { BasicsDemos } from "@/components/showcase/BasicsDemos";
+import { BracketDemos } from "@/components/showcase/BracketDemos";
 import { ContentDemos } from "@/components/showcase/ContentDemos";
 import { DemoGroup } from "@/components/showcase/DemoGroup";
 import { FilterDemos } from "@/components/showcase/FilterDemos";
@@ -49,6 +50,7 @@ const GROUPS: readonly { id: string; title: string; Demos: () => JSX.Element }[]
   { id: "filters", title: "Filters", Demos: FilterDemos },
   { id: "tables", title: "Tables", Demos: TableDemos },
   { id: "osu", title: "osu!", Demos: OsuDemos },
+  { id: "brackets", title: "Brackets", Demos: BracketDemos },
   { id: "icons", title: "Icons", Demos: IconDemos },
   { id: "shell", title: "Shell", Demos: ShellDemos },
   { id: "content", title: "Content", Demos: ContentDemos },

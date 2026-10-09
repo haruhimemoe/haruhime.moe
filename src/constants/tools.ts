@@ -7,7 +7,7 @@
  *       card also carries one concrete sentence and a link to its main task.
  * @author David @dvhsh (https://dvh.sh)
  * @created Wed Sep 23, 2026
- * @modified Wed Oct 7, 2026
+ * @modified Fri Oct 9, 2026
  */
 
 /** One tool. `url` is set only once the tool is live. */
@@ -83,6 +83,19 @@ export const TOOLS: readonly Tool[] = [
     summary:
       "osu! profiles, scores and pp in your Discord server, with map cards that remember the map.",
     task: { label: "See the commands", path: "/commands" },
+  },
+  {
+    name: "tourney",
+    hue: 110,
+    tagline: "osu! tournaments, run in one place",
+    icon: "brand/tourney-icon.svg",
+    url: "https://tourney.haruhime.moe",
+    beta: true,
+    about:
+      "Runs an osu! tournament: hosts sign in with osu!, open registration, approve teams, seed and draw the bracket, schedule matches from players' availability and enter results by hand or from an mp link. Each edition gets a public page with its bracket, schedule, results and rules.",
+    llmsTxt: true,
+    summary: "Run a tournament from registration to bracket, schedule and results in one place.",
+    task: { label: "Browse tournaments", path: "/browse" },
   },
   {
     name: "sheets",

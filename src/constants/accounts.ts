@@ -46,6 +46,11 @@ export const CONNECTED_APPS: readonly ConnectedApp[] = [
     url: "https://harumin.haruhime.moe",
     line: "The bot's dashboard, and your osu! name in Discord.",
   },
+  {
+    name: "tourney",
+    url: "https://tourney.haruhime.moe",
+    line: "The tournaments you host and the ones you play in.",
+  },
 ];
 
 /**

@@ -8,6 +8,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ### Added
 
+- tourney is live, in beta: a tool card with its beta tag and a link to browse tournaments, the header and footer, /account's connected apps, the terms and privacy links, a README banner for tourney.haruhime.moe, and its changelog at `/changelog/tourney.haruhime.moe` (the tourney library keeps `/changelog/tourney`).
+- /ui: a Brackets group with BracketView, BracketMatchCard, bracketColumns and sideLabel.
 - harumin, the osu! Discord bot, is live: a featured panel on the homepage in its black-and-white look, a tool card, the header and footer, /account's connected apps, the terms and privacy links, and README banners for its two repos.
 - The haruhime account: `/signin` is the one osu! sign-in for packs, pools and bb, and `/account` shows your osu! profile, the apps your account opens, every device you're signed in on (sign one out, or everywhere else), sign out and account deletion. The header has an account menu.
 - `/api/signin/osu?next=` sends you straight to osu! to sign in, so signing in from packs, pools or bb no longer stops on a haruhime.moe page first. `next` is checked the same way `/signin` checks it.
@@ -23,6 +25,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - `/libraries/<name>`: a side list of every library with its version, a "Libraries / <name>" trail, and an "On this page" list of the README's headings on wide screens.
 
 ### Changed
+
+- The footer lists each column's links longest first (ui 0.23.0).
 
 - The privacy policy, terms and privacy rights pages describe the haruhime account: what it keeps (your osu! profile and sign-in sessions), its cookies (none until you sign in) and where to delete it.
 

@@ -14,25 +14,37 @@ import { describe, expect, it } from "vitest";
 import { TOOLS } from "@/constants/tools";
 
 describe("TOOLS", () => {
-  it("lists packs, pools, bb, harumin and sheets in that order", () => {
-    expect(TOOLS.map((tool) => tool.name)).toEqual(["packs", "pools", "bb", "harumin", "sheets"]);
+  it("lists packs, pools, bb, harumin, tourney and sheets in that order", () => {
+    expect(TOOLS.map((tool) => tool.name)).toEqual([
+      "packs",
+      "pools",
+      "bb",
+      "harumin",
+      "tourney",
+      "sheets",
+    ]);
   });
 
-  it("links packs, pools, bb and harumin; sheets waits for its launch", () => {
+  it("links packs, pools, bb, harumin and tourney; sheets waits for its launch", () => {
     expect(TOOLS.filter((tool) => tool.url).map((tool) => tool.name)).toEqual([
       "packs",
       "pools",
       "bb",
       "harumin",
+      "tourney",
     ]);
+    expect(TOOLS[4]?.url).toBe("https://tourney.haruhime.moe");
     expect(TOOLS[3]?.url).toBe("https://harumin.haruhime.moe");
     expect(TOOLS[2]?.url).toBe("https://bb.haruhime.moe");
     expect(TOOLS[0]?.url).toBe("https://packs.haruhime.moe");
     expect(TOOLS[1]?.url).toBe("https://pools.haruhime.moe");
   });
 
-  it("marks only pools as beta; beta and llmsTxt are for live tools only", () => {
-    expect(TOOLS.filter((tool) => tool.beta).map((tool) => tool.name)).toEqual(["pools"]);
+  it("marks pools and tourney as beta; beta and llmsTxt are for live tools only", () => {
+    expect(TOOLS.filter((tool) => tool.beta).map((tool) => tool.name)).toEqual([
+      "pools",
+      "tourney",
+    ]);
     for (const tool of TOOLS.filter((t) => t.beta || t.llmsTxt)) {
       expect(tool.url).toBeDefined();
     }
@@ -56,7 +68,7 @@ describe("TOOLS", () => {
   );
 
   it("uses the brand kit's hues (pools h1 is #66ccff)", () => {
-    expect(TOOLS.map((tool) => tool.hue)).toEqual([333, 200, 265, 350, 150]);
+    expect(TOOLS.map((tool) => tool.hue)).toEqual([333, 200, 265, 350, 110, 150]);
     expect(hslToHex(200, 100, 70)).toBe("#66ccff");
   });
 });

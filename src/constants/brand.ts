@@ -42,7 +42,7 @@ export const BRAND_COLORS = [
  * a package (no `product`), its name in the parent's pink over a short line of its own.
  */
 type RepoBannerSource = {
-  product?: "haruhime" | "packs" | "pools" | "bb" | "harumin";
+  product?: "haruhime" | "packs" | "pools" | "bb" | "harumin" | "tourney";
   /**
    * The line under the name, which /brand's preview reads out as alt text. A tool's comes from
    * its TOOLS entry, which copies its product's tagline so the page needn't draw with
@@ -105,6 +105,7 @@ export const REPO_BANNERS: readonly RepoBanner[] = [
   repoBanner("bb.haruhime.moe", { product: "bb", tagline: toolTagline("bb") }),
   repoBanner("harumin.haruhime.moe", { product: "harumin", tagline: toolTagline("harumin") }),
   repoBanner("harumin", { product: "harumin", tagline: toolTagline("harumin") }),
+  repoBanner("tourney.haruhime.moe", { product: "tourney", tagline: toolTagline("tourney") }),
   repoBanner("ui", { tagline: "@haruhimemoe/ui: React components and theme" }),
   repoBanner("osu", { tagline: "@haruhimemoe/osu: osu! API v2 client" }),
   repoBanner("hinai", { tagline: "@haruhimemoe/hinai: hinai beatmap mirror client" }),

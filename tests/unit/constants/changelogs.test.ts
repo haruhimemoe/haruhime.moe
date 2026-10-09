@@ -25,11 +25,23 @@ describe("CHANGELOG_SOURCES", () => {
   it("lists the site, the live tools, the libraries, then the plugin", () => {
     expect(CHANGELOG_SOURCES.map((s) => [s.slug, s.repo, s.kind])).toEqual([
       ["haruhime.moe", "haruhime.moe", "app"],
-      ...TOOLS.filter((t) => t.url).map((t) => [t.name, `${t.name}.haruhime.moe`, "app"]),
+      ...TOOLS.filter((t) => t.url).map((t) => [
+        LIBRARIES.some((l) => l.name === t.name) ? `${t.name}.haruhime.moe` : t.name,
+        `${t.name}.haruhime.moe`,
+        "app",
+      ]),
       ...LIBRARIES.map((l) => [l.name, l.repo, "package"]),
       ["claude-plugin", "claude-plugin", "plugin"],
     ]);
     expect(CHANGELOG_SOURCES.find((s) => s.slug === "claude-plugin")?.label).toBe("Claude plugin");
+  });
+
+  it("gives tourney the app its domain as slug, so the tourney library keeps its own", () => {
+    expect(findChangelogSource("tourney.haruhime.moe")).toMatchObject({
+      label: "tourney",
+      kind: "app",
+    });
+    expect(findChangelogSource("tourney")?.kind).toBe("package");
   });
 
   it("never lists a tool that hasn't launched, and every slug is unique", () => {
