@@ -54,7 +54,10 @@ export function ToolCard({ tool }: { tool: Tool }) {
       </div>
       {tool.url && tool.summary ? <p className="text-c2">{tool.summary}</p> : null}
       {tool.url && tool.task ? (
-        <TextLink href={`${tool.url}${tool.task.path}`} className="mt-auto w-fit font-bold text-sm">
+        <TextLink
+          href={`${tool.url}${tool.task.path}`}
+          className="mt-auto w-fit coarse:py-2 font-bold text-sm"
+        >
           {tool.task.label}
           <span aria-hidden="true"> →</span>
         </TextLink>
