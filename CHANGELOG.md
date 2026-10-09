@@ -8,6 +8,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ### Added
 
+- Installs to a phone's home screen: a web app manifest, the page color as the browser's theme color, home-screen icons, and an offline page when a page can't load (a service worker that caches only the site's build files).
 - tourney is live, in beta: a tool card with its beta tag and a link to browse tournaments, the header and footer, /account's connected apps, the terms and privacy links, a README banner for tourney.haruhime.moe, and its changelog at `/changelog/tourney.haruhime.moe` (the tourney library keeps `/changelog/tourney`).
 - /ui: a Brackets group with BracketView, BracketMatchCard, bracketColumns and sideLabel.
 - harumin, the osu! Discord bot, is live: a featured panel on the homepage in its black-and-white look, a tool card, the header and footer, /account's connected apps, the terms and privacy links, and README banners for its two repos.
