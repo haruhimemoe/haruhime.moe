@@ -18,7 +18,7 @@ import type { NextConfig } from "next";
 
 const withMDX = createMDX({
   extension: /\.mdx?$/,
-  options: { remarkPlugins: ["@haruhimemoe/ui/remark"] },
+  options: { remarkPlugins: ["remark-gfm", "@haruhimemoe/ui/remark"] },
 });
 
 const nextConfig: NextConfig = {
