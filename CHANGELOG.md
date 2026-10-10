@@ -27,6 +27,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ### Changed
 
+- CI runs CodeQL and a gitleaks scan of the full git history, and Dependabot covers dependencies and pinned actions. Dependencies are on their latest versions.
 - The footer lists each column's links longest first (ui 0.23.0).
 
 - The privacy policy, terms and privacy rights pages describe the haruhime account: what it keeps (your osu! profile and sign-in sessions), its cookies (none until you sign in) and where to delete it.
