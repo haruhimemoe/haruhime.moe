@@ -6,9 +6,9 @@
       "name": "haruhime.moe",
       "dependencies": {
         "@haruhimemoe/brand": "0.10.0",
-        "@haruhimemoe/next-kit": "0.16.0",
+        "@haruhimemoe/next-kit": "0.16.1",
         "@haruhimemoe/osu": "0.7.0",
-        "@haruhimemoe/ui": "0.24.0",
+        "@haruhimemoe/ui": "0.24.1",
         "@mdx-js/loader": "3.1.1",
         "@mdx-js/react": "3.1.1",
         "@next/mdx": "16.4.0",
@@ -130,11 +130,11 @@
 
     "@haruhimemoe/brand": ["@haruhimemoe/brand@0.10.0", "", { "dependencies": { "@resvg/resvg-js": "2.6.2", "opentype.js": "2.0.0" }, "bin": { "haruhime-brand": "dist/cli.js" } }, "sha512-4ib+VbXqvL2bIN/2Gkr5qdINxSyz+EcHtcKkEYeX8iSrif/KivInHFjG3xIlBsgZknE6iRcpj6ke2PIZxHGwlQ=="],
 
-    "@haruhimemoe/next-kit": ["@haruhimemoe/next-kit@0.16.0", "", { "peerDependencies": { "@haruhimemoe/osu": "^0.2.0 || ^0.3.0 || ^0.4.0", "@haruhimemoe/ui": ">=0.14.0 <0.25.0", "@haruhimemoe/vcs": "^0.1.0", "better-auth": "^1.7.5", "mongodb": "^7.6.0", "mongodb-memory-server": "^11.3.0", "mongoose": "^9.10.2", "msw": "^2.15.0", "next": "^16.3.6", "next-intl": "^4.14.0", "react": "^19.3.0", "vitest": "^5.0.1", "zod": "^4.6.5" }, "optionalPeers": ["@haruhimemoe/osu", "@haruhimemoe/ui", "@haruhimemoe/vcs", "better-auth", "mongodb", "mongodb-memory-server", "mongoose", "msw", "next", "next-intl", "react", "vitest"], "bin": { "next-kit": "dist/check/cli.js" } }, "sha512-UJxARqkrdE5jGIOeCw/2FSgfOeex0dM8z6+xFufXShbh7xCgEqlVRnmSNRy5NO9AmSd932T6/aJuioaQ2QU9FA=="],
+    "@haruhimemoe/next-kit": ["@haruhimemoe/next-kit@0.16.1", "", { "peerDependencies": { "@haruhimemoe/osu": "^0.2.0 || ^0.3.0 || ^0.4.0 || ^0.5.0 || ^0.6.0 || ^0.7.0", "@haruhimemoe/ui": ">=0.14.0 <0.25.0", "@haruhimemoe/vcs": "^0.1.0", "better-auth": "^1.7.5", "mongodb": "^7.6.0", "mongodb-memory-server": "^11.3.0", "mongoose": "^9.10.2", "msw": "^2.15.0 || ^3.0.0", "next": "^16.3.6", "next-intl": "^4.14.0", "react": "^19.3.0", "vitest": "^5.0.1", "zod": "^4.6.5" }, "optionalPeers": ["@haruhimemoe/osu", "@haruhimemoe/ui", "@haruhimemoe/vcs", "better-auth", "mongodb", "mongodb-memory-server", "mongoose", "msw", "next", "next-intl", "react", "vitest"], "bin": { "next-kit": "dist/check/cli.js" } }, "sha512-EIFS3FY47SFA7Wclfq30ISG9k2j3uOLIorqwSZu62UrakykxQtuAx7k1+mr8mQq/kbi+MOUAlhJ4KpQSgkEwDw=="],
 
     "@haruhimemoe/osu": ["@haruhimemoe/osu@0.7.0", "", { "peerDependencies": { "zod": "^4.0.16" } }, "sha512-eKO46jp7J6UnQTtQwXzpw8s6s/RUw7x+H8VPbToDuwlNL/iHW3NkO2z0dkqIzA33LfsRBT4XPNl4R4KKrsk5MQ=="],
 
-    "@haruhimemoe/ui": ["@haruhimemoe/ui@0.24.0", "", { "dependencies": { "tailwind-merge": "3.7.0" }, "peerDependencies": { "next": ">=16.0.0 <17", "react": ">=19.0.0", "react-dom": ">=19.0.0", "shiki": ">=4.5.0 <5", "tailwindcss": ">=4.1.0 <5" }, "optionalPeers": ["shiki"] }, "sha512-TSUnLg9ddRJowsAYR+FPaNdSDY7gi517f1I1DRmBCjDcW1C/bY/MuGGEzknPC0dH15+yfiKJJoBf5e7R5ZqtmQ=="],
+    "@haruhimemoe/ui": ["@haruhimemoe/ui@0.24.1", "", { "dependencies": { "tailwind-merge": "3.7.0" }, "peerDependencies": { "next": ">=16.0.0 <17", "react": ">=19.0.0", "react-dom": ">=19.0.0", "shiki": ">=4.5.0 <5", "tailwindcss": ">=4.1.0 <5" }, "optionalPeers": ["shiki"] }, "sha512-4YvyJtvsw7DfbAG24ypj+XRnk6fV/OiqXWdfZ3wHd0dp2W7DpBWUJTKlwtIGC7JGGcc0op6Zjl96NivvcylDng=="],
 
     "@img/colour": ["@img/colour@1.1.0", "", {}, "sha512-Td76q7j57o/tLVdgS746cYARfSyxk8iEfRxewL9h4OMzYhbW4TAcppl0mT4eyqXddh6L/jwoM75mo7ixa/pCeQ=="],
 
@@ -808,7 +808,7 @@
 
     "playwright": ["playwright@1.64.0", "", { "dependencies": { "playwright-core": "1.64.0" }, "bin": { "playwright": "cli.js" } }, "sha512-kVzTnYFYEyQ9RGzBjNCd2+yEqWmVbxl3AHPynv3qQ6JTjv4a+kwRcnqQwIpuP3NnrnIrE/Q6wWAIAvMfIE2/Yg=="],
 
-    "playwright-core": ["playwright-core@1.63.0", "", { "bin": { "playwright-core": "cli.js" } }, "sha512-rYCsBF/M5HjUch52bbtVONEFjv6Xu8sm8h72dNlR5bzIE1fvC/bxgspzkjSfU+MweEMmPM8KJebG6nnyxo5mCg=="],
+    "playwright-core": ["playwright-core@1.64.0", "", { "bin": { "playwright-core": "cli.js" } }, "sha512-T9r+MZkTECl2+oUcZ26YgZzTrYidTsIhYYkJix+6iDOymOb1FB2RLLSOxRGnZGv5DStt+aduIVbt+E8WygXYpg=="],
 
     "postcss": ["postcss@8.5.29", "", { "dependencies": { "nanoid": "^3.3.19", "picocolors": "^1.1.1", "source-map-js": "^1.2.2" } }, "sha512-49cGhUbXj8Qenv0iTMxA1cFBzxXoctpC9Ujd77t1WcbJIr6nF/eI7g/8MgxrYldFRuAXvja7xQRwavoW7kgrxQ=="],
 
@@ -1007,8 +1007,6 @@
     "next/postcss": ["postcss@8.5.23", "", { "dependencies": { "nanoid": "^3.3.16", "picocolors": "^1.1.1", "source-map-js": "^1.2.1" } }, "sha512-g50586zr4bZmwFiTlflMu8E0bDTb5I5gertgwAKmsdUlTQIhZtunzUlD1WSzwcVWPoAVpsrA6vlfCD7oXvRwgg=="],
 
     "parse-entities/@types/unist": ["@types/unist@2.0.11", "", {}, "sha512-CmBKiL6NNo/OqgmMn95Fk9Whlp2mtvIv+KNpQKN2F4SjvrEesubTRWGYSg+BnWZOnlCaSTU1sMpsBOzgbYhnsA=="],
-
-    "playwright/playwright-core": ["playwright-core@1.64.0", "", { "bin": { "playwright-core": "cli.js" } }, "sha512-T9r+MZkTECl2+oUcZ26YgZzTrYidTsIhYYkJix+6iDOymOb1FB2RLLSOxRGnZGv5DStt+aduIVbt+E8WygXYpg=="],
 
     "vite/lightningcss": ["lightningcss@1.33.0", "", { "dependencies": { "detect-libc": "^2.0.3" }, "optionalDependencies": { "lightningcss-android-arm64": "1.33.0", "lightningcss-darwin-arm64": "1.33.0", "lightningcss-darwin-x64": "1.33.0", "lightningcss-freebsd-x64": "1.33.0", "lightningcss-linux-arm-gnueabihf": "1.33.0", "lightningcss-linux-arm64-gnu": "1.33.0", "lightningcss-linux-arm64-musl": "1.33.0", "lightningcss-linux-x64-gnu": "1.33.0", "lightningcss-linux-x64-musl": "1.33.0", "lightningcss-win32-arm64-msvc": "1.33.0", "lightningcss-win32-x64-msvc": "1.33.0" } }, "sha512-WkUDrojuJs0xkgGf2udWxa3yGBRxPtxUkB79i6aCZLRgc7PM8fZe9TosfPDcvEpQZbuFASnHYmRLBLUbmLOIIA=="],
 
