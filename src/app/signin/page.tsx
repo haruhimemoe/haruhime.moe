@@ -9,12 +9,13 @@
  *       so it renders per request.
  * @author David @dvhsh (https://dvh.sh)
  * @created Tue Oct 6, 2026
- * @modified Tue Oct 6, 2026
+ * @modified Sun Oct 11, 2026
  */
 
 import { pageMetadata } from "@haruhimemoe/next-kit/seo";
 import { PageHeader, Text, TextLink } from "@haruhimemoe/ui";
 import type { Metadata } from "next";
+import { getTranslations } from "next-intl/server";
 import { DEFAULT_AFTER_SIGN_IN, HUB_HOSTS } from "@/constants/accounts";
 import { SEO_SITE } from "@/constants/seo";
 import { RestoreSignedIn, SignInWithOsu } from "@/lib/account";
@@ -28,16 +29,14 @@ export const metadata: Metadata = pageMetadata(SEO_SITE, {
 });
 
 export default async function SignInPage({ searchParams }: PageProps<"/signin">) {
+  const t = await getTranslations("hub.pages.signin");
   const params = await searchParams;
   const next = resolveNext(params.next, { hosts: HUB_HOSTS, fallback: DEFAULT_AFTER_SIGN_IN });
   if (await getCurrentUser()) return <RestoreSignedIn next={next} />;
   const error = signInErrorText(params.error);
   return (
     <div className="mx-auto flex max-w-md flex-col items-center gap-6 py-10 text-center">
-      <PageHeader
-        title="Sign in"
-        lead="One osu! sign-in for packs, pools and bb. Browsing works without an account."
-      />
+      <PageHeader title={t("signIn")} lead={t("oneOsuSignIn")} />
       {error ? (
         <Text role="alert" tone="error" bold>
           {error}
@@ -46,7 +45,7 @@ export default async function SignInPage({ searchParams }: PageProps<"/signin">)
       <SignInWithOsu next={next} />
       <p className="text-c4 text-xs">
         We keep your osu! ID, username, avatar and country, and which devices are signed in. See the{" "}
-        <TextLink href="/legal/privacy">privacy page</TextLink>.
+        <TextLink href="/legal/privacy">{t("privacyPage")}</TextLink>.
       </p>
     </div>
   );

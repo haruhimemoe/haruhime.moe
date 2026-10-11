@@ -5,11 +5,12 @@
  *       version). Static, rebuilt once a day from each repo's CHANGELOG.md.
  * @author David @dvhsh (https://dvh.sh)
  * @created Sun Oct 4, 2026
- * @modified Tue Oct 6, 2026
+ * @modified Sun Oct 11, 2026
  */
 
 import { PageHeader } from "@haruhimemoe/ui";
 import type { Metadata } from "next";
+import { getTranslations } from "next-intl/server";
 import { ChangelogFeed } from "@/components/changelog/ChangelogFeed";
 import { ChangelogLayout } from "@/components/changelog/ChangelogLayout";
 import { fetchAllChangelogs } from "@/lib/changelogs";
@@ -22,14 +23,12 @@ export const metadata: Metadata = pageMetadata("/changelog");
 export const revalidate = 86400;
 
 export default async function ChangelogPage() {
+  const t = await getTranslations("hub.pages.changelog");
   const results = await fetchAllChangelogs();
   return (
     <ChangelogLayout versions={latestVersions(results)}>
       <div className="flex flex-col gap-8">
-        <PageHeader
-          title="Changelog"
-          lead="What changed in the tools, this site, the packages and the Claude plugin, newest release first."
-        />
+        <PageHeader title={t("changelog")} lead={t("whatChangedInThe")} />
         <ChangelogFeed feed={buildFeed(results)} />
       </div>
     </ChangelogLayout>

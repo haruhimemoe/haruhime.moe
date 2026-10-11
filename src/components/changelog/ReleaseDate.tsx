@@ -4,10 +4,11 @@
  *       didn't give a real one.
  * @author David @dvhsh (https://dvh.sh)
  * @created Sun Oct 4, 2026
- * @modified Sun Oct 4, 2026
+ * @modified Sun Oct 11, 2026
  */
 
 import { Text, textClasses } from "@haruhimemoe/ui";
+import { useTranslations } from "next-intl";
 import { formatIsoDate } from "@/utils/date";
 
 /**
@@ -16,10 +17,11 @@ import { formatIsoDate } from "@/utils/date";
  * @returns {JSX.Element} the date as a <time>, or "No date"
  */
 export function ReleaseDate({ date }: { date: string | null }) {
+  const t = useTranslations("hub.releaseDate");
   if (!date)
     return (
       <Text as="span" tone="muted">
-        No date
+        {t("noDate")}
       </Text>
     );
   return (

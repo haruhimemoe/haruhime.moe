@@ -7,10 +7,11 @@
  *       appended so `[x]` links resolve.
  * @author David @dvhsh (https://dvh.sh)
  * @created Sun Oct 4, 2026
- * @modified Tue Oct 6, 2026
+ * @modified Sun Oct 11, 2026
  */
 
 import { Text } from "@haruhimemoe/ui";
+import { useTranslations } from "next-intl";
 import { Markdown } from "@/components/libraries/Markdown";
 import { type ChangeSection, sectionMarkdown } from "@/utils/changelog";
 
@@ -29,8 +30,9 @@ export function ReleaseNotes({
   references: readonly string[];
   level?: 3 | 4;
 }) {
+  const t = useTranslations("hub.releaseNotes");
   const Heading = level === 4 ? "h4" : "h3";
-  if (sections.length === 0) return <Text tone="muted">No notes for this release.</Text>;
+  if (sections.length === 0) return <Text tone="muted">{t("noNotesForThis")}</Text>;
   return (
     <div className="flex flex-col gap-4">
       {sections.map((section) => (

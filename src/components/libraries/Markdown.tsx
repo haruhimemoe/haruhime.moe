@@ -12,7 +12,7 @@
  *       every name is dropped, so raw HTML can't clobber a global.
  * @author David @dvhsh (https://dvh.sh)
  * @created Fri Oct 2, 2026
- * @modified Tue Oct 6, 2026
+ * @modified Sun Oct 11, 2026
  */
 
 import { Prose } from "@haruhimemoe/ui";

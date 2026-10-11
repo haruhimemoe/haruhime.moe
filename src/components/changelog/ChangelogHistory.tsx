@@ -6,10 +6,11 @@
  *       changes. Only the latest starts open. Notes keep a readable measure (max-w-prose).
  * @author David @dvhsh (https://dvh.sh)
  * @created Sun Oct 4, 2026
- * @modified Tue Oct 6, 2026
+ * @modified Sun Oct 11, 2026
  */
 
 import { SectionHeading, Text } from "@haruhimemoe/ui";
+import { useTranslations } from "next-intl";
 import { ReleaseDate } from "@/components/changelog/ReleaseDate";
 import { ReleaseDetails } from "@/components/changelog/ReleaseDetails";
 import { ReleaseNotes } from "@/components/changelog/ReleaseNotes";
@@ -21,16 +22,17 @@ import { type Changelog, releaseAnchor, releaseSummary } from "@/utils/changelog
  * @returns {JSX.Element} Unreleased and every release, or a line when there's nothing
  */
 export function ChangelogHistory({ changelog }: { changelog: Changelog }) {
+  const t = useTranslations("hub.changelogHistory");
   const { unreleased, releases, references } = changelog;
   if (unreleased.length === 0 && releases.length === 0) {
-    return <p className="text-c3">No releases yet.</p>;
+    return <p className="text-c3">{t("noReleasesYet")}</p>;
   }
   return (
     <div className="flex flex-col gap-10">
       {unreleased.length > 0 ? (
         <div className="flex max-w-prose flex-col gap-3">
-          <SectionHeading id="unreleased">Not released yet</SectionHeading>
-          <Text tone="muted">On main, waiting for the next release.</Text>
+          <SectionHeading id="unreleased">{t("notReleasedYet")}</SectionHeading>
+          <Text tone="muted">{t("onMainWaitingFor")}</Text>
           <ReleaseNotes sections={unreleased} references={references} />
         </div>
       ) : null}

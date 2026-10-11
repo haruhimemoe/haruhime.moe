@@ -8,13 +8,14 @@
  *       slug is a 404. When the file can't be fetched the page still renders with a GitHub link.
  * @author David @dvhsh (https://dvh.sh)
  * @created Sun Oct 4, 2026
- * @modified Tue Oct 6, 2026
+ * @modified Sun Oct 11, 2026
  */
 
 import { notFoundMetadata, pageMetadata } from "@haruhimemoe/next-kit/seo";
 import { PageHeader, TextLink, Toc, type TocItem } from "@haruhimemoe/ui";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import { getTranslations } from "next-intl/server";
 import { ChangelogFailures } from "@/components/changelog/ChangelogFailures";
 import { ChangelogHistory } from "@/components/changelog/ChangelogHistory";
 import { ChangelogLayout } from "@/components/changelog/ChangelogLayout";
@@ -63,9 +64,11 @@ export async function generateMetadata({
  * @returns {Promise<JSX.Element>} the repo's changelog page
  */
 export default async function RepoChangelogPage({ params }: PageProps<"/changelog/[slug]">) {
+  const t = await getTranslations("hub.pages.changelogSlug");
   const { slug } = await params;
   const source = findChangelogSource(slug);
   if (!source) notFound();
+  const tc = await getTranslations("hub.changelog");
   const results = await fetchAllChangelogs();
   const result = results.find((entry) => entry.source.slug === source.slug) ?? {
     source,
@@ -74,16 +77,16 @@ export default async function RepoChangelogPage({ params }: PageProps<"/changelo
   const urls = changelogUrls(source);
   const library = source.kind === "package" ? findLibrary(source.slug) : undefined;
   const links: readonly [string, string][] = [
-    ...(library ? ([["Library page", libraryUrls(library).docs]] as [string, string][]) : []),
+    ...(library ? ([[tc("libraryPage"), libraryUrls(library).docs]] as [string, string][]) : []),
     ["GitHub", urls.github],
-    ["Releases", urls.releases],
+    [tc("releases"), urls.releases],
     ["CHANGELOG.md", urls.file],
   ];
   const toc: TocItem[] =
     "changelog" in result
       ? [
           ...(result.changelog.unreleased.length > 0
-            ? [{ id: "unreleased", text: "Not released yet", depth: 2 as const }]
+            ? [{ id: "unreleased", text: tc("notReleased"), depth: 2 as const }]
             : []),
           ...result.changelog.releases.map((release) => ({
             id: releaseAnchor(release.version),
@@ -97,12 +100,12 @@ export default async function RepoChangelogPage({ params }: PageProps<"/changelo
       <article className="flex flex-col gap-8">
         <div className="flex flex-col gap-3">
           <Breadcrumbs
-            parents={[{ href: "/changelog", label: "Changelog" }]}
+            parents={[{ href: "/changelog", label: tc("title") }]}
             current={source.label}
           />
           <PageHeader
-            title={`${source.label} changelog`}
-            lead={`Every ${source.label} release, newest first.`}
+            title={t("labelChangelog", { label: source.label })}
+            lead={t("everyLabelReleaseNewest", { label: source.label })}
           />
           <ul className="flex flex-wrap gap-x-4 gap-y-1 text-sm">
             {links.map(([label, href]) => (
@@ -116,7 +119,7 @@ export default async function RepoChangelogPage({ params }: PageProps<"/changelo
         </div>
         <div className="grid gap-6 xl:grid-cols-[minmax(0,1fr)_10rem] xl:gap-8">
           <div className="xl:order-2">
-            <Toc items={toc} label="Versions" />
+            <Toc items={toc} label={t("versions")} />
           </div>
           <div className="min-w-0">
             {"changelog" in result ? (

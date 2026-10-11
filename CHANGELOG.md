@@ -8,6 +8,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ### Added
 
+- Every word the site shows comes from `@haruhimemoe/messages` through next-intl, with no language in the URL: the shared `NEXT_LOCALE` cookie, then the browser's languages, and English for anything not translated. The footer's language picker (shown once a second language exists) sets the cookie for every haruhime app and saves the pick to your account. English only for now. Legal pages, changelogs, library READMEs, the /ui demos and search metadata stay English. `bun run check:keys` checks every key against the catalogs.
 - `/account` has a "Time display" card: a time zone and 12h/24h picked here (next-kit's `/preferences`) are read by every haruhime app that shows a date or time.
 - Installs to a phone's home screen: a web app manifest, the page color as the browser's theme color, home-screen icons, and an offline page when a page can't load (a service worker that caches only the site's build files).
 - tourney is live, in beta: a tool card with its beta tag and a link to browse tournaments, the header and footer, /account's connected apps, the terms and privacy links, a README banner for tourney.haruhime.moe, and its changelog at `/changelog/tourney.haruhime.moe` (the tourney library keeps `/changelog/tourney`).

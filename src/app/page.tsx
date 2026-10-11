@@ -8,12 +8,13 @@
  *       founder, and the WebSite with each live tool's site as a part.
  * @author David @dvhsh (https://dvh.sh)
  * @created Wed Sep 23, 2026
- * @modified Wed Oct 7, 2026
+ * @modified Sun Oct 11, 2026
  */
 
 import { HARUHIME_ORG, homeMetadata, ld } from "@haruhimemoe/next-kit/seo";
 import { CardGrid, JsonLd, PageHeader, PlayerCard } from "@haruhimemoe/ui";
 import type { Metadata } from "next";
+import { useTranslations } from "next-intl";
 import { EgcBanner } from "@/components/home/EgcBanner";
 import { HaruminFeature } from "@/components/home/HaruminFeature";
 import { ToolCard } from "@/components/home/ToolCard";
@@ -37,13 +38,11 @@ const HOME_LD = ld.graph(
 );
 
 export default function HomePage() {
+  const t = useTranslations("hub.pages.root");
   return (
     <div className="flex flex-col gap-12">
       <EgcBanner />
-      <PageHeader
-        title="osu! tools for players, mappers and tournament hosts"
-        lead="hellosu, haruhime here. these are free tools i make for osu!: packs turns a mappool into one download, pools is for building and looking up tournament pools, bb is a BBCode editor for userpages and forum posts, harumin is an osu! bot for your Discord server, and tourney runs a tournament from registration to results."
-      />
+      <PageHeader title={t("osuToolsForPlayers")} lead={t("hellosuHaruhimeHereThese")} />
       <div className="max-w-sm">
         <PlayerCard
           username={OWNER.username}
@@ -63,7 +62,7 @@ export default function HomePage() {
       {/* Not a labelled region: the footer already has a "Tools" region, and two landmarks with
           one name would read the same. The h2 is enough structure here. */}
       <section className="flex flex-col gap-5">
-        <h2 className="font-bold text-2xl text-c1">Tools</h2>
+        <h2 className="font-bold text-2xl text-c1">{t("tools")}</h2>
         <CardGrid>
           {TOOLS.map((tool) => (
             <ToolCard key={tool.name} tool={tool} />

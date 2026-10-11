@@ -5,7 +5,7 @@
  *       chip, its stats and its links, lifted above the card-wide cover.
  * @author David @dvhsh (https://dvh.sh)
  * @created Fri Oct 2, 2026
- * @modified Mon Oct 5, 2026
+ * @modified Sun Oct 11, 2026
  */
 
 import { CardLink, CodeChip, LinkCard, LinkRow, StatList, Text } from "@haruhimemoe/ui";

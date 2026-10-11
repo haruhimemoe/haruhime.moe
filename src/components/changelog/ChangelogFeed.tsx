@@ -8,10 +8,11 @@
  *       every source failed shows just the failure lines.
  * @author David @dvhsh (https://dvh.sh)
  * @created Sun Oct 4, 2026
- * @modified Tue Oct 6, 2026
+ * @modified Sun Oct 11, 2026
  */
 
 import { Badge, Text, TextLink } from "@haruhimemoe/ui";
+import { useTranslations } from "next-intl";
 import { ChangelogFailures } from "@/components/changelog/ChangelogFailures";
 import { ReleaseDetails } from "@/components/changelog/ReleaseDetails";
 import { ReleaseNotes } from "@/components/changelog/ReleaseNotes";
@@ -27,12 +28,13 @@ import { formatIsoDate } from "@/utils/date";
  *   cut
  */
 export function ChangelogFeed({ feed }: { feed: Feed }) {
+  const t = useTranslations("hub.changelogFeed");
   let index = 0;
   return (
     <div className="flex flex-col gap-8">
       <ChangelogFailures sources={feed.failed} />
       {feed.entries.length === 0 && feed.failed.length === 0 ? (
-        <p className="text-c3">No releases yet.</p>
+        <p className="text-c3">{t("noReleasesYet")}</p>
       ) : (
         groupByDate(feed.entries).map((day) => {
           const id = `day-${day.date ?? "undated"}`;
@@ -84,9 +86,7 @@ export function ChangelogFeed({ feed }: { feed: Feed }) {
           );
         })
       )}
-      {feed.more ? (
-        <Text tone="muted">Older releases are on each repo's own changelog page.</Text>
-      ) : null}
+      {feed.more ? <Text tone="muted">{t("olderReleasesAreOn")}</Text> : null}
     </div>
   );
 }

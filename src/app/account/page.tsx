@@ -19,12 +19,14 @@ import { userUrl } from "@haruhimemoe/osu/shapes";
 import { Button, Card, PageHeader, Text, TextLink, textClasses } from "@haruhimemoe/ui";
 import type { Metadata } from "next";
 import Image from "next/image";
+import { getTranslations } from "next-intl/server";
+import { DeleteAccount } from "@/components/account/DeleteAccount";
 import { DiscordUnlink } from "@/components/account/DiscordUnlink";
 import { PreferencesForm } from "@/components/account/PreferencesForm";
 import { SessionsList } from "@/components/account/SessionsList";
 import { CONNECTED_APPS } from "@/constants/accounts";
 import { SEO_SITE } from "@/constants/seo";
-import { DeleteAccountForm, RestoreSignedIn, SignOutButton } from "@/lib/account";
+import { RestoreSignedIn, SignOutButton } from "@/lib/account";
 import { requireUser } from "@/lib/auth-session";
 import { connectDb, getIdentityDb } from "@/lib/db";
 import { discordEnabled, linkedDiscord } from "@/lib/discord";
@@ -37,6 +39,8 @@ export const metadata: Metadata = pageMetadata(SEO_SITE, {
 });
 
 export default async function AccountPage() {
+  const t = await getTranslations("hub.pages.account");
+  const ui = await getTranslations("ui");
   const user = await requireUser("/account");
   const avatar = osuAvatarSrc(user.avatarUrl);
   const sessions = await listSessionRows(user.id, user.sessionId);
@@ -46,8 +50,13 @@ export default async function AccountPage() {
   return (
     <div className="flex flex-col gap-6">
       <RestoreSignedIn />
-      <PageHeader title="Account" actions={<SignOutButton />} />
-      <Card title="Your osu! account">
+      <PageHeader
+        title={t("account")}
+        actions={
+          <SignOutButton label={ui("account.signOut")} pendingLabel={ui("account.signingOut")} />
+        }
+      />
+      <Card title={t("yourOsuAccount")}>
         <div className="flex items-center gap-3">
           {avatar ? (
             // Unoptimized: osu!'s avatar host, shown as is.
@@ -68,17 +77,14 @@ export default async function AccountPage() {
           </div>
         </div>
       </Card>
-      <Card id="time" title="Time display">
-        <Text tone="muted">
-          Every haruhime app shows dates and times with these. Leave Time zone on "Use my browser's"
-          to match where you are; Hour format defaults to 12-hour unless you pick otherwise.
-        </Text>
+      <Card id="time" title={t("timeDisplay")}>
+        <Text tone="muted">{t("everyHaruhimeAppShows")}</Text>
         <div className="mt-3">
           <PreferencesForm initial={preferences} />
         </div>
       </Card>
-      <Card title="Connected apps">
-        <Text tone="muted">One haruhime account signs you in to each of these.</Text>
+      <Card title={t("connectedApps")}>
+        <Text tone="muted">{t("oneHaruhimeAccountSigns")}</Text>
         <ul className="mt-3 flex flex-col gap-2">
           {CONNECTED_APPS.map((app) => (
             <li key={app.name}>
@@ -90,16 +96,16 @@ export default async function AccountPage() {
           ))}
           {discord ? (
             <li className="flex flex-wrap items-center gap-2">
-              <span className="font-bold text-c1">Discord</span>
+              <span className="font-bold text-c1">{t("discord")}</span>
               <span className={textClasses({ tone: "muted" })}>
-                {discord.name ? `Linked as ${discord.name}.` : "Not linked."}
+                {discord.name ? t("linkedAs", { name: discord.name }) : t("notLinked")}
               </span>
               {discord.name ? (
                 <DiscordUnlink />
               ) : (
                 <form method="post" action="/api/account/discord/start">
                   <Button type="submit" variant="ghost">
-                    Connect
+                    {t("connect")}
                   </Button>
                 </form>
               )}
@@ -108,18 +114,14 @@ export default async function AccountPage() {
         </ul>
       </Card>
       <SessionsList initial={sessions} />
-      <Card title="Your data">
-        <Text tone="muted">Everything haruhime and its apps keep about you, as one JSON file.</Text>
+      <Card title={t("yourData")}>
+        <Text tone="muted">{t("everythingHaruhimeAndIts")}</Text>
         <TextLink href="/api/account/export" variant="plain" className="mt-3 font-bold" download>
-          Download my data
+          {t("downloadMyData")}
         </TextLink>
       </Card>
-      <Card title="Delete my account">
-        <DeleteAccountForm
-          username={user.username}
-          appName="haruhime.moe"
-          deletes="This deletes your haruhime account and signs you out of packs, pools and bb on every device. It also deletes what you made inside each app. It can't be undone."
-        />
+      <Card title={t("deleteMyAccount")}>
+        <DeleteAccount username={user.username} />
       </Card>
     </div>
   );

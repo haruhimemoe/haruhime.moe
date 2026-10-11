@@ -6,7 +6,7 @@
  *       the content registry's legal pages (at /legal/<slug>).
  * @author David @dvhsh (https://dvh.sh)
  * @created Wed Sep 23, 2026
- * @modified Sun Oct 4, 2026
+ * @modified Sun Oct 11, 2026
  */
 
 import { contentPath } from "@haruhimemoe/next-kit/docs";
@@ -20,28 +20,44 @@ import { TOOLS, type Tool } from "@/constants/tools";
  * @param tool {Tool} a tool from TOOLS
  * @returns {SiteLinkItem} a link for a live tool; the name with a "soon" note for one without a url
  */
-const toolLink = (tool: Tool): SiteLinkItem =>
-  tool.url ? { label: tool.name, href: tool.url } : { label: tool.name, note: "soon" };
+const toolLink =
+  (soon: string) =>
+  (tool: Tool): SiteLinkItem =>
+    tool.url ? { label: tool.name, href: tool.url } : { label: tool.name, note: soon };
 
-/** The tools, centered in the header. */
-export const HEADER_LINKS: readonly SiteLinkItem[] = TOOLS.map(toolLink);
+/** A translator: next-intl's t for "hub" or "common". */
+type T = (key: string) => string;
+
+/**
+ * @function headerLinks
+ * @param t {T} the "hub" translator
+ * @returns {SiteLinkItem[]} the tools, centered in the header
+ */
+export const headerLinks = (t: T): SiteLinkItem[] => TOOLS.map(toolLink(t("nav.soon")));
 
 /**
  * @function pageLinks
  * @param column {FooterColumnTitle} a footer column
+ * @param t {T} the "hub" translator
  * @returns {SiteLinkItem[]} the pages PAGES puts in that column, in PAGES order, labeled by title
  */
-const pageLinks = (column: FooterColumnTitle): SiteLinkItem[] =>
+const pageLinks = (column: FooterColumnTitle, t: T): SiteLinkItem[] =>
   PAGE_PATHS.filter(
     (path) => (PAGES[path] as { footer?: FooterColumnTitle }).footer === column,
-  ).map((path) => ({ href: path, label: PAGES[path].title }));
+  ).map((path) => ({ href: path, label: t(`pageTitles.${path.slice(1) || "home"}`) }));
 
-/** The three footer columns, in order. /ui has no footer link: /libraries and the ui card reach it. */
-export const FOOTER_COLUMNS: readonly SiteFooterColumn[] = [
-  { title: "Tools", items: TOOLS.map(toolLink) },
-  { title: "haruhime.moe", items: pageLinks("haruhime.moe") },
+/**
+ * @function footerColumns
+ * @param t {T} the "hub" translator
+ * @param common {T} the "common" translator
+ * @returns {SiteFooterColumn[]} the three footer columns, in order. /ui has no footer link:
+ *          /libraries and the ui card reach it. Legal page titles stay English, like the pages.
+ */
+export const footerColumns = (t: T, common: T): SiteFooterColumn[] => [
+  { title: t("nav.tools"), items: TOOLS.map(toolLink(t("nav.soon"))) },
+  { title: "haruhime.moe", items: pageLinks("haruhime.moe", t) },
   {
-    title: "Legal",
+    title: common("footer.legal"),
     items: CONTENT.entries.legal.map((e) => ({
       href: contentPath("legal", e.slug),
       label: e.title,

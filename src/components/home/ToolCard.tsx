@@ -9,7 +9,7 @@
  *       plain Surface, with no hover. Two cards to a row: four squeezed every line.
  * @author David @dvhsh (https://dvh.sh)
  * @created Wed Sep 23, 2026
- * @modified Mon Oct 5, 2026
+ * @modified Sun Oct 11, 2026
  */
 
 import { Badge, CardLink, LinkCard, Surface, TextLink } from "@haruhimemoe/ui";

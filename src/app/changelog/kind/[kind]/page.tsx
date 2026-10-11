@@ -6,13 +6,14 @@
  *       kinds, rebuilt once a day; anything else is a 404.
  * @author David @dvhsh (https://dvh.sh)
  * @created Sun Oct 4, 2026
- * @modified Tue Oct 6, 2026
+ * @modified Sun Oct 11, 2026
  */
 
 import { notFoundMetadata, pageMetadata } from "@haruhimemoe/next-kit/seo";
 import { PageHeader } from "@haruhimemoe/ui";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import { getTranslations } from "next-intl/server";
 import { ChangelogFeed } from "@/components/changelog/ChangelogFeed";
 import { ChangelogLayout } from "@/components/changelog/ChangelogLayout";
 import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
@@ -58,6 +59,8 @@ export async function generateMetadata({
  * @returns {Promise<JSX.Element>} the feed for that kind
  */
 export default async function ChangelogKindPage({ params }: PageProps<"/changelog/kind/[kind]">) {
+  const t = await getTranslations("hub.pages.changelogKindKind");
+  const tc = await getTranslations("hub.changelog");
   const { kind } = await params;
   if (!isKindSegment(kind)) notFound();
   const segment = KIND_SEGMENTS[kind];
@@ -67,11 +70,11 @@ export default async function ChangelogKindPage({ params }: PageProps<"/changelo
       <div className="flex flex-col gap-8">
         <div className="flex flex-col gap-3">
           <Breadcrumbs
-            parents={[{ href: "/changelog", label: "Changelog" }]}
+            parents={[{ href: "/changelog", label: tc("title") }]}
             current={segment.label}
           />
           <PageHeader
-            title={`Changelog: ${segment.label.toLowerCase()}`}
+            title={tc("kindTitle", { kind: segment.label.toLowerCase() })}
             lead={segment.description}
           />
         </div>
