@@ -7,7 +7,7 @@
  *       libraryLinkItems builds a library's card links (GitHub, npm, Changelog, Showcase).
  * @author David @dvhsh (https://dvh.sh)
  * @created Fri Oct 2, 2026
- * @modified Wed Oct 7, 2026
+ * @modified Sat Oct 10, 2026
  */
 
 import type { LinkRowItem } from "@haruhimemoe/ui";
@@ -99,6 +99,11 @@ export const LIBRARIES: readonly Library[] = [
     "tourney",
     333,
     "osu! tournaments as data: brackets and placements, groups and swiss, pick/ban phases, mp links read into matches, drafts, registration and scheduling.",
+  ),
+  lib(
+    "ordr",
+    333,
+    "Client for o!rdr, the online osu! replay renderer: queue renders from .osr files or replay URLs, wait for the video, and render a match map.",
   ),
   lib(
     "harumin-config",

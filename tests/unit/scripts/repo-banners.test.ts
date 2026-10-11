@@ -42,6 +42,7 @@ const REPOS = [
   "crowdfund",
   "invites",
   "tourney",
+  "ordr",
   "harumin-config",
   "claude-plugin",
 ];

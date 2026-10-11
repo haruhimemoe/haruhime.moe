@@ -120,6 +120,7 @@ export const REPO_BANNERS: readonly RepoBanner[] = [
   repoBanner("crowdfund", { tagline: "@haruhimemoe/crowdfund: crowdfunding as data" }),
   repoBanner("invites", { tagline: "@haruhimemoe/invites: invites as consent" }),
   repoBanner("tourney", { tagline: "@haruhimemoe/tourney: osu! tournaments as data" }),
+  repoBanner("ordr", { tagline: "@haruhimemoe/ordr: o!rdr replay renders" }),
   repoBanner("harumin-config", { tagline: "@haruhimemoe/harumin-config: harumin settings" }),
   repoBanner("claude-plugin", { tagline: "haruhime: osu! skills for Claude" }),
 ];
