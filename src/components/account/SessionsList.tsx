@@ -7,12 +7,13 @@
  *       is announced in a polite live region, a failure in an error notice.
  * @author David @dvhsh (https://dvh.sh)
  * @created Tue Oct 6, 2026
- * @modified Tue Oct 6, 2026
+ * @modified Sun Oct 11, 2026
  */
 
 "use client";
 
 import { Card, cx, InlineConfirm, Notice, textClasses } from "@haruhimemoe/ui";
+import { useTranslations } from "next-intl";
 import { useRef, useState } from "react";
 import type { SessionRow } from "@/lib/sessions";
 
@@ -24,8 +25,7 @@ type SessionsListProps = {
   fetcher?: typeof fetch;
 };
 
-const messageOf = async (response: Response): Promise<string> => {
-  const fallback = `That didn't work (${response.status}).`;
+const messageOf = async (response: Response, fallback: string): Promise<string> => {
   try {
     const body = (await response.json()) as { error?: { message?: string } };
     return body.error?.message ?? fallback;
@@ -40,6 +40,7 @@ const messageOf = async (response: Response): Promise<string> => {
  * @returns {JSX.Element} the sessions card
  */
 export function SessionsList({ initial, fetcher = fetch }: SessionsListProps) {
+  const t = useTranslations("hub.sessionsList");
   const [sessions, setSessions] = useState<readonly SessionRow[]>(initial);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -62,7 +63,7 @@ export function SessionsList({ initial, fetcher = fetch }: SessionsListProps) {
       }
       // 404: already gone, which is what was asked for.
       if (!response.ok && response.status !== 404) {
-        const message = await messageOf(response);
+        const message = await messageOf(response, t("failed", { status: response.status }));
         setError(message);
         throw new Error(message);
       }
@@ -76,19 +77,19 @@ export function SessionsList({ initial, fetcher = fetch }: SessionsListProps) {
   const revoke = (id: string) =>
     run(`${PATH}/${encodeURIComponent(id)}`, () => {
       setSessions((list) => list.filter((session) => session.id !== id));
-      setStatus("Signed out of that device.");
+      setStatus(t("signedOutOfThat"));
     });
 
   const revokeOthers = () =>
     run(PATH, () => {
       setSessions((list) => list.filter((session) => session.current));
-      setStatus("Signed out everywhere else.");
+      setStatus(t("signedOutEverywhereElse"));
     });
 
   const others = sessions.filter((session) => !session.current).length;
 
   return (
-    <Card title="Where you're signed in">
+    <Card title={t("whereYouReSigned")}>
       <ul className="flex flex-col divide-y divide-b3">
         {sessions.map((session) => (
           <li
@@ -98,7 +99,9 @@ export function SessionsList({ initial, fetcher = fetch }: SessionsListProps) {
             <div className="flex flex-col">
               <span className="font-bold text-c1">
                 {session.device}
-                {session.current ? <span className="ml-2 text-h1 text-sm">This device</span> : null}
+                {session.current ? (
+                  <span className="ml-2 text-h1 text-sm">{t("thisDevice")}</span>
+                ) : null}
               </span>
               <span className={textClasses({ tone: "muted", size: "sm" })}>
                 Signed in {session.signedIn}, last active {session.lastActive}
@@ -106,11 +109,11 @@ export function SessionsList({ initial, fetcher = fetch }: SessionsListProps) {
             </div>
             {session.current ? null : (
               <InlineConfirm
-                trigger="Sign out"
+                trigger={t("signOut")}
                 triggerProps={{ variant: "ghost", disabled: busy }}
-                question={`Sign out ${session.device}?`}
-                cancelLabel="Keep it"
-                confirmLabel="Yes, sign out"
+                question={t("signOutDevice", { device: session.device })}
+                cancelLabel={t("keepIt")}
+                confirmLabel={t("yesSignOut")}
                 confirmVariant="danger"
                 onConfirm={() => revoke(session.id)}
               />
@@ -121,11 +124,11 @@ export function SessionsList({ initial, fetcher = fetch }: SessionsListProps) {
       {others > 0 ? (
         <div className="mt-4">
           <InlineConfirm
-            trigger="Sign out everywhere else"
+            trigger={t("signOutEverywhereElse")}
             triggerProps={{ variant: "secondary", disabled: busy }}
-            question="Every other device is signed out of packs, pools, bb and this site."
-            cancelLabel="Keep them"
-            confirmLabel="Yes, sign them out"
+            question={t("everyOtherDeviceIs")}
+            cancelLabel={t("keepThem")}
+            confirmLabel={t("yesSignThemOut")}
             confirmVariant="danger"
             onConfirm={revokeOthers}
           />

@@ -7,9 +7,10 @@
  *       set into this one. The name is a paragraph, not a heading, like the Evergreen Cup banner.
  * @author David @dvhsh (https://dvh.sh)
  * @created Wed Oct 7, 2026
- * @modified Wed Oct 7, 2026
+ * @modified Sun Oct 11, 2026
  */
 
+import { useTranslations } from "next-intl";
 import { useId } from "react";
 import { TOOLS } from "@/constants/tools";
 
@@ -37,6 +38,7 @@ const HARUMIN_URL =
  * @returns {JSX.Element} the harumin panel
  */
 export function HaruminFeature() {
+  const t = useTranslations("hub.haruminFeature");
   const nameId = useId();
   return (
     <section
@@ -56,17 +58,16 @@ export function HaruminFeature() {
       />
       <div className="flex flex-col gap-4">
         <p className="font-bold text-sm uppercase tracking-[0.2em]" style={{ color: ROSE }}>
-          New: the osu! Discord bot
+          {t("newTheOsuDiscord")}
         </p>
         <p id={nameId} className="font-extrabold text-5xl leading-none tracking-tight sm:text-6xl">
-          harumin
+          {t("harumin")}
           <span aria-hidden="true" style={{ color: ROSE }}>
             .
           </span>
         </p>
         <p className="max-w-md text-lg" style={{ color: `${INK}cc` }}>
-          Profiles, recent and top plays with pp, and map cards for your server. Link a map once and
-          every command knows which one you mean.
+          {t("profilesRecentAndTop")}
         </p>
         <div className="flex flex-wrap gap-3">
           <a
@@ -74,23 +75,23 @@ export function HaruminFeature() {
             className="rounded-full px-5 py-2.5 font-bold text-white transition-opacity hover:opacity-85 focus-visible:outline-2 focus-visible:outline-offset-2"
             style={{ backgroundColor: INK, outlineColor: ROSE }}
           >
-            Add harumin
+            {t("addHarumin")}
           </a>
           <a
             href={`${HARUMIN_URL}/commands`}
             className="rounded-full px-5 py-2.5 font-bold transition-colors hover:bg-black/5 focus-visible:outline-2 focus-visible:outline-offset-2"
             style={{ border: `1.5px solid ${INK}`, outlineColor: ROSE }}
           >
-            See the commands
+            {t("seeTheCommands")}
           </a>
         </div>
       </div>
-      <figure aria-label="Sample Discord messages with harumin" className="relative pt-4">
+      <figure aria-label={t("sampleDiscordMessagesWith")} className="relative pt-4">
         <p
           className="absolute top-0 left-4 z-10 rounded-[3px] bg-white px-3 py-1 font-bold text-sm"
           style={{ border: `1.5px solid ${INK}` }}
         >
-          #tourney-chat
+          {t("tourneyChat")}
         </p>
         <div
           className="flex flex-col gap-3 rounded-[3px] bg-white p-4 pt-7 text-sm"
@@ -100,9 +101,9 @@ export function HaruminFeature() {
             <b>yuki</b> <code className="rounded-sm bg-black/5 px-1">/score</code>
           </p>
           <div className="rounded-sm bg-black/5 p-3" style={{ borderLeft: `4px solid ${INK}` }}>
-            <p className="font-bold">haruhime - first combo [Expert]</p>
+            <p className="font-bold">{t("haruhimeFirstComboExpert")}</p>
             <p>
-              <b>S</b> · +HD · 6.31★ · <b>298.40pp</b> (FC 316.02pp) · 98.12%
+              <b>S</b> · +HD · 6.31★ · <b>{t("n29840pp")}</b> (FC 316.02pp) · 98.12%
             </p>
           </div>
         </div>
@@ -110,7 +111,7 @@ export function HaruminFeature() {
           className="relative z-10 -mt-3 mr-4 ml-auto w-fit max-w-[16rem] rounded-[3px] bg-white px-3 py-1.5 text-sm"
           style={{ border: `1.5px solid ${INK}` }}
         >
-          No map given. The channel remembered it.
+          {t("noMapGivenThe")}
         </figcaption>
       </figure>
     </section>

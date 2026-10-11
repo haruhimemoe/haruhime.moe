@@ -20,15 +20,12 @@
 
 import { formatInstant, type Preferences } from "@haruhimemoe/next-kit/preferences";
 import { AsyncButton, RadioGroup, Select, Text } from "@haruhimemoe/ui";
+import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
 
 type HourCycleChoice = "" | "h12" | "h23";
 
-const HOUR_CYCLE_OPTIONS: ReadonlyArray<{ value: HourCycleChoice; label: string }> = [
-  { value: "", label: "Default (12-hour)" },
-  { value: "h12", label: "12-hour" },
-  { value: "h23", label: "24-hour" },
-];
+const HOUR_CYCLE_OPTIONS: readonly HourCycleChoice[] = ["", "h12", "h23"];
 
 /** PreferencesForm's props. */
 export type PreferencesFormProps = {
@@ -44,6 +41,7 @@ export type PreferencesFormProps = {
  * @returns {JSX.Element} the time zone and hour-cycle controls, a preview line and Save
  */
 export function PreferencesForm({ initial, fetcher = fetch }: PreferencesFormProps) {
+  const t = useTranslations("hub.preferencesForm");
   const [timezone, setTimezone] = useState(initial.timezone ?? "");
   const [hourCycle, setHourCycle] = useState<HourCycleChoice>(initial.hourCycle ?? "");
   const [mounted, setMounted] = useState(false);
@@ -81,11 +79,11 @@ export function PreferencesForm({ initial, fetcher = fetch }: PreferencesFormPro
     <div className="flex flex-col coarse:gap-6 gap-4">
       <Select
         id="preferences-timezone"
-        label="Time zone"
+        label={t("timeZone")}
         value={timezone}
         onChange={(event) => setTimezone(event.target.value)}
       >
-        <option value="">Use my browser's</option>
+        <option value="">{t("useMyBrowserS")}</option>
         {timeZones.map((zone) => (
           <option key={zone} value={zone}>
             {zone}
@@ -93,14 +91,17 @@ export function PreferencesForm({ initial, fetcher = fetch }: PreferencesFormPro
         ))}
       </Select>
       <RadioGroup
-        label="Hour format"
-        options={HOUR_CYCLE_OPTIONS}
+        label={t("hourFormat")}
+        options={HOUR_CYCLE_OPTIONS.map((value) => ({
+          value,
+          label: t(`cycles.${value || "default"}`),
+        }))}
         value={hourCycle}
         onChange={(value) => setHourCycle(value as HourCycleChoice)}
       />
-      <Text tone="muted">Preview: {preview ?? "loading"}</Text>
+      <Text tone="muted">{t("preview", { time: preview ?? t("loading") })}</Text>
       <AsyncButton
-        failedMessage="Couldn't save. Try again."
+        failedMessage={t("couldnTSaveTry")}
         action={async () => {
           const res = await fetcher("/api/account/preferences", {
             method: "POST",
@@ -111,10 +112,10 @@ export function PreferencesForm({ initial, fetcher = fetch }: PreferencesFormPro
             }),
           });
           if (!res.ok) throw new Error(String(res.status));
-          return "Saved.";
+          return t("saved");
         }}
       >
-        Save
+        {t("save")}
       </AsyncButton>
     </div>
   );

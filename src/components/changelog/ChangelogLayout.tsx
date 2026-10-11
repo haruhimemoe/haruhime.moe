@@ -6,10 +6,11 @@
  *       ContentNav marks the current page itself.
  * @author David @dvhsh (https://dvh.sh)
  * @created Tue Oct 6, 2026
- * @modified Tue Oct 6, 2026
+ * @modified Sun Oct 11, 2026
  */
 
 import { ContentLayout, ContentNav } from "@haruhimemoe/ui";
+import { useTranslations } from "next-intl";
 import type { ReactNode } from "react";
 import { changelogNavGroups } from "@/utils/changelog-nav";
 
@@ -26,13 +27,15 @@ export function ChangelogLayout({
   versions: ReadonlyMap<string, string>;
   children: ReactNode;
 }) {
+  const t = useTranslations("hub.changelogLayout");
+  const tc = useTranslations("hub.changelog");
   return (
     <ContentLayout
       nav={
         <ContentNav
-          label="Changelogs"
+          label={t("changelogs")}
           indexHref="/changelog"
-          indexLabel="All releases"
+          indexLabel={tc("allReleases")}
           groups={changelogNavGroups(versions)}
         />
       }

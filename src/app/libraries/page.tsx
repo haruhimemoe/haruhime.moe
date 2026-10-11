@@ -6,11 +6,12 @@
  *       per visit.
  * @author David @dvhsh (https://dvh.sh)
  * @created Fri Oct 2, 2026
- * @modified Tue Oct 6, 2026
+ * @modified Sun Oct 11, 2026
  */
 
 import { CardGrid, PageHeader, TextLink } from "@haruhimemoe/ui";
 import type { Metadata } from "next";
+import { getTranslations } from "next-intl/server";
 import { LibraryCard } from "@/components/libraries/LibraryCard";
 import { LIBRARIES } from "@/constants/libraries";
 import { SITE } from "@/constants/site";
@@ -23,17 +24,18 @@ export const metadata: Metadata = pageMetadata("/libraries");
 export const revalidate = 86400;
 
 export default async function LibrariesPage() {
+  const t = await getTranslations("hub.pages.libraries");
   const stats = await Promise.all(LIBRARIES.map((library) => fetchLibraryStats(library)));
   return (
     <div className="flex flex-col gap-8">
       <PageHeader
-        title="Libraries"
+        title={t("libraries")}
         lead={
           <>
             The packages the tools are built from, each its own repo under{" "}
-            <TextLink href={SITE.githubOrg}>github.com/haruhimemoe</TextLink> and on npm as{" "}
-            <TextLink href="https://www.npmjs.com/org/haruhimemoe">@haruhimemoe</TextLink>. MIT
-            licensed, ESM only. Each one's README is here as its docs page.
+            <TextLink href={SITE.githubOrg}>{t("githubComHaruhimemoe")}</TextLink> and on npm as{" "}
+            <TextLink href="https://www.npmjs.com/org/haruhimemoe">{t("haruhimemoe")}</TextLink>.
+            MIT licensed, ESM only. Each one's README is here as its docs page.
           </>
         }
       />

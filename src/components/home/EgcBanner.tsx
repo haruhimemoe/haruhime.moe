@@ -11,12 +11,13 @@
  *       Needle stays in frame beside the copy.
  * @author David @dvhsh (https://dvh.sh)
  * @created Wed Sep 23, 2026
- * @modified Mon Oct 5, 2026
+ * @modified Sun Oct 11, 2026
  */
 
 "use client";
 
 import { CardLink, useMotionAllowed } from "@haruhimemoe/ui";
+import { useTranslations } from "next-intl";
 import { useId } from "react";
 import { EVERGREEN_CUP } from "@/constants/site";
 
@@ -36,6 +37,7 @@ const ART_CLASS = "absolute inset-0 size-full object-cover object-[35%_85%]";
  *   which covers the whole card
  */
 export function EgcBanner() {
+  const t = useTranslations("hub.egcBanner");
   const headingId = useId();
   const motion = useMotionAllowed();
   return (
@@ -88,7 +90,7 @@ export function EgcBanner() {
           rel="noopener"
           className="w-fit rounded-full bg-[#49b86a] px-4 py-2 font-bold text-[#051a0d] text-sm transition-colors after:rounded-[10px] hover:bg-[#7cd293] focus-visible:outline-2 focus-visible:outline-[#aee5bd] focus-visible:outline-offset-2"
         >
-          evergreencup.org
+          {t("evergreencupOrg")}
         </CardLink>
       </div>
     </section>

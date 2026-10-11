@@ -7,9 +7,10 @@
  *       land back on them. CONNECTED_APPS is /account's list of the apps one account opens.
  * @author David @dvhsh (https://dvh.sh)
  * @created Tue Oct 6, 2026
- * @modified Tue Oct 6, 2026
+ * @modified Sun Oct 11, 2026
  */
 
+import { LOCALES } from "@haruhimemoe/messages";
 import type { AccountApp } from "@haruhimemoe/next-kit/account";
 import { SHARED_MARKER_COOKIE } from "@haruhimemoe/next-kit/auth-react";
 
@@ -79,10 +80,15 @@ export const ACCOUNT_APPS: readonly AccountApp[] = [
   },
 ];
 
-/** The locales the hub serves: English only for now. */
-export const HUB_LOCALES = { locales: ["en"], defaultLocale: "en" } as const;
+/** The locales the hub serves: every locale @haruhimemoe/messages carries. */
+export const HUB_LOCALES = { locales: LOCALES, defaultLocale: "en" };
 
-/** The header's account menu links; Sign out comes after them. */
-export const ACCOUNT_MENU_ITEMS: readonly { href: string; label: string }[] = [
-  { href: "/account", label: "Account" },
+/**
+ * @function accountMenuItems
+ * @param t {(key: string) => string} the "hub" translator
+ * @returns {{ href: string; label: string }[]} the header's account menu links; Sign out comes
+ *          after them
+ */
+export const accountMenuItems = (t: (key: string) => string): { href: string; label: string }[] => [
+  { href: "/account", label: t("nav.account") },
 ];

@@ -4,7 +4,7 @@
  *       dead fetch reads as a gap with a way around it, not a broken page.
  * @author David @dvhsh (https://dvh.sh)
  * @created Sun Oct 4, 2026
- * @modified Sun Oct 4, 2026
+ * @modified Sun Oct 11, 2026
  */
 
 import { Text, TextLink } from "@haruhimemoe/ui";

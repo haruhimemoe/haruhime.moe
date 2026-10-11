@@ -8,12 +8,13 @@
  *       "write to me" mails the same contact BrandPage shows, so the page has one address. Static.
  * @author David @dvhsh (https://dvh.sh)
  * @created Wed Sep 23, 2026
- * @modified Sun Oct 4, 2026
+ * @modified Sun Oct 11, 2026
  */
 
 import { brandPageData } from "@haruhimemoe/brand/products";
 import { BrandPage, linkClasses, PageHeader } from "@haruhimemoe/ui";
 import type { Metadata } from "next";
+import { useTranslations } from "next-intl";
 import { ProductFamily } from "@/components/brand/ProductFamily";
 import { ReadmeBanners } from "@/components/brand/ReadmeBanners";
 import { pageMetadata } from "@/utils/page-metadata";
@@ -21,17 +22,18 @@ import { pageMetadata } from "@/utils/page-metadata";
 export const metadata: Metadata = pageMetadata("/brand");
 
 export default function BrandRoute() {
+  const t = useTranslations("hub.pages.brand");
   const data = brandPageData("haruhime");
   return (
     <div className="flex flex-col gap-6">
       <PageHeader
-        title="Brand"
+        title={t("brand")}
         lead={
           <>
             haruhime.moe is home to packs, pools, bb and sheets, osu! tools for players, mappers and
             tournament hosts. For anything not covered here,{" "}
             <a href={`mailto:${data.contact}`} className={linkClasses()}>
-              write to me
+              {t("writeToMe")}
             </a>
             .
           </>

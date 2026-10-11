@@ -5,11 +5,12 @@
  *       /brand links here through BrandPage's Family section instead.
  * @author David @dvhsh (https://dvh.sh)
  * @created Sun Oct 4, 2026
- * @modified Sun Oct 4, 2026
+ * @modified Sun Oct 11, 2026
  */
 
 import { palette } from "@haruhimemoe/brand/palette";
 import { Card, TextLink } from "@haruhimemoe/ui";
+import { useTranslations } from "next-intl";
 import { TOOLS } from "@/constants/tools";
 
 /**
@@ -17,12 +18,10 @@ import { TOOLS } from "@/constants/tools";
  * @returns {JSX.Element} the product family card, one item per tool
  */
 export function ProductFamily() {
+  const t = useTranslations("hub.productFamily");
   return (
-    <Card title="Product family">
-      <p className="mb-4 text-sm">
-        Each tool has its own icon and hue. The rest of its palette follows from the hue, the same
-        way as the colors above.
-      </p>
+    <Card title={t("productFamily")}>
+      <p className="mb-4 text-sm">{t("eachToolHasIts")}</p>
       <ul className="grid gap-4 sm:grid-cols-3">
         {TOOLS.map((tool) => {
           const hex = palette(tool.hue).h1;

@@ -4,7 +4,7 @@
  *       description, Open Graph with the site image), dark body, the SiteShell frame.
  * @author David @dvhsh (https://dvh.sh)
  * @created Wed Sep 23, 2026
- * @modified Mon Sep 28, 2026
+ * @modified Sun Oct 11, 2026
  */
 
 import { pwaMetadata, pwaViewport, ServiceWorkerRegister } from "@haruhimemoe/next-kit/pwa";
@@ -16,6 +16,8 @@ import { SiteShell } from "@/components/layout/SiteShell";
 import { PWA } from "@/constants/pwa";
 import { SEO_SITE } from "@/constants/seo";
 import "./globals.css";
+import { NextIntlClientProvider } from "next-intl";
+import { getLocale } from "next-intl/server";
 
 const nunito = Nunito({ subsets: ["latin"], variable: "--font-nunito", display: "swap" });
 
@@ -24,11 +26,14 @@ export const metadata: Metadata = { ...siteMetadata(SEO_SITE), ...pwaMetadata(PW
 /** The page color as the browser's theme color, the app's color scheme, zoom left on. */
 export const viewport: Viewport = pwaViewport(PWA);
 
-export default function RootLayout({ children }: { children: ReactNode }) {
+export default async function RootLayout({ children }: { children: ReactNode }) {
+  const locale = await getLocale();
   return (
-    <html lang="en" className={nunito.variable}>
+    <html lang={locale} className={nunito.variable}>
       <body className="bg-b5 font-sans text-c2 antialiased">
-        <SiteShell>{children}</SiteShell>
+        <NextIntlClientProvider>
+          <SiteShell>{children}</SiteShell>
+        </NextIntlClientProvider>
         <ServiceWorkerRegister />
       </body>
     </html>

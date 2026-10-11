@@ -4,23 +4,22 @@
  *       osu!-style player card for every osu! player named (a snapshot, never fetched). Static.
  * @author David @dvhsh (https://dvh.sh)
  * @created Wed Sep 23, 2026
- * @modified Mon Oct 5, 2026
+ * @modified Sun Oct 11, 2026
  */
 
 import { Card, CardGrid, PageHeader, PlayerCard, TextLink } from "@haruhimemoe/ui";
 import type { Metadata } from "next";
+import { useTranslations } from "next-intl";
 import { THANKS } from "@/content/thanks";
 import { pageMetadata } from "@/utils/page-metadata";
 
 export const metadata: Metadata = pageMetadata("/thanks");
 
 export default function ThanksPage() {
+  const t = useTranslations("hub.pages.thanks");
   return (
     <div className="flex flex-col gap-8">
-      <PageHeader
-        title="Thanks"
-        lead="these tools lean on other people's work, feedback, encouragement, and so much more. thank you."
-      />
+      <PageHeader title={t("thanks")} lead={t("theseToolsLeanOn")} />
       <ul className="flex flex-col gap-3">
         {THANKS.map((entry) => (
           <li key={entry.name}>

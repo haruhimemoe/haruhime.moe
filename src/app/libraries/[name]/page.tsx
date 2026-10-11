@@ -9,7 +9,7 @@
  *       the README can't be fetched the page points at it on GitHub instead.
  * @author David @dvhsh (https://dvh.sh)
  * @created Fri Oct 2, 2026
- * @modified Tue Oct 6, 2026
+ * @modified Sun Oct 11, 2026
  */
 
 import { notFoundMetadata, pageMetadata } from "@haruhimemoe/next-kit/seo";
@@ -24,6 +24,7 @@ import {
 } from "@haruhimemoe/ui";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import { getTranslations } from "next-intl/server";
 import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
 import { Markdown } from "@/components/libraries/Markdown";
 import { findLibrary, LIBRARIES, libraryLinkItems, libraryUrls } from "@/constants/libraries";
@@ -71,6 +72,7 @@ export async function generateMetadata({
  * @returns {Promise<JSX.Element>} the docs page
  */
 export default async function LibraryDocsPage({ params }: PageProps<"/libraries/[name]">) {
+  const t = await getTranslations("hub.pages.librariesName");
   const { name } = await params;
   const library = findLibrary(name);
   if (!library) notFound();
@@ -86,17 +88,18 @@ export default async function LibraryDocsPage({ params }: PageProps<"/libraries/
   });
   // A long README (ui's) lists its h2s only, so the column stays a map, not a second page.
   const toc = readme ? readmeToc(readme) : [];
+  const tl = await getTranslations("hub.libraries");
   const install = `bun add ${library.pkg}`;
-  const meta = [stats.version ? `Version ${stats.version}` : null, stats.license]
+  const meta = [stats.version ? tl("version", { version: stats.version }) : null, stats.license]
     .filter(Boolean)
     .join(", ");
   return (
     <ContentLayout
       nav={
         <ContentNav
-          label="Libraries"
+          label={t("libraries")}
           indexHref="/libraries"
-          indexLabel="All libraries"
+          indexLabel={tl("all")}
           groups={libraryNavGroups(versions)}
         />
       }
@@ -104,7 +107,7 @@ export default async function LibraryDocsPage({ params }: PageProps<"/libraries/
       <article className="flex flex-col gap-8">
         <div className="flex flex-col gap-3">
           <Breadcrumbs
-            parents={[{ href: "/libraries", label: "Libraries" }]}
+            parents={[{ href: "/libraries", label: tl("title") }]}
             current={library.name}
           />
           <PageHeader title={library.pkg} lead={library.description} meta={meta || undefined} />
@@ -128,7 +131,7 @@ export default async function LibraryDocsPage({ params }: PageProps<"/libraries/
         ) : (
           <p className="text-c3">
             The README couldn't be loaded right now. Read{" "}
-            <TextLink href={libraryUrls(library).github}>the README on GitHub</TextLink>.
+            <TextLink href={libraryUrls(library).github}>{t("theReadmeOnGithub")}</TextLink>.
           </p>
         )}
       </article>

@@ -10,7 +10,7 @@
  *       public pages stay static and read no cookies.
  * @author David @dvhsh (https://dvh.sh)
  * @created Wed Sep 23, 2026
- * @modified Tue Oct 6, 2026
+ * @modified Sun Oct 11, 2026
  */
 
 import {
@@ -21,10 +21,12 @@ import {
   SiteHeader,
 } from "@haruhimemoe/ui";
 import Link from "next/link";
+import { useTranslations } from "next-intl";
 import type { ReactNode } from "react";
 import { AppPalette } from "@/components/layout/AppPalette";
-import { ACCOUNT_MENU_ITEMS } from "@/constants/accounts";
-import { FOOTER_COLUMNS, HEADER_LINKS } from "@/constants/nav";
+import { LocalePicker } from "@/components/layout/LocalePicker";
+import { accountMenuItems } from "@/constants/accounts";
+import { footerColumns, headerLinks } from "@/constants/nav";
 import { SITE } from "@/constants/site";
 import { AccountMenu } from "@/lib/account";
 
@@ -34,32 +36,46 @@ import { AccountMenu } from "@/lib/account";
  * @returns {JSX.Element} the page inside the shared header, main landmark and footer
  */
 export function SiteShell({ children }: { children: ReactNode }) {
+  const t = useTranslations("hub");
+  const common = useTranslations("common");
+  const ui = useTranslations("ui");
   return (
     <>
       <AppPalette />
       <PageShell
+        skipLabel={ui("shell.skip")}
         header={
           <SiteHeader
             brand={
-              <Link href="/" aria-label={`${SITE.name} home`} className="inline-flex shrink-0">
+              <Link
+                href="/"
+                aria-label={t("nav.home", { name: SITE.name })}
+                className="inline-flex shrink-0"
+              >
                 <HaruhimeWordmark decorative className="h-8 w-auto" />
               </Link>
             }
-            links={HEADER_LINKS}
-            navLabel="Tools"
+            links={headerLinks(t)}
+            navLabel={t("nav.toolsNav")}
             navAlign="center"
             actions={
               <div className="flex items-center gap-2">
-                <CommandPaletteButton />
-                <AccountMenu items={ACCOUNT_MENU_ITEMS} />
+                <CommandPaletteButton label={ui("palette.openLabel")} />
+                <AccountMenu
+                  items={accountMenuItems(t)}
+                  signInLabel={ui("account.signIn")}
+                  signOutLabel={ui("account.signOut")}
+                />
               </div>
             }
           />
         }
         footer={
           <SiteFooter
-            columns={FOOTER_COLUMNS}
-            finePrint={SITE.trademarkNotice}
+            columns={footerColumns(t, common)}
+            navLabel={ui("shell.footerNav")}
+            extra={<LocalePicker />}
+            finePrint={t("footer.finePrint")}
             parentLink={false}
             githubHref={SITE.githubOrg}
             discordHref={SITE.discordUrl}

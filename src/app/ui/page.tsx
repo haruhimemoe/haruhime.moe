@@ -6,7 +6,7 @@
  *       shell examples. Static; the demos that take callbacks are small client components.
  * @author David @dvhsh (https://dvh.sh)
  * @created Wed Sep 23, 2026
- * @modified Mon Oct 5, 2026
+ * @modified Sun Oct 11, 2026
  */
 
 import { CopyButton, JsonLd, LinkRow, PageHeader, TextLink } from "@haruhimemoe/ui";
@@ -15,6 +15,7 @@ import { CopyButton, JsonLd, LinkRow, PageHeader, TextLink } from "@haruhimemoe/
 import "@haruhimemoe/ui/shiki";
 import uiPackage from "@haruhimemoe/ui/package.json" with { type: "json" };
 import type { Metadata } from "next";
+import { useTranslations } from "next-intl";
 import type { JSX } from "react";
 import { ActionDemos } from "@/components/showcase/ActionDemos";
 import { ArticleDemos } from "@/components/showcase/ArticleDemos";
@@ -26,6 +27,7 @@ import { FilterDemos } from "@/components/showcase/FilterDemos";
 import { FormDemos } from "@/components/showcase/FormDemos";
 import { IconDemos } from "@/components/showcase/IconDemos";
 import { LayoutDemos } from "@/components/showcase/LayoutDemos";
+import { LocaleDemos } from "@/components/showcase/LocaleDemos";
 import { OsuDemos } from "@/components/showcase/OsuDemos";
 import { PaletteDemos } from "@/components/showcase/PaletteDemos";
 import { ShellDemos } from "@/components/showcase/ShellDemos";
@@ -57,28 +59,34 @@ const GROUPS: readonly { id: string; title: string; Demos: () => JSX.Element }[]
   { id: "palette", title: "Palette", Demos: PaletteDemos },
   { id: "articles", title: "Articles", Demos: ArticleDemos },
   { id: "utilities", title: "Utilities", Demos: UtilityDemos },
+  { id: "translation", title: "Translation", Demos: LocaleDemos },
 ];
 
 export default function UiPage() {
+  const t = useTranslations("hub.pages.ui");
   return (
     <div className="flex flex-col gap-12">
       <div className="flex flex-col gap-6">
         <PageHeader
-          title="UI"
+          title={t("ui")}
           lead={
             <>
-              Every component in <TextLink href={UI_NPM_URL}>@haruhimemoe/ui</TextLink>, rendered
-              from the package itself. haruhime.moe, packs, pools and bb are built from it. The
-              source is on <TextLink href={UI_REPO_URL}>GitHub</TextLink>, and its README is at{" "}
-              <TextLink href="/libraries/ui">/libraries/ui</TextLink>. On a touch screen, buttons,
-              chips, rows and fields are 44px tall.
+              Every component in <TextLink href={UI_NPM_URL}>{t("haruhimemoeUi")}</TextLink>,
+              rendered from the package itself. haruhime.moe, packs, pools and bb are built from it.
+              The source is on <TextLink href={UI_REPO_URL}>{t("github")}</TextLink>, and its README
+              is at <TextLink href="/libraries/ui">{t("librariesUi")}</TextLink>. On a touch screen,
+              buttons, chips, rows and fields are 44px tall.
             </>
           }
-          meta={`Version ${uiPackage.version}, ${uiPackage.license} license. Install: ${UI_INSTALL}`}
-          actions={<CopyButton text={UI_INSTALL} label="Copy install command" />}
+          meta={t("versionVersionLicenseLicense", {
+            version: uiPackage.version,
+            license: uiPackage.license,
+            INSTALL: UI_INSTALL,
+          })}
+          actions={<CopyButton text={UI_INSTALL} label={t("copyInstallCommand")} />}
         />
         <LinkRow
-          label="On this page"
+          label={t("onThisPage")}
           variant="quiet"
           items={GROUPS.map((group) => ({ href: `#${group.id}`, label: group.title }))}
         />

@@ -5,10 +5,11 @@
  *       current. Server only.
  * @author David @dvhsh (https://dvh.sh)
  * @created Tue Oct 6, 2026
- * @modified Tue Oct 6, 2026
+ * @modified Sun Oct 11, 2026
  */
 
 import { TextLink } from "@haruhimemoe/ui";
+import { useTranslations } from "next-intl";
 
 /** One parent page in the trail. */
 export type Crumb = { readonly href: string; readonly label: string };
@@ -20,8 +21,9 @@ export type Crumb = { readonly href: string; readonly label: string };
  * @returns {JSX.Element} a "Breadcrumb" nav with an ordered list of the trail
  */
 export function Breadcrumbs({ parents, current }: { parents: readonly Crumb[]; current: string }) {
+  const t = useTranslations("hub.breadcrumbs");
   return (
-    <nav aria-label="Breadcrumb">
+    <nav aria-label={t("breadcrumb")}>
       <ol className="flex flex-wrap items-center gap-x-2 text-c3 text-sm">
         {parents.map((crumb) => (
           <li key={crumb.href} className="flex items-center gap-2">
