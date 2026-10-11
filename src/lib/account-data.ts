@@ -7,7 +7,7 @@
  *       it before any app is called.
  * @author David @dvhsh (https://dvh.sh)
  * @created Tue Oct 6, 2026
- * @modified Tue Oct 6, 2026
+ * @modified Sun Oct 11, 2026
  */
 
 import "server-only";
@@ -47,6 +47,7 @@ export const exportAccount = async (userId: string): Promise<ExportBundle> => {
           discordUsername: 1,
           locale: 1,
           notificationPrefs: 1,
+          preferences: 1,
           createdAt: 1,
         },
       },

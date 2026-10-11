@@ -68,10 +68,10 @@ export default async function AccountPage() {
           </div>
         </div>
       </Card>
-      <Card title="Time display">
+      <Card id="time" title="Time display">
         <Text tone="muted">
-          Every haruhime app shows dates and times with these. Leave either on "browser" to let the
-          app showing it decide.
+          Every haruhime app shows dates and times with these. Leave Time zone on "Use my browser's"
+          to match where you are; Hour format defaults to 12-hour unless you pick otherwise.
         </Text>
         <div className="mt-3">
           <PreferencesForm initial={preferences} />

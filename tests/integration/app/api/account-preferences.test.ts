@@ -3,7 +3,9 @@
  * @desc GET/POST /api/account/preferences: 401 signed out (both methods), a valid zone and hour
  *       cycle round-trips, an unknown zone 400s, and a cross-site POST 403s, same refusals as
  *       every other hub write. The identity database and the session are faked (@/lib/db,
- *       @/lib/auth), since this app takes no new test dependency for a real MongoDB.
+ *       @/lib/auth), since this app takes no new test dependency for a real MongoDB. Also
+ *       checks the route calls connectDb() before touching the database, same as every other
+ *       hub route, instead of building off getIdentityDb() at module load.
  * @author David @dvhsh (https://dvh.sh)
  * @created Sun Oct 11, 2026
  * @modified Sun Oct 11, 2026
@@ -31,7 +33,9 @@ const fakeDb = {
   },
 };
 
-vi.mock("@/lib/db", () => ({ getIdentityDb: () => fakeDb }));
+const connectDb = vi.fn(async () => {});
+
+vi.mock("@/lib/db", () => ({ getIdentityDb: () => fakeDb, connectDb }));
 vi.mock("@/lib/auth", () => ({ getUserFromHeaders: async () => session.user }));
 
 const { GET, POST } = await import("@/app/api/account/preferences/route");
@@ -49,11 +53,18 @@ describe("/api/account/preferences", () => {
   afterEach(() => {
     session.user = null;
     users.clear();
+    connectDb.mockClear();
   });
 
   it("401s GET when signed out", async () => {
     const res = await GET(request("GET"));
     expect(res.status).toBe(401);
+  });
+
+  it("calls connectDb before touching the database", async () => {
+    session.user = { id: USER_ID };
+    await GET(request("GET"));
+    expect(connectDb).toHaveBeenCalled();
   });
 
   it("round-trips a valid zone and hour cycle", async () => {

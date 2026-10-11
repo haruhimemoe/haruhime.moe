@@ -1,11 +1,11 @@
 /**
  * @file tests/unit/lib/account-data.test.ts
  * @desc Account export and delete: export reads only the caller's identity with a projection
- *       that leaves tokens and sessions out; delete removes inbox and identity only after every
- *       app succeeded.
+ *       that leaves tokens and sessions out but includes preferences; delete removes inbox and
+ *       identity only after every app succeeded.
  * @author David @dvhsh (https://dvh.sh)
  * @created Tue Oct 6, 2026
- * @modified Tue Oct 6, 2026
+ * @modified Sun Oct 11, 2026
  */
 
 import { beforeEach, describe, expect, it, vi } from "vitest";
@@ -53,6 +53,7 @@ describe("exportAccount", () => {
     for (const key of Object.keys(projection)) {
       expect(key).not.toMatch(/token|secret|session|password/i);
     }
+    expect(projection).toMatchObject({ preferences: 1 });
     expect(fanOut).toHaveBeenCalledWith(expect.objectContaining({ op: "export", userId: USER.id }));
     expect(bundle.apps.packs).toEqual([1]);
   });

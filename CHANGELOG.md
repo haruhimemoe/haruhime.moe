@@ -55,6 +55,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 ### Fixed
 
 - Markdown pipe tables, task lists and strikethrough in the site's MDX pages render as HTML instead of plain text (`remark-gfm` runs before ui's remark plugin).
+- `/account`'s "Time display" card no longer hydration-mismatches: the time zone list and the live preview are now built in a mount effect instead of at module scope and during render, so the server and first client render agree.
+- `/api/account/preferences` builds its route lazily, after `connectDb()`, instead of calling `getIdentityDb()` at module load, matching every other hub route and no longer needing `MONGODB_URI` at build.
+- A stored time zone alias that `Intl.supportedValuesOf` doesn't list (`Asia/Calcutta`, say) stays selectable on `/account`, so saving never silently clears it.
+- "Download my data" includes your time display preferences.
+- `/account`'s Hour format no longer calls its default "Browser default": it's labelled "Default (12-hour)" to match what it actually renders.
 
 ## [0.3.0] - 2026-10-04
 
