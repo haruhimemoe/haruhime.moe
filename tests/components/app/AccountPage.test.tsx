@@ -1,10 +1,11 @@
 /**
  * @file tests/components/app/AccountPage.test.tsx
- * @desc /account: never indexed, one h1, the osu! profile (name linked, id shown), the connected
- *       apps, Discord only when configured, Download my data, the sessions card, and the delete form for this user.
+ * @desc /account: never indexed, one h1, the osu! profile (name linked, id shown), the time
+ *       display card, the connected apps, Discord only when configured, Download my data, the
+ *       sessions card, and the delete form for this user.
  * @author David @dvhsh (https://dvh.sh)
  * @created Tue Oct 6, 2026
- * @modified Tue Oct 6, 2026
+ * @modified Sun Oct 11, 2026
  */
 
 import { render, screen } from "@testing-library/react";
@@ -40,6 +41,13 @@ vi.mock("@/lib/account", () => ({
   RestoreSignedIn: () => null,
   SignOutButton: () => <button type="button">Sign out</button>,
   DeleteAccountForm: ({ username }: { username: string }) => <p>Delete {username}</p>,
+}));
+vi.mock("@/lib/db", () => ({
+  connectDb: async () => {},
+  getIdentityDb: () => ({}),
+}));
+vi.mock("@haruhimemoe/next-kit/preferences/server", () => ({
+  readPreferences: async () => ({ timezone: null, hourCycle: null }),
 }));
 
 const { default: AccountPage, metadata } = await import("@/app/account/page");
@@ -77,6 +85,11 @@ describe("/account", () => {
     expect(screen.getByText("Linked as haru.")).toBeInTheDocument();
     expect(screen.getByRole("button", { name: "Unlink" })).toBeInTheDocument();
     discord.enabled = false;
+  });
+
+  it("shows the time display card", async () => {
+    render(await AccountPage());
+    expect(screen.getByRole("heading", { name: "Time display" })).toBeInTheDocument();
   });
 
   it("links Download my data", async () => {

@@ -1,10 +1,12 @@
 /**
  * @file vitest.config.ts
- * @desc Vitest config: two projects (unit / components) over the tests/ tree, the @ path alias,
- *       v8 coverage with a 90% floor on src/utils.
+ * @desc Vitest config: three projects (unit / components / integration) over the tests/ tree,
+ *       the @ path alias, v8 coverage with a 90% floor on src/utils. integration is node, like
+ *       unit, but for route handlers (tests/integration/app/api/**) that mock @/lib/db and
+ *       @/lib/auth instead of hitting a real database.
  * @author David @dvhsh (https://dvh.sh)
  * @created Wed Sep 23, 2026
- * @modified Wed Sep 23, 2026
+ * @modified Sun Oct 11, 2026
  */
 
 import path from "node:path";
@@ -49,6 +51,15 @@ export default defineConfig({
           // package (instead of letting Vitest externalize it) lets vi.mock("next/navigation.js")
           // intercept that import too.
           server: { deps: { inline: [/@haruhimemoe\/ui/] } },
+        },
+      },
+      {
+        extends: true,
+        test: {
+          name: "integration",
+          environment: "node",
+          include: ["tests/integration/**/*.test.ts"],
+          env: { TZ: "America/Los_Angeles" },
         },
       },
     ],
