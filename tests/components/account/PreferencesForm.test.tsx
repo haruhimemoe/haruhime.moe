@@ -52,7 +52,7 @@ describe("PreferencesForm", () => {
     const optionValues = [...html.matchAll(/<option value="([^"]*)"/g)].map((m) => m[1]);
     expect(optionValues).toEqual(["", "Asia/Tokyo"]);
     expect(html).not.toMatch(/Preview: \d/);
-    expect(html).toContain("Preview: —");
+    expect(html).toContain("Preview: loading");
   });
 
   it("keeps a stored alias zone as an option even when supportedValuesOf doesn't list it", async () => {

@@ -98,7 +98,7 @@ export function PreferencesForm({ initial, fetcher = fetch }: PreferencesFormPro
         value={hourCycle}
         onChange={(value) => setHourCycle(value as HourCycleChoice)}
       />
-      <Text tone="muted">Preview: {preview ?? "—"}</Text>
+      <Text tone="muted">Preview: {preview ?? "loading"}</Text>
       <AsyncButton
         failedMessage="Couldn't save. Try again."
         action={async () => {
